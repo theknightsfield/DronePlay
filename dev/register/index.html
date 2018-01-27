@@ -150,7 +150,7 @@
   	}
 
 	function facebookSignInCallback() {
-    		FB.api('/me', {fields: 'name, email'}, function(response) {
+    		FB.api('/me', {fields: 'name, email', scope: 'name, email'}, function(response) {
 			$("#fbloginbutton").html('| Facebook에 로그인이 된 상태입니다');
 			$("#myname").val(response.name);
 			$("#myemail").val(response.email);
