@@ -30,7 +30,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
 
     <!-- Theme CSS -->
-    <link href="css/grayscale.css" rel="stylesheet">
+    <link href="css/droneplay.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -76,7 +76,7 @@
                     </li>
                     
                     <li>
-                        <a class="page-scroll" href="#apis">API 목록</a>
+                        <a class="page-scroll" href="/dev/apis/index.html">APIs</a>
                     </li>
                     
                     <li>
