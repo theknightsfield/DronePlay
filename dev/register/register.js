@@ -23,7 +23,7 @@ function sendData(responsedata) {
        cache: false,
        async: false,
        success : function(data) {
-	     $('#expmsg').html("아래의 토큰을 사용해 주세요.<br><br><a href=http://dev.droneplay.io/dev/apis>API 호출 방법 및 예제 보기</a>");
+	     $('#expmsg').html("아래의 토큰을 사용해 주세요.");
 	     $('#html_element').hide();
 	     $('#tokenfield').show();
 	     $('#mytoken').val(data.token);
