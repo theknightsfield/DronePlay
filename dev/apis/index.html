@@ -114,15 +114,14 @@
             			<font size=3>
             			
 		            			<b>- URL</b><br>
-		            			<code>/:token/position/:email/<br>
-		            			&nbsp;&nbsp;&nbsp;set/:lat/:lng/:height</code><br>
+		            			<font size=2><code>/:token/position/:email/set/:lat/:lng/:height</code></font>
 		            			<br>
 		            			<b>- Method:</b><br>
 		            			<code>GET</code><BR>
 		            			<br>
 		            			<b>URL Params</b><br>
 		            			<b>Required:</b><br>
-		            			<code>token=[string] , <a href="#download" target=new>토큰 발급 받기</a>에서 부여받은 토큰<br>
+		            			<code>token=[string] , <a href="#download" target=new>토큰 발급받기</a>에서 부여받은 토큰<br>
 		            			email=[string] , 토큰을 발급받을 때 입력한 이메일<br>
 		            			lat=[string] , 드론의 latitude 좌표 (선호좌표계 사용가능)<br>
 		            			lng=[string] , 드론의 longtitude 좌표 (선호좌표계 사용가능)<br>
@@ -139,35 +138,35 @@
 		            			Code : <code>404 NOT FOUND</code><br>
 		            		Content : <code>{result : "error" , msg : "No user data" }</code><br>
 		            			<br>
-		            			<b>호출 예제</b><br>
+		            			<b>호출 예제</b>
+		            				<pre>
+		            					
+											$.ajax({
+												&nbsp;url : 'http://apis.airpage.org/apdef/position/hello@mailmail.com/set/123.11/222.33/90',
+												&nbsp;dataType : "json",
+												&nbsp;type : "GET",
+												&nbsp;success : function(r) { console.log(JSON.stringify(r)); }
+											});          
+												     		
+										</pre>
 		            			
-		            			<code>
-											$.ajax({<br>
-												&nbsp;url : <br>
-												&nbsp;&nbsp;&nbsp;'http://apis.airpage.org/apdef/<br>
-												&nbsp;&nbsp;&nbsp;&nbsp;position/hello@mailmail.com/<br>
-												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set/123.11/222.33/90',<br>
-												&nbsp;dataType : "json",<br>
-												&nbsp;type : "GET",<br>
-												&nbsp;success : function(r) { console.log(JSON.stringify(r)); } <br>
-											});          <br>
-										
-		            			</code>		     		
 		            		</font>
+		            	</p>
+		            	<p class="text-left">
             		<br><br>
             		현재 내위치 읽어오기
             		<br><br>            		            		
             		<font size=3>
             			
             			<b>- URL</b><br>
-            			<code>/:token/position/:email/get</code><br>
+            			<font size=2><code>/:token/position/:email/get</code></font><br>
             			<br>
             			<b>- Method:</b><br>
             			<code>GET</code><BR>
             			<br>
             			<b>URL Params</b><br>
             			<b>Required:</b><br>
-            			<code>token=[string] , <a href="#download" target=new>토큰 발급 받기</a>에서 부여받은 토큰<br>
+            			<code>token=[string] , <a href="#download" target=new>토큰 발급받기</a>에서 부여받은 토큰<br>
 		            			email=[string] , 토큰을 발급받을 때 입력한 이메일<br>
             			</code>
             			<br>
@@ -176,27 +175,24 @@
             			<br>
             			<b>성공시 응답</b><br>
             			Code : <code>200</code><br>
-            			Content : <code>
-									﻿﻿{"positiontime<br>
-									&nbsp;":"Fri Jan 26 2018 14:22:34 GMT+0000 (UTC)",<br>
-									&nbsp;"lng":"555.55555","idx":6,<br>
-									&nbsp;"lat":"222.2222","height":"900"}</code><br>
+            			Content : <font size=2><code>
+									﻿﻿{ "positiontime":<br>"Fri Jan 26 2018 14:22:34 GMT+0000 (UTC)",<br>
+									&nbsp;"lng":"555.55555", "idx":6,<br>
+								&nbsp;"lat":"222.2222", "height":"900" }</code></font><br>
             			<br>
             			<b>오류시 응답</b><br>
             			Code : <code>404 NOT FOUND</code><br>
             			Content : <code>{result : "error" , msg : "No user data" }</code><br>
             			<br>
-            			<b>호출 예제</b><br>
-            			<code>
-									$.ajax({<br>
-												&nbsp;url : <br>
-												&nbsp;&nbsp;&nbsp;'http://apis.airpage.org/apdef/<br>
-												&nbsp;&nbsp;&nbsp;&nbsp;position/hello@mailmail.com/get<br>												
-												&nbsp;dataType : "json",<br>
-												&nbsp;type : "GET",<br>
-												&nbsp;success : function(r) { console.log(JSON.stringify(r)); } <br>
-											});          <br>
-            			</code>
+            			<b>호출 예제</b>
+            			<pre>
+									$.ajax({
+												&nbsp;url : 'http://apis.airpage.org/apdef/position/hello@mailmail.com/get
+												&nbsp;dataType : "json",
+												&nbsp;type : "GET",
+												&nbsp;success : function(r) { console.log(JSON.stringify(r)); }
+											});
+            			</pre>
             			
             			
             		
