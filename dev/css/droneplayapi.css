@@ -124,7 +124,7 @@ a:focus {
   padding: 100px 0;
   text-align: center;
   color: white;
-  background: url('../img/droneplay.png') no-repeat bottom center scroll;
+  background: url('../img/droneplayapi.jpg') no-repeat bottom center scroll;
   background-color: black;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -311,4 +311,12 @@ img::-moz-selection {
 }
 body {
   webkit-tap-highlight-color: rgba(255, 255, 255, 0.2);
+}
+
+.poetry {
+   padding: 0 0 0 20px;
+}
+
+.poetry p {
+   text-align: left;
 }
