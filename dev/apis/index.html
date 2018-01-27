@@ -139,14 +139,18 @@
 		            		Content : <code>{result : "error" , msg : "No user data" }</code><br>
 		            			<br>
 		            			<b>호출 예제</b><br>
+		            			
 		            			<code>
 											$.ajax({<br>
-												&nbsp;&nbsp;url : <br>
-												&nbsp;&nbsp;&nbsp;&nbsp;"http://apis.airpage.org/apdef/position/hello@mailmail.com/set/123.11/222.33/90",<br>
-												&nbsp;&nbsp;dataType : "json",<br>
-												&nbsp;&nbsp;type : "GET",<br>
-												&nbsp;&nbsp;success : function(r) { console.log(JSON.stringify(r)); } <br>
+												&nbsp;url : <br>
+												&nbsp;&nbsp;&nbsp;'http://apis.airpage.org/apdef/<br>
+												&nbsp;&nbsp;&nbsp;&nbsp;position/hello@mailmail.com/<br>
+												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;set/123.11/222.33/90',<br>
+												&nbsp;dataType : "json",<br>
+												&nbsp;type : "GET",<br>
+												&nbsp;success : function(r) { console.log(JSON.stringify(r)); } <br>
 											});          <br>
+										
 		            			</code>		     		
 		            		</font>
             		<br><br>
@@ -172,7 +176,10 @@
             			<b>성공시 응답</b><br>
             			Code : <code>200</code><br>
             			Content : <code>
-﻿﻿{"positiontime":"Fri Jan 26 2018 14:22:34 GMT+0000 (UTC)","lng":"555.55555","idx":6,"lat":"222.2222","height":"900"}</code><br>
+									﻿﻿{"positiontime<br>
+									&nbsp;":"Fri Jan 26 2018 14:22:34 GMT+0000 (UTC)",<br>
+									&nbsp;"lng":"555.55555","idx":6,<br>
+									&nbsp;"lat":"222.2222","height":"900"}</code><br>
             			<br>
             			<b>오류시 응답</b><br>
             			Code : <code>404 NOT FOUND</code><br>
@@ -181,13 +188,16 @@
             			<b>호출 예제</b><br>
             			<code>
 									$.ajax({<br>
-										&nbsp;&nbsp;url : <br>
-										&nbsp;&nbsp;&nbsp;&nbsp;"http://apis.airpage.org/apdef/position/hello@mailmail.com/get",<br>
-										&nbsp;&nbsp;dataType : "json",<br>
-										&nbsp;&nbsp;type : "GET",<br>
-										&nbsp;&nbsp;success : function(r) { console.log(JSON.stringify(r)); } <br>
-									});          <br>
+												&nbsp;url : <br>
+												&nbsp;&nbsp;&nbsp;'http://apis.airpage.org/apdef/<br>
+												&nbsp;&nbsp;&nbsp;&nbsp;position/hello@mailmail.com/get<br>												
+												&nbsp;dataType : "json",<br>
+												&nbsp;type : "GET",<br>
+												&nbsp;success : function(r) { console.log(JSON.stringify(r)); } <br>
+											});          <br>
             			</code>
+            			
+            			
             		
             		</font></p>
             </div>
