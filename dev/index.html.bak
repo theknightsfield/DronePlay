@@ -95,7 +95,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
-                        <h1 class="brand-heading">DronePlay OPEN API</h1>                        
+                        <h1 class="brand-heading">DronePlay.io 개발자 페이지</h1>                        
                         <a href="#about" class="btn btn-circle page-scroll">
                             <i class="fa fa-angle-double-down animated"></i>
                         </a>
@@ -113,17 +113,6 @@
                 <h5>비행의 꿈을 여기서 시작하세요!<br>
             </div>
         </div>
-    </section>
-    
-    <!-- New feature Section -->
-    <section id="apis" class="container content-section text-center">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2">
-            		<h2>드론의 위치를 실시간으로 공유하기 위한 API (준비중입니다)</h2>
-            		<p><h5>현재 내위치 기록하기</h5></p>
-            		<p><h5>현재 내위치 읽어오기</h5></p>
-            </div>
-        </div>        
     </section>
 
     <!-- Download Section -->
