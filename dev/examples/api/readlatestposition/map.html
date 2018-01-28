@@ -9,13 +9,14 @@
     <script src="https://openlayers.org/en/v4.6.4/build/ol.js"></script>
   </head>
   <body>
-    <div id="map" class="map"></div>    
-    <script>         
-    	
+    <a href="https://github.com/theknightsfield/droneplaycodes/tree/master/api/readlatestposition">Source code</a>
+    <div id="map" class="map"></div>
+    <script>
+
     	var pangyo_icon = new ol.Feature({
         geometry: new ol.geom.Point(ol.proj.fromLonLat([127.111136, 37.3947228]))
       });
-      
+
       pangyo_icon.setStyle(new ol.style.Style({
         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
           color: '#8959A8',
@@ -23,20 +24,20 @@
           src: 'https://openlayers.org/en/v4.6.4/examples/data/dot.png'
         }))
       }));
-      
+
       var vectorSource = new ol.source.Vector({
         features: [pangyo_icon]
       });
 
       var vectorLayer = new ol.layer.Vector({
         source: vectorSource
-      });            
-    
+      });
+
     	var pangyo = ol.proj.fromLonLat([127.111136, 37.3947228]);
-    
+
       var view = new ol.View({
         center: pangyo,
-        zoom: 9        
+        zoom: 9
       });
 
       var map = new ol.Map({
@@ -79,15 +80,15 @@
       function elastic(t) {
         return Math.pow(2, -10 * t) * Math.sin((t - 0.075) * (2 * Math.PI) / 0.3) + 1;
       }
-      
-      function flyTo(location, done) {      	      	      	      	      	      	      	
+
+      function flyTo(location, done) {
         var duration = 1500;
         var zoom = view.getZoom();
         var parts = 2;
         var called = false;
-        
+
         pangyo_icon.setGeometry(new ol.geom.Point(location));
-        
+
         function callback(complete) {
           --parts;
           if (called) {
@@ -109,34 +110,34 @@
           zoom: zoom,
           duration: duration / 2
         }, callback);
-      }     
+      }
 
-      function tour() {        
+      function tour() {
          setTimeout(function() {
                 getPos();
-         }, 2500);        
+         }, 2500);
       }
-      
+
       function getPos() {
-      	$.ajax({url : "http://apis.airpage.org/DRONEPLAYTOKEN/position/theknightsfield@gmail.com/get", 
-      					dataType : "jsonp",      					
-      					contentType : "application/json",      					
+      	$.ajax({url : "http://apis.airpage.org/DRONEPLAYTOKEN/position/theknightsfield@gmail.com/get",
+      					dataType : "jsonp",
+      					contentType : "application/json",
       					cache : false,
       					type : "GET",
       					async: false,
-	      				success : function(r) { 
-	      					console.log(JSON.stringify(r)); 
-	      					
+	      				success : function(r) {
+	      					console.log(JSON.stringify(r));
+
 	      					var npos = ol.proj.fromLonLat([r.lng *= 1, r.lat *= 1]);
-	      					flyTo(npos, function() {});  	
+	      					flyTo(npos, function() {});
 	      					tour();
 	      				},
 		      				error:function(request,status,error){
 		        				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-    				   	} 	
+    				   	}
       	});
-      }			      
-      
+      }
+
       tour();
     </script>
   </body>
