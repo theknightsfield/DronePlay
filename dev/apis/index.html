@@ -146,7 +146,8 @@ $.ajax({
 &nbsp;url : "http://apis.airpage.org/your-access-token/position/your-mail@mailmail.com/set/123.11/222.33/90",
 &nbsp;dataType : "json",
 &nbsp;type : "GET",
-&nbsp;success : function(r) { console.log(JSON.stringify(r)); }
+&nbsp;success : function(r) { console.log(JSON.stringify(r)); },
+&nbsp;error : function(err) { console.log(JSON.stringify(err)); }
 });
 			
 [curl]
@@ -196,7 +197,8 @@ $.ajax({
 &nbsp;url : "http://apis.airpage.org/your-access-token/position/your-mail@mailmail.com/get",
 &nbsp;dataType : "json",
 &nbsp;type : "GET",
-&nbsp;success : function(r) { console.log(JSON.stringify(r)); }
+&nbsp;success : function(r) { console.log(JSON.stringify(r)); },
+&nbsp;error : function(err) { console.log(JSON.stringify(err)); }
 });
 
 [curl]
