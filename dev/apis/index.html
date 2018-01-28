@@ -141,14 +141,16 @@
 		            			<br>
 		            			<b>- 호출 예제</b>
 		            				<pre>
-		            					
+[ajax]		            					
 $.ajax({
-&nbsp;url : "http://apis.airpage.org/apdef/position/hello@mailmail.com/set/123.11/222.33/90",
+&nbsp;url : "http://apis.airpage.org/your-access-token/position/your-mail@mailmail.com/set/123.11/222.33/90",
 &nbsp;dataType : "json",
 &nbsp;type : "GET",
 &nbsp;success : function(r) { console.log(JSON.stringify(r)); }
 });
-												     		
+			
+[curl]
+curl "http://apis.airpage.org/your-access-token/position/your-mail@mailmail.com/set/123.11/222.33/90"
 										</pre>
 		            			
 		            		</font>
@@ -189,12 +191,16 @@ $.ajax({
             			<br>
             			<b>- 호출 예제</b>
             			<pre>
+[ajax]
 $.ajax({
-&nbsp;url : "http://apis.airpage.org/apdef/position/hello@mailmail.com/get",
+&nbsp;url : "http://apis.airpage.org/your-access-token/position/your-mail@mailmail.com/get",
 &nbsp;dataType : "json",
 &nbsp;type : "GET",
 &nbsp;success : function(r) { console.log(JSON.stringify(r)); }
 });
+
+[curl]
+curl "http://apis.airpage.org/your-access-token/position/your-mail@mailmail.com/get"
             			</pre>									
             		</font></p>
             </div>
