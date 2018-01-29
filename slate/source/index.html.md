@@ -59,7 +59,7 @@ DronePlay Open API는 DronePlay 개발자 토큰을 파라메터로 입력해야
 DronePlay Open API를 사용하시려면 반드시 <code>토큰</code>을 API의 파라메터로 입력해야 합니다. 간수에 유의해 주세요.
 </aside>
 
-# 드론의 현재위치를 기록하거나 읽기 
+# 드론의 현재위치 기록/읽기 
 
 ## 드론의 현재위치 기록하기 
 
