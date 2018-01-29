@@ -1,1 +1,2 @@
 bundle exec middleman build --clean
+cp -r ./build/ ../dev/apis/
