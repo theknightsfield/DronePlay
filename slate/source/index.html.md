@@ -161,8 +161,6 @@ $.ajax({
 
 ```
 
-This endpoint retrieves a specific kitten.
-
 <aside class="warning">positiontime은 GMT+0 기준입니다. 서울기준이 아닙니다.</aside>
 
 ### HTTP 요청 
