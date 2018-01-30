@@ -3,9 +3,9 @@ title: DronePlay Open API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell
-  - ruby
-  - python
+  - php 
   - javascript
+  - python
 
 toc_footers:
   - <a href='http://dev.droneplay.io/'>DronePlay 개발자 페이지</a>
@@ -30,7 +30,16 @@ search: true
 
 > Open API 사용을 위해 DronePlay 개발자 토큰을 발급 받으세요.
 
-```ruby
+
+```shell
+
+```
+
+```php
+
+```
+
+```javascript
 
 ```
 
@@ -38,13 +47,6 @@ search: true
 
 ```
 
-```shell
-
-```
-
-```javascript
-
-```
 
 > 
 
@@ -63,17 +65,19 @@ DronePlay Open API를 사용하시려면 반드시 <code>토큰</code>을 API의
 
 ## 드론의 현재위치 기록하기 
 
-```ruby
-
-```
-
-```python
-
-```
 
 ```shell
 
 curl "http://apis.airpage.org/your-access-token/position/your-email@mailmail.com/set/123.11/222.33/90"
+
+```
+
+```php
+
+$get = curl_init();
+curl_setopt($get, CURLOPT_URL, "http://apis.airpage.org/your-access-token/position/your-email@mailmail.com/set/123.11/222.33/90");
+$result = curl_exec($get);
+echo $result;
 
 ```
 
@@ -86,6 +90,10 @@ $.ajax({
   success : function(r) { console.log(JSON.stringify(r)); },
   error : function(err) { console.log(JSON.stringify(err)); }
 });
+
+```
+
+```python
 
 ```
 
@@ -121,17 +129,19 @@ GET 형식으로 API가 호출되는 만큼 토큰의 노출에 유의하세요!
 
 ## 드론의 최근 위치 읽어오기
 
-```ruby
-
-```
-
-```python
-
-```
 
 ```shell
 
 curl "http://apis.airpage.org/your-access-token/position/your-email@mailmail.com/get"
+
+```
+
+```php
+
+$get = curl_init();
+curl_setopt($get, CURLOPT_URL, "http://apis.airpage.org/your-access-token/position/your-email@mailmail.com/get");
+$result = curl_exec($get);
+echo $result;
 
 ```
 
@@ -147,6 +157,9 @@ $.ajax({
 
 ```
 
+```python
+
+```
 > 상기의 명령은 아래와 같이 JSON 구조로 응답합니다:
 
 ```json
