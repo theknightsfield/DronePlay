@@ -4,23 +4,11 @@
     <!-- META -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="http://dev.droneplay.io/droneplay.ico" />
-	<link rel="icon" type="image/png" href="http://dev.droneplay.io/droneplay.png" />
-	<link rel="icon" type="image/gif" href="http://dev.droneplay.io/droneplay.gif" />
-	<meta property="og:locale" content="ko_KR" />
-	<meta property="og:type" content="website" />
-	<meta property="og:url" content="http://droneplay.io" />
-	<meta property="og:site_name" content="DronePlay Developer" />
-	<meta property="og:title" content="DronePlay Developer Page" />
-	<meta property="og:image" content="http://dev.droneplay.io/title.png" />
-	<meta property="og:description" content="Be a DronePlay Developer !" />	
   <meta name="google-signin-scope" content="profile email">
   <meta name="google-signin-client_id" content="796696970892-p16dtq9oq2oks814lu661hreampk6kjn.apps.googleusercontent.com">
-  <title>DronePlay Open APIs</title>
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-  <link href="register.css" rel="stylesheet">
-  <title>DronePlay.io APIs</title>
+  <title>OPEN API PLATFORM</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
@@ -34,7 +22,7 @@
     	<div class="row"><br>
     	</div>
       <div class="jumbotron">
-          <h2><STRONG>DRONEPLAY DEVELOPER</STRONG></h2><h5>개발자 Token 요청하기</h5>
+          <h2><STRONG>Get ACCESS TOKEN</STRONG></h2></h5>
       </div>
       <div class="row">
         <div class="col-sm-12">
@@ -49,7 +37,6 @@
         <div class="col-sm-3">
 		<div id="googleLoginButton" class="g-signin2" data-onsuccess="onGoogleSignIn" data-theme="dark"></div><br>
 	</div>
-
         <div class="col-sm-3">
 		<div id="fbloginbutton">
 			<!-- <fb:login-button scope="public_profile,email" onlogin="checkLoginState();"></fb:login-button> -->
@@ -86,26 +73,23 @@
 		<div id="expmsg">
 		       <h4>아래의 '로봇이 아닙니다'를 클릭하시면 토큰이 발급됩니다<h4>
 		</div>
-		
 	</div>
       </div>
       	<div class="row">
         	<div class="col-sm-6">
-	      	<div id="monitor"></div>
-	      	<div id="html_element"></div>
-    	    <div id="tokenfield"><input type="text" class=form-control id="mytoken"></div>
-    	    <br><br><a href=/dev/apis>API 호출 방법 및 예제 보기</a><br>
-				</div>
+	      		<div id="monitor"></div>
+	      		<div id="html_element"></div>
+    	    		<div id="tokenfield"><input type="text" class=form-control id="mytoken"></div>
+		</div>
       </div>
     </form>
       <div class="row">
         <div class="col-sm-6"><br><br><br>
-		<FONT SIZE=2>© 2018 <a href=http://droneplay.io>DronePlay</a> / <a href=http://airpage.org>AiRPAGE</a> All rights reserved. | <a href=http://dev.droneplay.io/dev/privacy.html target=_new>Privacy</a></FONT>
+		<a href=#privacy target=_new>Privacy</a></FONT>
 	</div>
       </div>
     </div>
 	<script>
-
 		var naverLogin = new naver.LoginWithNaverId(
 			{
 				clientId: "wSvRwDA6qt1OWrvVY542",
@@ -187,7 +171,6 @@
 		$('#html_element').show();
         };
 
-		/* (6) 로그인 상태가 "true" 인 경우 로그인 버튼을 없애고 사용자 정보를 출력합니다. */
 	function setLoginStatus() {
 		var nickName = naverLogin.user.getNickName();
 		var email = naverLogin.user.getEmail();
@@ -198,6 +181,51 @@
 		$('#logexpmsg').hide();
 		$('#html_element').show();
 	}
+
+	var onloadCallback = function() {
+ 		 grecaptcha.render('html_element', {
+   		 'sitekey' : '6LexCTAUAAAAAIURdnNux9P3incrbqhYWIEH3-UL',
+   		 'callback' : verifyCallback,
+  		});
+	};
+
+	var verifyCallback = function(response) {
+  		sendData(response);
+	};
+
+	function sendData(responsedata) {
+  		var myemail = $('#myemail').val();
+  		var myname = $('#myname').val();
+ 
+		 $.ajax({
+		       type:"POST",
+ 		       url:"https://mn91te9qqb.execute-api.ap-northeast-2.amazonaws.com/open/newmember",
+       		       dataType:"JSON",
+       		       crossDomain: true,
+       		       data: JSON.stringify({email : myemail, name : myname, captchaResponse : responsedata}),
+       		       contentType: "application/json",
+       		       cache: false,
+		       async: false,
+   		    success : function(data) {
+	     		$('#expmsg').html("아래의 토큰을 사용해 주세요.");
+	    		$('#html_element').hide();
+	     		$('#tokenfield').show();
+	     		$('#mytoken').val(data.token);
+       		    },
+       		   complete : function(data) {
+       		   },
+       		   error : function(xhr, status, error) {
+	     		$('#monitor').html(error);
+       		   }
+  	});
+}
+
+$( document ).ready(function() {
+	$('#tokenfield').hide();
+	$('#expmsg').hide();
+	$('#html_element').hide();
+});
+
 
 </script>
     <script src="register.js"></script>
