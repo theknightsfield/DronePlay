@@ -311,6 +311,16 @@ echo $result;
 <span class="p">});</span>
 
 </code></pre><pre class="highlight python tab-python"><code>
+<span class="kn">import</span> <span class="nn">requests</span> 
+<span class="n">URL</span> <span class="o">=</span> <span class="s">'http://apis.airpage.org/your-access-token/position/your-email@mailmail.com/set/123.11/222.33/90?callback=abc'</span> 
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">URL</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">status_code</span> <span class="ow">is</span> <span class="ow">not</span> <span class="mi">200</span><span class="p">:</span>
+  <span class="k">print</span> <span class="p">(</span><span class="s">"error"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="k">print</span> <span class="p">(</span><span class="s">"success"</span><span class="p">)</span>
+  <span class="k">print</span> <span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
 </code></pre>
 <blockquote>
 <p>상기의 명령은 아래와 같이 JSON 구조로 응답합니다:</p>
@@ -381,6 +391,17 @@ echo $result;
 <span class="p">});</span>
 
 </code></pre><pre class="highlight python tab-python"><code>
+<span class="kn">import</span> <span class="nn">requests</span> 
+<span class="n">URL</span> <span class="o">=</span> <span class="s">'http://apis.airpage.org/your-access-token/position/your-email@mailmail.com/get?callback=abc'</span> 
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">URL</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">status_code</span> <span class="ow">is</span> <span class="ow">not</span> <span class="mi">200</span><span class="p">:</span>
+  <span class="k">print</span> <span class="p">(</span><span class="s">"error"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="k">print</span> <span class="p">(</span><span class="s">"success"</span><span class="p">)</span>
+  <span class="k">print</span> <span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+
 </code></pre>
 <blockquote>
 <p>상기의 명령은 아래와 같이 JSON 구조로 응답합니다:</p>
