@@ -21,8 +21,10 @@ search: true
 
 # 소개 
 
-이곳은 드론 소프트웨어 개발자분들을 위한 예제코드와 Open API 정보를 제공하는 사이트 입니다.
+'우리는 드론을 세계일주 시킬겁니다'
 
+이곳은 드론 소프트웨어 개발자분들을 위한 예제코드와 Open API 정보를 제공하는 사이트 입니다.
+뿐만아니라 드론을 '세계일주' 시키기 위한 관련 코드들도 계속해서 추가할 예정입니다.
 쌈박하고 깔끔한 아이디어가 녹아든 쉽고 간편한 Open API와 코드들을 둘러 보세요.
 
 
@@ -142,7 +144,7 @@ GET 형식으로 API가 호출되는 만큼 토큰의 노출에 유의하세요!
 
 ```shell
 
-curl "http://apis.airpage.org/your-access-token/position/your-email@mailmail.com/get"
+curl "http://apis.airpage.org/your-access-token/position/your-email@mailmail.com/get/1518534859144/1518534861111"
 
 ```
 
@@ -185,21 +187,41 @@ else:
 
 ```json
 
-{
-  "positiontime" : "Fri Jan 26 2018 14:22:34 GMT+0000 (UTC)",
-  "lng" : "555.5555",
-  "lat" : "222.2222",
-  "alt" : "900",
-  "idx" : "8"
-}
+[
+ { 
+   "positiontime" : "Tue Feb 13 2018 15:44:40 GMT+0000 (UTC)",
+   "timestamp" : 1518536680763,
+   "lat" : "37.2435813",
+   "lng" : "131.8661992",
+   "alt" : 500,
+   "clientid" : "theknightsfield@gmail.com"
+ },
+ {
+   "positiontime" : "Tue Feb 13 2018 15:44:40 GMT+0000 (UTC)",
+   "timestamp" : 1518536680765,
+   "lat" : "37.2424227",
+   "lng" : "131.8673264",
+   "alt" : 500,
+   "clientid" : "theknightsfield@gmail.com"
+ },
+ {
+   "positiontime" : "Tue Feb 13 2018 15:44:40 GMT+0000 (UTC)",
+   "timestamp" : 1518536680763,
+   "lat" : "37.2421004",
+   "lng" : "131.8680063",
+   "alt" : 500,
+   "clientid" : "theknightsfield@gmail.com"
+ }
+]
 
 ```
 
 <aside class="warning">positiontime은 GMT+0 기준입니다. 서울기준이 아닙니다.</aside>
+<aside class="warning">timestamp는 GMT+0 기준입니다. 서울기준이 아닙니다.</aside>
 
 ### HTTP 요청 
 
-`GET http://apis.airpage.org/[:token]/position/[:email]/get`
+`GET http://apis.airpage.org/[:token]/position/[:email]/get/[:start]/[:end]`
 
 ### URL 파라메터
 
@@ -209,5 +231,6 @@ token | 부여받은 개발자 토큰값을 입력합니다.
 position | 'position'을 입력합니다. 
 email | 개발자 토큰을 받기위해 입력한 이메일 주소를 입력합니다.
 get | 'get'을 입력합니다.
-
+start (optional) | timestamp 값입니다. start 시각에서 ~ end 시각 사이의 결과를 요청할 때 사용합니다.
+end (optional) | timestamp 값입니다. 
 

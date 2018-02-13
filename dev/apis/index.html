@@ -267,9 +267,11 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='fa255f0ccc'>소개</h1>
-<p>이곳은 드론 소프트웨어 개발자분들을 위한 예제코드와 Open API 정보를 제공하는 사이트 입니다.</p>
+<p>&#39;우리는 드론을 세계일주 시킬겁니다&#39;</p>
 
-<p>쌈박하고 깔끔한 아이디어가 녹아든 쉽고 간편한 Open API와 코드들을 둘러 보세요.</p>
+<p>이곳은 드론 소프트웨어 개발자분들을 위한 예제코드와 Open API 정보를 제공하는 사이트 입니다.
+뿐만아니라 드론을 &#39;세계일주&#39; 시키기 위한 관련 코드들도 계속해서 추가할 예정입니다.
+쌈박하고 깔끔한 아이디어가 녹아든 쉽고 간편한 Open API와 코드들을 둘러 보세요.</p>
 <h1 id='79b1f545ca'>토큰 발급 받기</h1>
 <blockquote>
 <p>Open API 사용을 위해 DronePlay 개발자 토큰을 발급 받으세요.</p>
@@ -373,7 +375,7 @@ echo $result;
 GET 형식으로 API가 호출되는 만큼 토큰의 노출에 유의하세요!
 </aside>
 <h2 id='4c067a7cbd'>드론의 최근 위치 읽어오기</h2><pre class="highlight shell tab-shell"><code>
-curl <span class="s2">"http://apis.airpage.org/your-access-token/position/your-email@mailmail.com/get"</span>
+curl <span class="s2">"http://apis.airpage.org/your-access-token/position/your-email@mailmail.com/get/1518534859144/1518534861111"</span>
 
 </code></pre><pre class="highlight php tab-php"><code>
 $get = curl_init();
@@ -407,18 +409,39 @@ echo $result;
 <p>상기의 명령은 아래와 같이 JSON 구조로 응답합니다:</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="w">
-</span><span class="p">{</span><span class="w">
-  </span><span class="s2">"positiontime"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Fri Jan 26 2018 14:22:34 GMT+0000 (UTC)"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"lng"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"555.5555"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"lat"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"222.2222"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"alt"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"900"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"idx"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"8"</span><span class="w">
-</span><span class="p">}</span><span class="w">
+</span><span class="p">[</span><span class="w">
+ </span><span class="p">{</span><span class="w"> 
+   </span><span class="s2">"positiontime"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Tue Feb 13 2018 15:44:40 GMT+0000 (UTC)"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"timestamp"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1518536680763</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"lat"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"37.2435813"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"lng"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"131.8661992"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"alt"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"clientid"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"theknightsfield@gmail.com"</span><span class="w">
+ </span><span class="p">},</span><span class="w">
+ </span><span class="p">{</span><span class="w">
+   </span><span class="s2">"positiontime"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Tue Feb 13 2018 15:44:40 GMT+0000 (UTC)"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"timestamp"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1518536680765</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"lat"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"37.2424227"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"lng"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"131.8673264"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"alt"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"clientid"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"theknightsfield@gmail.com"</span><span class="w">
+ </span><span class="p">},</span><span class="w">
+ </span><span class="p">{</span><span class="w">
+   </span><span class="s2">"positiontime"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Tue Feb 13 2018 15:44:40 GMT+0000 (UTC)"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"timestamp"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1518536680763</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"lat"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"37.2421004"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"lng"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"131.8680063"</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"alt"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"clientid"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"theknightsfield@gmail.com"</span><span class="w">
+ </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
 
 </span></code></pre>
 <aside class="warning">positiontime은 GMT+0 기준입니다. 서울기준이 아닙니다.</aside>
+
+<aside class="warning">timestamp는 GMT+0 기준입니다. 서울기준이 아닙니다.</aside>
 <h3 id='http-2'>HTTP 요청</h3>
-<p><code>GET http://apis.airpage.org/[:token]/position/[:email]/get</code></p>
+<p><code>GET http://apis.airpage.org/[:token]/position/[:email]/get/[:start]/[:end]</code></p>
 <h3 id='url-2'>URL 파라메터</h3>
 <table><thead>
 <tr>
@@ -441,6 +464,14 @@ echo $result;
 <tr>
 <td>get</td>
 <td>&#39;get&#39;을 입력합니다.</td>
+</tr>
+<tr>
+<td>start (optional)</td>
+<td>timestamp 값입니다. start 시각에서 ~ end 시각 사이의 결과를 요청할 때 사용합니다.</td>
+</tr>
+<tr>
+<td>end (optional)</td>
+<td>timestamp 값입니다.</td>
 </tr>
 </tbody></table>
 <h1 id='7a4c98d247'>오류 설명</h1>
