@@ -412,7 +412,7 @@ echo $result;
 </span><span class="p">[</span><span class="w">
  </span><span class="p">{</span><span class="w"> 
    </span><span class="s2">"positiontime"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Tue Feb 13 2018 15:44:40 GMT+0000 (UTC)"</span><span class="p">,</span><span class="w">
-   </span><span class="s2">"timestamp"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1518536680763</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"dtimestamp"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1518536680763</span><span class="p">,</span><span class="w">
    </span><span class="s2">"lat"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"37.2435813"</span><span class="p">,</span><span class="w">
    </span><span class="s2">"lng"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"131.8661992"</span><span class="p">,</span><span class="w">
    </span><span class="s2">"alt"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w">
@@ -420,7 +420,7 @@ echo $result;
  </span><span class="p">},</span><span class="w">
  </span><span class="p">{</span><span class="w">
    </span><span class="s2">"positiontime"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Tue Feb 13 2018 15:44:40 GMT+0000 (UTC)"</span><span class="p">,</span><span class="w">
-   </span><span class="s2">"timestamp"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1518536680765</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"dtimestamp"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1518536680765</span><span class="p">,</span><span class="w">
    </span><span class="s2">"lat"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"37.2424227"</span><span class="p">,</span><span class="w">
    </span><span class="s2">"lng"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"131.8673264"</span><span class="p">,</span><span class="w">
    </span><span class="s2">"alt"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w">
@@ -428,7 +428,7 @@ echo $result;
  </span><span class="p">},</span><span class="w">
  </span><span class="p">{</span><span class="w">
    </span><span class="s2">"positiontime"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Tue Feb 13 2018 15:44:40 GMT+0000 (UTC)"</span><span class="p">,</span><span class="w">
-   </span><span class="s2">"timestamp"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1518536680763</span><span class="p">,</span><span class="w">
+   </span><span class="s2">"dtimestamp"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">1518536680763</span><span class="p">,</span><span class="w">
    </span><span class="s2">"lat"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"37.2421004"</span><span class="p">,</span><span class="w">
    </span><span class="s2">"lng"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"131.8680063"</span><span class="p">,</span><span class="w">
    </span><span class="s2">"alt"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w">
@@ -439,7 +439,7 @@ echo $result;
 </span></code></pre>
 <aside class="warning">positiontime은 GMT+0 기준입니다. 서울기준이 아닙니다.</aside>
 
-<aside class="warning">timestamp는 GMT+0 기준입니다. 서울기준이 아닙니다.</aside>
+<aside class="warning">dtimestamp는 GMT+0 기준입니다. 서울기준이 아닙니다.</aside>
 <h3 id='http-2'>HTTP 요청</h3>
 <p><code>GET http://apis.airpage.org/[:token]/position/[:email]/get/[:start]/[:end]</code></p>
 <h3 id='url-2'>URL 파라메터</h3>
@@ -467,11 +467,11 @@ echo $result;
 </tr>
 <tr>
 <td>start (optional)</td>
-<td>timestamp 값입니다. start 시각에서 ~ end 시각 사이의 결과를 요청할 때 사용합니다.</td>
+<td>timestamp 값입니다. GMT+0 기준입니다. start ~ end 시각 사이의 결과를 요청할 때 사용합니다.</td>
 </tr>
 <tr>
 <td>end (optional)</td>
-<td>timestamp 값입니다.</td>
+<td>timestamp 값입니다. GMT+0 기준입니다.</td>
 </tr>
 </tbody></table>
 <h1 id='7a4c98d247'>오류 설명</h1>

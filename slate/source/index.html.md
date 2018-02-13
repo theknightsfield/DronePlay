@@ -190,7 +190,7 @@ else:
 [
  { 
    "positiontime" : "Tue Feb 13 2018 15:44:40 GMT+0000 (UTC)",
-   "timestamp" : 1518536680763,
+   "dtimestamp" : 1518536680763,
    "lat" : "37.2435813",
    "lng" : "131.8661992",
    "alt" : 500,
@@ -198,7 +198,7 @@ else:
  },
  {
    "positiontime" : "Tue Feb 13 2018 15:44:40 GMT+0000 (UTC)",
-   "timestamp" : 1518536680765,
+   "dtimestamp" : 1518536680765,
    "lat" : "37.2424227",
    "lng" : "131.8673264",
    "alt" : 500,
@@ -206,7 +206,7 @@ else:
  },
  {
    "positiontime" : "Tue Feb 13 2018 15:44:40 GMT+0000 (UTC)",
-   "timestamp" : 1518536680763,
+   "dtimestamp" : 1518536680763,
    "lat" : "37.2421004",
    "lng" : "131.8680063",
    "alt" : 500,
@@ -217,7 +217,7 @@ else:
 ```
 
 <aside class="warning">positiontime은 GMT+0 기준입니다. 서울기준이 아닙니다.</aside>
-<aside class="warning">timestamp는 GMT+0 기준입니다. 서울기준이 아닙니다.</aside>
+<aside class="warning">dtimestamp는 GMT+0 기준입니다. 서울기준이 아닙니다.</aside>
 
 ### HTTP 요청 
 
@@ -231,6 +231,6 @@ token | 부여받은 개발자 토큰값을 입력합니다.
 position | 'position'을 입력합니다. 
 email | 개발자 토큰을 받기위해 입력한 이메일 주소를 입력합니다.
 get | 'get'을 입력합니다.
-start (optional) | timestamp 값입니다. start 시각에서 ~ end 시각 사이의 결과를 요청할 때 사용합니다.
-end (optional) | timestamp 값입니다. 
+start (optional) | timestamp 값입니다. GMT+0 기준입니다. start ~ end 시각 사이의 결과를 요청할 때 사용합니다.
+end (optional) | timestamp 값입니다. GMT+0 기준입니다.
 
