@@ -95,6 +95,16 @@ $.ajax({
 
 ```python
 
+import requests 
+URL = 'http://apis.airpage.org/your-access-token/position/your-email@mailmail.com/set/123.11/222.33/90?callback=abc' 
+res = requests.get(URL)
+
+if res.status_code is not 200:
+  print ("error")
+else:
+  print ("success")
+  print (res.text)
+
 ```
 
 > 상기의 명령은 아래와 같이 JSON 구조로 응답합니다:
@@ -158,6 +168,17 @@ $.ajax({
 ```
 
 ```python
+
+import requests 
+URL = 'http://apis.airpage.org/your-access-token/position/your-email@mailmail.com/get?callback=abc' 
+res = requests.get(URL)
+
+if res.status_code is not 200:
+  print ("error")
+else:
+  print ("success")
+  print (res.text)
+
 
 ```
 > 상기의 명령은 아래와 같이 JSON 구조로 응답합니다:
