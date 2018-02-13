@@ -311,6 +311,16 @@ echo $result;
 <span class="p">});</span>
 
 </code></pre><pre class="highlight python tab-python"><code>
+<span class="kn">import</span> <span class="nn">requests</span> 
+<span class="n">URL</span> <span class="o">=</span> <span class="s">'http://apis.airpage.org/your-access-token/position/your-email@mailmail.com/set/123.11/222.33/90?callback=abc'</span> 
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">URL</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">status_code</span> <span class="ow">is</span> <span class="ow">not</span> <span class="mi">200</span><span class="p">:</span>
+  <span class="k">print</span> <span class="p">(</span><span class="s">"error"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="k">print</span> <span class="p">(</span><span class="s">"success"</span><span class="p">)</span>
+  <span class="k">print</span> <span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
 </code></pre>
 <blockquote>
 <p>상기의 명령은 아래와 같이 JSON 구조로 응답합니다:</p>
@@ -321,7 +331,7 @@ echo $result;
 </span></code></pre>
 <p>현재의 좌표와 고도를 기록합니다.</p>
 <h3 id='http'>HTTP 요청</h3>
-<p><code>GET http://apis.airpage.org/[:token]/position/[:email]/set/[:lat]/[:lng]/[:height]</code></p>
+<p><code>GET http://apis.airpage.org/[:token]/position/[:email]/set/[:lat]/[:lng]/[:alt]</code></p>
 <h3 id='url'>URL 파라메터</h3>
 <table><thead>
 <tr>
@@ -354,7 +364,7 @@ echo $result;
 <td>longitude 좌표값를 입력합니다.</td>
 </tr>
 <tr>
-<td>height</td>
+<td>alt</td>
 <td>고도값을 입력합니다.</td>
 </tr>
 </tbody></table>
@@ -381,6 +391,17 @@ echo $result;
 <span class="p">});</span>
 
 </code></pre><pre class="highlight python tab-python"><code>
+<span class="kn">import</span> <span class="nn">requests</span> 
+<span class="n">URL</span> <span class="o">=</span> <span class="s">'http://apis.airpage.org/your-access-token/position/your-email@mailmail.com/get?callback=abc'</span> 
+<span class="n">res</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">URL</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">status_code</span> <span class="ow">is</span> <span class="ow">not</span> <span class="mi">200</span><span class="p">:</span>
+  <span class="k">print</span> <span class="p">(</span><span class="s">"error"</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+  <span class="k">print</span> <span class="p">(</span><span class="s">"success"</span><span class="p">)</span>
+  <span class="k">print</span> <span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+
+
 </code></pre>
 <blockquote>
 <p>상기의 명령은 아래와 같이 JSON 구조로 응답합니다:</p>
@@ -390,7 +411,7 @@ echo $result;
   </span><span class="s2">"positiontime"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Fri Jan 26 2018 14:22:34 GMT+0000 (UTC)"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"lng"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"555.5555"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"lat"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"222.2222"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"height"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"900"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"alt"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"900"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"idx"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"8"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 

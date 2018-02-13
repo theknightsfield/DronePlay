@@ -119,7 +119,7 @@ else:
 
 ### HTTP 요청 
 
-`GET http://apis.airpage.org/[:token]/position/[:email]/set/[:lat]/[:lng]/[:height]`
+`GET http://apis.airpage.org/[:token]/position/[:email]/set/[:lat]/[:lng]/[:alt]`
 
 ### URL 파라메터
 
@@ -131,7 +131,7 @@ email | 개발자 토큰을 받기위해 입력한 이메일 주소를 입력합
 set | 'set'을 입력합니다.
 lat | latitude 좌표값를 입력합니다.
 lng | longitude 좌표값를 입력합니다.
-height | 고도값을 입력합니다.
+alt | 고도값을 입력합니다.
 
 <aside class="warning">
 GET 형식으로 API가 호출되는 만큼 토큰의 노출에 유의하세요!
@@ -189,7 +189,7 @@ else:
   "positiontime" : "Fri Jan 26 2018 14:22:34 GMT+0000 (UTC)",
   "lng" : "555.5555",
   "lat" : "222.2222",
-  "height" : "900",
+  "alt" : "900",
   "idx" : "8"
 }
 
