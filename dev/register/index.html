@@ -349,7 +349,8 @@
 
 	  $.ajax({
 	       type:"POST",
-	       url:"https://mn91te9qqb.execute-api.ap-northeast-2.amazonaws.com/open/newmember",
+	       url:"https://8jq3cf4np1.execute-api.ap-northeast-2.amazonaws.com/prod/newmember",
+	       // url:"https://mn91te9qqb.execute-api.ap-northeast-2.amazonaws.com/open/newmember",
 	       dataType:"JSON",
 	       crossDomain: true,
 	       data: JSON.stringify({email : myemail, name : myname, captchaResponse : responsedata}),
