@@ -14,7 +14,6 @@ toc_footers:
   - <a href='http://droneplay.io/'>DronePlay 홈</a>
 
   - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
-  - <div class="fb-like" data-href="https://www.facebook.com/386832955100142" data-width="100" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div>
 includes:
   - errors
 
