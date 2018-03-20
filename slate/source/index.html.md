@@ -8,11 +8,11 @@ language_tabs: # must be one of https://git.io/vQNgJ
   - python
 
 toc_footers:
+  - <div class="fb-like" data-href="https://www.facebook.com/386832955100142" data-width="100" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div>
   - <a href='http://dev.droneplay.io/'>DronePlay 개발자홈</a>
   - <a href='http://code.droneplay.io/'>DronePlay Codes</a>
   - <a href='http://facebook.droneplay.io/'>DronePlay 페이스북</a>
   - <a href='http://droneplay.io/'>DronePlay 홈</a>
-
   - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
 includes:
   - errors
