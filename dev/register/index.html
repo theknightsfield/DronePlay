@@ -363,7 +363,8 @@
 
 	  $.ajax({
 	       type:"POST",
-	       url:"http://apis.airpage.org/droneplay/newmember/" + myemail + "/" + myname + "/" + responsedata + "/dum/",
+	       #url:"http://apis.airpage.org/droneplay/newmember/" + myemail + "/" + myname + "/" + responsedata + "/dum/",
+	       url:"http://apis.airpage.org/droneplay/newmember",
 	       dataType:"JSONP",
 	       crossDomain: true,
 	       data: JSON.stringify({email : myemail, name : myname, captchaResponse : responsedata}),
