@@ -361,7 +361,7 @@
 	  var myemail = $('#myemail').val();
 	  var myname = $('#myname').val();
 
-	  var murl = "http://apis.airpage.org/droneplay/newmember/" + encodeURIComponent(myemail) + "/" + encodeURIComponent(myname) + "/" + encodeURIComponent(responsedata) + "/dum/";
+	  var murl = "http://apis.airpage.org/droneplay/newmember/" + myemail + "/" + myname + "/" + responsedata + "/dum/";
 
 	  $.ajax({
 	       type:"POST",
