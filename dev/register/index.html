@@ -361,9 +361,11 @@
 	  var myemail = $('#myemail').val();
 	  var myname = $('#myname').val();
 
+	  var murl = "http://apis.airpage.org/droneplay/newmember/" + encodeURIComponent(myemail) + "/" + encodeURIComponent(myname) + "/" + encodeURIComponent(responsedata) + "/dum/";
+
 	  $.ajax({
 	       type:"POST",
-	       url:"http://apis.airpage.org/droneplay/newmember/" + encodeURIComponent(myemail) + "/" + encodeURIComponent(myname) + "/" + encodeURIComponent(responsedata) + "/dum/",
+	       url: murl,,
 	       dataType:"JSONP",
 	       crossDomain: true,
 	       //data: JSON.stringify({"email" : myemail, "name" : myname, "captchaResponse" : responsedata}),
