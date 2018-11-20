@@ -2,56 +2,67 @@
 <html>
   <head>
     <title>DronePlay Open API example - Dokdo Tour</title>
-    <link rel="stylesheet" href="https://openlayers.org/en/v4.6.4/css/ol.css" type="text/css">
-    <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://openlayers.org/en/v5.3.0/css/ol.css" type="text/css">
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
-    <script src="https://openlayers.org/en/v4.6.4/build/ol.js"></script>
+    <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>    
   </head>
   <body>
     <div id="map" class="map"></div>    
     <script>         
-    	var maparray;
-    	var dokdo_icon = new ol.Feature({
-        geometry: new ol.geom.Point(ol.proj.fromLonLat([131.8661992, 37.2435813]))
-      });
-      
-      dokdo_icon.setStyle(new ol.style.Style({
-        image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-          color: '#8959A8',
-          crossOrigin: 'anonymous',
-          src: 'https://openlayers.org/en/v4.6.4/examples/data/dot.png'
-        }))
-      }));
-      
-      var vectorSource = new ol.source.Vector({
-        features: [dokdo_icon]
-      });
+	import Feature from 'ol/Feature.js';
+	import Map from 'ol/Map.js';
+	import Point from 'ol/geom/Point.js';
+	import {Icon, Style} from 'ol/style.js';
+	import VectorLayer from 'ol/layer/Vector.js';
+	import VectorSource from 'ol/source/Vector.js';
+	import View from 'ol/View.js';
+	import fromLonLat from 'ol/proj.js';
+	import TileLayer from 'ol/layer/Tile.js';
+	import OSM from 'ol/source/OSM.js';
 
-      var vectorLayer = new ol.layer.Vector({
-        source: vectorSource
-      });            
-    
-    	var dokdo = ol.proj.fromLonLat([131.8661992, 37.2435813]);
-    
-      var view = new ol.View({
-        center: dokdo,
-        zoom: 17        
-      });
+	var maparray;
+    	var dokdo_icon = new Feature({
+		geometry: new Point(fromLonLat([131.8661992, 37.2435813]))
+	});
+      
+	dokdo_icon.setStyle(new Style({
+		image: new Icon(/** @type {olx.style.IconOptions} */ ({
+		color: '#8959A8',
+		crossOrigin: 'anonymous',
+		src: 'https://openlayers.org/en/v4.6.4/examples/data/dot.png'
+		}))
+	}));
+      
+	var vectorSource = new VectorSource({
+		features: [dokdo_icon]
+	});
 
-      var map = new ol.Map({
-        target: 'map',
-        layers: [
-          new ol.layer.Tile({
-            preload: 4,
-            source: new ol.source.OSM()
-          }), vectorLayer
-        ],
-        // Improve user experience by loading tiles while animating. Will make
-        // animations stutter on mobile or slow devices.
-        loadTilesWhileAnimating: true,
-        view: view
-      });
+	var vectorLayer = new VectorLayer({
+		source: vectorSource
+	});            
+    
+	var dokdo = fromLonLat([131.8661992, 37.2435813]);
+    
+	var view = new View({
+		center: dokdo,
+		zoom: 17        
+	});
+
+	var map = new Map({
+		target: 'map',
+		layers: [
+			new TileLayer ({
+            			preload: 4,
+            			source: new OSM()
+          			}), 
+			vectorLayer
+        		],
+        		// Improve user experience by loading tiles while animating. Will make
+        		// animations stutter on mobile or slow devices.
+        		loadTilesWhileAnimating: true,
+        		view: view
+      	});
 
       // A bounce easing method (from https://github.com/DmitryBaranovskiy/raphael).
       function bounce(t) {
@@ -86,7 +97,7 @@
         var parts = 2;
         var called = false;
         
-        dokdo_icon.setGeometry(new ol.geom.Point(location));
+        dokdo_icon.setGeometry(new Point(location));
         
         function callback(complete) {
           --parts;
@@ -113,7 +124,7 @@
 
 			function nexttour() {
 				r = maparray[currentindex];
-				var npos = ol.proj.fromLonLat([r.lng *= 1, r.lat *= 1]);
+				var npos = fromLonLat([r.lng *= 1, r.lat *= 1]);
 	    	flyTo(npos, function() {});
 	    	
 	    	currentindex++;
