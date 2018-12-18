@@ -11,7 +11,7 @@
 <body>
 
 	Wait ...
-	
+
 	<!-- (1) LoginWithNaverId Javscript SDK -->
 	<script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.0.js" charset="utf-8"></script>
 
@@ -21,7 +21,7 @@
 		var naverLogin = new naver.LoginWithNaverId(
 			{
 				clientId: "wSvRwDA6qt1OWrvVY542",
-				callbackUrl: "http://dev.droneplay.io/dev/register/callback.html",
+				callbackUrl: "https://dev.droneplay.io/dev/register/callback.html",
 				isPopup: false,
 				callbackHandle: true
 				/* callback 페이지가 분리되었을 경우에 callback 페이지에서는 callback처리를 해줄수 있도록 설정합니다. */
@@ -44,7 +44,7 @@
 						return;
 					}
 
-					window.location.replace("http://dev.droneplay.io/dev/register/index.html#download");
+					window.location.replace("https://dev.droneplay.io/dev/register/index.html#download");
 				} else {
 					console.log("callback 처리에 실패하였습니다.");
 				}
@@ -54,5 +54,3 @@
 </body>
 
 </html>
-
-
