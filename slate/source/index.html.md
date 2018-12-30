@@ -13,7 +13,6 @@ toc_footers:
   - <a href='http://code.droneplay.io/'>DronePlay Codes</a>
   - <a href='http://facebook.droneplay.io/'>DronePlay 페이스북</a>
   - <a href='http://droneplay.io/'>DronePlay 홈</a>
-  - <a href='http://droneplay.io/center/index.php'>DronePlay Mission Center</a>
   - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
 includes:
   - errors
