@@ -450,7 +450,6 @@ curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X
 
 $body['action'] = 'get';
 $body['clientid'] = 'EMAILADDRESS';
-$body['mname'] = "MISSIONNAME";
 
 $headers = array(
         'Content-Type: application/json',
@@ -475,7 +474,7 @@ echo $response;
 
 ```javascript
 
-var jdata = {"action": "get", "clientid" : "EMAILADDRESS", "mname" : "MISSIONNAME"};
+var jdata = {"action": "get", "clientid" : "EMAILADDRESS"};
 
 $.ajax({url : "https://api.droneplay.io/v1/mission",
        dataType : "json",
@@ -546,3 +545,111 @@ DronePlay Mission Center의 Mission 데이터를 불러옵니다.
 droneplay-token | 부여받은 개발자 토큰값을 헤더에 입력합니다.
 clientid | 개발자 토큰을 받기위해 입력한 이메일 주소를 입력합니다.
 action | 'get'을 입력합니다.
+
+
+## Mission 삭제하기
+
+
+```shell
+
+curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"delete", "mname":"MISSIONNAME"}' http://api.droneplay.io/v1/mission
+
+```
+
+```php
+
+$body['action'] = 'delete';
+$body['clientid'] = 'EMAILADDRESS';
+$body['mname'] = "MISSIONNAME";
+
+$headers = array(
+        'Content-Type: application/json',
+        'droneplay-token: DRONEPLAYTOKEN'
+);
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, 'https://api.droneplay.io/v1/mission');
+curl_setopt($ch, CURLOPT_HTTPHEADER,  $headers);
+curl_setopt($ch, CURLOPT_POST,    true);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_POSTFIELDS,json_encode($body));
+$response = curl_exec($ch);
+//$json_list= json_decode($response, true);
+curl_close($ch);
+
+echo $response;
+
+
+```
+
+```javascript
+
+var jdata = {"action": "delete", "clientid" : "EMAILADDRESS", "mname" : "MISSIONNAME"};
+
+$.ajax({url : "https://api.droneplay.io/v1/mission",
+       dataType : "json",
+       contentType : "application/json",
+       crossDomain: true,
+       cache : false,
+       data : JSON.stringify(jdata),
+       type : "POST",
+       async: false,
+       beforeSend: function(request) {
+          request.setRequestHeader("droneplay-token", "DRONEPLAYTOKEN");
+        },
+       success : function(r) {
+         console.log(JSON.stringify(r));
+         if(r.result == "success") {
+           //r.data;
+         }
+       },
+       error:function(request,status,error){
+           alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+       }
+});
+
+```
+
+```python
+
+import requests
+headers = {
+    'Content-Type': 'application/json',
+    'droneplay-token' : 'DRONEPLAYTOKEN'
+}
+data = {
+    'action': 'delete',
+    'clientid' : 'EMAILADDRESS',
+    'mname' : 'MISSIONNAME'
+}
+
+url = 'https://api.droneplay.io/v1/mission'
+response = requests.post(url, headers=headers,
+                         data=json.dumps(data))
+response.raise_for_status()
+'response.json()
+
+```
+
+> 상기의 명령은 아래와 같이 JSON 구조로 응답합니다:
+
+```json
+  {
+    "result":"success"
+  }
+```
+DronePlay Mission Center의 Mission 1개를 삭제합니다.
+
+### HTTP 요청
+
+`POST http://apis.droneplay.io/v1/mission`
+
+### URL 파라메터
+
+파라메터 | 설명
+--------- | -----------
+droneplay-token | 부여받은 개발자 토큰값을 헤더에 입력합니다.
+clientid | 개발자 토큰을 받기위해 입력한 이메일 주소를 입력합니다.
+action | 'delete' 입력합니다.
+mname | 삭제할 Mission 이름을 입력합니다.
