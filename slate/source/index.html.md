@@ -273,33 +273,35 @@ response.raise_for_status()
 > 상기의 명령은 아래와 같이 JSON 구조로 응답합니다:
 
 ```json
-
-[
- {
-   "positiontime" : "Tue Feb 13 2018 15:44:40 GMT+0000 (UTC)",
-   "dtimestamp" : 1518536680763,
-   "lat" : "37.2435813",
-   "lng" : "131.8661992",
-   "alt" : 500,
-   "clientid" : "theknightsfield@gmail.com"
- },
- {
-   "positiontime" : "Tue Feb 13 2018 15:44:40 GMT+0000 (UTC)",
-   "dtimestamp" : 1518536680765,
-   "lat" : "37.2424227",
-   "lng" : "131.8673264",
-   "alt" : 500,
-   "clientid" : "theknightsfield@gmail.com"
- },
- {
-   "positiontime" : "Tue Feb 13 2018 15:44:40 GMT+0000 (UTC)",
-   "dtimestamp" : 1518536680763,
-   "lat" : "37.2421004",
-   "lng" : "131.8680063",
-   "alt" : 500,
-   "clientid" : "theknightsfield@gmail.com"
- }
-]
+{
+  "result" : "success",
+  "data" : [
+   {
+     "positiontime" : "Tue Feb 13 2018 15:44:40 GMT+0000 (UTC)",
+     "dtimestamp" : 1518536680763,
+     "lat" : "37.2435813",
+     "lng" : "131.8661992",
+     "alt" : 500,
+     "clientid" : "theknightsfield@gmail.com"
+   },
+   {
+     "positiontime" : "Tue Feb 13 2018 15:44:40 GMT+0000 (UTC)",
+     "dtimestamp" : 1518536680765,
+     "lat" : "37.2424227",
+     "lng" : "131.8673264",
+     "alt" : 500,
+     "clientid" : "theknightsfield@gmail.com"
+   },
+   {
+     "positiontime" : "Tue Feb 13 2018 15:44:40 GMT+0000 (UTC)",
+     "dtimestamp" : 1518536680763,
+     "lat" : "37.2421004",
+     "lng" : "131.8680063",
+     "alt" : 500,
+     "clientid" : "theknightsfield@gmail.com"
+   }
+  ]
+}
 
 ```
 
