@@ -332,7 +332,7 @@
 DronePlay Open API를 사용하시려면 반드시 <code>토큰</code>을 API의 파라메터로 입력해야 합니다. 간수에 유의해 주세요.
 </aside>
 <h1 id='2a6349c1b0'>드론의 현재위치 기록/읽기</h1><h2 id='8831a16e1d'>드론의 현재위치 기록하기</h2><pre class="highlight shell tab-shell"><code>
-curl -H <span class="s2">"droneplay-token: DRONEPLAYTOKEN"</span> -H <span class="s2">"Content-type: application/json"</span> -X POST -d <span class="s1">'{"clientid":"EMAILADDRESS", "action":"set", "lat" : "12.134132", "lng" : "12.1324", "alt" : 5}'</span> http://api.droneplay.io/v1/position
+curl -H <span class="s2">"droneplay-token: DRONEPLAYTOKEN"</span> -H <span class="s2">"Content-type: application/json"</span> -X POST -d <span class="s1">'{"clientid":"EMAILADDRESS", "action":"set", "lat" : "12.134132", "lng" : "12.1324", "alt" : 5, "act" : "0"}'</span> http://api.droneplay.io/v1/position
 
 </code></pre><pre class="highlight php tab-php"><code>
 $body['action'] = 'set';
@@ -340,6 +340,7 @@ $body['clientid'] = 'EMAILADDRESS';
 $body['lat'] = "12.134132";
 $body['lng'] = "12.1324";
 $body['alt'] = 5;
+$body['act'] = "0";
 
 $headers = array(
         'Content-Type: application/json',
@@ -361,7 +362,7 @@ echo $response;
 
 
 </code></pre><pre class="highlight javascript tab-javascript"><code>
-<span class="kd">var</span> <span class="nx">jdata</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"action"</span><span class="p">:</span> <span class="s2">"set"</span><span class="p">,</span> <span class="s2">"clientid"</span> <span class="p">:</span> <span class="s2">"EMAILADDRESS"</span><span class="p">,</span> <span class="s2">"lat"</span> <span class="p">:</span> <span class="s2">"12.134132"</span><span class="p">,</span> <span class="s2">"lng"</span> <span class="p">:</span> <span class="s2">"12.1324"</span><span class="p">,</span> <span class="s2">"alt"</span> <span class="p">:</span> <span class="mi">5</span> <span class="p">};</span>
+<span class="kd">var</span> <span class="nx">jdata</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"action"</span><span class="p">:</span> <span class="s2">"set"</span><span class="p">,</span> <span class="s2">"clientid"</span> <span class="p">:</span> <span class="s2">"EMAILADDRESS"</span><span class="p">,</span> <span class="s2">"lat"</span> <span class="p">:</span> <span class="s2">"12.134132"</span><span class="p">,</span> <span class="s2">"lng"</span> <span class="p">:</span> <span class="s2">"12.1324"</span><span class="p">,</span> <span class="s2">"alt"</span> <span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">"act"</span> <span class="p">:</span> <span class="s2">"0"</span> <span class="p">};</span>
 
 <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span><span class="na">url</span> <span class="p">:</span> <span class="s2">"https://api.droneplay.io/v1/position"</span><span class="p">,</span>
        <span class="na">dataType</span> <span class="p">:</span> <span class="s2">"json"</span><span class="p">,</span>
@@ -396,7 +397,8 @@ echo $response;
     <span class="s">'clientid'</span> <span class="p">:</span> <span class="s">'EMAILADDRESS'</span>
     <span class="s">'lat'</span> <span class="p">:</span> <span class="s">"12.134132"</span><span class="p">,</span>
     <span class="s">'lng'</span> <span class="p">:</span> <span class="s">"12.1324"</span><span class="p">,</span>
-    <span class="s">'alt'</span> <span class="p">:</span> <span class="mi">5</span>
+    <span class="s">'alt'</span> <span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="s">"act"</span> <span class="p">:</span> <span class="s">"0"</span>
 <span class="p">}</span>
 <span class="n">url</span> <span class="o">=</span> <span class="s">'https://api.droneplay.io/v1/position'</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
@@ -445,6 +447,10 @@ echo $response;
 <tr>
 <td>alt</td>
 <td>고도값을 입력합니다. (미터)</td>
+</tr>
+<tr>
+<td>act</td>
+<td>해당위치에서 수행한 행동 (개발자 임의 정의 가능)</td>
 </tr>
 </tbody></table>
 
@@ -537,7 +543,8 @@ echo $response;
      </span><span class="nt">"lat"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"37.2435813"</span><span class="p">,</span><span class="w">
      </span><span class="nt">"lng"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"131.8661992"</span><span class="p">,</span><span class="w">
      </span><span class="nt">"alt"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w">
-     </span><span class="nt">"clientid"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"theknightsfield@gmail.com"</span><span class="w">
+     </span><span class="nt">"act"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+     </span><span class="nt">"clientid"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"EMAILADDRESS"</span><span class="w">
    </span><span class="p">},</span><span class="w">
    </span><span class="p">{</span><span class="w">
      </span><span class="nt">"positiontime"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Tue Feb 13 2018 15:44:40 GMT+0000 (UTC)"</span><span class="p">,</span><span class="w">
@@ -545,7 +552,8 @@ echo $response;
      </span><span class="nt">"lat"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"37.2424227"</span><span class="p">,</span><span class="w">
      </span><span class="nt">"lng"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"131.8673264"</span><span class="p">,</span><span class="w">
      </span><span class="nt">"alt"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w">
-     </span><span class="nt">"clientid"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"theknightsfield@gmail.com"</span><span class="w">
+     </span><span class="nt">"act"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+     </span><span class="nt">"clientid"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"EMAILADDRESS"</span><span class="w">
    </span><span class="p">},</span><span class="w">
    </span><span class="p">{</span><span class="w">
      </span><span class="nt">"positiontime"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"Tue Feb 13 2018 15:44:40 GMT+0000 (UTC)"</span><span class="p">,</span><span class="w">
@@ -553,7 +561,8 @@ echo $response;
      </span><span class="nt">"lat"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"37.2421004"</span><span class="p">,</span><span class="w">
      </span><span class="nt">"lng"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"131.8680063"</span><span class="p">,</span><span class="w">
      </span><span class="nt">"alt"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="p">,</span><span class="w">
-     </span><span class="nt">"clientid"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"theknightsfield@gmail.com"</span><span class="w">
+     </span><span class="nt">"act"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
+     </span><span class="nt">"clientid"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="s2">"EMAILADDRESS"</span><span class="w">
    </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">

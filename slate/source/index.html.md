@@ -71,7 +71,7 @@ DronePlay Open API를 사용하시려면 반드시 <code>토큰</code>을 API의
 
 ```shell
 
-curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"set", "lat" : "12.134132", "lng" : "12.1324", "alt" : 5}' http://api.droneplay.io/v1/position
+curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"set", "lat" : "12.134132", "lng" : "12.1324", "alt" : 5, "act" : "0"}' http://api.droneplay.io/v1/position
 
 ```
 
@@ -82,6 +82,7 @@ $body['clientid'] = 'EMAILADDRESS';
 $body['lat'] = "12.134132";
 $body['lng'] = "12.1324";
 $body['alt'] = 5;
+$body['act'] = "0";
 
 $headers = array(
         'Content-Type: application/json',
@@ -106,7 +107,7 @@ echo $response;
 
 ```javascript
 
-var jdata = {"action": "set", "clientid" : "EMAILADDRESS", "lat" : "12.134132", "lng" : "12.1324", "alt" : 5 };
+var jdata = {"action": "set", "clientid" : "EMAILADDRESS", "lat" : "12.134132", "lng" : "12.1324", "alt" : 5, "act" : "0" };
 
 $.ajax({url : "https://api.droneplay.io/v1/position",
        dataType : "json",
@@ -144,7 +145,8 @@ data = {
     'clientid' : 'EMAILADDRESS'
     'lat' : "12.134132",
     'lng' : "12.1324",
-    'alt' : 5
+    'alt' : 5,
+    "act" : "0"
 }
 url = 'https://api.droneplay.io/v1/position'
 response = requests.post(url, headers=headers,
@@ -178,6 +180,7 @@ action | 'set'을 입력합니다.
 lat | latitude 좌표값를 입력합니다.
 lng | longitude 좌표값를 입력합니다.
 alt | 고도값을 입력합니다. (미터)
+act | 해당위치에서 수행한 행동 (개발자 임의 정의 가능)
 
 <aside class="warning">
 토큰의 노출에 유의하세요!
@@ -282,7 +285,8 @@ response.raise_for_status()
      "lat" : "37.2435813",
      "lng" : "131.8661992",
      "alt" : 500,
-     "clientid" : "theknightsfield@gmail.com"
+     "act" : "0",
+     "clientid" : "EMAILADDRESS"
    },
    {
      "positiontime" : "Tue Feb 13 2018 15:44:40 GMT+0000 (UTC)",
@@ -290,7 +294,8 @@ response.raise_for_status()
      "lat" : "37.2424227",
      "lng" : "131.8673264",
      "alt" : 500,
-     "clientid" : "theknightsfield@gmail.com"
+     "act" : "0",
+     "clientid" : "EMAILADDRESS"
    },
    {
      "positiontime" : "Tue Feb 13 2018 15:44:40 GMT+0000 (UTC)",
@@ -298,7 +303,8 @@ response.raise_for_status()
      "lat" : "37.2421004",
      "lng" : "131.8680063",
      "alt" : 500,
-     "clientid" : "theknightsfield@gmail.com"
+     "act" : "0",
+     "clientid" : "EMAILADDRESS"
    }
   ]
 }
