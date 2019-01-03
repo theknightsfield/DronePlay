@@ -30,9 +30,9 @@ search: true
 쌈박하고 깔끔한 아이디어가 녹아든 쉽고 간편한 Open API와 코드들을 둘러 보세요.
 
 
-# 토큰 발급 받기
+# Token 발급 받기
 
-> Open API 사용을 위해 DronePlay 개발자 토큰을 발급 받으세요.
+> Open API 사용을 위해 DronePlay 개발자 Token을 발급 받으세요.
 
 
 ```shell
@@ -54,15 +54,15 @@ search: true
 
 >
 
-DronePlay Open API는 DronePlay 개발자 토큰을 파라메터로 입력해야 사용하실 수 있습니다.
-아래 경로에서 먼저 토큰을 발급 받으세요.
+DronePlay Open API는 DronePlay 개발자 Token을 파라메터로 입력해야 사용하실 수 있습니다.
+아래 경로에서 먼저 Token을 발급 받으세요.
 
-[DronePlay 토큰얻기](http://dev.droneplay.io/dev/register/index.html).
+[DronePlay 개발자Token 발급](http://dev.droneplay.io/dev/register/index.html).
 
-발급받은 토큰의 사용방법은 각 Open API의 설명을 참고해 주세요.
+발급받은 Token의 사용방법은 각 Open API의 설명을 참고해 주세요.
 
 <aside class="notice">
-DronePlay Open API를 사용하시려면 반드시 <code>토큰</code>을 API의 파라메터로 입력해야 합니다. 간수에 유의해 주세요.
+DronePlay Open API를 사용하시려면 반드시 <code>Token</code>을 API의 파라메터로 입력해야 합니다. 간수에 유의해 주세요.
 </aside>
 
 # 드론의 현재위치 기록/읽기
@@ -175,8 +175,8 @@ response.raise_for_status()
 
 파라메터 | 설명
 --------- | -----------
-droneplay-token | 부여받은 개발자 토큰값을 헤더에 입력합니다.
-clientid | 개발자 토큰을 받기위해 입력한 이메일 주소를 입력합니다.
+droneplay-token | 부여받은 개발자 Token값을 헤더에 입력합니다.
+clientid | 개발자 Token을 받기위해 입력한 이메일 주소를 입력합니다.
 action | 'set'을 입력합니다.
 lat | latitude 좌표값를 입력합니다.
 lng | longitude 좌표값를 입력합니다.
@@ -184,7 +184,7 @@ alt | 고도값을 입력합니다. (미터)
 act | 해당위치에서 수행한 행동 (개발자 임의 정의 가능)
 
 <aside class="warning">
-토큰의 노출에 유의하세요!
+Token의 노출에 유의하세요!
 </aside>
 
 ## 드론의 최근 위치 읽어오기
@@ -192,7 +192,6 @@ act | 해당위치에서 수행한 행동 (개발자 임의 정의 가능)
 
 ```shell
 
-curl "http://apis.airpage.org/your-access-token/position/your-email@mailmail.com/get/1518534859144/1518534861111"
 curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"get", "start" : 1518534859144, "end" : 1518534861111}' http://api.droneplay.io/v1/position
 
 ```
@@ -323,9 +322,9 @@ response.raise_for_status()
 
 파라메터 | 설명
 --------- | -----------
-droneplay-token | 부여받은 개발자 토큰값을 헤더에 입력합니다.
+droneplay-token | 부여받은 개발자 Token값을 헤더에 입력합니다.
 action | 'get'을 입력합니다.
-clientid | 개발자 토큰을 받기위해 입력한 이메일 주소를 입력합니다.
+clientid | 개발자 Token을 받기위해 입력한 이메일 주소를 입력합니다.
 start (optional) | timestamp 값입니다. GMT+0 기준입니다. start ~ end 시각 사이의 결과를 요청할 때 사용합니다.
 end (optional) | timestamp 값입니다. GMT+0 기준입니다.
 
@@ -436,8 +435,8 @@ DronePlay Mission Center에 Mission 데이터를 기록합니다.
 
 파라메터 | 설명
 --------- | -----------
-droneplay-token | 부여받은 개발자 토큰값을 헤더에 입력합니다.
-clientid | 개발자 토큰을 받기위해 입력한 이메일 주소를 입력합니다.
+droneplay-token | 부여받은 개발자 Token값을 헤더에 입력합니다.
+clientid | 개발자 Token을 받기위해 입력한 이메일 주소를 입력합니다.
 action | 'set'을 입력합니다.
 mname | Mission이름을 입력합니다.
 missiondata | Mission데이터를 입력합니다.
@@ -551,8 +550,8 @@ DronePlay Mission Center의 Mission 데이터를 불러옵니다.
 
 파라메터 | 설명
 --------- | -----------
-droneplay-token | 부여받은 개발자 토큰값을 헤더에 입력합니다.
-clientid | 개발자 토큰을 받기위해 입력한 이메일 주소를 입력합니다.
+droneplay-token | 부여받은 개발자 Token값을 헤더에 입력합니다.
+clientid | 개발자 Token을 받기위해 입력한 이메일 주소를 입력합니다.
 action | 'get'을 입력합니다.
 
 
@@ -658,7 +657,7 @@ DronePlay Mission Center의 Mission 1개를 삭제합니다.
 
 파라메터 | 설명
 --------- | -----------
-droneplay-token | 부여받은 개발자 토큰값을 헤더에 입력합니다.
-clientid | 개발자 토큰을 받기위해 입력한 이메일 주소를 입력합니다.
+droneplay-token | 부여받은 개발자 Token값을 헤더에 입력합니다.
+clientid | 개발자 Token을 받기위해 입력한 이메일 주소를 입력합니다.
 action | 'delete' 입력합니다.
 mname | 삭제할 Mission 이름을 입력합니다.
