@@ -14,6 +14,7 @@ toc_footers:
   - <a href='http://facebook.droneplay.io/'>DronePlay 페이스북</a>
   - <a href='http://droneplay.io/'>DronePlay 홈</a>
   - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
+  - © 2019 DronePlay
 includes:
   - errors
 
