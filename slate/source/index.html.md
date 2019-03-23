@@ -72,13 +72,14 @@ DronePlay Open API를 사용하시려면 반드시 <code>Token</code>을 API의 
 
 ```shell
 
-curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"set", "lat" : "12.134132", "lng" : "12.1324", "alt" : 5, "act" : "0", "missionname" : "TESTMISSION1", "missionid" : "mission-1"}' http://api.droneplay.io/v1/position
+curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"position", "daction":"set", "lat" : "12.134132", "lng" : "12.1324", "alt" : 5, "act" : "0", "missionname" : "TESTMISSION1", "missionid" : "mission-1"}' http://api.droneplay.io/v1/
 
 ```
 
 ```php
 
-$body['action'] = 'set';
+$body['action'] = 'position';
+$body['daction'] = 'set';
 $body['clientid'] = 'EMAILADDRESS';
 $body['lat'] = "12.134132";
 $body['lng'] = "12.1324";
@@ -93,7 +94,7 @@ $headers = array(
 );
 
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://api.droneplay.io/v1/position');
+curl_setopt($ch, CURLOPT_URL, 'https://api.droneplay.io/v1/');
 curl_setopt($ch, CURLOPT_HTTPHEADER,  $headers);
 curl_setopt($ch, CURLOPT_POST,    true);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -110,9 +111,9 @@ echo $response;
 
 ```javascript
 
-var jdata = {"action": "set", "clientid" : "EMAILADDRESS", "lat" : "12.134132", "lng" : "12.1324", "alt" : 5, "act" : "0", "missionid" : "mission-1", "missionname" : "TESTMISSION1"};
+var jdata = {"action":"position", "daction": "set", "clientid" : "EMAILADDRESS", "lat" : "12.134132", "lng" : "12.1324", "alt" : 5, "act" : "0", "missionid" : "mission-1", "missionname" : "TESTMISSION1"};
 
-$.ajax({url : "https://api.droneplay.io/v1/position",
+$.ajax({url : "https://api.droneplay.io/v1/",
        dataType : "json",
        contentType : "application/json",
        crossDomain: true,
@@ -144,7 +145,8 @@ headers = {
     'droneplay-token' : 'DRONEPLAYTOKEN'
 }
 data = {
-    'action': 'set',
+    'action': 'position',
+    'daction': 'set',
     'clientid' : 'EMAILADDRESS'
     'lat' : "12.134132",
     'lng' : "12.1324",
@@ -153,7 +155,7 @@ data = {
     "missionname" : "TESTMISSION1",
     "act" : "0"
 }
-url = 'https://api.droneplay.io/v1/position'
+url = 'https://api.droneplay.io/v1/'
 response = requests.post(url, headers=headers,
                          data=json.dumps(data))
 response.raise_for_status()
@@ -173,7 +175,7 @@ response.raise_for_status()
 
 ### HTTP 요청
 
-`POST http://apis.droneplay.io/v1/position`
+`POST http://apis.droneplay.io/v1/`
 
 ### URL 파라메터
 
@@ -181,13 +183,14 @@ response.raise_for_status()
 --------- | -----------
 droneplay-token | 부여받은 개발자 Token값을 헤더에 입력합니다.
 clientid | 개발자 Token을 받기위해 입력한 이메일 주소를 입력합니다.
-action | 'set'을 입력합니다.
+action | 'position'을 입력합니다.
+daction | 'set'을 입력합니다.
 lat | latitude 좌표값를 입력합니다.
 lng | longitude 좌표값를 입력합니다.
 alt | 고도값을 입력합니다. (미터)
 act | 해당위치에서 수행한 행동 (개발자 임의 정의 가능)
-missionid | MISSION의 ID (미션 저장하기 참고 - Optional) 
-missionname | MISSION의 이름 (미션 저장하기 참고 - Optional) 
+missionid | MISSION의 ID (미션 저장하기 참고 - Optional)
+missionname | MISSION의 이름 (미션 저장하기 참고 - Optional)
 
 <aside class="warning">
 Token의 노출에 유의하세요!
@@ -198,13 +201,14 @@ Token의 노출에 유의하세요!
 
 ```shell
 
-curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"get", "start" : 1518534859144, "end" : 1518534861111}' http://api.droneplay.io/v1/position
+curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"position", "daction":"get", "start" : 1518534859144, "end" : 1518534861111}' http://api.droneplay.io/v1/
 
 ```
 
 ```php
 
-$body['action'] = 'get';
+$body['action'] = 'position';
+$body['daction'] = 'get';
 $body['clientid'] = 'EMAILADDRESS';
 $body['start'] = 1518534859144;
 $body['end'] = 1518534861111;
@@ -215,7 +219,7 @@ $headers = array(
 );
 
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://api.droneplay.io/v1/position');
+curl_setopt($ch, CURLOPT_URL, 'https://api.droneplay.io/v1/');
 curl_setopt($ch, CURLOPT_HTTPHEADER,  $headers);
 curl_setopt($ch, CURLOPT_POST,    true);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -232,9 +236,9 @@ echo $response;
 ```javascript
 
 
-var jdata = {"action": "get", "clientid" : "EMAILADDRESS", "start" : 1518534859144, "end" : 1518534861111 };
+var jdata = {"action": "position", "daction": "get", "clientid" : "EMAILADDRESS", "start" : 1518534859144, "end" : 1518534861111 };
 
-$.ajax({url : "https://api.droneplay.io/v1/position",
+$.ajax({url : "https://api.droneplay.io/v1/",
        dataType : "json",
        contentType : "application/json",
        crossDomain: true,
@@ -266,12 +270,13 @@ headers = {
     'droneplay-token' : 'DRONEPLAYTOKEN'
 }
 data = {
-    'action': 'get',
+    'action': 'position'
+    'daction': 'get',
     'clientid' : 'EMAILADDRESS'
     'start' : 1518534859144,
     'end' : 1518534861111
 }
-url = 'https://api.droneplay.io/v1/position'
+url = 'https://api.droneplay.io/v1/'
 response = requests.post(url, headers=headers,
                          data=json.dumps(data))
 response.raise_for_status()
@@ -328,14 +333,15 @@ response.raise_for_status()
 
 ### HTTP 요청
 
-`POST http://api.droneplay.io/v1/position`
+`POST http://api.droneplay.io/v1/`
 
 ### URL 파라메터
 
 파라메터 | 설명
 --------- | -----------
 droneplay-token | 부여받은 개발자 Token값을 헤더에 입력합니다.
-action | 'get'을 입력합니다.
+action | 'position'을 입력합니다.
+daction | 'get'을 입력합니다.
 clientid | 개발자 Token을 받기위해 입력한 이메일 주소를 입력합니다.
 start (optional) | timestamp 값입니다. GMT+0 기준입니다. start ~ end 시각 사이의 결과를 요청할 때 사용합니다.
 end (optional) | timestamp 값입니다. GMT+0 기준입니다.
@@ -347,13 +353,14 @@ end (optional) | timestamp 값입니다. GMT+0 기준입니다.
 
 ```shell
 
-curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"set", "mname" : MISSIONNAME, "missiondata" : [{"12.134132","12.1324",5,0,"mission-1"},{"12.134132","12.1324",5,0,"mission-2"}]}' http://api.droneplay.io/v1/mission
+curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"mission", "daction":"set", "mname" : MISSIONNAME, "missiondata" : [{"12.134132","12.1324",5,0,"mission-1"},{"12.134132","12.1324",5,0,"mission-2"}]}' http://api.droneplay.io/v1/
 
 ```
 
 ```php
 
-$body['action'] = 'set';
+$body['action'] = 'mission';
+$body['daction'] = 'set';
 $body['clientid'] = 'EMAILADDRESS';
 $body['mname'] = "MISSIONNAME";
 $body['missiondata'] = json_decode('[{"12.134132","12.1324",5,0},{"12.134132","12.1324",5,0,"mission-1"}]');
@@ -364,7 +371,7 @@ $headers = array(
 );
 
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://api.droneplay.io/v1/mission');
+curl_setopt($ch, CURLOPT_URL, 'https://api.droneplay.io/v1/');
 curl_setopt($ch, CURLOPT_HTTPHEADER,  $headers);
 curl_setopt($ch, CURLOPT_POST,    true);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -381,9 +388,9 @@ echo $response;
 
 ```javascript
 
-var jdata = {"action": "set", "clientid" : "EMAILADDRESS", "mname" : "MISSIONNAME", "missiondata" : [{"12.134132","12.1324",5,0},{"12.134132","12.1324",5,0,"mission-1"}]};
+var jdata = {"action":"mission", "daction": "set", "clientid" : "EMAILADDRESS", "mname" : "MISSIONNAME", "missiondata" : [{"12.134132","12.1324",5,0},{"12.134132","12.1324",5,0,"mission-1"}]};
 
-$.ajax({url : "https://api.droneplay.io/v1/mission",
+$.ajax({url : "https://api.droneplay.io/v1/",
        dataType : "json",
        contentType : "application/json",
        crossDomain: true,
@@ -415,13 +422,14 @@ headers = {
     'droneplay-token' : 'DRONEPLAYTOKEN'
 }
 data = {
-    'action': 'set',
+    'action': 'mission',
+    'daction': 'set',
     'clientid' : 'EMAILADDRESS'
     "mname" : "MISSIONNAME",
     "missiondata" : [{"12.134132","12.1324",5,0},{"12.134132","12.1324",5,0,"mission-1"}]
 }
 
-url = 'https://api.droneplay.io/v1/mission'
+url = 'https://api.droneplay.io/v1/'
 response = requests.post(url, headers=headers,
                          data=json.dumps(data))
 response.raise_for_status()
@@ -441,7 +449,7 @@ DronePlay Mission Center에 Mission 데이터를 기록합니다.
 
 ### HTTP 요청
 
-`POST http://apis.droneplay.io/v1/mission`
+`POST http://apis.droneplay.io/v1/`
 
 ### URL 파라메터
 
@@ -449,7 +457,8 @@ DronePlay Mission Center에 Mission 데이터를 기록합니다.
 --------- | -----------
 droneplay-token | 부여받은 개발자 Token값을 헤더에 입력합니다.
 clientid | 개발자 Token을 받기위해 입력한 이메일 주소를 입력합니다.
-action | 'set'을 입력합니다.
+action | 'mission'을 입력합니다.
+daction | 'set'을 입력합니다.
 mname | Mission 이름을 입력합니다.
 missiondata | Mission 데이터 목록을 입력합니다.
 
@@ -470,13 +479,14 @@ mission-id | Mission의 고유 아이디 (부여한 Mission 이름의 범위내�
 
 ```shell
 
-curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"get"}' http://api.droneplay.io/v1/mission
+curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"mission", "daction":"get"}' http://api.droneplay.io/v1/
 
 ```
 
 ```php
 
-$body['action'] = 'get';
+$body['action'] = 'mission';
+$body['daction'] = 'get';
 $body['clientid'] = 'EMAILADDRESS';
 
 $headers = array(
@@ -485,7 +495,7 @@ $headers = array(
 );
 
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://api.droneplay.io/v1/mission');
+curl_setopt($ch, CURLOPT_URL, 'https://api.droneplay.io/v1/');
 curl_setopt($ch, CURLOPT_HTTPHEADER,  $headers);
 curl_setopt($ch, CURLOPT_POST,    true);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -502,9 +512,9 @@ echo $response;
 
 ```javascript
 
-var jdata = {"action": "get", "clientid" : "EMAILADDRESS"};
+var jdata = {"action": "mission", "daction": "get", "clientid" : "EMAILADDRESS"};
 
-$.ajax({url : "https://api.droneplay.io/v1/mission",
+$.ajax({url : "https://api.droneplay.io/v1/",
        dataType : "json",
        contentType : "application/json",
        crossDomain: true,
@@ -536,11 +546,12 @@ headers = {
     'droneplay-token' : 'DRONEPLAYTOKEN'
 }
 data = {
-    'action': 'get',
+    'action': 'mission',
+    'daction': 'get',
     'clientid' : 'EMAILADDRESS'
 }
 
-url = 'https://api.droneplay.io/v1/mission'
+url = 'https://api.droneplay.io/v1/'
 response = requests.post(url, headers=headers,
                          data=json.dumps(data))
 response.raise_for_status()
@@ -564,7 +575,7 @@ DronePlay Mission Center의 Mission 데이터를 불러옵니다.
 
 ### HTTP 요청
 
-`POST http://apis.droneplay.io/v1/mission`
+`POST http://apis.droneplay.io/v1/`
 
 ### URL 파라메터
 
@@ -572,7 +583,8 @@ DronePlay Mission Center의 Mission 데이터를 불러옵니다.
 --------- | -----------
 droneplay-token | 부여받은 개발자 Token값을 헤더에 입력합니다.
 clientid | 개발자 Token을 받기위해 입력한 이메일 주소를 입력합니다.
-action | 'get'을 입력합니다.
+action | 'mission'을 입력합니다.
+daction | 'get'을 입력합니다.
 
 
 ## Mission 삭제하기
@@ -580,13 +592,14 @@ action | 'get'을 입력합니다.
 
 ```shell
 
-curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"delete", "mname":"MISSIONNAME"}' http://api.droneplay.io/v1/mission
+curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"mission", "daction":"delete", "mname":"MISSIONNAME"}' http://api.droneplay.io/v1/
 
 ```
 
 ```php
 
-$body['action'] = 'delete';
+$body['action'] = 'mission';
+$body['daction'] = 'delete';
 $body['clientid'] = 'EMAILADDRESS';
 $body['mname'] = "MISSIONNAME";
 
@@ -596,7 +609,7 @@ $headers = array(
 );
 
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://api.droneplay.io/v1/mission');
+curl_setopt($ch, CURLOPT_URL, 'https://api.droneplay.io/v1/');
 curl_setopt($ch, CURLOPT_HTTPHEADER,  $headers);
 curl_setopt($ch, CURLOPT_POST,    true);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -613,9 +626,9 @@ echo $response;
 
 ```javascript
 
-var jdata = {"action": "delete", "clientid" : "EMAILADDRESS", "mname" : "MISSIONNAME"};
+var jdata = {"action":"mission", "daction": "delete", "clientid" : "EMAILADDRESS", "mname" : "MISSIONNAME"};
 
-$.ajax({url : "https://api.droneplay.io/v1/mission",
+$.ajax({url : "https://api.droneplay.io/v1/",
        dataType : "json",
        contentType : "application/json",
        crossDomain: true,
@@ -647,12 +660,13 @@ headers = {
     'droneplay-token' : 'DRONEPLAYTOKEN'
 }
 data = {
-    'action': 'delete',
+    'action': 'mission',
+    'daction': 'delete',
     'clientid' : 'EMAILADDRESS',
     'mname' : 'MISSIONNAME'
 }
 
-url = 'https://api.droneplay.io/v1/mission'
+url = 'https://api.droneplay.io/v1/'
 response = requests.post(url, headers=headers,
                          data=json.dumps(data))
 response.raise_for_status()
@@ -671,7 +685,7 @@ DronePlay Mission Center의 Mission 1개를 삭제합니다.
 
 ### HTTP 요청
 
-`POST http://apis.droneplay.io/v1/mission`
+`POST http://apis.droneplay.io/v1/`
 
 ### URL 파라메터
 
@@ -679,5 +693,6 @@ DronePlay Mission Center의 Mission 1개를 삭제합니다.
 --------- | -----------
 droneplay-token | 부여받은 개발자 Token값을 헤더에 입력합니다.
 clientid | 개발자 Token을 받기위해 입력한 이메일 주소를 입력합니다.
-action | 'delete' 입력합니다.
+action | 'mission' 입력합니다.
+daction | 'delete' 입력합니다.
 mname | 삭제할 Mission 이름을 입력합니다.

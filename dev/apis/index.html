@@ -333,10 +333,11 @@
 DronePlay Open API를 사용하시려면 반드시 <code>Token</code>을 API의 파라메터로 입력해야 합니다. 간수에 유의해 주세요.
 </aside>
 <h1 id='2a6349c1b0'>드론의 현재위치 기록/읽기</h1><h2 id='8831a16e1d'>드론의 현재위치 기록하기</h2><pre class="highlight shell tab-shell"><code>
-curl -H <span class="s2">"droneplay-token: DRONEPLAYTOKEN"</span> -H <span class="s2">"Content-type: application/json"</span> -X POST -d <span class="s1">'{"clientid":"EMAILADDRESS", "action":"set", "lat" : "12.134132", "lng" : "12.1324", "alt" : 5, "act" : "0", "missionname" : "TESTMISSION1", "missionid" : "mission-1"}'</span> http://api.droneplay.io/v1/position
+curl -H <span class="s2">"droneplay-token: DRONEPLAYTOKEN"</span> -H <span class="s2">"Content-type: application/json"</span> -X POST -d <span class="s1">'{"clientid":"EMAILADDRESS", "action":"position", "daction":"set", "lat" : "12.134132", "lng" : "12.1324", "alt" : 5, "act" : "0", "missionname" : "TESTMISSION1", "missionid" : "mission-1"}'</span> http://api.droneplay.io/v1/
 
 </code></pre><pre class="highlight php tab-php"><code>
-$body['action'] = 'set';
+$body['action'] = 'position';
+$body['daction'] = 'set';
 $body['clientid'] = 'EMAILADDRESS';
 $body['lat'] = "12.134132";
 $body['lng'] = "12.1324";
@@ -351,7 +352,7 @@ $headers = array(
 );
 
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://api.droneplay.io/v1/position');
+curl_setopt($ch, CURLOPT_URL, 'https://api.droneplay.io/v1/');
 curl_setopt($ch, CURLOPT_HTTPHEADER,  $headers);
 curl_setopt($ch, CURLOPT_POST,    true);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -365,9 +366,9 @@ echo $response;
 
 
 </code></pre><pre class="highlight javascript tab-javascript"><code>
-<span class="kd">var</span> <span class="nx">jdata</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"action"</span><span class="p">:</span> <span class="s2">"set"</span><span class="p">,</span> <span class="s2">"clientid"</span> <span class="p">:</span> <span class="s2">"EMAILADDRESS"</span><span class="p">,</span> <span class="s2">"lat"</span> <span class="p">:</span> <span class="s2">"12.134132"</span><span class="p">,</span> <span class="s2">"lng"</span> <span class="p">:</span> <span class="s2">"12.1324"</span><span class="p">,</span> <span class="s2">"alt"</span> <span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">"act"</span> <span class="p">:</span> <span class="s2">"0"</span><span class="p">,</span> <span class="s2">"missionid"</span> <span class="p">:</span> <span class="s2">"mission-1"</span><span class="p">,</span> <span class="s2">"missionname"</span> <span class="p">:</span> <span class="s2">"TESTMISSION1"</span><span class="p">};</span>
+<span class="kd">var</span> <span class="nx">jdata</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"action"</span><span class="p">:</span><span class="s2">"position"</span><span class="p">,</span> <span class="s2">"daction"</span><span class="p">:</span> <span class="s2">"set"</span><span class="p">,</span> <span class="s2">"clientid"</span> <span class="p">:</span> <span class="s2">"EMAILADDRESS"</span><span class="p">,</span> <span class="s2">"lat"</span> <span class="p">:</span> <span class="s2">"12.134132"</span><span class="p">,</span> <span class="s2">"lng"</span> <span class="p">:</span> <span class="s2">"12.1324"</span><span class="p">,</span> <span class="s2">"alt"</span> <span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s2">"act"</span> <span class="p">:</span> <span class="s2">"0"</span><span class="p">,</span> <span class="s2">"missionid"</span> <span class="p">:</span> <span class="s2">"mission-1"</span><span class="p">,</span> <span class="s2">"missionname"</span> <span class="p">:</span> <span class="s2">"TESTMISSION1"</span><span class="p">};</span>
 
-<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span><span class="na">url</span> <span class="p">:</span> <span class="s2">"https://api.droneplay.io/v1/position"</span><span class="p">,</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span><span class="na">url</span> <span class="p">:</span> <span class="s2">"https://api.droneplay.io/v1/"</span><span class="p">,</span>
        <span class="na">dataType</span> <span class="p">:</span> <span class="s2">"json"</span><span class="p">,</span>
        <span class="na">contentType</span> <span class="p">:</span> <span class="s2">"application/json"</span><span class="p">,</span>
        <span class="na">crossDomain</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
@@ -396,7 +397,8 @@ echo $response;
     <span class="s">'droneplay-token'</span> <span class="p">:</span> <span class="s">'DRONEPLAYTOKEN'</span>
 <span class="p">}</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s">'action'</span><span class="p">:</span> <span class="s">'set'</span><span class="p">,</span>
+    <span class="s">'action'</span><span class="p">:</span> <span class="s">'position'</span><span class="p">,</span>
+    <span class="s">'daction'</span><span class="p">:</span> <span class="s">'set'</span><span class="p">,</span>
     <span class="s">'clientid'</span> <span class="p">:</span> <span class="s">'EMAILADDRESS'</span>
     <span class="s">'lat'</span> <span class="p">:</span> <span class="s">"12.134132"</span><span class="p">,</span>
     <span class="s">'lng'</span> <span class="p">:</span> <span class="s">"12.1324"</span><span class="p">,</span>
@@ -405,7 +407,7 @@ echo $response;
     <span class="s">"missionname"</span> <span class="p">:</span> <span class="s">"TESTMISSION1"</span><span class="p">,</span>
     <span class="s">"act"</span> <span class="p">:</span> <span class="s">"0"</span>
 <span class="p">}</span>
-<span class="n">url</span> <span class="o">=</span> <span class="s">'https://api.droneplay.io/v1/position'</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">'https://api.droneplay.io/v1/'</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
                          <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
@@ -421,7 +423,7 @@ echo $response;
 </span></code></pre>
 <p>현재의 좌표와 고도를 기록합니다.</p>
 <h3 id='http'>HTTP 요청</h3>
-<p><code>POST http://apis.droneplay.io/v1/position</code></p>
+<p><code>POST http://apis.droneplay.io/v1/</code></p>
 <h3 id='url'>URL 파라메터</h3>
 <table><thead>
 <tr>
@@ -439,6 +441,10 @@ echo $response;
 </tr>
 <tr>
 <td>action</td>
+<td>&#39;position&#39;을 입력합니다.</td>
+</tr>
+<tr>
+<td>daction</td>
 <td>&#39;set&#39;을 입력합니다.</td>
 </tr>
 <tr>
@@ -471,10 +477,11 @@ echo $response;
 Token의 노출에 유의하세요!
 </aside>
 <h2 id='4c067a7cbd'>드론의 최근 위치 읽어오기</h2><pre class="highlight shell tab-shell"><code>
-curl -H <span class="s2">"droneplay-token: DRONEPLAYTOKEN"</span> -H <span class="s2">"Content-type: application/json"</span> -X POST -d <span class="s1">'{"clientid":"EMAILADDRESS", "action":"get", "start" : 1518534859144, "end" : 1518534861111}'</span> http://api.droneplay.io/v1/position
+curl -H <span class="s2">"droneplay-token: DRONEPLAYTOKEN"</span> -H <span class="s2">"Content-type: application/json"</span> -X POST -d <span class="s1">'{"clientid":"EMAILADDRESS", "action":"position", "daction":"get", "start" : 1518534859144, "end" : 1518534861111}'</span> http://api.droneplay.io/v1/
 
 </code></pre><pre class="highlight php tab-php"><code>
-$body['action'] = 'get';
+$body['action'] = 'position';
+$body['daction'] = 'get';
 $body['clientid'] = 'EMAILADDRESS';
 $body['start'] = 1518534859144;
 $body['end'] = 1518534861111;
@@ -485,7 +492,7 @@ $headers = array(
 );
 
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://api.droneplay.io/v1/position');
+curl_setopt($ch, CURLOPT_URL, 'https://api.droneplay.io/v1/');
 curl_setopt($ch, CURLOPT_HTTPHEADER,  $headers);
 curl_setopt($ch, CURLOPT_POST,    true);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -499,9 +506,9 @@ echo $response;
 
 </code></pre><pre class="highlight javascript tab-javascript"><code>
 
-<span class="kd">var</span> <span class="nx">jdata</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"action"</span><span class="p">:</span> <span class="s2">"get"</span><span class="p">,</span> <span class="s2">"clientid"</span> <span class="p">:</span> <span class="s2">"EMAILADDRESS"</span><span class="p">,</span> <span class="s2">"start"</span> <span class="p">:</span> <span class="mi">1518534859144</span><span class="p">,</span> <span class="s2">"end"</span> <span class="p">:</span> <span class="mi">1518534861111</span> <span class="p">};</span>
+<span class="kd">var</span> <span class="nx">jdata</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"action"</span><span class="p">:</span> <span class="s2">"position"</span><span class="p">,</span> <span class="s2">"daction"</span><span class="p">:</span> <span class="s2">"get"</span><span class="p">,</span> <span class="s2">"clientid"</span> <span class="p">:</span> <span class="s2">"EMAILADDRESS"</span><span class="p">,</span> <span class="s2">"start"</span> <span class="p">:</span> <span class="mi">1518534859144</span><span class="p">,</span> <span class="s2">"end"</span> <span class="p">:</span> <span class="mi">1518534861111</span> <span class="p">};</span>
 
-<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span><span class="na">url</span> <span class="p">:</span> <span class="s2">"https://api.droneplay.io/v1/position"</span><span class="p">,</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span><span class="na">url</span> <span class="p">:</span> <span class="s2">"https://api.droneplay.io/v1/"</span><span class="p">,</span>
        <span class="na">dataType</span> <span class="p">:</span> <span class="s2">"json"</span><span class="p">,</span>
        <span class="na">contentType</span> <span class="p">:</span> <span class="s2">"application/json"</span><span class="p">,</span>
        <span class="na">crossDomain</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
@@ -530,12 +537,13 @@ echo $response;
     <span class="s">'droneplay-token'</span> <span class="p">:</span> <span class="s">'DRONEPLAYTOKEN'</span>
 <span class="p">}</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s">'action'</span><span class="p">:</span> <span class="s">'get'</span><span class="p">,</span>
+    <span class="s">'action'</span><span class="p">:</span> <span class="s">'position'</span>
+    <span class="s">'daction'</span><span class="p">:</span> <span class="s">'get'</span><span class="p">,</span>
     <span class="s">'clientid'</span> <span class="p">:</span> <span class="s">'EMAILADDRESS'</span>
     <span class="s">'start'</span> <span class="p">:</span> <span class="mi">1518534859144</span><span class="p">,</span>
     <span class="s">'end'</span> <span class="p">:</span> <span class="mi">1518534861111</span>
 <span class="p">}</span>
-<span class="n">url</span> <span class="o">=</span> <span class="s">'https://api.droneplay.io/v1/position'</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">'https://api.droneplay.io/v1/'</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
                          <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
@@ -590,7 +598,7 @@ echo $response;
 
 <aside class="warning">dtimestamp는 GMT+0 기준입니다. 서울기준이 아닙니다.</aside>
 <h3 id='http-2'>HTTP 요청</h3>
-<p><code>POST http://api.droneplay.io/v1/position</code></p>
+<p><code>POST http://api.droneplay.io/v1/</code></p>
 <h3 id='url-2'>URL 파라메터</h3>
 <table><thead>
 <tr>
@@ -604,6 +612,10 @@ echo $response;
 </tr>
 <tr>
 <td>action</td>
+<td>&#39;position&#39;을 입력합니다.</td>
+</tr>
+<tr>
+<td>daction</td>
 <td>&#39;get&#39;을 입력합니다.</td>
 </tr>
 <tr>
@@ -620,10 +632,11 @@ echo $response;
 </tr>
 </tbody></table>
 <h1 id='mission'>Mission 저장/불러오기</h1><h2 id='mission-2'>Mission 저장</h2><pre class="highlight shell tab-shell"><code>
-curl -H <span class="s2">"droneplay-token: DRONEPLAYTOKEN"</span> -H <span class="s2">"Content-type: application/json"</span> -X POST -d <span class="s1">'{"clientid":"EMAILADDRESS", "action":"set", "mname" : MISSIONNAME, "missiondata" : [{"12.134132","12.1324",5,0,"mission-1"},{"12.134132","12.1324",5,0,"mission-2"}]}'</span> http://api.droneplay.io/v1/mission
+curl -H <span class="s2">"droneplay-token: DRONEPLAYTOKEN"</span> -H <span class="s2">"Content-type: application/json"</span> -X POST -d <span class="s1">'{"clientid":"EMAILADDRESS", "action":"mission", "daction":"set", "mname" : MISSIONNAME, "missiondata" : [{"12.134132","12.1324",5,0,"mission-1"},{"12.134132","12.1324",5,0,"mission-2"}]}'</span> http://api.droneplay.io/v1/
 
 </code></pre><pre class="highlight php tab-php"><code>
-$body['action'] = 'set';
+$body['action'] = 'mission';
+$body['daction'] = 'set';
 $body['clientid'] = 'EMAILADDRESS';
 $body['mname'] = "MISSIONNAME";
 $body['missiondata'] = json_decode('[{"12.134132","12.1324",5,0},{"12.134132","12.1324",5,0,"mission-1"}]');
@@ -634,7 +647,7 @@ $headers = array(
 );
 
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://api.droneplay.io/v1/mission');
+curl_setopt($ch, CURLOPT_URL, 'https://api.droneplay.io/v1/');
 curl_setopt($ch, CURLOPT_HTTPHEADER,  $headers);
 curl_setopt($ch, CURLOPT_POST,    true);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -648,9 +661,9 @@ echo $response;
 
 
 </code></pre><pre class="highlight javascript tab-javascript"><code>
-<span class="kd">var</span> <span class="nx">jdata</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"action"</span><span class="p">:</span> <span class="s2">"set"</span><span class="p">,</span> <span class="s2">"clientid"</span> <span class="p">:</span> <span class="s2">"EMAILADDRESS"</span><span class="p">,</span> <span class="s2">"mname"</span> <span class="p">:</span> <span class="s2">"MISSIONNAME"</span><span class="p">,</span> <span class="s2">"missiondata"</span> <span class="p">:</span> <span class="p">[{</span><span class="s2">"12.134132"</span><span class="p">,</span><span class="s2">"12.1324"</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="s2">"12.134132"</span><span class="p">,</span><span class="s2">"12.1324"</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="s2">"mission-1"</span><span class="p">}]};</span>
+<span class="kd">var</span> <span class="nx">jdata</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"action"</span><span class="p">:</span><span class="s2">"mission"</span><span class="p">,</span> <span class="s2">"daction"</span><span class="p">:</span> <span class="s2">"set"</span><span class="p">,</span> <span class="s2">"clientid"</span> <span class="p">:</span> <span class="s2">"EMAILADDRESS"</span><span class="p">,</span> <span class="s2">"mname"</span> <span class="p">:</span> <span class="s2">"MISSIONNAME"</span><span class="p">,</span> <span class="s2">"missiondata"</span> <span class="p">:</span> <span class="p">[{</span><span class="s2">"12.134132"</span><span class="p">,</span><span class="s2">"12.1324"</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="s2">"12.134132"</span><span class="p">,</span><span class="s2">"12.1324"</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="s2">"mission-1"</span><span class="p">}]};</span>
 
-<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span><span class="na">url</span> <span class="p">:</span> <span class="s2">"https://api.droneplay.io/v1/mission"</span><span class="p">,</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span><span class="na">url</span> <span class="p">:</span> <span class="s2">"https://api.droneplay.io/v1/"</span><span class="p">,</span>
        <span class="na">dataType</span> <span class="p">:</span> <span class="s2">"json"</span><span class="p">,</span>
        <span class="na">contentType</span> <span class="p">:</span> <span class="s2">"application/json"</span><span class="p">,</span>
        <span class="na">crossDomain</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
@@ -679,13 +692,14 @@ echo $response;
     <span class="s">'droneplay-token'</span> <span class="p">:</span> <span class="s">'DRONEPLAYTOKEN'</span>
 <span class="p">}</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s">'action'</span><span class="p">:</span> <span class="s">'set'</span><span class="p">,</span>
+    <span class="s">'action'</span><span class="p">:</span> <span class="s">'mission'</span><span class="p">,</span>
+    <span class="s">'daction'</span><span class="p">:</span> <span class="s">'set'</span><span class="p">,</span>
     <span class="s">'clientid'</span> <span class="p">:</span> <span class="s">'EMAILADDRESS'</span>
     <span class="s">"mname"</span> <span class="p">:</span> <span class="s">"MISSIONNAME"</span><span class="p">,</span>
     <span class="s">"missiondata"</span> <span class="p">:</span> <span class="p">[{</span><span class="s">"12.134132"</span><span class="p">,</span><span class="s">"12.1324"</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="s">"12.134132"</span><span class="p">,</span><span class="s">"12.1324"</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="s">"mission-1"</span><span class="p">}]</span>
 <span class="p">}</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">'https://api.droneplay.io/v1/mission'</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">'https://api.droneplay.io/v1/'</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
                          <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
@@ -701,7 +715,7 @@ echo $response;
 </span></code></pre>
 <p>DronePlay Mission Center에 Mission 데이터를 기록합니다.</p>
 <h3 id='http-3'>HTTP 요청</h3>
-<p><code>POST http://apis.droneplay.io/v1/mission</code></p>
+<p><code>POST http://apis.droneplay.io/v1/</code></p>
 <h3 id='url-3'>URL 파라메터</h3>
 <table><thead>
 <tr>
@@ -719,6 +733,10 @@ echo $response;
 </tr>
 <tr>
 <td>action</td>
+<td>&#39;mission&#39;을 입력합니다.</td>
+</tr>
+<tr>
+<td>daction</td>
 <td>&#39;set&#39;을 입력합니다.</td>
 </tr>
 <tr>
@@ -761,10 +779,11 @@ echo $response;
 </tr>
 </tbody></table>
 <h2 id='mission-3'>Mission 불러오기</h2><pre class="highlight shell tab-shell"><code>
-curl -H <span class="s2">"droneplay-token: DRONEPLAYTOKEN"</span> -H <span class="s2">"Content-type: application/json"</span> -X POST -d <span class="s1">'{"clientid":"EMAILADDRESS", "action":"get"}'</span> http://api.droneplay.io/v1/mission
+curl -H <span class="s2">"droneplay-token: DRONEPLAYTOKEN"</span> -H <span class="s2">"Content-type: application/json"</span> -X POST -d <span class="s1">'{"clientid":"EMAILADDRESS", "action":"mission", "daction":"get"}'</span> http://api.droneplay.io/v1/
 
 </code></pre><pre class="highlight php tab-php"><code>
-$body['action'] = 'get';
+$body['action'] = 'mission';
+$body['daction'] = 'get';
 $body['clientid'] = 'EMAILADDRESS';
 
 $headers = array(
@@ -773,7 +792,7 @@ $headers = array(
 );
 
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://api.droneplay.io/v1/mission');
+curl_setopt($ch, CURLOPT_URL, 'https://api.droneplay.io/v1/');
 curl_setopt($ch, CURLOPT_HTTPHEADER,  $headers);
 curl_setopt($ch, CURLOPT_POST,    true);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -787,9 +806,9 @@ echo $response;
 
 
 </code></pre><pre class="highlight javascript tab-javascript"><code>
-<span class="kd">var</span> <span class="nx">jdata</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"action"</span><span class="p">:</span> <span class="s2">"get"</span><span class="p">,</span> <span class="s2">"clientid"</span> <span class="p">:</span> <span class="s2">"EMAILADDRESS"</span><span class="p">};</span>
+<span class="kd">var</span> <span class="nx">jdata</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"action"</span><span class="p">:</span> <span class="s2">"mission"</span><span class="p">,</span> <span class="s2">"daction"</span><span class="p">:</span> <span class="s2">"get"</span><span class="p">,</span> <span class="s2">"clientid"</span> <span class="p">:</span> <span class="s2">"EMAILADDRESS"</span><span class="p">};</span>
 
-<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span><span class="na">url</span> <span class="p">:</span> <span class="s2">"https://api.droneplay.io/v1/mission"</span><span class="p">,</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span><span class="na">url</span> <span class="p">:</span> <span class="s2">"https://api.droneplay.io/v1/"</span><span class="p">,</span>
        <span class="na">dataType</span> <span class="p">:</span> <span class="s2">"json"</span><span class="p">,</span>
        <span class="na">contentType</span> <span class="p">:</span> <span class="s2">"application/json"</span><span class="p">,</span>
        <span class="na">crossDomain</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
@@ -818,11 +837,12 @@ echo $response;
     <span class="s">'droneplay-token'</span> <span class="p">:</span> <span class="s">'DRONEPLAYTOKEN'</span>
 <span class="p">}</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s">'action'</span><span class="p">:</span> <span class="s">'get'</span><span class="p">,</span>
+    <span class="s">'action'</span><span class="p">:</span> <span class="s">'mission'</span><span class="p">,</span>
+    <span class="s">'daction'</span><span class="p">:</span> <span class="s">'get'</span><span class="p">,</span>
     <span class="s">'clientid'</span> <span class="p">:</span> <span class="s">'EMAILADDRESS'</span>
 <span class="p">}</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">'https://api.droneplay.io/v1/mission'</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">'https://api.droneplay.io/v1/'</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
                          <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
@@ -843,7 +863,7 @@ echo $response;
 </span></code></pre>
 <p>DronePlay Mission Center의 Mission 데이터를 불러옵니다.</p>
 <h3 id='http-4'>HTTP 요청</h3>
-<p><code>POST http://apis.droneplay.io/v1/mission</code></p>
+<p><code>POST http://apis.droneplay.io/v1/</code></p>
 <h3 id='url-4'>URL 파라메터</h3>
 <table><thead>
 <tr>
@@ -861,14 +881,19 @@ echo $response;
 </tr>
 <tr>
 <td>action</td>
+<td>&#39;mission&#39;을 입력합니다.</td>
+</tr>
+<tr>
+<td>daction</td>
 <td>&#39;get&#39;을 입력합니다.</td>
 </tr>
 </tbody></table>
 <h2 id='mission-4'>Mission 삭제하기</h2><pre class="highlight shell tab-shell"><code>
-curl -H <span class="s2">"droneplay-token: DRONEPLAYTOKEN"</span> -H <span class="s2">"Content-type: application/json"</span> -X POST -d <span class="s1">'{"clientid":"EMAILADDRESS", "action":"delete", "mname":"MISSIONNAME"}'</span> http://api.droneplay.io/v1/mission
+curl -H <span class="s2">"droneplay-token: DRONEPLAYTOKEN"</span> -H <span class="s2">"Content-type: application/json"</span> -X POST -d <span class="s1">'{"clientid":"EMAILADDRESS", "action":"mission", "daction":"delete", "mname":"MISSIONNAME"}'</span> http://api.droneplay.io/v1/
 
 </code></pre><pre class="highlight php tab-php"><code>
-$body['action'] = 'delete';
+$body['action'] = 'mission';
+$body['daction'] = 'delete';
 $body['clientid'] = 'EMAILADDRESS';
 $body['mname'] = "MISSIONNAME";
 
@@ -878,7 +903,7 @@ $headers = array(
 );
 
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://api.droneplay.io/v1/mission');
+curl_setopt($ch, CURLOPT_URL, 'https://api.droneplay.io/v1/');
 curl_setopt($ch, CURLOPT_HTTPHEADER,  $headers);
 curl_setopt($ch, CURLOPT_POST,    true);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -892,9 +917,9 @@ echo $response;
 
 
 </code></pre><pre class="highlight javascript tab-javascript"><code>
-<span class="kd">var</span> <span class="nx">jdata</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"action"</span><span class="p">:</span> <span class="s2">"delete"</span><span class="p">,</span> <span class="s2">"clientid"</span> <span class="p">:</span> <span class="s2">"EMAILADDRESS"</span><span class="p">,</span> <span class="s2">"mname"</span> <span class="p">:</span> <span class="s2">"MISSIONNAME"</span><span class="p">};</span>
+<span class="kd">var</span> <span class="nx">jdata</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"action"</span><span class="p">:</span><span class="s2">"mission"</span><span class="p">,</span> <span class="s2">"daction"</span><span class="p">:</span> <span class="s2">"delete"</span><span class="p">,</span> <span class="s2">"clientid"</span> <span class="p">:</span> <span class="s2">"EMAILADDRESS"</span><span class="p">,</span> <span class="s2">"mname"</span> <span class="p">:</span> <span class="s2">"MISSIONNAME"</span><span class="p">};</span>
 
-<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span><span class="na">url</span> <span class="p">:</span> <span class="s2">"https://api.droneplay.io/v1/mission"</span><span class="p">,</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span><span class="na">url</span> <span class="p">:</span> <span class="s2">"https://api.droneplay.io/v1/"</span><span class="p">,</span>
        <span class="na">dataType</span> <span class="p">:</span> <span class="s2">"json"</span><span class="p">,</span>
        <span class="na">contentType</span> <span class="p">:</span> <span class="s2">"application/json"</span><span class="p">,</span>
        <span class="na">crossDomain</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
@@ -923,12 +948,13 @@ echo $response;
     <span class="s">'droneplay-token'</span> <span class="p">:</span> <span class="s">'DRONEPLAYTOKEN'</span>
 <span class="p">}</span>
 <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s">'action'</span><span class="p">:</span> <span class="s">'delete'</span><span class="p">,</span>
+    <span class="s">'action'</span><span class="p">:</span> <span class="s">'mission'</span><span class="p">,</span>
+    <span class="s">'daction'</span><span class="p">:</span> <span class="s">'delete'</span><span class="p">,</span>
     <span class="s">'clientid'</span> <span class="p">:</span> <span class="s">'EMAILADDRESS'</span><span class="p">,</span>
     <span class="s">'mname'</span> <span class="p">:</span> <span class="s">'MISSIONNAME'</span>
 <span class="p">}</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="s">'https://api.droneplay.io/v1/mission'</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s">'https://api.droneplay.io/v1/'</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span>
                          <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
@@ -944,7 +970,7 @@ echo $response;
 </span></code></pre>
 <p>DronePlay Mission Center의 Mission 1개를 삭제합니다.</p>
 <h3 id='http-5'>HTTP 요청</h3>
-<p><code>POST http://apis.droneplay.io/v1/mission</code></p>
+<p><code>POST http://apis.droneplay.io/v1/</code></p>
 <h3 id='url-5'>URL 파라메터</h3>
 <table><thead>
 <tr>
@@ -962,6 +988,10 @@ echo $response;
 </tr>
 <tr>
 <td>action</td>
+<td>&#39;mission&#39; 입력합니다.</td>
+</tr>
+<tr>
+<td>daction</td>
 <td>&#39;delete&#39; 입력합니다.</td>
 </tr>
 <tr>
