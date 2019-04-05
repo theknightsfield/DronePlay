@@ -1,5 +1,5 @@
 
-var arrayData = null;
+var arrayData = new Array();
 
 
 function dromiInit() {
@@ -13,10 +13,10 @@ function convert2time(stime) {
 }
 
 function uploadData(mname) {
-    if (arrayData == null || arrayData.length == 0) {
-      alert("Please select any file !!");
-      return;
-    }
+    // if (arrayData == null || arrayData.length == 0) {
+    //   alert("Please select any file !!");
+    //   return;
+    // }
 
     var selYear = document.getElementById("selYear");
     var dYear = selYear.options[selYear.selectedIndex].value;
@@ -77,16 +77,19 @@ var chartLocData = new Array();
 var bMoved = false;
 
 function addMapAndChartItem(i, item) {
-  var date = convert2data(item.time);
-  var valM = String(date.getMonth() + 1).padStart(2, '0');
-  var valD = String(date.getDate()).padStart(2, '0');
-  var valH = String(date.getHours()).padStart(2, '0');
-  var valMin = String(date.getMinutes()).padStart(2, '0');
-  var valS = String(date.getSeconds()).padStart(2, '0');
-  var dateString = date.getFullYear() + "-" + valM + "-" + valD + " " + valH + ":" + valMin + ":" + valS;
-  chartTData.push({x: i, y: item.t});
-  chartHData.push({x: i, y: item.h});
-  chartLabelData.push(dateString);
+  if ("t" in item && "h" in item) {
+    chartTData.push({x: i, y: item.t});
+    chartHData.push({x: i, y: item.h});
+
+    var date = convert2data(item.time);
+    var valM = String(date.getMonth() + 1).padStart(2, '0');
+    var valD = String(date.getDate()).padStart(2, '0');
+    var valH = String(date.getHours()).padStart(2, '0');
+    var valMin = String(date.getMinutes()).padStart(2, '0');
+    var valS = String(date.getSeconds()).padStart(2, '0');
+    var dateString = date.getFullYear() + "-" + valM + "-" + valD + " " + valH + ":" + valMin + ":" + valS;
+    chartLabelData.push(dateString);
+  }
 
   if ("lat" in item && "lng" in item && "alt" in item) {
     chartLocData.push({lat : item.lat, lng : item.lng, alt: item.alt});
@@ -126,19 +129,32 @@ function setChartData(cdata) {
         i++;
       });
 
-      map.on('click', function (evt) {
-          var feature = map.forEachFeatureAtPixel(evt.pixel,
-              function (feature) {
-                  return feature;
-              });
+      if (posIcons.length > 0) {
+          map.on('click', function (evt) {
+              var feature = map.forEachFeatureAtPixel(evt.pixel,
+                  function (feature) {
+                      return feature;
+                  });
 
-          if (feature) {
-              //alert(feature.get('name'));
-              var ii = feature.get('mindex');
-              //alert("index:" + ii);
-              openTip(window.myScatter, 0, ii);
-          }
-      });
+              if (feature) {
+                  //alert(feature.get('name'));
+                  var ii = feature.get('mindex');
+                  //alert("index:" + ii);
+                  openTip(window.myScatter, 0, ii);
+              }
+          });
+
+          var posSource = new ol.source.Vector({
+              features: posIcons
+          });
+          var posLayer = new ol.layer.Vector({
+              source: posSource
+          });
+
+          map.addLayer(posLayer);
+      }
+
+      if (chartTData.length == 0) return;
 
       var dataSet = {datasets: [
           {
@@ -154,15 +170,6 @@ function setChartData(cdata) {
              data: chartHData
          }
       ]};
-
-      var posSource = new ol.source.Vector({
-          features: posIcons
-      });
-      var posLayer = new ol.layer.Vector({
-          source: posSource
-      });
-
-      map.addLayer(posLayer);
 
       var ctx = document.getElementById('chart1').getContext('2d');
       window.myScatter = Chart.Scatter(ctx, {
