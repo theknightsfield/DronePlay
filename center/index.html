@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-130136264-4"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'UA-130136264-4');
+</script>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="DronePlay mission Center">
+    <meta name="author" content="DronePlay">
+		<link rel="shortcut icon" type="image/x-icon" href="./imgs/logo.png" />
+    <link rel="icon" type="image/png" href="./imgs/logo.png" />
+    <link rel="apple-touch-icon" href="./imgs/logo.png" />
+
+    <title>DronePlay - Mission Center : Login</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="./vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="./vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="./css/bootstrap-social.css" rel="stylesheet">
+		<link href="./css/index_style.css" rel="stylesheet">
+    <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+</head>
+
+<body class="background-image">
+	<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v3.2&appId=109453656066856&autoLogAppEvents=1';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+		<header id="gtco-header" class="gtco-cover" role="banner">
+			<div class="gtco-container">
+				<div class="row" id="about">
+					<div class="col-md-12 col-md-offset-0 text-left">
+						<div class="display-t">
+							<div class="display-tc">
+								<div class="row">
+									<div class="col-md-3 text-center header-img">
+										<img src="https://top.droneplay.io/images/droneplay_logo.png" alt="DronePlay">
+									</div>
+									<div class="col-md-9 copy">
+													<form role="form" method="post" action="login_bts.php" id="loginForm">
+														<input class="form-control" id="kind" name="kind" type="hidden" value="">
+													</form>
+										<h1>비행의 꿈<br>DRONEPLAY CENTER <i>BETA</i></h1>
+
+									</div>
+
+									<div class="row">
+																<section class="container content-section text-left">
+																		<div class="col-md-9 copy">
+																				<h3 style="color:#fff;">Please SignIn By ...</h3><br>
+																		</div>
+																<section>
+																<section id="contact" class="container content-section text-center">
+
+																		<div class="col-md-9 copy">
+																					<button class="btn btn-primary bouton-image fbbutton" onclick="onFacebook()">Facebook 로그인
+																					</button><br><br>
+																					<button class="btn btn-primary bouton-image googlebutton" onclick="onGoogle()">Google 로그인
+																					</button><br><br>
+																					<button class="btn btn-primary bouton-image naverbutton" onclick="onNaver()">Naver 로그인
+																					</button>
+																		</div>
+
+																</section>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<!-- Contact Section -->
+
+			<!-- Footer-->
+            <footer class="footer">
+                <div class="footer-bar">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-6">
+																<div class="fb-like" data-width="280" data-href="https://www.facebook.com/386832955100142" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="false"></div>
+                                <div class="copyright">© 2019 <a href="https://top.droneplay.io/">DronePlay</a> All Rights Reserved.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+  <script src="./vendor/jquery/jquery.min.js"></script>
+  <!-- Bootstrap Core JavaScript -->
+  <script src="./vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="./js/index.js"></script>
+</body>
+</html>
