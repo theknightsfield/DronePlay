@@ -83,6 +83,7 @@ function getDromiList() {
       }
 
       setDromilist(r.data);
+      $('#getListBtn').hide(1500);
     }
   }, function(request,status,error) {
     hideLoader();
