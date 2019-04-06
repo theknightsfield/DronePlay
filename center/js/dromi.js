@@ -35,13 +35,17 @@ function appendListTable(name, dtimestamp, data) {
 }
 
 function removeTableRow(rowname) {
-  $(rowname).remove();
+  $("#" + rowname).remove();
 }
 
 function deleteData(index) {
   if (dromiDataArray.length == 0) return;
-
   var item = dromiDataArray[index];
+
+  if (confirm('정말로 ' + item.dname + ' 데이터를 삭제하시겠습니까?')) {
+  } else {
+    return;
+  }
 
   var userid = getCookie("dev_user_id");
   var jdata = {"action": "dromi", "daction": "delete", "clientid" : userid, "name" : item.dname};
