@@ -49,7 +49,9 @@ function uploadData(mname) {
     var userid = getCookie("dev_user_id");
     var jdata = {"action": "dromi", "daction": "set", "name" :  mname, "data" : arrayData, "start": dTimeStart, "end" : dTimeEnd, "clientid" : userid};
 
+    showLoader();
     ajaxRequest(jdata, function (r) {
+      hideLoader();
       if(r.result == "success") {
         if (r.data == null || r.data.length == 0) {
           alert("no data");
@@ -59,9 +61,19 @@ function uploadData(mname) {
         setChartData(r.data);
       }
     }, function(request,status,error) {
+      hideLoader();
       alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
     });
 }
+
+function showLoader() {
+  $("#loading").show();
+}
+
+function hideLoader() {
+  $("#loading").fadeOut(800);
+}
+
 
 function convert2data(t) {
     var date = new Date(t);
