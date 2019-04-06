@@ -195,11 +195,16 @@ function addMapAndChartItem(i, item) {
         mindex : i
     });
 
+    var pos_icon_image = './imgs/position2.png';
+    if("etc" in item && "marked" in item.etc) {
+      pos_icon_image = './imgs/position3.png';
+    }
+    
     pos_icon.setStyle(new ol.style.Style({
         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-          color: '#8959A8',
+          color: '#ff0000',
           crossOrigin: 'anonymous',
-          src: './imgs/position2.png'
+          src: pos_icon_image
         }))
     }));
 
