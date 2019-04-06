@@ -196,10 +196,10 @@ function addMapAndChartItem(i, item) {
     });
 
     var pos_icon_image = './imgs/position2.png';
-    var pos_icon_color = '#5577ff';
+    var pos_icon_color = '#557799';
     if("etc" in item && "marked" in item.etc) {
       pos_icon_image = './imgs/position3.png';
-      pos_icon_color = '#ff3333';
+      pos_icon_color = '#993333';
     }
 
     pos_icon.setStyle(new ol.style.Style({
