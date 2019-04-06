@@ -24,7 +24,7 @@ function setDromilist(data) {
 }
 
 function appendListTable(name, dtimestamp, data) {
-  var appendRow = "<tr class='odd gradeX'><td>" + tableCount + "</td>"
+  var appendRow = "<tr class='odd gradeX'><td>" + (tableCount + 1) + "</td>"
       + "<td width='60%' class='center' bgcolor='#eee'><a href='javascript:showData(" + tableCount + ");'>"
       + name + "</a></td><td width='20%' class='center' bgcolor='#fff'> " + dtimestamp + "</td></tr>";
   $('#dataTable-lists > tbody:last').append(appendRow);
