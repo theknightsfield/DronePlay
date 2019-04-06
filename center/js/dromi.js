@@ -24,11 +24,38 @@ function setDromilist(data) {
 }
 
 function appendListTable(name, dtimestamp, data) {
-  var appendRow = "<tr class='odd gradeX'><td>" + (tableCount + 1) + "</td>"
-      + "<td width='60%' class='center' bgcolor='#eee'><a href='javascript:showData(" + tableCount + ");'>"
-      + name + "</a></td><td width='20%' class='center' bgcolor='#fff'> " + dtimestamp + "</td></tr>";
+  var appendRow = "<tr class='odd gradeX' id='dromi-list-" + tableCount + "'><td width='5%'>" + (tableCount + 1) + "</td>"
+      + "<td class='center' bgcolor='#eee'><a href='javascript:showData(" + tableCount + ");'>"
+      + name + "</a></td><td width='25%' class='center' bgcolor='#fff'> " + dtimestamp + "</td>"
+      + "<td><a href='javascript:deleteData(" + tableCount + ");'>"
+      + "삭제</a></td>"
+      + "</tr>";
   $('#dataTable-lists > tbody:last').append(appendRow);
   tableCount++;
+}
+
+function removeTableRow(rowname) {
+  $(rowname).remove();
+}
+
+function deleteData(index) {
+  if (dromiDataArray.length == 0) return;
+
+  var item = dromiDataArray[index];
+
+  var userid = getCookie("dev_user_id");
+  var jdata = {"action": "dromi", "daction": "delete", "clientid" : userid, "name" : item.dname};
+
+  showLoader();
+  ajaxRequest(jdata, function (r) {
+    hideLoader();
+    if(r.result == "success") {
+      removeTableRow("dromi-list-" + index);
+    }
+  }, function(request,status,error) {
+    hideLoader();
+    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+  });
 }
 
 function showData(index) {
