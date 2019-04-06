@@ -10,23 +10,32 @@ function dromiListInit() {
   getDromiList();
 }
 
+
+var tableCount = 0;
+var dromiDataArray = new Array();
 function setDromilist(data) {
   if (data == null || data.length == 0)
     return;
 
   data.forEach(function(item) {
-    appendListTable(item.dname, item.dtime);
+    appendListTable(item.dname, item.dtime, item.data);
+    dromiDataArray.push(item);
   });
 }
 
-var tableCount = 0;
-function appendListTable(name, dtimestamp) {
-  tableCount++;
-  var strid = "dromi-" + tableCount;
-  var appendRow = "<tr class='odd gradeX' id='" + strid + "'><td>" + tableCount + "</td>"
-      + "<td width='60%' class='center' bgcolor='#eee'>"
-      + name + "</td><td width='20%' class='center' bgcolor='#fff'> " + dtimestamp + "</td></tr>";
+function appendListTable(name, dtimestamp, data) {
+  var appendRow = "<tr class='odd gradeX'><td>" + tableCount + "</td>"
+      + "<td width='60%' class='center' bgcolor='#eee'><a href='javascript:showData(" + tableCount + ");'>"
+      + name + "</a></td><td width='20%' class='center' bgcolor='#fff'> " + dtimestamp + "</td></tr>";
   $('#dataTable-lists > tbody:last').append(appendRow);
+  tableCount++;
+}
+
+function showData(index) {
+  if (dromiDataArray.length == 0) return;
+
+  var item = dromiDataArray[index];
+  setChartData(item.data);
 }
 
 function getDromiList() {
