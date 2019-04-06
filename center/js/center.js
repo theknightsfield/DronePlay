@@ -10,8 +10,11 @@ var geolocation;
 $(function() {
   showLoader();
   mapInit();
-  askToken();
   hideLoader();
+  if (askToken() == false) {
+    location.href="index.html";
+    return;
+  }
 
   var page_data = document.getElementById("page_data");
 	var page_action = page_data.getAttribute("page_action");
@@ -94,9 +97,14 @@ function nextMon() {
 
 function askToken() {
   var userid = getCookie("dev_user_id");
+  var usertoken = getCookie("user_token");
+  if (userid == null || userid == "") return false;
+  if (usertoken == null || usertoken == "") return false;
 
-  $("#email_field").text(getCookie("dev_user_id"));
-  $('#droneplaytoken_view').val(getCookie("user_token"));
+  $("#email_field").text(userid);
+  $('#droneplaytoken_view').val(usertoken);
+
+  return true;
 }
 
 function getList() {
