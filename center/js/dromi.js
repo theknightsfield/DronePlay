@@ -24,10 +24,10 @@ function setDromilist(data) {
 }
 
 function appendListTable(name, dtimestamp, data) {
-  var appendRow = "<tr class='odd gradeX' id='dromi-list-" + tableCount + "'><td width='5%'>" + (tableCount + 1) + "</td>"
+  var appendRow = "<tr class='odd gradeX' id='dromi-list-" + tableCount + "'><td width='10%'>" + (tableCount + 1) + "</td>"
       + "<td class='center' bgcolor='#eee'><a href='javascript:showData(" + tableCount + ");'>"
-      + name + "</a></td><td width='25%' class='center' bgcolor='#fff'> " + dtimestamp + "</td>"
-      + "<td><a href='javascript:deleteData(" + tableCount + ");'>"
+      + name + "</a></td><td width='30%' class='center' bgcolor='#fff'> " + dtimestamp + "</td>"
+      + "<td width='20%'><a href='javascript:deleteData(" + tableCount + ");'>"
       + "삭제</a></td>"
       + "</tr>";
   $('#dataTable-lists > tbody:last').append(appendRow);
