@@ -15,7 +15,7 @@ function setDromilist(data) {
     return;
 
   data.forEach(function(item) {
-    appendListTable(item.dname, item.dTimeStamp);
+    appendListTable(item.dname, item.time);
   });
 }
 
