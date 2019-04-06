@@ -7,7 +7,7 @@ function dromiInit() {
 }
 
 function dromiListInit() {
-  getDromiList();
+  //getDromiList();
 }
 
 
