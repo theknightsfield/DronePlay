@@ -6,6 +6,49 @@ function dromiInit() {
   setUploadData();
 }
 
+function dromiListInit() {
+  getDromiList();
+}
+
+function setDromilist(data) {
+  if (data == null || data.length == 0)
+    return;
+
+  data.forEach(function(item) {
+    appendListTable(item.dname, item.dTimeStamp);
+  });
+}
+
+var tableCount = 0;
+function appendListTable(name, dtimestamp) {
+  tableCount++;
+  var strid = "dromi-" + tableCount;
+  var appendRow = "<tr class='odd gradeX' id='" + strid + "'><td>" + tableCount + "</td>"
+      + "<td width='60%' class='center' bgcolor='#eee'>"
+      + name + "</td><td width='20%' class='center' bgcolor='#fff'> " + convert2data(dtimestamp).toString() + "</td></tr>";
+  $('#dataTable-lists > tbody:last').append(appendRow);
+}
+
+function getDromiList() {
+  var userid = getCookie("dev_user_id");
+  var jdata = {"action": "dromi", "daction": "list", "clientid" : userid};
+
+  showLoader();
+  ajaxRequest(jdata, function (r) {
+    hideLoader();
+    if(r.result == "success") {
+      if (r.data == null || r.data.length == 0) {
+        alert("no data");
+        return;
+      }
+
+      setDromilist(r.data);
+    }
+  }, function(request,status,error) {
+    hideLoader();
+    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+  });
+}
 
 function convert2time(stime) {
   var gapTime = document.getElementById("gmtGapTime").value;

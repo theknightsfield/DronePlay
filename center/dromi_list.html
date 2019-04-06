@@ -145,7 +145,7 @@ gtag('config', 'UA-130136264-4');
                             <div><br></div>
                             <div class="panel panel-default loginforms">
                               <div class="panel-body">
-                                <h3>드로미 모니터</h3>
+                                <h3>드로미 데이터 목록</h3>
                               </div>
                             </div>
                         </div>
@@ -157,79 +157,22 @@ gtag('config', 'UA-130136264-4');
                       <div class="col-lg-6">
                         <div class="panel panel-default">
                           <div class="panel-heading">
-                                <canvas id="chart1"></canvas>
+                                <table width="100%" class="table table-striped table-bordered table-hover" id="dataTable-lists">
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>이름</th>
+                                            <th>생성일</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
                           </div>
                         </div>
                       </div>
-
-                      <div class="col-lg-6">
-                        <div class="panel panel-default">
-                          <div class="panel-heading">
-                                <div id="map" class="map"></div>
-                          </div>
-                        </div>
-                      </div>
-
                     </div>
-
-
-                    <!-- /.row -->
-                		<div class="row">
-                      <div class="col-lg-6">
-                          <div class="panel panel-default">
-                              <div class="panel-heading">
-
-
-                                  <div>
-                                      <label for="filePicker">온습도 데이터 업로드</label>
-                                      <input type="file" id="filePicker">
-                                      <br>
-                                      <button class="btn btn-primary" type="button" id="uploadBtn">
-                                          업로드
-                                      </button>
-                                  </div>
-
-                                  <br>
-
-                                  <div>
-                                      <label for="selYear">수집 시작 일시</label>
-                                      <select class="form-control" id="selYear">
-                                      </select>
-
-                                      <select class="form-control" id="selMon">
-                                      </select>
-
-                                      <select class="form-control" id="selDay">
-                                      </select>
-
-                                      <select class="form-control" id="selHour">
-                                      </select>
-                                  </div>
-
-                                  <br>
-
-                                  <div>
-                                      <label for="selYear2">수집 종료 일시</label>
-                                      <select class="form-control" id="selYear2">
-                                      </select>
-
-                                      <select class="form-control" id="selMon2">
-                                      </select>
-
-                                      <select class="form-control" id="selDay2">
-                                      </select>
-
-                                      <select class="form-control" id="selHour2">
-                                      </select>
-                                      <br>
-                                      <label for="gmtGapTime">GMT +</label><input type="text" id="gmtGapTime" value="0">
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-
-
-                		</div>
 
                 </div>
                 <!-- /.container-fluid -->
@@ -251,7 +194,7 @@ gtag('config', 'UA-130136264-4');
     <script src="./dist/js/sb-admin-2.js"></script>
     <script src="./js/Chart.min.js"></script>
     <script src="./js/dromi.js"></script>
-    <script id="page_data" page_action="dromi" src="./js/center.js"></script>
+    <script id="page_data" page_action="dromi_list" src="./js/center.js"></script>
 </body>
 
 </html>

@@ -25,14 +25,17 @@ $(function() {
   else if (page_action == "design") {
     designInit();
   }
-  else if (page_action == "dromi") {
-    dromiInit();
-  }
   else if (page_action == "list") {
 
   }
   else if (page_action == "monitor") {
     monitorInit();
+  }
+  else if (page_action == "dromi") {
+    dromiInit();
+  }
+  else if (page_action == "dromi_list") {
+    dromiListInit();
   }
 });
 
