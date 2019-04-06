@@ -15,7 +15,7 @@ function setDromilist(data) {
     return;
 
   data.forEach(function(item) {
-    appendListTable(item.dname, item.time);
+    appendListTable(item.dname, item.dtime);
   });
 }
 
@@ -25,7 +25,7 @@ function appendListTable(name, dtimestamp) {
   var strid = "dromi-" + tableCount;
   var appendRow = "<tr class='odd gradeX' id='" + strid + "'><td>" + tableCount + "</td>"
       + "<td width='60%' class='center' bgcolor='#eee'>"
-      + name + "</td><td width='20%' class='center' bgcolor='#fff'> " + convert2data(dtimestamp).toString() + "</td></tr>";
+      + name + "</td><td width='20%' class='center' bgcolor='#fff'> " + dtimestamp + "</td></tr>";
   $('#dataTable-lists > tbody:last').append(appendRow);
 }
 
