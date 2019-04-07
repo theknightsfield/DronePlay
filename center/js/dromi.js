@@ -130,7 +130,7 @@ function processSeek(curTime) {
       if ("dsec" in item) {
         var ds = item.dsec *1;
         if((ds + 2) >= curTime && (ds - 2) <= curTime) {
-            openTip(window.myScatter, 0, ii);
+            openTip(window.myScatter, 0, index);
             var latLng = ol.proj.fromLonLat([item.lng *= 1, item.lat *= 1]);
             flyTo(latLng, function() {isMoved=true;});
             return true;
