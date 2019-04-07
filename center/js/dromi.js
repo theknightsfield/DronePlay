@@ -102,7 +102,7 @@ function onPlayerReady(event) {
 
     var checkPlayerTime = function () {
         if (lastTime != -1) {
-            if(youTubePlayer.getPlayerState() == YT.PlayerState.PAUSED ) {
+            if(youTubePlayer.getPlayerState() == YT.PlayerState.PLAYING ) {
                 var t = youTubePlayer.getCurrentTime();
 
                 //console.log(Math.abs(t - lastTime -1));
