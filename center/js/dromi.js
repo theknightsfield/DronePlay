@@ -120,6 +120,10 @@ function onPlayerReady(event) {
     setTimeout(checkPlayerTime, interval); /// initial call delayed
 }
 
+function onPlayerStateChange(event) {
+  
+}
+
 function processSeek(curTime) {
     var index = 0;
     chartLocData.some(function(item) {
