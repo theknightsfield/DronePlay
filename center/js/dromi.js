@@ -9,11 +9,15 @@ var chartLocData = new Array();
 var bMoved = false;
 var tableCount = 0;
 var dromiDataArray = new Array();
+var flightDataArray = new Array();
 
 var youTubePlayer = null;
 var youtube_data_id;
 
+var cur_flightrecord_name = "";
+
 function dromiInit() {
+  $('#dromiUploadForm').hide();
   setUploadData();
 }
 
@@ -168,6 +172,81 @@ function showData(index) {
   setChartData(item.data);
 }
 
+function setFlightlist(data) {
+  if (data == null || data.length == 0)
+    return;
+
+  data.forEach(function(item) {
+    appendFlightListTable(item.name, item.dtime, item.data);
+    flightDataArray.push(item);
+  });
+}
+
+function appendFlightListTable(name, dtimestamp, data) {
+  var appendRow = "<tr class='odd gradeX' id='flight-list-" + tableCount + "'><td width='10%'>" + (tableCount + 1) + "</td>"
+      + "<td class='center' bgcolor='#eee'><a href='javascript:uploadFromSet(" + tableCount + ");'>"
+      + name + "</a></td><td width='30%' class='center'> " + dtimestamp + "</td>"
+      + "<td width='20%' bgcolor='#fff'>"
+      + "<button class='btn btn-primary' type='button' onClick='deleteFlightData(" + tableCount + ");'>삭제</button></td>"
+      + "</tr>";
+  $('#dataTable-Flight_list > tbody:last').append(appendRow);
+  tableCount++;
+}
+
+function uploadFromSet(index) {
+  $('#dromiUploadForm').show();
+  var item = flightDataArray[index];
+  $('#FlightDataName').html(item.name);
+  cur_flightrecord_name = item.name;
+}
+
+function deleteFlightData(index) {
+  $('#dromiUploadForm').hide();
+
+  var item = flightDataArray[index];
+
+  if (confirm('정말로 ' + item.name + ' 비행기록을 삭제하시겠습니까?')) {
+  } else {
+    return;
+  }
+
+  var userid = getCookie("dev_user_id");
+  var jdata = {"action": "position", "daction": "delete", "clientid" : userid, "name" : item.name};
+
+  showLoader();
+  ajaxRequest(jdata, function (r) {
+    hideLoader();
+    if(r.result != "success") {
+      alert("삭제 실패!")
+    }
+  }, function(request,status,error) {
+    hideLoader();
+    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+  });
+}
+
+function getFlightList() {
+  var userid = getCookie("dev_user_id");
+  var jdata = {"action": "position", "daction": "download", "clientid" : userid};
+
+  showLoader();
+  ajaxRequest(jdata, function (r) {
+    hideLoader();
+    if(r.result == "success") {
+      if (r.data == null || r.data.length == 0) {
+        alert("no data");
+        return;
+      }
+
+      setFlightlist(r.data);
+      $('#getFlightListBtn').hide(1500);
+    }
+  }, function(request,status,error) {
+    hideLoader();
+    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+  });
+}
+
 function getDromiList() {
   var userid = getCookie("dev_user_id");
   var jdata = {"action": "dromi", "daction": "list", "clientid" : userid};
@@ -195,7 +274,7 @@ function convert2time(stime) {
   return (new Date(stime).getTime() + (3600000 * (gapTime*=1)));
 }
 
-function uploadData(mname) {
+function uploadData(name, mname) {
     // if (arrayData == null || arrayData.length == 0) {
     //   alert("Please select any file !!");
     //   return;
@@ -230,7 +309,12 @@ function uploadData(mname) {
     var dTimeEnd = convert2time(dYear + "-" + dMon + "-" + dDay + " " + dHour + ":59:59");
 
     var userid = getCookie("dev_user_id");
-    var jdata = {"action": "dromi", "daction": "set", "name" :  mname, "data" : arrayData, "start": dTimeStart, "end" : dTimeEnd, "clientid" : userid};
+    var jdata = "";
+
+    if (name == "")
+      jdata = {"action": "dromi", "daction": "set", "mname" :  mname, "data" : arrayData, "start": dTimeStart, "end" : dTimeEnd, "clientid" : userid};
+    else
+      jdata = {"action": "dromi", "daction": "set", "name" :  name, "data" : arrayData, "clientid" : userid};
 
     showLoader();
     ajaxRequest(jdata, function (r) {
@@ -571,15 +655,19 @@ function analyzeData(datas) {
 
 function setUploadData() {
       $("#uploadBtn").click(function() {
+          if (cur_flightrecord_name == "") {
+            var mname = prompt("데이터셋의 이름을 입력해 주세요.", "");
 
-          var mname = prompt("데이터셋의 이름을 입력해 주세요.", "");
+            if (mname == null) {
+                alert("데이터셋의 이름을 잘못 입력하셨습니다.");
+                return;
+            }
 
-          if (mname == null) {
-              alert("데이터셋의 이름을 잘못 입력하셨습니다.");
-              return;
+            uploadData("", mname);
           }
-
-          uploadData(mname);
+          else {
+            uploadData(cur_flightrecord_name, "");
+          }
       });
 
       setDateBox();
