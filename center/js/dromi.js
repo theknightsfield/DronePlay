@@ -62,7 +62,7 @@ function deleteData(index) {
   });
 }
 
-var youTubePlayer1;
+var youTubePlayer = null;
 var youtube_data_id;
 function setYoutubePlayer(data_id) {
   var tag = document.createElement('script');
@@ -74,7 +74,7 @@ function setYoutubePlayer(data_id) {
 }
 
 function onYouTubeIframeAPIReady() {
-    youTubePlayer1 = new YT.Player('youTubePlayer', {
+    youTubePlayer = new YT.Player('youTubePlayer', {
         width: '1000',
         height: '563',
         videoId: youtube_data_id,
@@ -96,6 +96,11 @@ function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.PLAYING) {
         //플레이어가 재생중일때 작성한 동작이 실행된다.
     }
+}
+
+function youtubeSeekTo(where) {
+  if (youTubePlayer == null) return;
+  youTubePlayer.seekTo(where, true);
 }
 
 function showData(index) {
@@ -215,7 +220,6 @@ var chartLabelData = new Array();
 var chartLocData = new Array();
 
 var bMoved = false;
-
 function addMapAndChartItem(i, item) {
   if ("t" in item && "h" in item) {
     chartTData.push({x: i, y: item.t});
@@ -232,7 +236,7 @@ function addMapAndChartItem(i, item) {
   }
 
   if ("lat" in item && "lng" in item && "alt" in item) {
-    chartLocData.push({lat : item.lat, lng : item.lng, alt: item.alt});
+    chartLocData.push({lat : item.lat, lng : item.lng, alt: item.alt, dsec : item.dsec});
 
     var pos_icon = new ol.Feature({
         geometry: new ol.geom.Point(ol.proj.fromLonLat([item.lng *= 1, item.lat *= 1])),
@@ -288,6 +292,11 @@ function setChartData(cdata) {
                   var ii = feature.get('mindex');
                   //alert("index:" + ii);
                   openTip(window.myScatter, 0, ii);
+                  
+                  var locdata = chartLocData[ii];
+                  if ("dsec" in locdata) {
+                    youtubeSeekTo(locdata.dsec *= 1);
+                  }
               }
           });
 
@@ -338,6 +347,10 @@ function setChartData(cdata) {
                           if (isMoved == true) {
                             isMoved = false;
                             flyTo(latLng, function() {isMoved=true;});
+                          }
+
+                          if ("dsec" in locdata) {
+                            youtubeSeekTo(locdata.dsec *= 1);
                           }
                         }
 
