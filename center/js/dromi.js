@@ -218,6 +218,8 @@ function deleteFlightData(index) {
     hideLoader();
     if(r.result != "success") {
       alert("삭제 실패!");
+    }
+    else {
       removeTableRow("flight-list-" + index);
     }
   }, function(request,status,error) {
