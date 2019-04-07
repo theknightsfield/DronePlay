@@ -75,6 +75,11 @@ function deleteData(index) {
 }
 
 function setYoutubePlayer(data_id) {
+  if (youTubePlayer != null) {
+    youTubePlayer.loadVideoById(data_id, 0, "large");
+    return;
+  }
+
   var tag = document.createElement('script');
   tag.src = "https://www.youtube.com/player_api";
   youtube_data_id = data_id;
