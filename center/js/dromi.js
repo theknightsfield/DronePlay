@@ -18,10 +18,12 @@ var cur_flightrecord_name = "";
 
 function dromiInit() {
   $('#dromiUploadForm').hide();
+  $("#chartView").hide();
   setUploadData();
 }
 
 function dromiListInit() {
+  $("#chartView").hide();
   //getDromiList();
 }
 
