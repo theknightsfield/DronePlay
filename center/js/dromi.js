@@ -63,9 +63,12 @@ function deleteData(index) {
 }
 
 var youTubePlayer1;
-function setYoutubePlayer() {
+var youtube_data_id;
+function setYoutubePlayer(data_id) {
   var tag = document.createElement('script');
   tag.src = "https://www.youtube.com/player_api";
+  youtube_data_id = data_id;
+
   var firstScriptTag = document.getElementsByTagName('script')[0];
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 }
@@ -74,7 +77,7 @@ function onYouTubeIframeAPIReady() {
     youTubePlayer1 = new YT.Player('youTubePlayer', {
         width: '1000',
         height: '563',
-        videoId: 'alnLXYXN1-k',
+        videoId: youtube_data_id,
         playerVars: {rel: 0},//추천영상 안보여주게 설정
         events: {
           'onReady': onPlayerReady, //로딩할때 이벤트 실행
@@ -100,8 +103,8 @@ function showData(index) {
 
   var item = dromiDataArray[index];
 
-  if ("youtube_url" in item) {
-    setYoutubePlayer();
+  if ("youtube_data_id" in item) {
+    setYoutubePlayer(item.youtube_data_id);
   }
   else {
     $("#youTubePlayer").hide();
