@@ -355,9 +355,9 @@ function convert2data(t) {
 }
 
 function addMapAndChartItem(i, item) {
-  if ("t" in item && "h" in item) {
-    chartTData.push({x: i, y: item.t});
-    chartHData.push({x: i, y: item.h});
+  if ("etc" in item && "t" in item.etc && "h" in item.etc) {
+    chartTData.push({x: i, y: item.etc.t});
+    chartHData.push({x: i, y: item.etc.h});
 
     var date = convert2data(item.dtimestamp);
     var valM = String(date.getMonth() + 1).padStart(2, '0');
