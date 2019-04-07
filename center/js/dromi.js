@@ -102,8 +102,8 @@ function onPlayerReady(event) {
 
     var checkPlayerTime = function () {
         if (lastTime != -1) {
-            if(player.getPlayerState() == YT.PlayerState.PLAYING ) {
-                var t = player.getCurrentTime();
+            if(youTubePlayer.getPlayerState() == YT.PlayerState.PLAYING ) {
+                var t = youTubePlayer.getCurrentTime();
 
                 //console.log(Math.abs(t - lastTime -1));
 
@@ -114,14 +114,14 @@ function onPlayerReady(event) {
                 }
             }
         }
-        lastTime = player.getCurrentTime();
+        lastTime = youTubePlayer.getCurrentTime();
         setTimeout(checkPlayerTime, interval); /// repeat function call in 1 second
     }
     setTimeout(checkPlayerTime, interval); /// initial call delayed
 }
 
 function onPlayerStateChange(event) {
-  
+
 }
 
 function processSeek(curTime) {
