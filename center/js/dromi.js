@@ -104,7 +104,7 @@ function onPlayerStateChange(event) {
     }
 
     if (event.data == YT.PlayerState.PAUSED) {
-      var curTime = player.getCurrentTime();
+      var curTime = youTubePlayer.getCurrentTime();
 
       var index = 0;
       chartLocData.some(function(item) {
