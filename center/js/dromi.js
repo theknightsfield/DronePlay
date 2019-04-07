@@ -96,32 +96,46 @@ function onYouTubeIframeAPIReady() {
 
 function onPlayerReady(event) {
     event.target.playVideo();//자동재생
+
+    var lastTime = -1;
+    var interval = 1000;
+
+    var checkPlayerTime = function () {
+        if (lastTime != -1) {
+            if(player.getPlayerState() == YT.PlayerState.PLAYING ) {
+                var t = player.getCurrentTime();
+
+                //console.log(Math.abs(t - lastTime -1));
+
+                ///expecting 1 second interval , with 500 ms margin
+                if (Math.abs(t - lastTime - 1) > 0.5) {
+                    // there was a seek occuring
+                    processSeek(t);
+                }
+            }
+        }
+        lastTime = player.getCurrentTime();
+        setTimeout(checkPlayerTime, interval); /// repeat function call in 1 second
+    }
+    setTimeout(checkPlayerTime, interval); /// initial call delayed
 }
 
-function onPlayerStateChange(event) {
-    if (event.data == YT.PlayerState.PLAYING) {
-        //플레이어가 재생중일때 작성한 동작이 실행된다.
-    }
-
-    if (event.data == YT.PlayerState.PAUSED) {
-      var curTime = youTubePlayer.getCurrentTime();
-
-      var index = 0;
-      chartLocData.some(function(item) {
-        if ("dsec" in item) {
-          var ds = item.dsec *1;
-          if((ds + 2) >= curTime && (ds - 2) <= curTime) {
-              openTip(window.myScatter, 0, ii);
-              var latLng = ol.proj.fromLonLat([item.lng *= 1, item.lat *= 1]);
-              flyTo(latLng, function() {isMoved=true;});
-              return true;
-          }
+function processSeek(curTime) {
+    var index = 0;
+    chartLocData.some(function(item) {
+      if ("dsec" in item) {
+        var ds = item.dsec *1;
+        if((ds + 2) >= curTime && (ds - 2) <= curTime) {
+            openTip(window.myScatter, 0, ii);
+            var latLng = ol.proj.fromLonLat([item.lng *= 1, item.lat *= 1]);
+            flyTo(latLng, function() {isMoved=true;});
+            return true;
         }
-        
-        index++;
-        return false;
-      });
-    }
+      }
+
+      index++;
+      return false;
+    });
 }
 
 function youtubeSeekTo(where) {
