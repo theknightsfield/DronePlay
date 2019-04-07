@@ -108,12 +108,16 @@ function onPlayerStateChange(event) {
 
       var index = 0;
       chartLocData.some(function(item) {
-        if ("dsec" in item && item.dsec == curTime) {
-          openTip(window.myScatter, 0, ii);
-          var latLng = ol.proj.fromLonLat([item.lng *= 1, item.lat *= 1]);
-          flyTo(latLng, function() {isMoved=true;});
-          return true;
+        if ("dsec" in item) {
+          var ds = item.dsec *1;
+          if((ds + 2) >= curTime && (ds - 2) <= curTime) {
+              openTip(window.myScatter, 0, ii);
+              var latLng = ol.proj.fromLonLat([item.lng *= 1, item.lat *= 1]);
+              flyTo(latLng, function() {isMoved=true;});
+              return true;
+          }
         }
+        
         index++;
         return false;
       });
