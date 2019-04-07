@@ -1,6 +1,17 @@
 
 var arrayData = new Array();
+var posIcons = new Array();
+var chartTData = new Array();
+var chartHData = new Array();
+var chartLabelData = new Array();
+var chartLocData = new Array();
 
+var bMoved = false;
+var tableCount = 0;
+var dromiDataArray = new Array();
+
+var youTubePlayer = null;
+var youtube_data_id;
 
 function dromiInit() {
   setUploadData();
@@ -10,9 +21,6 @@ function dromiListInit() {
   //getDromiList();
 }
 
-
-var tableCount = 0;
-var dromiDataArray = new Array();
 function setDromilist(data) {
   if (data == null || data.length == 0)
     return;
@@ -62,8 +70,6 @@ function deleteData(index) {
   });
 }
 
-var youTubePlayer = null;
-var youtube_data_id;
 function setYoutubePlayer(data_id) {
   var tag = document.createElement('script');
   tag.src = "https://www.youtube.com/player_api";
@@ -95,6 +101,22 @@ function onPlayerReady(event) {
 function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.PLAYING) {
         //플레이어가 재생중일때 작성한 동작이 실행된다.
+    }
+
+    if (event.data == YT.PlayerState.PAUSED) {
+      var curTime = player.getCurrentTime();
+
+      var index = 0;
+      chartLocData.some(function(item) {
+        if ("dsec" in item && item.dsec == curTime) {
+          openTip(window.myScatter, 0, ii);
+          var latLng = ol.proj.fromLonLat([item.lng *= 1, item.lat *= 1]);
+          flyTo(latLng, function() {isMoved=true;});
+          return true;
+        }
+        index++;
+        return false;
+      });
     }
 }
 
@@ -207,19 +229,11 @@ function hideLoader() {
   $("#loading").fadeOut(800);
 }
 
-
 function convert2data(t) {
     var date = new Date(t);
     return date;
 }
 
-var posIcons = new Array();
-var chartTData = new Array();
-var chartHData = new Array();
-var chartLabelData = new Array();
-var chartLocData = new Array();
-
-var bMoved = false;
 function addMapAndChartItem(i, item) {
   if ("t" in item && "h" in item) {
     chartTData.push({x: i, y: item.t});
@@ -292,7 +306,7 @@ function setChartData(cdata) {
                   var ii = feature.get('mindex');
                   //alert("index:" + ii);
                   openTip(window.myScatter, 0, ii);
-                  
+
                   var locdata = chartLocData[ii];
                   if ("dsec" in locdata) {
                     youtubeSeekTo(locdata.dsec *= 1);
