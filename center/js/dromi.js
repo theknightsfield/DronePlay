@@ -444,7 +444,13 @@ function setChartData(cdata) {
           map.addLayer(posLayer);
       }
 
-      if (chartTData.length == 0) return;
+
+      if (chartTData.length == 0) {
+        $("#chartView").hide();
+        return;
+      }
+
+      $("#chartView").show();
 
       var dataSet = {datasets: [
           {
@@ -461,7 +467,7 @@ function setChartData(cdata) {
          }
       ]};
 
-      var ctx = document.getElementById('chart1').getContext('2d');
+      var ctx = document.getElementById('chartArea').getContext('2d');
       window.myScatter = Chart.Scatter(ctx, {
         data: dataSet,
         options: {
