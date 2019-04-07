@@ -62,10 +62,51 @@ function deleteData(index) {
   });
 }
 
+var youTubePlayer1;
+function setYoutubePlayer() {
+  var tag = document.createElement('script');
+  tag.src = "https://www.youtube.com/player_api";
+  var firstScriptTag = document.getElementsByTagName('script')[0];
+  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+}
+
+function onYouTubeIframeAPIReady() {
+    youTubePlayer1 = new YT.Player('youTubePlayer', {
+        width: '1000',
+        height: '563',
+        videoId: 'alnLXYXN1-k',
+        playerVars: {rel: 0},//추천영상 안보여주게 설정
+        events: {
+          'onReady': onPlayerReady, //로딩할때 이벤트 실행
+          'onStateChange': onPlayerStateChange //플레이어 상태 변화시 이벤트실행
+        }
+    });//youTubePlayer1셋팅
+
+    $("#youTubePlayer").show();
+}
+
+function onPlayerReady(event) {
+    event.target.playVideo();//자동재생
+}
+
+function onPlayerStateChange(event) {
+    if (event.data == YT.PlayerState.PLAYING) {
+        //플레이어가 재생중일때 작성한 동작이 실행된다.
+    }
+}
+
 function showData(index) {
   if (dromiDataArray.length == 0) return;
 
   var item = dromiDataArray[index];
+
+  if ("youtube_url" in item) {
+    setYoutubePlayer();
+  }
+  else {
+    $("#youTubePlayer").hide();
+  }
+
   setChartData(item.data);
 }
 
