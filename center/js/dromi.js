@@ -359,7 +359,7 @@ function addMapAndChartItem(i, item) {
     chartTData.push({x: i, y: item.t});
     chartHData.push({x: i, y: item.h});
 
-    var date = convert2data(item.time);
+    var date = convert2data(item.dtimestamp);
     var valM = String(date.getMonth() + 1).padStart(2, '0');
     var valD = String(date.getDate()).padStart(2, '0');
     var valH = String(date.getHours()).padStart(2, '0');
