@@ -124,7 +124,10 @@ function onPlayerStateChange(event) {
 }
 
 function processSeek(curTime) {
-    if (fromMap == true) return;
+    if (fromMap == true) {
+      fromMap = false;
+      return;
+    }
 
     var index = 0;
     chartLocData.some(function(item) {
@@ -134,7 +137,6 @@ function processSeek(curTime) {
             openTip(window.myScatter, 0, index);
             var latLng = ol.proj.fromLonLat([item.lng *= 1, item.lat *= 1]);
             flyTo(latLng, function() {isMoved=true;});
-            fromMap = false;
             return true;
         }
       }
@@ -142,12 +144,12 @@ function processSeek(curTime) {
       index++;
       return false;
     });
-
-    fromMap = false;
 }
 
 function youtubeSeekTo(where) {
   if (youTubePlayer == null) return;
+
+  fromMap = true;
   youTubePlayer.seekTo(where, true);
 }
 
@@ -335,7 +337,6 @@ function setChartData(cdata) {
 
                   var locdata = chartLocData[ii];
                   if ("dsec" in locdata) {
-                    fromMap = true;
                     youtubeSeekTo(locdata.dsec *= 1);
                   }
               }
@@ -391,7 +392,6 @@ function setChartData(cdata) {
                           }
 
                           if ("dsec" in locdata) {
-                            fromMap = true;
                             youtubeSeekTo(locdata.dsec *= 1);
                           }
                         }
