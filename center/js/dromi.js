@@ -217,7 +217,8 @@ function deleteFlightData(index) {
   ajaxRequest(jdata, function (r) {
     hideLoader();
     if(r.result != "success") {
-      alert("삭제 실패!")
+      alert("삭제 실패!");
+      removeTableRow("flight-list-" + index);
     }
   }, function(request,status,error) {
     hideLoader();
