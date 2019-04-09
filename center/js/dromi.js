@@ -325,6 +325,7 @@ function uploadData(name, mname) {
 
     showLoader();
     ajaxRequest(jdata, function (r) {
+      cur_flightrecord_name = "";
       hideLoader();
       if(r.result == "success") {
         if (r.data == null || r.data.length == 0) {
@@ -335,6 +336,7 @@ function uploadData(name, mname) {
         setChartData(r.data);
       }
     }, function(request,status,error) {
+      cur_flightrecord_name = "";
       hideLoader();
       alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
     });
