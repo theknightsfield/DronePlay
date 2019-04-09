@@ -48,11 +48,12 @@ function onNaver() {
 }
 
 function checkLoginStatus() {
-  var dev_user_id = getCookie("dev_user_id");
-  if (isSet(dev_user_id) == true) {
+  var userid = getCookie("dev_user_id");
+  var usertoken = getCookie("user_token");
+  if (isSet(userid) == true && isSet(usertoken) == true)
     location.href="center.html";
-  }
-
+    return;
+  
   setCookie("dev_user_id", "", -1);
   setCookie("socialid", "", -1);
   setCookie("user_token", "", -1);

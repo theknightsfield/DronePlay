@@ -101,11 +101,18 @@ function nextMon() {
 function askToken() {
   var userid = getCookie("dev_user_id");
   var usertoken = getCookie("user_token");
-  if (userid == null || userid == "") return false;
-  if (usertoken == null || usertoken == "") return false;
+  if (isSet(userid) == false || isSet(usertoken) == false)
+    return false;
 
   $("#email_field").text(userid);
   $('#droneplaytoken_view').val(usertoken);
+
+  return true;
+}
+
+
+function isSet(value) {
+  if (value == "" || value == null || value == "undefined") return false;
 
   return true;
 }
