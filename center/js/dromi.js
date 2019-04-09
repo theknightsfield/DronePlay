@@ -17,7 +17,6 @@ var youtube_data_id;
 var cur_flightrecord_name = "";
 
 function dromiInit() {
-  $('#dromiUploadForm').hide();
   $("#chartView").hide();
   setUploadData();
 }
@@ -201,14 +200,12 @@ function appendFlightListTable(name, dtimestamp, data) {
 }
 
 function uploadFromSet(index) {
-  $('#dromiUploadForm').show();
   var item = flightDataArray[index];
   $('#FlightDataName').html(item.name);
   cur_flightrecord_name = item.name;
 }
 
 function deleteFlightData(index) {
-  $('#dromiUploadForm').hide();
 
   var item = flightDataArray[index];
 
