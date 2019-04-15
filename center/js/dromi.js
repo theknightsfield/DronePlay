@@ -371,7 +371,8 @@ function addMapAndChartItem(i, item) {
   }
 
   if ("lat" in item && "lng" in item && "alt" in item) {
-    chartLocData.push({lat : item.lat, lng : item.lng, alt: item.alt, dsec : item.dsec});
+    var dsec = (item.dsec * 1) / 1000;
+    chartLocData.push({lat : item.lat, lng : item.lng, alt: item.alt, dsec : dsec});
 
     var pos_icon = new ol.Feature({
         geometry: new ol.geom.Point(ol.proj.fromLonLat([item.lng *= 1, item.lat *= 1])),
