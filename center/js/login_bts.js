@@ -45,10 +45,9 @@ function naverinit() {
 }
 
 
-function naverSignInCallback() {
+function naverSignInCallback(token) {
   var skind = getCookie("dev_kind");
   if (skind != "naver") return;
-  var token = naverLogin.oauthParams.access_token;
   formSubmit(token);
 }
 
