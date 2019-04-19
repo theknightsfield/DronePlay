@@ -30,9 +30,11 @@
 		var naver_id_login = new naver_id_login("wSvRwDA6qt1OWrvVY542", "https://dev.droneplay.io/center/navercallback.html");
 		if (naver_id_login.oauthParams.access_token == "") {
 			alert("죄송합니다, 오류가 발생하였습니다.");
-			location.href="/index.html";
+			location.href="index.html";
 		}
-		else {naverSignInCallback(naver_id_login.oauthParams.access_token);}
+		else {
+			naverSignInCallback(naver_id_login.oauthParams.access_token);
+		}
 
 
 	</script>
