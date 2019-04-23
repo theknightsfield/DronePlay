@@ -290,10 +290,10 @@ function appendDesignTableWithFlightRecord(lat, lng, alt, speed, act, actparam) 
   tableCount++;
   var strid = "mission-" + tableCount;
   var appendRow = "<tr class='odd gradeX' id='misstr_" + tableCount + "'><td>" + tableCount + "</td><td colspan=3>"
-      + "<input name='latdata_" + tableCount + "' id='latdata_" + tableCount + "' type='text' placeholder='Latitude' value='"+lat+"' class='form-control'><input name='lngdata_" + tableCount + "' id='lngdata_" + tableCount + "' type='text' placeholder='Longitude' value='"+lng+"' class='form-control'>"
-      + "<input name='altdata_" + tableCount + "' id='altdata_" + tableCount + "' type='text' placeholder='Altitude (m)' class='form-control' value='"+alt+"'><br>"
-      + "<input name='speeddata_" + tableCount + "' id='speeddata_" + tableCount + "' type='text' placeholder='Speed (m/s)' class='form-control' value='"+speed+"'>"
-      + "<select class='form-control' id='actiondata_" + tableCount + "'>"
+      + "<input name='latdata_" + tableCount + "' id='latdata_" + tableCount + "' type='text' placeholder='Latitude' value='"+lat+"' class='form-control latdata'><input name='lngdata_" + tableCount + "' id='lngdata_" + tableCount + "' type='text' placeholder='Longitude' value='"+lng+"' class='form-control lngdata'>"
+      + "<input name='altdata_" + tableCount + "' id='altdata_" + tableCount + "' type='text' placeholder='Altitude (m)' class='form-control altdata' value='"+alt+"'><br>"
+      + "<input name='speeddata_" + tableCount + "' id='speeddata_" + tableCount + "' type='text' placeholder='Speed (m/s)' class='form-control speeddata' value='"+speed+"'>"
+      + "<select class='form-control actiondata' id='actiondata_" + tableCount + "'>"
           + "<option selected value=0>STAY</option>"
           + "<option value=1>START_TAKE_PHOTO</option>"
           + "<option value=2>START_RECORD</option>"
@@ -302,7 +302,7 @@ function appendDesignTableWithFlightRecord(lat, lng, alt, speed, act, actparam) 
           + "<option value=5>GIMBAL_PITCH</option>"
           + "<option value=7>CAMERA_ZOOM</option>"
           + "<option value=8>CAMERA_FOCUS</option>"
-      + "</select><input name='actionparam_" + tableCount + "' id='actionparam_" + tableCount + "' placeholder='action Param' type='text' class='form-control' value='"+actparam+"'>"
+      + "</select><input name='actionparam_" + tableCount + "' id='actionparam_" + tableCount + "' placeholder='action Param' type='text' class='form-control actionparam' value='"+actparam+"'>"
       + "<br><br><a href=javascript:removeDesignTableRow(" + tableCount + ");>Delete</a> <a href=javascript:moveToPositionOnMap("+lat+","+lng+");>Move</a>"
       + "</td></tr>";
 
@@ -315,10 +315,10 @@ function appendDesignTable(coordinates) {
   var lonLat = ol.proj.toLonLat(coordinates);
   var strid = "mission-" + tableCount;
   var appendRow = "<tr class='odd gradeX' id='misstr_" + tableCount + "'><td>" + tableCount + "</td><td colspan=3>"
-      + "<input name='latdata_" + tableCount + "' id='latdata_" + tableCount + "' type='text' placeholder='Latitude' value='"+lonLat[1]+"' class='form-control'><input name='lngdata_" + tableCount + "' id='lngdata_" + tableCount + "' type='text' placeholder='Longitude' value='"+lonLat[0]+"' class='form-control'>"
-      + "<input name='altdata_" + tableCount + "' id='altdata_" + tableCount + "' type='text' placeholder='Altitude (m)' class='form-control'><br>"
-      + "<input name='speeddata_" + tableCount + "' id='speeddata_" + tableCount + "' type='text' placeholder='Speed (m/s)' class='form-control'>"
-      + "<select class='form-control' id='actiondata_" + tableCount + "'>"
+      + "<input name='latdata_" + tableCount + "' id='latdata_" + tableCount + "' type='text' placeholder='Latitude' value='"+lonLat[1]+"' class='form-control latdata'><input name='lngdata_" + tableCount + "' id='lngdata_" + tableCount + "' type='text' placeholder='Longitude' value='"+lonLat[0]+"' class='form-control lngdata'>"
+      + "<input name='altdata_" + tableCount + "' id='altdata_" + tableCount + "' type='text' placeholder='Altitude (m)' class='form-control altdata'><br>"
+      + "<input name='speeddata_" + tableCount + "' id='speeddata_" + tableCount + "' type='text' placeholder='Speed (m/s)' class='form-control speeddata'>"
+      + "<select class='form-control actiondata' id='actiondata_" + tableCount + "'>"
           + "<option selected value=0>STAY</option>"
           + "<option value=1>START_TAKE_PHOTO</option>"
           + "<option value=2>START_RECORD</option>"
@@ -327,7 +327,7 @@ function appendDesignTable(coordinates) {
           + "<option value=5>GIMBAL_PITCH</option>"
           + "<option value=7>CAMERA_ZOOM</option>"
           + "<option value=8>CAMERA_FOCUS</option>"
-          + "</select><input name='actionparam_" + tableCount + "' id='actionparam_" + tableCount + "' placeholder='action Param' type='text' class='form-control'>"
+          + "</select><input name='actionparam_" + tableCount + "' id='actionparam_" + tableCount + "' placeholder='action Param' type='text' class='form-control actionparam'>"
           + "<br><br><a href=javascript:removeDesignTableRow(" + tableCount + ");>Delete</a> <a href=javascript:moveToPositionOnMap("+lonLat[1]+","+lonLat[0]+");>Move</a>"
     + "</td></tr>"
     $('#dataTable-points > tbody:last').append(appendRow);
