@@ -111,7 +111,7 @@ function setDesignTableWithFlightRecord(data) {
   if (data == null) return;
 
   data.forEach(function (item) {
-      appendDesignTable(item.lat, item.lng, item.alt, item.speed, item.act, item.actparam);
+      appendDesignTableWithFlightRecord(item.lat, item.lng, item.alt, item.speed, item.act, item.actparam);
   });
 }
 
@@ -231,7 +231,7 @@ function appendMissionsToMonitor(mission) {
 }
 
 
-function appendDesignTable(lat, lng, alt, speed, act, actparam) {
+function appendDesignTableWithFlightRecord(lat, lng, alt, speed, act, actparam) {
   tableCount++;
   var strid = "mission-" + tableCount;
   var appendRow = "<tr class='odd gradeX' id='misstr_" + tableCount + "'><td>" + tableCount + "</td><td colspan=3>"
