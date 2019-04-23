@@ -317,7 +317,7 @@ function appendDesignTable(coordinates) {
           + "<option value=7>CAMERA_ZOOM</option>"
           + "<option value=8>CAMERA_FOCUS</option>"
           + "</select><input name='actionparam_" + tableCount + "' id='actionparam_" + tableCount + "' placeholder='action Param' type='text' class='form-control'>"
-          + "<br><br><a href=javascript:removeDesignTableRow(" + tableCount + ");>Delete</a> <a href=javascript:moveToPositionOnMap("+onLat[1]+","+onLat[0]+");>Move</a>"
+          + "<br><br><a href=javascript:removeDesignTableRow(" + tableCount + ");>Delete</a> <a href=javascript:moveToPositionOnMap("+lonLat[1]+","+lonLat[0]+");>Move</a>"
     + "</td></tr>"
     $('#dataTable-points > tbody:last').append(appendRow);
 }
