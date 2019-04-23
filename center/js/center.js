@@ -520,16 +520,16 @@ function btnRegister() {
     console.log("Number of rows : " + size);
     tb.find("tr").each(function(index, element) {
       var colSize = $(element).find('td').length;
-      console.log("  Number of cols in row " + (index + 1) + " : " + colSize);
-      $(element).find('td').each(function(index, ele) {
-        var altdata = $(ele).find(".altdata").val();
-        var actiondata = $(ele).find(".actiondata").val();
-        var actionparam = $(ele).find(".actionparam").val();
-        var speeddata = $(ele).find(".speeddata").val();
-        var latdata = $(ele).find(".latdata").val();
-        var lngdata = $(ele).find(".lngdata").val();
-        nPositions.push({lat:latdata, lng:lngdata, alt:altdata, act:actiondata, actparam:actionparam, speed:speeddata});
-      });
+      var index = 0;
+      var ele = $(element).find('td')[1];
+      var altdata = $(ele).find(".altdata").val();
+      var actiondata = $(ele).find(".actiondata").val();
+      var actionparam = $(ele).find(".actionparam").val();
+      var speeddata = $(ele).find(".speeddata").val();
+      var latdata = $(ele).find(".latdata").val();
+      var lngdata = $(ele).find(".lngdata").val();
+      nPositions.push({lat:latdata, lng:lngdata, alt:altdata, act:actiondata, actparam:actionparam, speed:speeddata});
+
     });
 
     var userid = getCookie("dev_user_id");
