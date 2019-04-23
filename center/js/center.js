@@ -371,7 +371,7 @@ function getFlightList() {
         return;
       }
 
-      setFlightlist(r.data);
+      setFlightlist(r.data.data);
       $('#getFlightListBtn').hide(1500);
     }
   }, function(request,status,error) {
@@ -392,7 +392,7 @@ function setFlightlist(data) {
 
 function appendFlightListTable(name, dtimestamp, data) {
   var appendRow = "<tr class='odd gradeX' id='flight-list-" + tableCount + "'><td width='10%'>" + (tableCount + 1) + "</td>"
-      + "<td class='center' bgcolor='#eee'><a href='design.html?record_name=\""+ name +"\"'>"
+      + "<td class='center' bgcolor='#eee'><a href='design.html?record_name=" + name + "'>"
       + name + "</a></td><td width='30%' class='center'> " + dtimestamp + "</td>"
       + "<td width='20%' bgcolor='#fff'>"
       + "<button class='btn btn-primary' type='button' onClick='deleteFlightData(" + tableCount + ");'>삭제</button></td>"
