@@ -578,13 +578,39 @@ response.raise_for_status()
   {
     "result":"success",
     "data":[
-      {"regtime":"Sun Dec 30 2018 13:11:39 GMT+0000 (UTC)",
-        "mission":[{"alt":3,"lng":131.86471756082,"act":0,"id":"mission-1","lat":37.243835988516,"actparam":1, "speed":10},{"alt":3,"lng":131.86645915266,"act":0,"id":"mission-2","lat":37.244423805175,"actparam":1, "speed":10},{"alt":3,"lng":131.86671844684,"act":0,"id":"mission-3","lat":37.243568918929,"actparam":1, "speed":10},{"alt":3,"lng":131.86493079644,"act":0,"id":"mission-4","lat":37.243182141771,"actparam":1, "speed":10},{"alt":3,"lng":131.86491855886,"act":0,"id":"mission-5","lat":37.243758419995,"actparam":1, "speed":10},{"alt":3,"lng":131.86492249835,"act":0,"id":"mission-6","lat":37.243906083699,"actparam":1, "speed":10},{"alt":3,"lng":131.86492249835,"act":0,"id":"mission-7","lat":37.243903981846,"actparam":1, "speed":10}],"name":"MISSIONNAME","clientid":"EMAILADDRESS"}]
+          {
+          "regtime":"Sun Dec 30 2018 13:11:39 GMT+0000 (UTC)",
+          "mission":[
+              {"alt":3,"lng":131.86471756082,"act":0,"id":"mission-1","lat":37.243835988516,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86645915266,"act":0,"id":"mission-2","lat":37.244423805175,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86671844684,"act":0,"id":"mission-3","lat":37.243568918929,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86493079644,"act":0,"id":"mission-4","lat":37.243182141771,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86491855886,"act":0,"id":"mission-5","lat":37.243758419995,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86492249835,"act":0,"id":"mission-6","lat":37.243906083699,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86492249835,"act":0,"id":"mission-7","lat":37.243903981846,"actparam":1, "speed":10}
+            ],
+          "name":"MISSIONNAME",
+          "clientid":"EMAILADDRESS"
+      },
+
+      {
+          "regtime":"Sun Dec 30 2018 13:11:39 GMT+0000 (UTC)",
+          "mission":[
+              {"alt":3,"lng":131.86471756082,"act":0,"id":"mission-1","lat":37.243835988516,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86645915266,"act":0,"id":"mission-2","lat":37.244423805175,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86671844684,"act":0,"id":"mission-3","lat":37.243568918929,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86493079644,"act":0,"id":"mission-4","lat":37.243182141771,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86491855886,"act":0,"id":"mission-5","lat":37.243758419995,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86492249835,"act":0,"id":"mission-6","lat":37.243906083699,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86492249835,"act":0,"id":"mission-7","lat":37.243903981846,"actparam":1, "speed":10}
+            ],
+          "name":"MISSIONNAME_2",
+          "clientid":"EMAILADDRESS"
       }
     ]
   }
 ```
-DronePlay Mission Center의 Mission 데이터를 불러옵니다.
+DronePlay Mission Center의 Mission 목록을 불러옵니다.
 
 ### HTTP 요청
 
@@ -709,3 +735,526 @@ clientid | 개발자 Token을 받기위해 입력한 이메일 주소를 입력�
 action | 'mission' 입력합니다.
 daction | 'delete' 입력합니다.
 mname | 삭제할 Mission 이름을 입력합니다.
+
+
+
+
+# 비행기록 저장하기/가져오기
+
+## 비행기록 저장하기
+
+
+```shell
+
+curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"position", "daction":"upload", "name" : "FLIGHTRECORDNAME", "data" : [{"lat":"12.134132","lng":"12.1324","alt":5,"speed":0,"act":1,"actparam":1,"id":"mission-1"},{"lat":"12.134132","lng":"12.1324","alt":5,"speed":0,"act":1,"actparam":1,"id":"mission-2"}]}' http://api.droneplay.io/v1/
+
+```
+
+```php
+
+$body['action'] = 'position';
+$body['daction'] = 'upload';
+$body['clientid'] = 'EMAILADDRESS';
+$body['name'] = "FLIGHTRECORDNAME";
+$body['missiondata'] = json_decode('[{"lat":"12.134132","lng":"12.1324","alt":5,"speed":0,"act":1,"actparam":1,"id":"mission-1"},{"lat":"12.134132","lng":"12.1324","alt":5,"speed":0,"act":1,"actparam":1,"id":"mission-2"}]');
+
+$headers = array(
+        'Content-Type: application/json',
+        'droneplay-token: DRONEPLAYTOKEN'
+);
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, 'https://api.droneplay.io/v1/');
+curl_setopt($ch, CURLOPT_HTTPHEADER,  $headers);
+curl_setopt($ch, CURLOPT_POST,    true);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_POSTFIELDS,json_encode($body));
+$response = curl_exec($ch);
+//$json_list= json_decode($response, true);
+curl_close($ch);
+
+echo $response;
+
+
+```
+
+```javascript
+
+var jdata = {"clientid":"EMAILADDRESS", "action":"position", "daction":"upload", "name" : "FLIGHTRECORDNAME", "data" :[{"lat":"12.134132","lng":"12.1324","alt":5,"speed":0,"act":1,"actparam":1,"id":"mission-1"},{"lat":"12.134132","lng":"12.1324","alt":5,"speed":0,"act":1,"actparam":1,"id":"mission-2"}]};
+
+$.ajax({url : "https://api.droneplay.io/v1/",
+       dataType : "json",
+       contentType : "application/json",
+       crossDomain: true,
+       cache : false,
+       data : JSON.stringify(jdata),
+       type : "POST",
+       async: false,
+       beforeSend: function(request) {
+          request.setRequestHeader("droneplay-token", "DRONEPLAYTOKEN");
+        },
+       success : function(r) {
+         console.log(JSON.stringify(r));
+         if(r.result == "success") {
+           //r.data;
+         }
+       },
+       error:function(request,status,error){
+           alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+       }
+});
+
+```
+
+```python
+
+import requests
+headers = {
+    'Content-Type': 'application/json',
+    'droneplay-token' : 'DRONEPLAYTOKEN'
+}
+data = {
+    'action': 'position',
+    'daction': 'upload',
+    'clientid' : 'EMAILADDRESS'
+    "name" : "FLIGHTRECORDNAME",
+    "data" : [{"lat":"12.134132","lng":"12.1324","alt":5,"speed":0,"act":1,"actparam":1,"id":"mission-1"},{"lat":"12.134132","lng":"12.1324","alt":5,"speed":0,"act":1,"actparam":1,"id":"mission-2"}]
+}
+
+url = 'https://api.droneplay.io/v1/'
+response = requests.post(url, headers=headers,
+                         data=json.dumps(data))
+response.raise_for_status()
+'response.json()
+
+```
+
+> 상기의 명령은 아래와 같이 JSON 구조로 응답합니다:
+
+```json
+  {
+    "result": "success"
+  }
+```
+
+DronePlay Mission Center에 Mission 데이터를 기록합니다.
+
+### HTTP 요청
+
+`POST http://apis.droneplay.io/v1/`
+
+### URL 파라메터
+
+파라메터 | 설명
+--------- | -----------
+droneplay-token | 부여받은 개발자 Token값을 헤더에 입력합니다.
+clientid | 개발자 Token을 받기위해 입력한 이메일 주소를 입력합니다.
+action | 'position'을 입력합니다.
+daction | 'upload'를 입력합니다.
+name | 비행기록 이름을 입력합니다.
+data | 비행기록 목록을 입력합니다.
+
+### missiondata 파라메터 포멧
+[{lat:latitude, lng:longitude, alt:altitude, act:action, actparam:actionparam, speed:speed, id:mission-id}]
+
+파라메터 | 설명
+--------- | -----------
+lat | 위도
+lng | 경도
+alt | 고도 (미터)
+act | 해당위치에서 드론이 수행한 행동 (DJI기준, 또는 개발자 임의 정의)
+actparam | action 에 대한 파라메터
+id | Mission의 고유 아이디 (부여한 Mission 이름의 범위내에서 고유한 아이디, 개발자 임의입력 가능)
+
+### act, action param 값 참고 (DJI 기준)
+액션 | act 값
+--------- | -----------
+STAY|0
+START_TAKE_PHOTO|1
+START_RECORD|2
+STOP_RECORD|3
+ROTATE_AIRCRAFT|4
+GIMBAL_PITCH|5
+
+[DJI사의 WayPoint Action 값을 참고해 주세요](https://developer.dji.com/api-reference/android-api/Components/Missions/DJIWaypoint_DJIWaypointAction.html#djiwaypoint_djiwaypointactiontype_inline).
+
+
+## 모든 비행기록 불러오기
+
+
+```shell
+
+curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"position", "daction":"download"}' http://api.droneplay.io/v1/
+
+```
+
+```php
+
+$body['action'] = 'position';
+$body['daction'] = 'download';
+$body['clientid'] = 'EMAILADDRESS';
+
+$headers = array(
+        'Content-Type: application/json',
+        'droneplay-token: DRONEPLAYTOKEN'
+);
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, 'https://api.droneplay.io/v1/');
+curl_setopt($ch, CURLOPT_HTTPHEADER,  $headers);
+curl_setopt($ch, CURLOPT_POST,    true);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_POSTFIELDS,json_encode($body));
+$response = curl_exec($ch);
+//$json_list= json_decode($response, true);
+curl_close($ch);
+
+echo $response;
+
+
+```
+
+```javascript
+
+var jdata = {"action": "position", "daction": "download", "clientid" : "EMAILADDRESS"};
+
+$.ajax({url : "https://api.droneplay.io/v1/",
+       dataType : "json",
+       contentType : "application/json",
+       crossDomain: true,
+       cache : false,
+       data : JSON.stringify(jdata),
+       type : "POST",
+       async: false,
+       beforeSend: function(request) {
+          request.setRequestHeader("droneplay-token", "DRONEPLAYTOKEN");
+        },
+       success : function(r) {
+         console.log(JSON.stringify(r));
+         if(r.result == "success") {
+           //r.data;
+         }
+       },
+       error:function(request,status,error){
+           alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+       }
+});
+
+```
+
+```python
+
+import requests
+headers = {
+    'Content-Type': 'application/json',
+    'droneplay-token' : 'DRONEPLAYTOKEN'
+}
+data = {
+    'action': 'position',
+    'daction': 'download',
+    'clientid' : 'EMAILADDRESS'
+}
+
+url = 'https://api.droneplay.io/v1/'
+response = requests.post(url, headers=headers,
+                         data=json.dumps(data))
+response.raise_for_status()
+'response.json()
+
+```
+
+> 상기의 명령은 아래와 같이 JSON 구조로 응답합니다:
+
+```json
+  {
+    "result":"success",
+    "data":[
+          {
+          "regtime":"Sun Dec 30 2018 13:11:39 GMT+0000 (UTC)",
+          "data":[
+              {"alt":3,"lng":131.86471756082,"act":0,"id":"mission-1","lat":37.243835988516,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86645915266,"act":0,"id":"mission-2","lat":37.244423805175,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86671844684,"act":0,"id":"mission-3","lat":37.243568918929,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86493079644,"act":0,"id":"mission-4","lat":37.243182141771,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86491855886,"act":0,"id":"mission-5","lat":37.243758419995,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86492249835,"act":0,"id":"mission-6","lat":37.243906083699,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86492249835,"act":0,"id":"mission-7","lat":37.243903981846,"actparam":1, "speed":10}
+            ],
+          "name":"MISSIONNAME",
+          "clientid":"EMAILADDRESS"
+      },
+
+      {
+          "regtime":"Sun Dec 30 2018 13:11:39 GMT+0000 (UTC)",
+          "mission":[
+              {"alt":3,"lng":131.86471756082,"act":0,"id":"mission-1","lat":37.243835988516,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86645915266,"act":0,"id":"mission-2","lat":37.244423805175,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86671844684,"act":0,"id":"mission-3","lat":37.243568918929,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86493079644,"act":0,"id":"mission-4","lat":37.243182141771,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86491855886,"act":0,"id":"mission-5","lat":37.243758419995,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86492249835,"act":0,"id":"mission-6","lat":37.243906083699,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86492249835,"act":0,"id":"mission-7","lat":37.243903981846,"actparam":1, "speed":10}
+            ],
+          "name":"MISSIONNAME_2",
+          "clientid":"EMAILADDRESS"
+      }
+    ]
+  }
+```
+
+비행기록을 모두 불러옵니다.
+
+### HTTP 요청
+
+`POST http://apis.droneplay.io/v1/`
+
+### URL 파라메터
+
+파라메터 | 설명
+--------- | -----------
+droneplay-token | 부여받은 개발자 Token값을 헤더에 입력합니다.
+clientid | 개발자 Token을 받기위해 입력한 이메일 주소를 입력합니다.
+action | 'position'을 입력합니다.
+daction | 'download'을 입력합니다.
+
+
+
+## 비행기록 1개 불러오기
+
+
+```shell
+
+curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"position", "daction":"download_spe", "name": "FLIGHTRECORDNAME"}' http://api.droneplay.io/v1/
+
+```
+
+```php
+
+$body['action'] = 'position';
+$body['daction'] = 'download_spe';
+$body['name'] = 'FLIGHTRECORDNAME';
+$body['clientid'] = 'EMAILADDRESS';
+
+$headers = array(
+        'Content-Type: application/json',
+        'droneplay-token: DRONEPLAYTOKEN'
+);
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, 'https://api.droneplay.io/v1/');
+curl_setopt($ch, CURLOPT_HTTPHEADER,  $headers);
+curl_setopt($ch, CURLOPT_POST,    true);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_POSTFIELDS,json_encode($body));
+$response = curl_exec($ch);
+//$json_list= json_decode($response, true);
+curl_close($ch);
+
+echo $response;
+
+
+```
+
+```javascript
+
+var jdata = {"action": "position", "daction": "download_spe", "clientid" : "EMAILADDRESS", 'name': 'FLIGHTRECORDNAME'};
+
+$.ajax({url : "https://api.droneplay.io/v1/",
+       dataType : "json",
+       contentType : "application/json",
+       crossDomain: true,
+       cache : false,
+       data : JSON.stringify(jdata),
+       type : "POST",
+       async: false,
+       beforeSend: function(request) {
+          request.setRequestHeader("droneplay-token", "DRONEPLAYTOKEN");
+        },
+       success : function(r) {
+         console.log(JSON.stringify(r));
+         if(r.result == "success") {
+           //r.data;
+         }
+       },
+       error:function(request,status,error){
+           alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+       }
+});
+
+```
+
+```python
+
+import requests
+headers = {
+    'Content-Type': 'application/json',
+    'droneplay-token' : 'DRONEPLAYTOKEN'
+}
+data = {
+    'action': 'position',
+    'daction': 'download_spe',
+    'name': 'FLIGHTRECORDNAME',
+    'clientid' : 'EMAILADDRESS'
+}
+
+url = 'https://api.droneplay.io/v1/'
+response = requests.post(url, headers=headers,
+                         data=json.dumps(data))
+response.raise_for_status()
+'response.json()
+
+```
+
+> 상기의 명령은 아래와 같이 JSON 구조로 응답합니다:
+
+```json
+  {
+    "result":"success",
+    "data":[
+          {
+          "regtime":"Sun Dec 30 2018 13:11:39 GMT+0000 (UTC)",
+          "data":[
+              {"alt":3,"lng":131.86471756082,"act":0,"id":"mission-1","lat":37.243835988516,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86645915266,"act":0,"id":"mission-2","lat":37.244423805175,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86671844684,"act":0,"id":"mission-3","lat":37.243568918929,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86493079644,"act":0,"id":"mission-4","lat":37.243182141771,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86491855886,"act":0,"id":"mission-5","lat":37.243758419995,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86492249835,"act":0,"id":"mission-6","lat":37.243906083699,"actparam":1, "speed":10},
+              {"alt":3,"lng":131.86492249835,"act":0,"id":"mission-7","lat":37.243903981846,"actparam":1, "speed":10}
+            ],
+          "name":"MISSIONNAME",
+          "clientid":"EMAILADDRESS"
+      }
+    ]
+  }
+```
+
+지정한 이름의 비행기록 1개를 불러옵니다.
+
+### HTTP 요청
+
+`POST http://apis.droneplay.io/v1/`
+
+### URL 파라메터
+
+파라메터 | 설명
+--------- | -----------
+droneplay-token | 부여받은 개발자 Token값을 헤더에 입력합니다.
+clientid | 개발자 Token을 받기위해 입력한 이메일 주소를 입력합니다.
+action | 'position'을 입력합니다.
+daction | 'download_spe'을 입력합니다.
+name | 비행기록 이름을 입력합니다.
+
+
+## 비행기록 삭제하기
+
+
+```shell
+
+curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"position", "daction":"delete", "name":"FLIGHTRECORDNAME"}' http://api.droneplay.io/v1/
+
+```
+
+```php
+
+$body['action'] = 'position';
+$body['daction'] = 'delete';
+$body['clientid'] = 'EMAILADDRESS';
+$body['name'] = "FLIGHTRECORDNAME";
+
+$headers = array(
+        'Content-Type: application/json',
+        'droneplay-token: DRONEPLAYTOKEN'
+);
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, 'https://api.droneplay.io/v1/');
+curl_setopt($ch, CURLOPT_HTTPHEADER,  $headers);
+curl_setopt($ch, CURLOPT_POST,    true);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_POSTFIELDS,json_encode($body));
+$response = curl_exec($ch);
+//$json_list= json_decode($response, true);
+curl_close($ch);
+
+echo $response;
+
+
+```
+
+```javascript
+
+var jdata = {"action":"position", "daction": "delete", "clientid" : "EMAILADDRESS", "name" : "FLIGHTRECORDNAME"};
+
+$.ajax({url : "https://api.droneplay.io/v1/",
+       dataType : "json",
+       contentType : "application/json",
+       crossDomain: true,
+       cache : false,
+       data : JSON.stringify(jdata),
+       type : "POST",
+       async: false,
+       beforeSend: function(request) {
+          request.setRequestHeader("droneplay-token", "DRONEPLAYTOKEN");
+        },
+       success : function(r) {
+         console.log(JSON.stringify(r));
+         if(r.result == "success") {
+           //r.data;
+         }
+       },
+       error:function(request,status,error){
+           alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+       }
+});
+
+```
+
+```python
+
+import requests
+headers = {
+    'Content-Type': 'application/json',
+    'droneplay-token' : 'DRONEPLAYTOKEN'
+}
+data = {
+    'action': 'position',
+    'daction': 'delete',
+    'clientid' : 'EMAILADDRESS',
+    'mname' : 'MISSIONNAME'
+}
+
+url = 'https://api.droneplay.io/v1/'
+response = requests.post(url, headers=headers,
+                         data=json.dumps(data))
+response.raise_for_status()
+'response.json()
+
+```
+
+> 상기의 명령은 아래와 같이 JSON 구조로 응답합니다:
+
+```json
+  {
+    "result":"success"
+  }
+```
+비행기록 1개 삭제합니다.
+
+### HTTP 요청
+
+`POST http://apis.droneplay.io/v1/`
+
+### URL 파라메터
+
+파라메터 | 설명
+--------- | -----------
+droneplay-token | 부여받은 개발자 Token값을 헤더에 입력합니다.
+clientid | 개발자 Token을 받기위해 입력한 이메일 주소를 입력합니다.
+action | 'position' 입력합니다.
+daction | 'delete' 입력합니다.
+name | 삭제할 비행기록의 이름을 입력합니다.
