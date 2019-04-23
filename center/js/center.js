@@ -180,7 +180,7 @@ function appendDesignTable(coordinates) {
   tableCount++;
   var lonLat = ol.proj.toLonLat(coordinates);
   var strid = "mission-" + tableCount;
-  aPositions.push( {lat:lonLat[1], lon: lonLat[0], alt: 3, act: 0, id: strid} );
+  aPositions.push( {lat:lonLat[1], lon: lonLat[0], alt: 0, act: 0, actparam : 0, speed : 0, id: strid} );
   var appendRow = "<tr class='odd gradeX' id='misstr_" + tableCount + "'><td>" + tableCount + "</td><td colspan=3>"
       + "<table border=0 width='100%'><tr><td class='center' bgcolor='#eee'>" + lonLat[1] + "</td><td class='center' bgcolor='#fff'> " + lonLat[0] + "</td>"
       + "<td class='center'><input name='altdata_" + tableCount + "' id='altdata_" + tableCount + "' type='text' placeholder='Altitude (m)' class='form-control'></td></tr>"
@@ -304,8 +304,12 @@ function btnRegister() {
     for (var i = 0; i < aPositions.length; i++) {
         var altdata = $("#altdata_" + (i + 1)).val();
         var actiondata = $("#actiondata_" + (i + 1)).val();
+        var actionparam = $("#actionparam_" + (i + 1)).val();
+        var speeddata = $("#speeddata_" + (i + 1)).val();
         aPositions[i].alt = altdata;
         aPositions[i].act = actiondata;
+        aPositions[i].actparam = actionparam;
+        aPositions[i].speed = speeddata;
     }
 
     var userid = getCookie("dev_user_id");
