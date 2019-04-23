@@ -5,7 +5,7 @@ var dokdo_view;
 var dokdo_icon;
 var map;
 var geolocation;
-var posLayer;
+var posSource;
 var posIcons = new Array();
 
 var flightDataArray = new Array();
@@ -138,11 +138,11 @@ function setDesignTableWithFlightRecord(data) {
   });
 
 
-  var posSource = new ol.source.Vector({
+  posSource = new ol.source.Vector({
       features: posIcons
   });
 
-  posLayer = new ol.layer.Vector({
+  var posLayer = new ol.layer.Vector({
       source: posSource
   });
 
@@ -271,8 +271,8 @@ function moveToPositionOnMap(lat, lng) {
 
 function removeDesignTableRow(index) {
   removeTableRow('misstr_' + index);
-  if (posLayer && (posIcons.length > 0))
-    posLayer.removeFeatures(posIcons[index]);
+  if (posSource && (posIcons.length > 0))
+    posSource.removeFeature(posIcons[index]);
 }
 
 function appendDesignTableWithFlightRecord(lat, lng, alt, speed, act, actparam) {
