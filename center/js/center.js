@@ -393,7 +393,7 @@ function btnClear() {
         return;
     }
 
-    var tb = $('#dataTable-Flight_list tbody');
+    var tb = $('#dataTable-points tbody');
     var size = tb.find("tr").length;
     console.log("Number of rows : " + size);
     tb.find("tr").each(function(index, element) {
