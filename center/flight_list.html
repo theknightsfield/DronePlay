@@ -133,117 +133,48 @@ gtag('config', 'UA-130136264-4');
         <div id="loading">
                       <div class="loader"></div>
                 </div>
-
                     <!-- Page Content -->
                     <div id="page-wrapper">
                         <div class="container-fluid">
                             <div class="row">
-                                <div class="col-lg-12">
-                                    <div><br></div>
-                                    <div class="panel panel-default loginforms">
-                                      <div class="panel-body">
-                                        <h3>Mission 디자인</h3>
-                                      </div>
+                              <div class="col-lg-12">
+                                  <div><br></div>
+                                  <div class="panel panel-default loginforms">
+                                    <div class="panel-body">
+                                      <h3>비행기록 목록</h3>
+                                      <button id="getFlightListBtn" class="btn btn-primary" type="button" onClick="getFlightList()">
+                                          비행기록 불러오기
+                                      </button>
                                     </div>
-                                </div>
+                                  </div>
+                              </div>
                                 <!-- /.col-lg-12 -->
                             </div>
                             <!-- /.row -->
                             <div class="row">
-                              <div class="col-lg-6">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-
-                                          <label for="queryData">주소</label>
-                                          <div class="input-group">
-                                                <input type="text" class="form-control" placeholder="Search..." id="queryData">
-                                                <span class="input-group-btn">
-                                                  <button class="btn btn-default" type="button" onClick="btnSearch()">
-                                                      <i class="fa fa-search"></i>
-                                                  </button>
-                                                </span>
-                                          </div>
-
-                                    </div>
-
-                                    <div class="panel-heading">
-
-                                      <label for="track">
-                                        track position
-                                        <input id="track" type="checkbox"/>
-                                      </label>
-                                      <hr>
-                                      <p>
-                                        position accuracy : <span id="accuracy"></span>&nbsp;&nbsp;
-                                        altitude : <span id="altitude"></span>&nbsp;&nbsp;
-                                        altitude accuracy : <span id="altitudeAccuracy"></span>&nbsp;&nbsp;
-                                        heading : <span id="heading"></span>&nbsp;&nbsp;
-                                        speed : <span id="speed"></span>
-                                      </p>
-                                    </div>
-
-                                    <div class="panel-heading">
-                                      <span id="monitor"></span>
-                                    </div>
-                                  </div>
-                              </div>
-                            </div>
-                        		<div class="row">
-
-                              <div class="col-lg-12">
-                                  <div class="panel panel-default">
-
-                                      <!-- /.panel-heading -->
-                                      <div class="panel-body">
-                                            <div id="map" class="map"></div>
-                                      </div>
-
-                                      <div class="panel-heading">
-                                        <button type="button" class="btn btn-primary" onClick="btnRegister();">Register</button>
-                                        <button type="button" class="btn btn-danger" onClick="btnClear();">Clear</button>
-                                      </div>
-
-                                  </div>
-                              </div>
                               <div class="col-lg-12">
                                 <div class="panel panel-default">
                                     <div class="panel-body">
-
-                                      Action Parameter<ul>
-<li>STAY : Keeps the aircraft at the waypoint's location. The actionParam parameter will determine how much time in milliseconds the aircraft will stay at the location with range of [0, 32767] milliseconds.</li>
-<li>START_TAKE_PHOTO :	Starts to shoot a photo. The actionParam for the waypoint action will be ignored. The maximum time set to execute this waypoint action is 6 seconds. If the time while executing the waypoint action goes above 6 seconds, the aircraft will stop executing the waypoint action and will move on to the next waypoint action, if one exists.</li>
-<li>START_RECORD :	Starts recording. The actionParam for the waypoint action will be ignored. The maximum time set to execute this waypoint action is 6 seconds. If the time while executing the waypoint action goes above 6 seconds (e.g. the camera is not present) the aircraft will stop executing the waypoint action and will move on to the next waypoint action, if one exists.</li>
-<li>STOP_RECORD	: Stops recording. The actionParam for the waypoint action will be ignored. The maximum time set to execute this waypoint action is 6 seconds. If the time while executing the waypoint action goes above 6 seconds (e.g. the camera is not present) the aircraft will stop executing the waypoint action and will move on to the next waypoint action, if one exists.</li>
-<li>ROTATE_AIRCRAFT :	Rotates the aircraft's yaw. The rotation direction is determined by the waypoint's turnMode property. The actionParam value must be in the range of [-180, 180] degrees.</li>
-<li>GIMBAL_PITCH :	Rotates the gimbal's pitch. The actionParam value should be in range [-90, 0] degrees.</li>
-</ul>
-                                    </div>
-                                    <div class="panel-body">
-
-                                      <table class="table table-striped table-bordered table-hover dataTable-points" id="dataTable-points">
+                                      <table width="100%" class="table table-striped table-bordered table-hover" id="dataTable-Flight_list">
                                           <thead>
                                               <tr>
-                                                  <th></th>
-                                                  <th>Latitude</th><th>Longitude</th><th>Altitude</th>
-                                              </tr>
-                                              <tr>
-                                                  <th></th>
-                                                  <th>Speed</th><th>Action</th><th></th>
+                                                  <th>Name</th>
+                                                  <th>Status</th>
+                                                  <th>Registered date</th>
+                                                  <th>etc</th>
                                               </tr>
                                           </thead>
                                           <tbody>
-
                                             </tbody>
                                           </table>
                                     </div>
                                 </div>
                               </div>
-                        		</div>
+                            </div>
                         </div>
                         <!-- /.container-fluid -->
                     </div>
                     <!-- /#page-wrapper -->
-
     </div>
     <!-- /#wrapper -->
     <script src="./js/ol.js"></script>
@@ -259,7 +190,6 @@ gtag('config', 'UA-130136264-4');
     <!-- Custom Theme JavaScript -->
     <script src="./dist/js/sb-admin-2.js"></script>
     <script src="./js/Chart.min.js"></script>
-    <script id="page_data" page_action="design" src="./js/center.js"></script>
-</body>
+    <script id="page_data" page_action="flightlist" src="./js/center.js"></script>
 
 </html>

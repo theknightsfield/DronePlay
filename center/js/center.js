@@ -1,6 +1,5 @@
 
 var bMonStarted = false;
-var aPositions = new Array();
 var pointSource;
 var dokdo_view;
 var dokdo_icon;
@@ -30,6 +29,9 @@ $(function() {
   }
   else if (page_action == "monitor") {
     monitorInit();
+  }
+  else if (page_action == "flightlist") {
+    flightListInit();
   }
   else if (page_action == "dromi") {
     dromiInit();
@@ -64,6 +66,10 @@ function designInit() {
   el('track').addEventListener('change', function() {
     geolocation.setTracking(this.checked);
   });
+}
+
+function flightListInit() {
+
 }
 
 function startMon() {
@@ -116,6 +122,7 @@ function isSet(value) {
 
   return true;
 }
+
 
 function getList() {
 
@@ -180,13 +187,10 @@ function appendDesignTable(coordinates) {
   tableCount++;
   var lonLat = ol.proj.toLonLat(coordinates);
   var strid = "mission-" + tableCount;
-  aPositions.push( {lat:lonLat[1], lon: lonLat[0], alt: 0, act: 0, actparam : 0, speed : 0, id: strid} );
   var appendRow = "<tr class='odd gradeX' id='misstr_" + tableCount + "'><td>" + tableCount + "</td><td colspan=3>"
-      + "<table border=0 width='100%'><tr><td class='center' bgcolor='#eee'>" + lonLat[1] + "</td><td class='center' bgcolor='#fff'> " + lonLat[0] + "</td>"
-      + "<td class='center'><input name='altdata_" + tableCount + "' id='altdata_" + tableCount + "' type='text' placeholder='Altitude (m)' class='form-control'></td></tr>"
-      + "<tr>"
-      + "<td class='center'><input name='speeddata_" + tableCount + "' id='speeddata_" + tableCount + "' type='text' placeholder='Speed (m/s)' class='form-control'></td>"
-      + "<td class='center'>"
+      + "<input name='latdata_" + tableCount + "' id='latdata_" + tableCount + "' type='text' placeholder='Latitude' value='"+onLat[1]+"' class='form-control'><input name='lngdata_" + tableCount + "' id='lngdata_" + tableCount + "' type='text' placeholder='Longitude' value='"+onLat[0]+"' class='form-control'>"
+      + "<input name='altdata_" + tableCount + "' id='altdata_" + tableCount + "' type='text' placeholder='Altitude (m)' class='form-control'><br>"
+      + "<input name='speeddata_" + tableCount + "' id='speeddata_" + tableCount + "' type='text' placeholder='Speed (m/s)' class='form-control'>"
       + "<select class='form-control' id='actiondata_" + tableCount + "'>"
           + "<option selected value=0>STAY</option>"
           + "<option value=1>START_TAKE_PHOTO</option>"
@@ -196,8 +200,7 @@ function appendDesignTable(coordinates) {
           + "<option value=5>GIMBAL_PITCH</option>"
           + "<option value=7>CAMERA_ZOOM</option>"
           + "<option value=8>CAMERA_FOCUS</option>"
-      + "</select></td><td class='center'><input name='actionparam_" + tableCount + "' id='actionparam_" + tableCount + "' placeholder='action Param' type='text' class='form-control'>"
-      + "</td></tr></table>"
+      + "</select><input name='actionparam_" + tableCount + "' id='actionparam_" + tableCount + "' placeholder='action Param' type='text' class='form-control'>"
   + "</td></tr>"
   $('#dataTable-points > tbody:last').append(appendRow);
 }
@@ -262,14 +265,100 @@ function btnClear() {
         return;
     }
 
-    for(var i=1;i<=tableCount;i++) {
-      $("#misstr_" + i).remove();
-    }
+    var tb = $('#dataTable-Flight_list tbody');
+    var size = tb.find("tr").length;
+    console.log("Number of rows : " + size);
+    tb.find("tr").each(function(index, element) {
+      // var colSize = $(element).find('td').length;
+      // console.log("  Number of cols in row " + (index + 1) + " : " + colSize);
+      // $(element).find('td').each(function(index, element) {
+      //   var colVal = $(element).text();
+      //   console.log("    Value in col " + (index + 1) + " : " + colVal.trim());
+      // });
+
+      $(element).remove();
+    });
 
     pointSource.clear();
-    aPositions = new Array();
     tableCount = 0;
     //window.location.reload();
+}
+
+
+function getFlightList() {
+  var userid = getCookie("dev_user_id");
+  var jdata = {"action": "position", "daction": "download", "clientid" : userid};
+
+  showLoader();
+  ajaxRequest(jdata, function (r) {
+    hideLoader();
+    if(r.result == "success") {
+      if (r.data == null || r.data.length == 0) {
+        alert("no data");
+        return;
+      }
+
+      setFlightlist(r.data);
+      $('#getFlightListBtn').hide(1500);
+    }
+  }, function(request,status,error) {
+    hideLoader();
+    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+  });
+}
+
+function setFlightlist(data) {
+  if (data == null || data.length == 0)
+    return;
+
+  data.forEach(function(item) {
+    appendFlightListTable(item.name, item.dtime, item.data);
+    flightDataArray.push(item);
+  });
+}
+
+function appendFlightListTable(name, dtimestamp, data) {
+  var appendRow = "<tr class='odd gradeX' id='flight-list-" + tableCount + "'><td width='10%'>" + (tableCount + 1) + "</td>"
+      + "<td class='center' bgcolor='#eee'><a href='javascript:uploadFromSet(" + tableCount + ");'>"
+      + name + "</a></td><td width='30%' class='center'> " + dtimestamp + "</td>"
+      + "<td width='20%' bgcolor='#fff'>"
+      + "<button class='btn btn-primary' type='button' onClick='deleteFlightData(" + tableCount + ");'>삭제</button></td>"
+      + "</tr>";
+  $('#dataTable-Flight_list > tbody:last').append(appendRow);
+  tableCount++;
+}
+
+
+function deleteFlightData(index) {
+
+  var item = flightDataArray[index];
+
+  if (confirm('정말로 ' + item.name + ' 비행기록을 삭제하시겠습니까?')) {
+  } else {
+    return;
+  }
+
+  var userid = getCookie("dev_user_id");
+  var jdata = {"action": "position", "daction": "delete", "clientid" : userid, "name" : item.name};
+
+  showLoader();
+  ajaxRequest(jdata, function (r) {
+    hideLoader();
+    if(r.result != "success") {
+      alert("삭제 실패!");
+    }
+    else {
+      removeTableRow("flight-list-" + index);
+    }
+  }, function(request,status,error) {
+    hideLoader();
+    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+  });
+}
+
+
+function removeTableRow(rowname) {
+  $("#" + rowname).remove();
 }
 
 function btnRemove(name, trname) {
@@ -289,11 +378,6 @@ function btnRemove(name, trname) {
 }
 
 function btnRegister() {
-    if (aPositions.length == 0) {
-      alert("좌표를 지정하지 않으셨습니다.");
-      return;
-    }
-
     var mname = prompt("Mission 이름을 입력해 주세요.", "");
 
     if (mname == null) {
@@ -301,19 +385,27 @@ function btnRegister() {
         return;
     }
 
-    for (var i = 0; i < aPositions.length; i++) {
-        var altdata = $("#altdata_" + (i + 1)).val();
-        var actiondata = $("#actiondata_" + (i + 1)).val();
-        var actionparam = $("#actionparam_" + (i + 1)).val();
-        var speeddata = $("#speeddata_" + (i + 1)).val();
-        aPositions[i].alt = altdata;
-        aPositions[i].act = actiondata;
-        aPositions[i].actparam = actionparam;
-        aPositions[i].speed = speeddata;
-    }
+    var nPositions = new Array();
+
+    var tb = $('.dataTable-points tbody');
+    var size = tb.find("tr").length;
+    console.log("Number of rows : " + size);
+    tb.find("tr").each(function(index, element) {
+      var colSize = $(element).find('td').length;
+      console.log("  Number of cols in row " + (index + 1) + " : " + colSize);
+      $(element).find('td').each(function(index, ele) {
+        var altdata = $(ele).find(".altdata input").val();
+        var actiondata = $(ele).find(".actiondata input").val();
+        var actionparam = $(ele).find(".actionparam input").val();
+        var speeddata = $(ele).find(".speeddata input").val();
+        var latdata = $(ele).find(".latdata input").val();
+        var lngdata = $(ele).find(".lngdata input").val();
+        nPositions.push({lat:latdata, lng:lngdata, alt:altdata, act:actiondata, actparam:actionparam, speed:speeddata});
+      });
+    });
 
     var userid = getCookie("dev_user_id");
-    var jdata = {"action": "mission","mname" : mname, "daction" : "set", "missiondata" : aPositions, "clientid" : userid};
+    var jdata = {"action": "mission","mname" : mname, "daction" : "set", "missiondata" : nPositions, "clientid" : userid};
 
     ajaxRequest(jdata, function (r) {
       if(r.result == "success") {
