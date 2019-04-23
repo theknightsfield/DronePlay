@@ -230,6 +230,11 @@ function appendMissionsToMonitor(mission) {
     });
 }
 
+function moveToPositionOnMap(lat, lng) {
+  var npos = ol.proj.fromLonLat([lng *= 1, lat *= 1]);
+  flyTo(npos, function() {});
+}
+
 
 function appendDesignTableWithFlightRecord(lat, lng, alt, speed, act, actparam) {
   tableCount++;
@@ -248,7 +253,7 @@ function appendDesignTableWithFlightRecord(lat, lng, alt, speed, act, actparam) 
           + "<option value=7>CAMERA_ZOOM</option>"
           + "<option value=8>CAMERA_FOCUS</option>"
       + "</select><input name='actionparam_" + tableCount + "' id='actionparam_" + tableCount + "' placeholder='action Param' type='text' class='form-control' value='"+actparam+"'>"
-      + "<br><br><a href=javascript:removeTableRow('misstr_" + tableCount + "');>Delete</a>"
+      + "<br><br><a href=javascript:removeTableRow('misstr_" + tableCount + "');>Delete</a> <a href=javascript:moveToPositionOnMap("+lat+","+lng+");>Move</a>"
       + "</td></tr>";
 
   $('#dataTable-points > tbody:last').append(appendRow);
@@ -273,7 +278,7 @@ function appendDesignTable(coordinates) {
           + "<option value=7>CAMERA_ZOOM</option>"
           + "<option value=8>CAMERA_FOCUS</option>"
           + "</select><input name='actionparam_" + tableCount + "' id='actionparam_" + tableCount + "' placeholder='action Param' type='text' class='form-control'>"
-          + "<br><br><a href=javascript:removeTableRow('misstr_" + tableCount + "');>Delete</a>"
+          + "<br><br><a href=javascript:removeTableRow('misstr_" + tableCount + "');>Delete</a> <a href=javascript:moveToPositionOnMap("+onLat[1]+","+onLat[0]+");>Move</a>"
     + "</td></tr>"
     $('#dataTable-points > tbody:last').append(appendRow);
 }
