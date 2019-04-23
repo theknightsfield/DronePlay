@@ -471,7 +471,7 @@ lat | 위도
 lng | 경도
 alt | 고도 (미터)
 act | 해당위치에서 드론이 수행할 행동 (DJI기준, 또는 개발자 임의 정의)
-actparam | action 에 대한 파라메
+actparam | action 에 대한 파라메터
 id | Mission의 고유 아이디 (부여한 Mission 이름의 범위내에서 고유한 아이디, 개발자 임의입력 가능)
 
 ### act, action param 값 참고 (DJI 기준)
