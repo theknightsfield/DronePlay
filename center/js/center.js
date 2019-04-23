@@ -304,7 +304,7 @@ function appendDesignTable(coordinates) {
   var lonLat = ol.proj.toLonLat(coordinates);
   var strid = "mission-" + tableCount;
   var appendRow = "<tr class='odd gradeX' id='misstr_" + tableCount + "'><td>" + tableCount + "</td><td colspan=3>"
-      + "<input name='latdata_" + tableCount + "' id='latdata_" + tableCount + "' type='text' placeholder='Latitude' value='"+onLat[1]+"' class='form-control'><input name='lngdata_" + tableCount + "' id='lngdata_" + tableCount + "' type='text' placeholder='Longitude' value='"+onLat[0]+"' class='form-control'>"
+      + "<input name='latdata_" + tableCount + "' id='latdata_" + tableCount + "' type='text' placeholder='Latitude' value='"+lonLat[1]+"' class='form-control'><input name='lngdata_" + tableCount + "' id='lngdata_" + tableCount + "' type='text' placeholder='Longitude' value='"+lonLat[0]+"' class='form-control'>"
       + "<input name='altdata_" + tableCount + "' id='altdata_" + tableCount + "' type='text' placeholder='Altitude (m)' class='form-control'><br>"
       + "<input name='speeddata_" + tableCount + "' id='speeddata_" + tableCount + "' type='text' placeholder='Speed (m/s)' class='form-control'>"
       + "<select class='form-control' id='actiondata_" + tableCount + "'>"
