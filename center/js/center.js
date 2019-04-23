@@ -6,6 +6,8 @@ var dokdo_icon;
 var map;
 var geolocation;
 
+var flightDataArray = new Array();
+
 $(function() {
   showLoader();
   mapInit();
@@ -65,6 +67,51 @@ function designInit() {
 
   el('track').addEventListener('change', function() {
     geolocation.setTracking(this.checked);
+  });
+
+	var record_name = location.search.split('record_name=')[1];
+  var mission_name = location.search.split('mission_name=')[1];
+
+	if (record_name != null) {
+		record_name = record_name.split('&')[0];
+    setDesignTableByFlightRecord(record_name);
+  }
+	else if (mission_name != null) {
+		mission_name = mission_name.split('&')[0];
+    setDesignTableByMission(mission_name);
+  }
+}
+
+function setDesignTableByMission(name) {
+
+}
+
+function setDesignTableByFlightRecord(name) {
+  var userid = getCookie("dev_user_id");
+  var jdata = {"action" : "position", "daction" : "download_spe", "clientid" : userid};
+
+  $("#loader").show();
+  ajaxRequest(jdata, function (r) {
+    if(r.result == "success") {
+      $("#loader").hide();
+      setDesignTableWithFlightRecord(r.data);
+    }
+    else {
+      alert("해당 비행기록이 존재하지 않거나 오류가 발생하였습니다.");
+      $("#loader").hide();
+    }
+  }, function(request,status,error) {
+
+    alert("일시적인 오류가 발생했습니다.");
+    $("#loader").hide();
+  });
+}
+
+function setDesignTableWithFlightRecord(data) {
+  if (data == null) return;
+
+  data.forEach(function (item) {
+      appendDesignTable(item.lat, item.lng, item.alt, item.speed, item.act, item.actparam);
   });
 }
 
@@ -183,6 +230,31 @@ function appendMissionsToMonitor(mission) {
     });
 }
 
+
+function appendDesignTable(lat, lng, alt, speed, act, actparam) {
+  tableCount++;
+  var strid = "mission-" + tableCount;
+  var appendRow = "<tr class='odd gradeX' id='misstr_" + tableCount + "'><td>" + tableCount + "</td><td colspan=3>"
+      + "<input name='latdata_" + tableCount + "' id='latdata_" + tableCount + "' type='text' placeholder='Latitude' value='"+lat+"' class='form-control'><input name='lngdata_" + tableCount + "' id='lngdata_" + tableCount + "' type='text' placeholder='Longitude' value='"+lng+"' class='form-control'>"
+      + "<input name='altdata_" + tableCount + "' id='altdata_" + tableCount + "' type='text' placeholder='Altitude (m)' class='form-control' value='"+alt+"'><br>"
+      + "<input name='speeddata_" + tableCount + "' id='speeddata_" + tableCount + "' type='text' placeholder='Speed (m/s)' class='form-control' value='"+speed+"'>"
+      + "<select class='form-control' id='actiondata_" + tableCount + "'>"
+          + "<option selected value=0>STAY</option>"
+          + "<option value=1>START_TAKE_PHOTO</option>"
+          + "<option value=2>START_RECORD</option>"
+          + "<option value=3>STOP_RECORD</option>"
+          + "<option value=4>ROTATE_AIRCRAFT</option>"
+          + "<option value=5>GIMBAL_PITCH</option>"
+          + "<option value=7>CAMERA_ZOOM</option>"
+          + "<option value=8>CAMERA_FOCUS</option>"
+      + "</select><input name='actionparam_" + tableCount + "' id='actionparam_" + tableCount + "' placeholder='action Param' type='text' class='form-control' value='"+actparam+"'>"
+      + "<br><br><a href=javascript:removeTableRow('misstr_" + tableCount + "');>Delete</a>"
+      + "</td></tr>";
+
+  $('#dataTable-points > tbody:last').append(appendRow);
+  $('#actiondata_' + tableCount).val(act).prop("selected", true);
+}
+
 function appendDesignTable(coordinates) {
   tableCount++;
   var lonLat = ol.proj.toLonLat(coordinates);
@@ -200,9 +272,10 @@ function appendDesignTable(coordinates) {
           + "<option value=5>GIMBAL_PITCH</option>"
           + "<option value=7>CAMERA_ZOOM</option>"
           + "<option value=8>CAMERA_FOCUS</option>"
-      + "</select><input name='actionparam_" + tableCount + "' id='actionparam_" + tableCount + "' placeholder='action Param' type='text' class='form-control'>"
-  + "</td></tr>"
-  $('#dataTable-points > tbody:last').append(appendRow);
+          + "</select><input name='actionparam_" + tableCount + "' id='actionparam_" + tableCount + "' placeholder='action Param' type='text' class='form-control'>"
+          + "<br><br><a href=javascript:removeTableRow('misstr_" + tableCount + "');>Delete</a>"
+    + "</td></tr>"
+    $('#dataTable-points > tbody:last').append(appendRow);
 }
 
 function appendMissionList(data) {
@@ -319,7 +392,7 @@ function setFlightlist(data) {
 
 function appendFlightListTable(name, dtimestamp, data) {
   var appendRow = "<tr class='odd gradeX' id='flight-list-" + tableCount + "'><td width='10%'>" + (tableCount + 1) + "</td>"
-      + "<td class='center' bgcolor='#eee'><a href='javascript:uploadFromSet(" + tableCount + ");'>"
+      + "<td class='center' bgcolor='#eee'><a href='design.html?record_name=\""+ name +"\"'>"
       + name + "</a></td><td width='30%' class='center'> " + dtimestamp + "</td>"
       + "<td width='20%' bgcolor='#fff'>"
       + "<button class='btn btn-primary' type='button' onClick='deleteFlightData(" + tableCount + ");'>삭제</button></td>"
