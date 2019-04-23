@@ -632,14 +632,14 @@ echo $response;
 </tr>
 </tbody></table>
 <h1 id='mission'>Mission 저장/불러오기</h1><h2 id='mission-2'>Mission 저장</h2><pre class="highlight shell tab-shell"><code>
-curl -H <span class="s2">"droneplay-token: DRONEPLAYTOKEN"</span> -H <span class="s2">"Content-type: application/json"</span> -X POST -d <span class="s1">'{"clientid":"EMAILADDRESS", "action":"mission", "daction":"set", "mname" : MISSIONNAME, "missiondata" : [{"12.134132","12.1324",5,0,"mission-1"},{"12.134132","12.1324",5,0,"mission-2"}]}'</span> http://api.droneplay.io/v1/
+curl -H <span class="s2">"droneplay-token: DRONEPLAYTOKEN"</span> -H <span class="s2">"Content-type: application/json"</span> -X POST -d <span class="s1">'{"clientid":"EMAILADDRESS", "action":"mission", "daction":"set", "mname" : MISSIONNAME, "missiondata" : [{"lat":"12.134132","lng":"12.1324","alt":5,"speed":0,"act":1,"actparam":1,"id":"mission-1"},{"lat":"12.134132","lng":"12.1324","alt":5,"speed":0,"act":1,"actparam":1,"id":"mission-2"}]}'</span> http://api.droneplay.io/v1/
 
 </code></pre><pre class="highlight php tab-php"><code>
 $body['action'] = 'mission';
 $body['daction'] = 'set';
 $body['clientid'] = 'EMAILADDRESS';
 $body['mname'] = "MISSIONNAME";
-$body['missiondata'] = json_decode('[{"12.134132","12.1324",5,0},{"12.134132","12.1324",5,0,"mission-1"}]');
+$body['missiondata'] = json_decode('[{"lat":"12.134132","lng":"12.1324","alt":5,"speed":0,"act":1,"actparam":1,"id":"mission-1"},{"lat":"12.134132","lng":"12.1324","alt":5,"speed":0,"act":1,"actparam":1,"id":"mission-2"}]');
 
 $headers = array(
         'Content-Type: application/json',
@@ -661,7 +661,7 @@ echo $response;
 
 
 </code></pre><pre class="highlight javascript tab-javascript"><code>
-<span class="kd">var</span> <span class="nx">jdata</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"action"</span><span class="p">:</span><span class="s2">"mission"</span><span class="p">,</span> <span class="s2">"daction"</span><span class="p">:</span> <span class="s2">"set"</span><span class="p">,</span> <span class="s2">"clientid"</span> <span class="p">:</span> <span class="s2">"EMAILADDRESS"</span><span class="p">,</span> <span class="s2">"mname"</span> <span class="p">:</span> <span class="s2">"MISSIONNAME"</span><span class="p">,</span> <span class="s2">"missiondata"</span> <span class="p">:</span> <span class="p">[{</span><span class="s2">"12.134132"</span><span class="p">,</span><span class="s2">"12.1324"</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="s2">"12.134132"</span><span class="p">,</span><span class="s2">"12.1324"</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="s2">"mission-1"</span><span class="p">}]};</span>
+<span class="kd">var</span> <span class="nx">jdata</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">"lat"</span><span class="p">:</span><span class="s2">"12.134132"</span><span class="p">,</span><span class="s2">"lng"</span><span class="p">:</span><span class="s2">"12.1324"</span><span class="p">,</span><span class="s2">"alt"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="s2">"speed"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s2">"act"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s2">"actparam"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s2">"id"</span><span class="p">:</span><span class="s2">"mission-1"</span><span class="p">},{</span><span class="s2">"lat"</span><span class="p">:</span><span class="s2">"12.134132"</span><span class="p">,</span><span class="s2">"lng"</span><span class="p">:</span><span class="s2">"12.1324"</span><span class="p">,</span><span class="s2">"alt"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="s2">"speed"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s2">"act"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s2">"actparam"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s2">"id"</span><span class="p">:</span><span class="s2">"mission-2"</span><span class="p">}];</span>
 
 <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span><span class="na">url</span> <span class="p">:</span> <span class="s2">"https://api.droneplay.io/v1/"</span><span class="p">,</span>
        <span class="na">dataType</span> <span class="p">:</span> <span class="s2">"json"</span><span class="p">,</span>
@@ -696,7 +696,7 @@ echo $response;
     <span class="s">'daction'</span><span class="p">:</span> <span class="s">'set'</span><span class="p">,</span>
     <span class="s">'clientid'</span> <span class="p">:</span> <span class="s">'EMAILADDRESS'</span>
     <span class="s">"mname"</span> <span class="p">:</span> <span class="s">"MISSIONNAME"</span><span class="p">,</span>
-    <span class="s">"missiondata"</span> <span class="p">:</span> <span class="p">[{</span><span class="s">"12.134132"</span><span class="p">,</span><span class="s">"12.1324"</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">},{</span><span class="s">"12.134132"</span><span class="p">,</span><span class="s">"12.1324"</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="s">"mission-1"</span><span class="p">}]</span>
+    <span class="s">"missiondata"</span> <span class="p">:</span> <span class="p">[{</span><span class="s">"lat"</span><span class="p">:</span><span class="s">"12.134132"</span><span class="p">,</span><span class="s">"lng"</span><span class="p">:</span><span class="s">"12.1324"</span><span class="p">,</span><span class="s">"alt"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="s">"speed"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s">"act"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s">"actparam"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s">"id"</span><span class="p">:</span><span class="s">"mission-1"</span><span class="p">},{</span><span class="s">"lat"</span><span class="p">:</span><span class="s">"12.134132"</span><span class="p">,</span><span class="s">"lng"</span><span class="p">:</span><span class="s">"12.1324"</span><span class="p">,</span><span class="s">"alt"</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="s">"speed"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s">"act"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s">"actparam"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="s">"id"</span><span class="p">:</span><span class="s">"mission-2"</span><span class="p">]</span>
 <span class="p">}</span>
 
 <span class="n">url</span> <span class="o">=</span> <span class="s">'https://api.droneplay.io/v1/'</span>
@@ -748,8 +748,8 @@ echo $response;
 <td>Mission 데이터 목록을 입력합니다.</td>
 </tr>
 </tbody></table>
-<h4 id='missiondata'>missiondata 파라메터 포멧</h4>
-<p>[{latitude, longitude, altitude, action, mission-id}]</p>
+<h3 id='missiondata'>missiondata 파라메터 포멧</h3>
+<p>[{lat:latitude, lng:longitude, alt:altitude, act:action, actparam:actionparam, speed:speed, id:mission-id}]</p>
 
 <table><thead>
 <tr>
@@ -758,26 +758,64 @@ echo $response;
 </tr>
 </thead><tbody>
 <tr>
-<td>latitude</td>
+<td>lat</td>
 <td>위도</td>
 </tr>
 <tr>
-<td>longitude</td>
+<td>lng</td>
 <td>경도</td>
 </tr>
 <tr>
-<td>altitude</td>
+<td>alt</td>
 <td>고도 (미터)</td>
 </tr>
 <tr>
-<td>action</td>
-<td>해당위치에서 드론이 수행할 행동 (개발자 임의입력 가능)</td>
+<td>act</td>
+<td>해당위치에서 드론이 수행할 행동 (DJI기준, 또는 개발자 임의 정의)</td>
 </tr>
 <tr>
-<td>mission-id</td>
+<td>actparam</td>
+<td>action 에 대한 파라메</td>
+</tr>
+<tr>
+<td>id</td>
 <td>Mission의 고유 아이디 (부여한 Mission 이름의 범위내에서 고유한 아이디, 개발자 임의입력 가능)</td>
 </tr>
 </tbody></table>
+<h3 id='act-action-param-dji'>act, action param 값 참고 (DJI 기준)</h3>
+<table><thead>
+<tr>
+<th>액션</th>
+<th>act 값</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>STAY</td>
+<td>0</td>
+</tr>
+<tr>
+<td>START_TAKE_PHOTO</td>
+<td>1</td>
+</tr>
+<tr>
+<td>START_RECORD</td>
+<td>2</td>
+</tr>
+<tr>
+<td>STOP_RECORD</td>
+<td>3</td>
+</tr>
+<tr>
+<td>ROTATE_AIRCRAFT</td>
+<td>4</td>
+</tr>
+<tr>
+<td>GIMBAL_PITCH</td>
+<td>5</td>
+</tr>
+</tbody></table>
+
+<p><a href="https://developer.dji.com/api-reference/android-api/Components/Missions/DJIWaypoint_DJIWaypointAction.html#djiwaypoint_djiwaypointactiontype_inline">DJI사의 WayPoint Action 값을 참고해 주세요</a>.</p>
 <h2 id='mission-3'>Mission 불러오기</h2><pre class="highlight shell tab-shell"><code>
 curl -H <span class="s2">"droneplay-token: DRONEPLAYTOKEN"</span> -H <span class="s2">"Content-type: application/json"</span> -X POST -d <span class="s1">'{"clientid":"EMAILADDRESS", "action":"mission", "daction":"get"}'</span> http://api.droneplay.io/v1/
 
@@ -856,7 +894,7 @@ echo $response;
     </span><span class="nt">"result"</span><span class="p">:</span><span class="s2">"success"</span><span class="p">,</span><span class="w">
     </span><span class="nt">"data"</span><span class="p">:[</span><span class="w">
       </span><span class="p">{</span><span class="nt">"regtime"</span><span class="p">:</span><span class="s2">"Sun Dec 30 2018 13:11:39 GMT+0000 (UTC)"</span><span class="p">,</span><span class="w">
-        </span><span class="nt">"mission"</span><span class="p">:[{</span><span class="nt">"alt"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="nt">"lon"</span><span class="p">:</span><span class="mf">131.86471756082</span><span class="p">,</span><span class="nt">"act"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"mission-1"</span><span class="p">,</span><span class="nt">"lat"</span><span class="p">:</span><span class="mf">37.243835988516</span><span class="p">},{</span><span class="nt">"alt"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="nt">"lon"</span><span class="p">:</span><span class="mf">131.86645915266</span><span class="p">,</span><span class="nt">"act"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"mission-2"</span><span class="p">,</span><span class="nt">"lat"</span><span class="p">:</span><span class="mf">37.244423805175</span><span class="p">},{</span><span class="nt">"alt"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="nt">"lon"</span><span class="p">:</span><span class="mf">131.86671844684</span><span class="p">,</span><span class="nt">"act"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"mission-3"</span><span class="p">,</span><span class="nt">"lat"</span><span class="p">:</span><span class="mf">37.243568918929</span><span class="p">},{</span><span class="nt">"alt"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="nt">"lon"</span><span class="p">:</span><span class="mf">131.86493079644</span><span class="p">,</span><span class="nt">"act"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"mission-4"</span><span class="p">,</span><span class="nt">"lat"</span><span class="p">:</span><span class="mf">37.243182141771</span><span class="p">},{</span><span class="nt">"alt"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="nt">"lon"</span><span class="p">:</span><span class="mf">131.86491855886</span><span class="p">,</span><span class="nt">"act"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"mission-5"</span><span class="p">,</span><span class="nt">"lat"</span><span class="p">:</span><span class="mf">37.243758419995</span><span class="p">},{</span><span class="nt">"alt"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="nt">"lon"</span><span class="p">:</span><span class="mf">131.86492249835</span><span class="p">,</span><span class="nt">"act"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"mission-6"</span><span class="p">,</span><span class="nt">"lat"</span><span class="p">:</span><span class="mf">37.243906083699</span><span class="p">},{</span><span class="nt">"alt"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="nt">"lon"</span><span class="p">:</span><span class="mf">131.86492249835</span><span class="p">,</span><span class="nt">"act"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"mission-7"</span><span class="p">,</span><span class="nt">"lat"</span><span class="p">:</span><span class="mf">37.243903981846</span><span class="p">}],</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"MISSIONNAME"</span><span class="p">,</span><span class="nt">"clientid"</span><span class="p">:</span><span class="s2">"EMAILADDRESS"</span><span class="p">}]</span><span class="w">
+        </span><span class="nt">"mission"</span><span class="p">:[{</span><span class="nt">"alt"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="nt">"lng"</span><span class="p">:</span><span class="mf">131.86471756082</span><span class="p">,</span><span class="nt">"act"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"mission-1"</span><span class="p">,</span><span class="nt">"lat"</span><span class="p">:</span><span class="mf">37.243835988516</span><span class="p">,</span><span class="nt">"actparam"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">"speed"</span><span class="p">:</span><span class="mi">10</span><span class="p">},{</span><span class="nt">"alt"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="nt">"lng"</span><span class="p">:</span><span class="mf">131.86645915266</span><span class="p">,</span><span class="nt">"act"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"mission-2"</span><span class="p">,</span><span class="nt">"lat"</span><span class="p">:</span><span class="mf">37.244423805175</span><span class="p">,</span><span class="nt">"actparam"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">"speed"</span><span class="p">:</span><span class="mi">10</span><span class="p">},{</span><span class="nt">"alt"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="nt">"lng"</span><span class="p">:</span><span class="mf">131.86671844684</span><span class="p">,</span><span class="nt">"act"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"mission-3"</span><span class="p">,</span><span class="nt">"lat"</span><span class="p">:</span><span class="mf">37.243568918929</span><span class="p">,</span><span class="nt">"actparam"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">"speed"</span><span class="p">:</span><span class="mi">10</span><span class="p">},{</span><span class="nt">"alt"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="nt">"lng"</span><span class="p">:</span><span class="mf">131.86493079644</span><span class="p">,</span><span class="nt">"act"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"mission-4"</span><span class="p">,</span><span class="nt">"lat"</span><span class="p">:</span><span class="mf">37.243182141771</span><span class="p">,</span><span class="nt">"actparam"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">"speed"</span><span class="p">:</span><span class="mi">10</span><span class="p">},{</span><span class="nt">"alt"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="nt">"lng"</span><span class="p">:</span><span class="mf">131.86491855886</span><span class="p">,</span><span class="nt">"act"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"mission-5"</span><span class="p">,</span><span class="nt">"lat"</span><span class="p">:</span><span class="mf">37.243758419995</span><span class="p">,</span><span class="nt">"actparam"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">"speed"</span><span class="p">:</span><span class="mi">10</span><span class="p">},{</span><span class="nt">"alt"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="nt">"lng"</span><span class="p">:</span><span class="mf">131.86492249835</span><span class="p">,</span><span class="nt">"act"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"mission-6"</span><span class="p">,</span><span class="nt">"lat"</span><span class="p">:</span><span class="mf">37.243906083699</span><span class="p">,</span><span class="nt">"actparam"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">"speed"</span><span class="p">:</span><span class="mi">10</span><span class="p">},{</span><span class="nt">"alt"</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="nt">"lng"</span><span class="p">:</span><span class="mf">131.86492249835</span><span class="p">,</span><span class="nt">"act"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="nt">"id"</span><span class="p">:</span><span class="s2">"mission-7"</span><span class="p">,</span><span class="nt">"lat"</span><span class="p">:</span><span class="mf">37.243903981846</span><span class="p">,</span><span class="nt">"actparam"</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nt">"speed"</span><span class="p">:</span><span class="mi">10</span><span class="p">}],</span><span class="nt">"name"</span><span class="p">:</span><span class="s2">"MISSIONNAME"</span><span class="p">,</span><span class="nt">"clientid"</span><span class="p">:</span><span class="s2">"EMAILADDRESS"</span><span class="p">}]</span><span class="w">
       </span><span class="p">}</span><span class="w">
     </span><span class="err">]</span><span class="w">
   </span><span class="err">}</span><span class="w">

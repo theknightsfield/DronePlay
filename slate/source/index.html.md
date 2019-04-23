@@ -353,7 +353,7 @@ end (optional) | timestamp 값입니다. GMT+0 기준입니다.
 
 ```shell
 
-curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"mission", "daction":"set", "mname" : MISSIONNAME, "missiondata" : [{"12.134132","12.1324",5,0,"mission-1"},{"12.134132","12.1324",5,0,"mission-2"}]}' http://api.droneplay.io/v1/
+curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"mission", "daction":"set", "mname" : MISSIONNAME, "missiondata" : [{"lat":"12.134132","lng":"12.1324","alt":5,"speed":0,"act":1,"actparam":1,"id":"mission-1"},{"lat":"12.134132","lng":"12.1324","alt":5,"speed":0,"act":1,"actparam":1,"id":"mission-2"}]}' http://api.droneplay.io/v1/
 
 ```
 
@@ -363,7 +363,7 @@ $body['action'] = 'mission';
 $body['daction'] = 'set';
 $body['clientid'] = 'EMAILADDRESS';
 $body['mname'] = "MISSIONNAME";
-$body['missiondata'] = json_decode('[{"12.134132","12.1324",5,0},{"12.134132","12.1324",5,0,"mission-1"}]');
+$body['missiondata'] = json_decode('[{"lat":"12.134132","lng":"12.1324","alt":5,"speed":0,"act":1,"actparam":1,"id":"mission-1"},{"lat":"12.134132","lng":"12.1324","alt":5,"speed":0,"act":1,"actparam":1,"id":"mission-2"}]');
 
 $headers = array(
         'Content-Type: application/json',
@@ -388,7 +388,7 @@ echo $response;
 
 ```javascript
 
-var jdata = {"action":"mission", "daction": "set", "clientid" : "EMAILADDRESS", "mname" : "MISSIONNAME", "missiondata" : [{"12.134132","12.1324",5,0},{"12.134132","12.1324",5,0,"mission-1"}]};
+var jdata = [{"lat":"12.134132","lng":"12.1324","alt":5,"speed":0,"act":1,"actparam":1,"id":"mission-1"},{"lat":"12.134132","lng":"12.1324","alt":5,"speed":0,"act":1,"actparam":1,"id":"mission-2"}];
 
 $.ajax({url : "https://api.droneplay.io/v1/",
        dataType : "json",
@@ -426,7 +426,7 @@ data = {
     'daction': 'set',
     'clientid' : 'EMAILADDRESS'
     "mname" : "MISSIONNAME",
-    "missiondata" : [{"12.134132","12.1324",5,0},{"12.134132","12.1324",5,0,"mission-1"}]
+    "missiondata" : [{"lat":"12.134132","lng":"12.1324","alt":5,"speed":0,"act":1,"actparam":1,"id":"mission-1"},{"lat":"12.134132","lng":"12.1324","alt":5,"speed":0,"act":1,"actparam":1,"id":"mission-2"]
 }
 
 url = 'https://api.droneplay.io/v1/'
@@ -462,16 +462,29 @@ daction | 'set'을 입력합니다.
 mname | Mission 이름을 입력합니다.
 missiondata | Mission 데이터 목록을 입력합니다.
 
-#### missiondata 파라메터 포멧
-[{latitude, longitude, altitude, action, mission-id}]
+### missiondata 파라메터 포멧
+[{lat:latitude, lng:longitude, alt:altitude, act:action, actparam:actionparam, speed:speed, id:mission-id}]
 
 파라메터 | 설명
 --------- | -----------
-latitude | 위도
-longitude | 경도
-altitude | 고도 (미터)
-action | 해당위치에서 드론이 수행할 행동 (개발자 임의입력 가능)
-mission-id | Mission의 고유 아이디 (부여한 Mission 이름의 범위내에서 고유한 아이디, 개발자 임의입력 가능)
+lat | 위도
+lng | 경도
+alt | 고도 (미터)
+act | 해당위치에서 드론이 수행할 행동 (DJI기준, 또는 개발자 임의 정의)
+actparam | action 에 대한 파라메
+id | Mission의 고유 아이디 (부여한 Mission 이름의 범위내에서 고유한 아이디, 개발자 임의입력 가능)
+
+### act, action param 값 참고 (DJI 기준)
+액션 | act 값
+--------- | -----------
+STAY|0
+START_TAKE_PHOTO|1
+START_RECORD|2
+STOP_RECORD|3
+ROTATE_AIRCRAFT|4
+GIMBAL_PITCH|5
+
+[DJI사의 WayPoint Action 값을 참고해 주세요](https://developer.dji.com/api-reference/android-api/Components/Missions/DJIWaypoint_DJIWaypointAction.html#djiwaypoint_djiwaypointactiontype_inline).
 
 
 ## Mission 불러오기
@@ -566,7 +579,7 @@ response.raise_for_status()
     "result":"success",
     "data":[
       {"regtime":"Sun Dec 30 2018 13:11:39 GMT+0000 (UTC)",
-        "mission":[{"alt":3,"lon":131.86471756082,"act":0,"id":"mission-1","lat":37.243835988516},{"alt":3,"lon":131.86645915266,"act":0,"id":"mission-2","lat":37.244423805175},{"alt":3,"lon":131.86671844684,"act":0,"id":"mission-3","lat":37.243568918929},{"alt":3,"lon":131.86493079644,"act":0,"id":"mission-4","lat":37.243182141771},{"alt":3,"lon":131.86491855886,"act":0,"id":"mission-5","lat":37.243758419995},{"alt":3,"lon":131.86492249835,"act":0,"id":"mission-6","lat":37.243906083699},{"alt":3,"lon":131.86492249835,"act":0,"id":"mission-7","lat":37.243903981846}],"name":"MISSIONNAME","clientid":"EMAILADDRESS"}]
+        "mission":[{"alt":3,"lng":131.86471756082,"act":0,"id":"mission-1","lat":37.243835988516,"actparam":1, "speed":10},{"alt":3,"lng":131.86645915266,"act":0,"id":"mission-2","lat":37.244423805175,"actparam":1, "speed":10},{"alt":3,"lng":131.86671844684,"act":0,"id":"mission-3","lat":37.243568918929,"actparam":1, "speed":10},{"alt":3,"lng":131.86493079644,"act":0,"id":"mission-4","lat":37.243182141771,"actparam":1, "speed":10},{"alt":3,"lng":131.86491855886,"act":0,"id":"mission-5","lat":37.243758419995,"actparam":1, "speed":10},{"alt":3,"lng":131.86492249835,"act":0,"id":"mission-6","lat":37.243906083699,"actparam":1, "speed":10},{"alt":3,"lng":131.86492249835,"act":0,"id":"mission-7","lat":37.243903981846,"actparam":1, "speed":10}],"name":"MISSIONNAME","clientid":"EMAILADDRESS"}]
       }
     ]
   }
