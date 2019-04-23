@@ -278,8 +278,8 @@ function appendMissionsToMonitor(mission) {
 
       var appendRow = "<tr class='odd gradeX' id='" + missionid + "'><td>" + tableCount + "</td><td>"
           + "<table border=0 width='100%'><tr><td width='50%' class='center' bgcolor='#eee'>" + item['lat'] + "</td><td width='50%' class='center' bgcolor='#fff'> " + item['lng'] + "</td></tr>"
-          + "<tr><td class='center' bgcolor='#eee'>" + item['alt'] + "</td><td class='center'>"
-          + missionActionString[act]
+          + "<tr><td class='center' bgcolor='#eee'>" + item['alt'] / item['speed']+ "</td><td class='center'>"
+          + missionActionString[act] / actparam
           + "</td></tr></table>"
       + "</td></tr>"
       $('#monitorTable-points > tbody:last').append(appendRow);
