@@ -522,12 +522,12 @@ function btnRegister() {
       var colSize = $(element).find('td').length;
       console.log("  Number of cols in row " + (index + 1) + " : " + colSize);
       $(element).find('td').each(function(index, ele) {
-        var altdata = $(ele).find(".altdata input").val();
-        var actiondata = $(ele).find(".actiondata input").val();
-        var actionparam = $(ele).find(".actionparam input").val();
-        var speeddata = $(ele).find(".speeddata input").val();
-        var latdata = $(ele).find(".latdata input").val();
-        var lngdata = $(ele).find(".lngdata input").val();
+        var altdata = $(ele).find(".altdata input[type='text']").val();
+        var actiondata = $(ele).find(".actiondata input[type='text']").val();
+        var actionparam = $(ele).find(".actionparam input[type='text']").val();
+        var speeddata = $(ele).find(".speeddata input[type='text']").val();
+        var latdata = $(ele).find(".latdata input[type='text']").val();
+        var lngdata = $(ele).find(".lngdata input[type='text']").val();
         nPositions.push({lat:latdata, lng:lngdata, alt:altdata, act:actiondata, actparam:actionparam, speed:speeddata});
       });
     });
