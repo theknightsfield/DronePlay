@@ -196,7 +196,7 @@ function appendDesignTable(coordinates) {
           + "<option value=5>GIMBAL_PITCH</option>"
           + "<option value=7>CAMERA_ZOOM</option>"
           + "<option value=8>CAMERA_FOCUS</option>"
-      + "</select> <input name='actionparam_" + tableCount + "' id='actionparam_" + tableCount + "' placeholder="action Param" type='text' class='form-control' value='0'>"
+      + "</select> <input name='actionparam_" + tableCount + "' id='actionparam_" + tableCount + "' placeholder='action Param' type='text' class='form-control' value='0'>"
       + "</td></tr></table>"
   + "</td></tr>"
   $('#dataTable-points > tbody:last').append(appendRow);
