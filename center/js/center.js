@@ -94,7 +94,7 @@ function setDesignTableByFlightRecord(name) {
   ajaxRequest(jdata, function (r) {
     if(r.result == "success") {
       $("#loader").hide();
-      setDesignTableWithFlightRecord(r.data);
+      setDesignTableWithFlightRecord(r.data.data);
     }
     else {
       alert("해당 비행기록이 존재하지 않거나 오류가 발생하였습니다.");
@@ -371,7 +371,7 @@ function getFlightList() {
         return;
       }
 
-      setFlightlist(r.data.data);
+      setFlightlist(r.data);
       $('#getFlightListBtn').hide(1500);
     }
   }, function(request,status,error) {
