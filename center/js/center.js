@@ -527,6 +527,7 @@ function btnRegister() {
     var nPositions = new Array();
 
     var tb = $('.dataTable-points tbody');
+    var index = 0;
     tb.find("tr").each(function(index, element) {
       var ele = $(element).find('td')[1];
       var altdata = $(ele).find(".altdata").val();
@@ -535,7 +536,9 @@ function btnRegister() {
       var speeddata = $(ele).find(".speeddata").val();
       var latdata = $(ele).find(".latdata").val();
       var lngdata = $(ele).find(".lngdata").val();
-      nPositions.push({lat:latdata, lng:lngdata, alt:altdata, act:actiondata, actparam:actionparam, speed:speeddata});
+      var mid = "mid-" + index;
+      nPositions.push({id:mid, lat:latdata, lng:lngdata, alt:altdata, act:actiondata, actparam:actionparam, speed:speeddata});
+      index++;
     });
 
     var userid = getCookie("dev_user_id");
