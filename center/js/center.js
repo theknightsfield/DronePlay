@@ -275,11 +275,11 @@ function appendMissionsToMonitor(mission) {
       if (act >= missionActionString.length) {
         act = 0;
       }
-      
+
       var appendRow = "<tr class='odd gradeX' id='" + missionid + "'><td>" + tableCount + "</td><td>"
           + "<table border=0 width='100%'><tr><td width='50%' class='center' bgcolor='#eee'>" + item['lat'] + "</td><td width='50%' class='center' bgcolor='#fff'> " + item['lng'] + "</td></tr>"
           + "<tr><td class='center' bgcolor='#eee'>" + item['alt'] + "</td><td class='center'>"
-          + missionActionString[item['act']]
+          + missionActionString[act]
           + "</td></tr></table>"
       + "</td></tr>"
       $('#monitorTable-points > tbody:last').append(appendRow);
