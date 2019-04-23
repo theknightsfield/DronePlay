@@ -110,9 +110,43 @@ function setDesignTableByFlightRecord(name) {
 function setDesignTableWithFlightRecord(data) {
   if (data == null) return;
 
+
+  var posIcons = new Array();
+  var i = 0;
+
   data.forEach(function (item) {
       appendDesignTableWithFlightRecord(item.lat, item.lng, item.alt, item.speed, item.act, item.actparam);
+
+      var pos_icon = new ol.Feature({
+          geometry: new ol.geom.Point(ol.proj.fromLonLat([item.lng *= 1, item.lat *= 1])),
+          name: dateString + " / lat: " + item.lat + ", lng: " + item.lng + ", alt: " + item.alt,
+          mindex : i
+      });
+
+      var pos_icon_image = './imgs/position2.png';
+      var pos_icon_color = '#557799';
+
+      pos_icon.setStyle(new ol.style.Style({
+          image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+            color: pos_icon_color,
+            crossOrigin: 'anonymous',
+            src: pos_icon_image
+          }))
+      }));
+
+      posIcons.push(pos_icon);
+      i++;
   });
+
+
+  var posSource = new ol.source.Vector({
+      features: posIcons
+  });
+  var posLayer = new ol.layer.Vector({
+      source: posSource
+  });
+
+  map.addLayer(posLayer);
 }
 
 function flightListInit() {
