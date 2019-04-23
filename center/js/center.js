@@ -182,7 +182,7 @@ function appendDesignTable(coordinates) {
   var strid = "mission-" + tableCount;
   aPositions.push( {lat:lonLat[1], lon: lonLat[0], alt: 3, act: 0, id: strid} );
   var appendRow = "<tr class='odd gradeX' id='misstr_" + tableCount + "'><td>" + tableCount + "</td><td colspan=3>"
-      + "<table border=0 width='100%'><tr><td width='50%' class='center' bgcolor='#eee'>" + lonLat[1] + "</td><td width='50%' class='center' bgcolor='#fff'> " + lonLat[0] + "</td></tr>"
+      + "<table border=0 width='100%'><tr><td width='50%' class='center' bgcolor='#eee'>" + lonLat[1] + "</td><td width='50%' class='center' bgcolor='#fff'> " + lonLat[0] + "</td>"
       + "<td class='center'><input name='altdata_" + tableCount + "' id='altdata_" + tableCount + "' type='text' class='form-control' value='3'></td></tr>"
       + "<tr>"
       + "<td class='center'><input name='speeddata_" + tableCount + "' id='speeddata_" + tableCount + "' type='text' class='form-control' value='3'></td>"
@@ -196,7 +196,7 @@ function appendDesignTable(coordinates) {
           + "<option value=5>GIMBAL_PITCH</option>"
           + "<option value=7>CAMERA_ZOOM</option>"
           + "<option value=8>CAMERA_FOCUS</option>"
-      + "</select> <input name='actionparam_" + tableCount + "' id='actionparam_" + tableCount + "' placeholder='action Param' type='text' class='form-control' value='0'>"
+      + "</select></td><td class='center'><input name='actionparam_" + tableCount + "' id='actionparam_" + tableCount + "' placeholder='action Param' type='text' class='form-control' value='0'>"
       + "</td></tr></table>"
   + "</td></tr>"
   $('#dataTable-points > tbody:last').append(appendRow);
