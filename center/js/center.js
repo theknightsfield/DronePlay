@@ -232,6 +232,8 @@ function getList() {
 }
 
 function getMissionToMonitor(id) {
+    if (id == null || id == "") return;
+
     var userid = getCookie("dev_user_id");
     var jdata = {"action" : "mission", "daction" : "get", "clientid": userid};
 
@@ -254,6 +256,8 @@ function getMissionToMonitor(id) {
     });
 }
 
+var missionActionString = ["STAY", "START_TAKE_PHOTO", "START_RECORD", "STOP_RECORD", "ROTATE_AIRCRAFT", "GIMBAL_PITCH", "NONE", "CAMERA_ZOOM", "CAMERA_FOCUS"];
+
 function appendMissionsToMonitor(mission) {
     if (mission == null) return;
     if (mission.length == 0) return;
@@ -265,10 +269,17 @@ function appendMissionsToMonitor(mission) {
       if(missionid == null) {
         missionid = "mission-" + tableCount;
       }
+
+      var act = item['act'];
+
+      if (act >= missionActionString.length) {
+        act = 0;
+      }
+      
       var appendRow = "<tr class='odd gradeX' id='" + missionid + "'><td>" + tableCount + "</td><td>"
-          + "<table border=0 width='100%'><tr><td width='50%' class='center' bgcolor='#eee'>" + item['lat'] + "</td><td width='50%' class='center' bgcolor='#fff'> " + item['lon'] + "</td></tr>"
+          + "<table border=0 width='100%'><tr><td width='50%' class='center' bgcolor='#eee'>" + item['lat'] + "</td><td width='50%' class='center' bgcolor='#fff'> " + item['lng'] + "</td></tr>"
           + "<tr><td class='center' bgcolor='#eee'>" + item['alt'] + "</td><td class='center'>"
-          + item['act']
+          + missionActionString[item['act']]
           + "</td></tr></table>"
       + "</td></tr>"
       $('#monitorTable-points > tbody:last').append(appendRow);
