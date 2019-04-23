@@ -88,7 +88,7 @@ function setDesignTableByMission(name) {
 
 function setDesignTableByFlightRecord(name) {
   var userid = getCookie("dev_user_id");
-  var jdata = {"action" : "position", "daction" : "download_spe", "clientid" : userid};
+  var jdata = {"action" : "position", "daction" : "download_spe", "name" : name, "clientid" : userid};
 
   $("#loader").show();
   ajaxRequest(jdata, function (r) {
