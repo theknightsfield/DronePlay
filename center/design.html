@@ -205,13 +205,15 @@ gtag('config', 'UA-130136264-4');
                               <div class="col-lg-12">
                                 <div class="panel panel-default">
                                     <div class="panel-body">
-                                      Action Parameter<br>
-STAY : Keeps the aircraft at the waypoint's location. The actionParam parameter will determine how much time in milliseconds the aircraft will stay at the location with range of [0, 32767] milliseconds.
-<br>START_TAKE_PHOTO :	Starts to shoot a photo. The actionParam for the waypoint action will be ignored. The maximum time set to execute this waypoint action is 6 seconds. If the time while executing the waypoint action goes above 6 seconds, the aircraft will stop executing the waypoint action and will move on to the next waypoint action, if one exists.
-<br>START_RECORD :	Starts recording. The actionParam for the waypoint action will be ignored. The maximum time set to execute this waypoint action is 6 seconds. If the time while executing the waypoint action goes above 6 seconds (e.g. the camera is not present) the aircraft will stop executing the waypoint action and will move on to the next waypoint action, if one exists.
-<br>STOP_RECORD	: Stops recording. The actionParam for the waypoint action will be ignored. The maximum time set to execute this waypoint action is 6 seconds. If the time while executing the waypoint action goes above 6 seconds (e.g. the camera is not present) the aircraft will stop executing the waypoint action and will move on to the next waypoint action, if one exists.
-<br>ROTATE_AIRCRAFT :	Rotates the aircraft's yaw. The rotation direction is determined by the waypoint's turnMode property. The actionParam value must be in the range of [-180, 180] degrees.
-<br>GIMBAL_PITCH :	Rotates the gimbal's pitch. The actionParam value should be in range [-90, 0] degrees.
+
+                                      Action Parameter<ul>
+<li>STAY : Keeps the aircraft at the waypoint's location. The actionParam parameter will determine how much time in milliseconds the aircraft will stay at the location with range of [0, 32767] milliseconds.</li>
+<li>START_TAKE_PHOTO :	Starts to shoot a photo. The actionParam for the waypoint action will be ignored. The maximum time set to execute this waypoint action is 6 seconds. If the time while executing the waypoint action goes above 6 seconds, the aircraft will stop executing the waypoint action and will move on to the next waypoint action, if one exists.</li>
+<li>START_RECORD :	Starts recording. The actionParam for the waypoint action will be ignored. The maximum time set to execute this waypoint action is 6 seconds. If the time while executing the waypoint action goes above 6 seconds (e.g. the camera is not present) the aircraft will stop executing the waypoint action and will move on to the next waypoint action, if one exists.</li>
+<li>STOP_RECORD	: Stops recording. The actionParam for the waypoint action will be ignored. The maximum time set to execute this waypoint action is 6 seconds. If the time while executing the waypoint action goes above 6 seconds (e.g. the camera is not present) the aircraft will stop executing the waypoint action and will move on to the next waypoint action, if one exists.</li>
+<li>ROTATE_AIRCRAFT :	Rotates the aircraft's yaw. The rotation direction is determined by the waypoint's turnMode property. The actionParam value must be in the range of [-180, 180] degrees.</li>
+<li>GIMBAL_PITCH :	Rotates the gimbal's pitch. The actionParam value should be in range [-90, 0] degrees.</li>
+</ul>
                                     </div>
                                     <div class="panel-body">
 
