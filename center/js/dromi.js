@@ -9,7 +9,7 @@ var chartLocData = new Array();
 var bMoved = false;
 var tableCount = 0;
 var dromiDataArray = new Array();
-var flightDataArray = new Array();
+var flightDataArrayForDromi = new Array();
 
 var youTubePlayer = null;
 var youtube_data_id;
@@ -45,10 +45,6 @@ function appendListTable(name, dtimestamp, data) {
       + "</tr>";
   $('#dataTable-lists > tbody:last').append(appendRow);
   tableCount++;
-}
-
-function removeTableRow(rowname) {
-  $("#" + rowname).remove();
 }
 
 function deleteData(index) {
@@ -178,17 +174,17 @@ function showData(index) {
   setChartData(item.data);
 }
 
-function setFlightlist(data) {
+function setFlightlistForDromi(data) {
   if (data == null || data.length == 0)
     return;
 
   data.forEach(function(item) {
-    appendFlightListTable(item.name, item.dtime, item.data);
-    flightDataArray.push(item);
+    appendFlightListTableForDromi(item.name, item.dtime, item.data);
+    flightDataArrayForDromi.push(item);
   });
 }
 
-function appendFlightListTable(name, dtimestamp, data) {
+function appendFlightListTableForDromi(name, dtimestamp, data) {
   var appendRow = "<tr class='odd gradeX' id='flight-list-" + tableCount + "'><td width='10%'>" + (tableCount + 1) + "</td>"
       + "<td class='center' bgcolor='#eee'><a href='javascript:uploadFromSet(" + tableCount + ");'>"
       + name + "</a></td><td width='30%' class='center'> " + dtimestamp + "</td>"
@@ -199,15 +195,10 @@ function appendFlightListTable(name, dtimestamp, data) {
   tableCount++;
 }
 
-function uploadFromSet(index) {
-  var item = flightDataArray[index];
-  $('#FlightDataName').html(item.name);
-  cur_flightrecord_name = item.name;
-}
 
 function deleteFlightData(index) {
 
-  var item = flightDataArray[index];
+  var item = flightDataArrayForDromis[index];
 
   if (confirm('정말로 ' + item.name + ' 비행기록을 삭제하시겠습니까?')) {
   } else {
@@ -232,7 +223,13 @@ function deleteFlightData(index) {
   });
 }
 
-function getFlightList() {
+function uploadFromSet(index) {
+  var item = flightDataArrayForDromi[index];
+  $('#FlightDataName').html(item.name);
+  cur_flightrecord_name = item.name;
+}
+
+function getFlightListForDromi() {
   var userid = getCookie("dev_user_id");
   var jdata = {"action": "position", "daction": "download", "clientid" : userid};
 
@@ -245,7 +242,7 @@ function getFlightList() {
         return;
       }
 
-      setFlightlist(r.data);
+      setFlightlistForDromi(r.data);
       $('#getFlightListBtn').hide(1500);
     }
   }, function(request,status,error) {
