@@ -516,6 +516,11 @@ function btnRemove(name, trname) {
     }, function(request,status,error) {});
 }
 
+function monitor(msg) {
+  var info = el('monitor');
+  info.innerHTML = msg;
+}
+
 function btnRegister() {
     var mname = prompt("Mission 이름을 입력해 주세요.", "");
 
@@ -537,6 +542,14 @@ function btnRegister() {
       var latdata = $(ele).find(".latdata").val();
       var lngdata = $(ele).find(".lngdata").val();
       var mid = "mid-" + index;
+
+      if (altdata == null || altdata == ""
+        || speeddata == null || speeddata == ""
+        || actionparam == null || actionparam == "") {
+          monitor("index : " +index + " / some parameter is empty.");
+          return;
+        }
+
       nPositions.push({id:mid, lat:latdata, lng:lngdata, alt:altdata, act:actiondata, actparam:actionparam, speed:speeddata});
       index++;
     });
