@@ -518,7 +518,7 @@ function btnRemove(name, trname) {
 
 function monitor(msg) {
   var info = el('monitor');
-  info.innerHTML = msg;
+  info.innerHTML = "<font color=red><b>" + msg + "</b></font>";
 }
 
 function btnRegister() {
@@ -533,6 +533,7 @@ function btnRegister() {
 
     var tb = $('.dataTable-points tbody');
     var index = 0;
+    var bError = 0;
     tb.find("tr").each(function(index, element) {
       var ele = $(element).find('td')[1];
       var altdata = $(ele).find(".altdata").val();
@@ -547,6 +548,7 @@ function btnRegister() {
         || speeddata == null || speeddata == ""
         || actionparam == null || actionparam == "") {
           monitor("index : " +index + " / some parameter is empty.");
+          bError++;
           return;
         }
 
@@ -554,6 +556,10 @@ function btnRegister() {
       index++;
     });
 
+    if (bError > 0) {
+      alert("오류를 확인해 주세요!");
+      return;
+    }
     var userid = getCookie("dev_user_id");
     var jdata = {"action": "mission","mname" : mname, "daction" : "set", "missiondata" : nPositions, "clientid" : userid};
 
