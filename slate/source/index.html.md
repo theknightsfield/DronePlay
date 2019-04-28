@@ -9,10 +9,10 @@ language_tabs: # must be one of https://git.io/vQNgJ
 
 toc_footers:
   - <div class="fb-like" data-href="https://www.facebook.com/386832955100142" data-width="100" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div>
-  - <a href='http://dev.droneplay.io/'>DronePlay 개발자홈</a>
-  - <a href='http://code.droneplay.io/'>DronePlay Codes</a>
-  - <a href='http://facebook.droneplay.io/'>DronePlay 페이스북</a>
-  - <a href='http://droneplay.io/'>DronePlay 홈</a>
+  - <a href='https://dev.droneplay.io/'>DronePlay 개발자홈</a>
+  - <a href='https://code.droneplay.io/'>DronePlay Codes</a>
+  - <a href='https://facebook.droneplay.io/'>DronePlay 페이스북</a>
+  - <a href='https://top.droneplay.io/'>DronePlay 홈</a>
   - <a href='https://github.com/lord/slate'>Documentation Powered by Slate</a>
   - © 2019 DronePlay
 includes:
@@ -57,7 +57,7 @@ search: true
 DronePlay Open API는 DronePlay 개발자 Token을 파라메터로 입력해야 사용하실 수 있습니다.
 아래 경로에서 먼저 Token을 발급 받으세요.
 
-[DronePlay 개발자Token 발급](http://dev.droneplay.io/dev/register/index.html).
+[DronePlay 개발자Token 발급](https://dev.droneplay.io/dev/register/index.html).
 
 발급받은 Token의 사용방법은 각 Open API의 설명을 참고해 주세요.
 
@@ -72,7 +72,7 @@ DronePlay Open API를 사용하시려면 반드시 <code>Token</code>을 API의 
 
 ```shell
 
-curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"position", "daction":"set", "lat" : "12.134132", "lng" : "12.1324", "alt" : 5, "act" : "0", "missionname" : "TESTMISSION1", "missionid" : "mission-1"}' http://api.droneplay.io/v1/
+curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"position", "daction":"set", "lat" : "12.134132", "lng" : "12.1324", "alt" : 5, "act" : "0", "missionname" : "TESTMISSION1", "missionid" : "mission-1"}' https://api.droneplay.io/v1/
 
 ```
 
@@ -175,7 +175,7 @@ response.raise_for_status()
 
 ### HTTP 요청
 
-`POST http://apis.droneplay.io/v1/`
+`POST https://apis.droneplay.io/v1/`
 
 ### URL 파라메터
 
@@ -201,7 +201,7 @@ Token의 노출에 유의하세요!
 
 ```shell
 
-curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"position", "daction":"get", "start" : 1518534859144, "end" : 1518534861111}' http://api.droneplay.io/v1/
+curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"position", "daction":"get", "start" : 1518534859144, "end" : 1518534861111}' https://api.droneplay.io/v1/
 
 ```
 
@@ -333,7 +333,7 @@ response.raise_for_status()
 
 ### HTTP 요청
 
-`POST http://api.droneplay.io/v1/`
+`POST https://api.droneplay.io/v1/`
 
 ### URL 파라메터
 
@@ -353,7 +353,7 @@ end (optional) | timestamp 값입니다. GMT+0 기준입니다.
 
 ```shell
 
-curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"mission", "daction":"set", "mname" : MISSIONNAME, "missiondata" : [{"lat":"12.134132","lng":"12.1324","alt":5,"speed":0,"act":1,"actparam":1,"id":"mission-1"},{"lat":"12.134132","lng":"12.1324","alt":5,"speed":0,"act":1,"actparam":1,"id":"mission-2"}]}' http://api.droneplay.io/v1/
+curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"mission", "daction":"set", "mname" : MISSIONNAME, "missiondata" : [{"lat":"12.134132","lng":"12.1324","alt":5,"speed":0,"act":1,"actparam":1,"id":"mission-1"},{"lat":"12.134132","lng":"12.1324","alt":5,"speed":0,"act":1,"actparam":1,"id":"mission-2"}]}' https://api.droneplay.io/v1/
 
 ```
 
@@ -449,7 +449,7 @@ DronePlay Mission Center에 Mission 데이터를 기록합니다.
 
 ### HTTP 요청
 
-`POST http://apis.droneplay.io/v1/`
+`POST https://apis.droneplay.io/v1/`
 
 ### URL 파라메터
 
@@ -492,7 +492,7 @@ GIMBAL_PITCH|5
 
 ```shell
 
-curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"mission", "daction":"get"}' http://api.droneplay.io/v1/
+curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"mission", "daction":"get"}' https://api.droneplay.io/v1/
 
 ```
 
@@ -614,7 +614,7 @@ DronePlay Mission Center의 Mission 목록을 불러옵니다.
 
 ### HTTP 요청
 
-`POST http://apis.droneplay.io/v1/`
+`POST https://apis.droneplay.io/v1/`
 
 ### URL 파라메터
 
@@ -631,7 +631,7 @@ daction | 'get'을 입력합니다.
 
 ```shell
 
-curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"mission", "daction":"delete", "mname":"MISSIONNAME"}' http://api.droneplay.io/v1/
+curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"mission", "daction":"delete", "mname":"MISSIONNAME"}' https://api.droneplay.io/v1/
 
 ```
 
@@ -724,7 +724,7 @@ DronePlay Mission Center의 Mission 1개를 삭제합니다.
 
 ### HTTP 요청
 
-`POST http://apis.droneplay.io/v1/`
+`POST https://apis.droneplay.io/v1/`
 
 ### URL 파라메터
 
@@ -746,7 +746,7 @@ mname | 삭제할 Mission 이름을 입력합니다.
 
 ```shell
 
-curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"position", "daction":"upload", "name" : "FLIGHTRECORDNAME", "data" : [{"lat":"12.134132","lng":"12.1324","alt":5,"speed":0,"act":1,"actparam":1,"id":"mission-1"},{"lat":"12.134132","lng":"12.1324","alt":5,"speed":0,"act":1,"actparam":1,"id":"mission-2"}]}' http://api.droneplay.io/v1/
+curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"position", "daction":"upload", "name" : "FLIGHTRECORDNAME", "data" : [{"lat":"12.134132","lng":"12.1324","alt":5,"speed":0,"act":1,"actparam":1,"id":"mission-1"},{"lat":"12.134132","lng":"12.1324","alt":5,"speed":0,"act":1,"actparam":1,"id":"mission-2"}]}' https://api.droneplay.io/v1/
 
 ```
 
@@ -842,7 +842,7 @@ DronePlay Mission Center에 Mission 데이터를 기록합니다.
 
 ### HTTP 요청
 
-`POST http://apis.droneplay.io/v1/`
+`POST https://apis.droneplay.io/v1/`
 
 ### URL 파라메터
 
@@ -885,7 +885,7 @@ GIMBAL_PITCH|5
 
 ```shell
 
-curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"position", "daction":"download"}' http://api.droneplay.io/v1/
+curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"position", "daction":"download"}' https://api.droneplay.io/v1/
 
 ```
 
@@ -1008,7 +1008,7 @@ response.raise_for_status()
 
 ### HTTP 요청
 
-`POST http://apis.droneplay.io/v1/`
+`POST https://apis.droneplay.io/v1/`
 
 ### URL 파라메터
 
@@ -1026,7 +1026,7 @@ daction | 'download'을 입력합니다.
 
 ```shell
 
-curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"position", "daction":"download_spe", "name": "FLIGHTRECORDNAME"}' http://api.droneplay.io/v1/
+curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"position", "daction":"download_spe", "name": "FLIGHTRECORDNAME"}' https://api.droneplay.io/v1/
 
 ```
 
@@ -1136,7 +1136,7 @@ response.raise_for_status()
 
 ### HTTP 요청
 
-`POST http://apis.droneplay.io/v1/`
+`POST https://apis.droneplay.io/v1/`
 
 ### URL 파라메터
 
@@ -1154,7 +1154,7 @@ name | 비행기록 이름을 입력합니다.
 
 ```shell
 
-curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"position", "daction":"delete", "name":"FLIGHTRECORDNAME"}' http://api.droneplay.io/v1/
+curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"position", "daction":"delete", "name":"FLIGHTRECORDNAME"}' https://api.droneplay.io/v1/
 
 ```
 
@@ -1247,7 +1247,7 @@ response.raise_for_status()
 
 ### HTTP 요청
 
-`POST http://apis.droneplay.io/v1/`
+`POST https://apis.droneplay.io/v1/`
 
 ### URL 파라메터
 
