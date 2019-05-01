@@ -48,12 +48,30 @@ function onNaver() {
 }
 
 function checkLoginStatus() {
+  var url_string = window.location.href;
+  var isFromApp = location.search.split('fromapp=')[1];
+  if (isFromApp != null) {
+    isFromApp = isFromApp.split('&')[0];
+  }
+  else {
+    isFromApp = "no";
+  }
+
+  setCookie("isFromApp", isFromApp, 1);
+
   var userid = getCookie("dev_user_id");
   var usertoken = getCookie("user_token");
-  if (isSet(userid) == true && isSet(usertoken) == true)
+
+  if (isSet(userid) == true && isSet(usertoken) == true) {
+    if (isFromApp == "yes") {
+      Android.setToken(usertoken, userid);
+      return;
+    }
+
     location.href="center.html";
     return;
-  
+  }
+
   setCookie("dev_user_id", "", -1);
   setCookie("socialid", "", -1);
   setCookie("user_token", "", -1);

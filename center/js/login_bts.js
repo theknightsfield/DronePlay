@@ -123,6 +123,12 @@ function formSubmit(token) {
     if(r.result == "success") {
       setCookie("dev_user_id", r.emailid, 1);
       setCookie("user_token", r.token, 1);
+      
+      if (getCookie("isFromApp") == "yes") {
+        Android.setToken(usertoken, userid);
+        return;
+      }
+
       location.href="center.html";
     }else {
       hideLoader();
@@ -143,30 +149,31 @@ function checkLoginStatus() {
   $("#googleLoginButton").hide();
 
   var dev_user_id = getCookie("dev_user_id");
-  if (isSet(dev_user_id) == true) {
+  var usertoken = getCookie("user_token");
+  if (isSet(dev_user_id) && isSet(usertoken)) {
     location.href="center.html";
     return;
   }
-  else {
-    var dev_kind = getCookie("dev_kind");
-    if (isSet(dev_kind) == false) {
-      setCookie("dev_user_id", '', -1);
-      location.href="index.html";
-      return;
-    }
 
-    if (dev_kind == "facebook") {
-      $("#fbLoginButton").show();
-      fbLoginCheck();
-    }
-    else if (dev_kind == "google") {
-      $("#googleLoginButton").show();
-      googleinit();
-    }
-    else if (dev_kind == "naver") {
-      $("#naverIdLogin").show();
-      naverinit();
-    }
+  var dev_kind = getCookie("dev_kind");
+  if (isSet(dev_kind) == false) {
+    setCookie("dev_user_id", '', -1);
+    setCookie("user_token", '', -1);
+    location.href="index.html";
+    return;
+  }
+
+  if (dev_kind == "facebook") {
+    $("#fbLoginButton").show();
+    fbLoginCheck();
+  }
+  else if (dev_kind == "google") {
+    $("#googleLoginButton").show();
+    googleinit();
+  }
+  else if (dev_kind == "naver") {
+    $("#naverIdLogin").show();
+    naverinit();
   }
 }
 
