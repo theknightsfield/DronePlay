@@ -303,10 +303,11 @@ function appendDesignTableWithFlightRecord(lat, lng, alt, speed, act, actparam) 
   tableCount++;
   var strid = "mission-" + tableCount;
   var appendRow = "<tr class='odd gradeX' id='misstr_" + tableCount + "'><td>" + tableCount + "</td><td colspan=3>"
-      + "<input name='latdata_" + tableCount + "' id='latdata_" + tableCount + "' type='text' placeholder='Latitude' value='"+lat+"' class='form-control latdata'><input name='lngdata_" + tableCount + "' id='lngdata_" + tableCount + "' type='text' placeholder='Longitude' value='"+lng+"' class='form-control lngdata'>"
-      + "<input name='altdata_" + tableCount + "' id='altdata_" + tableCount + "' type='text' placeholder='Altitude (m)' class='form-control altdata' value='"+alt+"'><br>"
-      + "<input name='speeddata_" + tableCount + "' id='speeddata_" + tableCount + "' type='text' placeholder='Speed (m/s)' class='form-control speeddata' value='"+speed+"'>"
-      + "<select class='form-control actiondata' id='actiondata_" + tableCount + "'>"
+      + "<label for='latdata_" + tableCount + "'>위도(Lat)</label><input name='latdata_" + tableCount + "' id='latdata_" + tableCount + "' type='text' placeholder='Latitude' value='"+lat+"' class='form-control latdata'>"
+      + "<label for='lngdata_" + tableCount + "'>경도(Lng)</label><input name='lngdata_" + tableCount + "' id='lngdata_" + tableCount + "' type='text' placeholder='Longitude' value='"+lng+"' class='form-control lngdata'>"
+      + "<label for='altdata_" + tableCount + "'>고도(Alt)</label><input name='altdata_" + tableCount + "' id='altdata_" + tableCount + "' type='text' placeholder='Altitude (m)' class='form-control altdata' value='"+alt+"'><br>"
+      + "<label for='speeddata_" + tableCount + "'>속도(Speed)</label><input name='speeddata_" + tableCount + "' id='speeddata_" + tableCount + "' type='text' placeholder='Speed (m/s)' class='form-control speeddata' value='"+speed+"'>"
+      + "<label for='actiondata_" + tableCount + "'>액션(Act)</label><select class='form-control actiondata' id='actiondata_" + tableCount + "'>"
           + "<option selected value=0>STAY</option>"
           + "<option value=1>START_TAKE_PHOTO</option>"
           + "<option value=2>START_RECORD</option>"
@@ -315,7 +316,8 @@ function appendDesignTableWithFlightRecord(lat, lng, alt, speed, act, actparam) 
           + "<option value=5>GIMBAL_PITCH</option>"
           + "<option value=7>CAMERA_ZOOM</option>"
           + "<option value=8>CAMERA_FOCUS</option>"
-      + "</select><input name='actionparam_" + tableCount + "' id='actionparam_" + tableCount + "' placeholder='action Param' type='text' class='form-control actionparam' value='"+actparam+"'>"
+      + "</select>"
+      + "<label for='actionparam_" + tableCount + "'>액션인자(Param)</label><input name='actionparam_" + tableCount + "' id='actionparam_" + tableCount + "' placeholder='action Param' type='text' class='form-control actionparam' value='"+actparam+"'>"
       + "<br><br><a href=javascript:removeDesignTableRow(" + tableCount + ");>삭제</a> <a href=javascript:moveToPositionOnMap("+lat+","+lng+");>이동</a>"
       + "</td></tr>";
 
@@ -328,10 +330,11 @@ function appendDesignTable(coordinates) {
   var lonLat = ol.proj.toLonLat(coordinates);
   var strid = "mission-" + tableCount;
   var appendRow = "<tr class='odd gradeX' id='misstr_" + tableCount + "'><td>" + tableCount + "</td><td colspan=3>"
-      + "<input name='latdata_" + tableCount + "' id='latdata_" + tableCount + "' type='text' placeholder='Latitude' value='"+lonLat[1]+"' class='form-control latdata'><input name='lngdata_" + tableCount + "' id='lngdata_" + tableCount + "' type='text' placeholder='Longitude' value='"+lonLat[0]+"' class='form-control lngdata'>"
-      + "<input name='altdata_" + tableCount + "' id='altdata_" + tableCount + "' type='text' placeholder='Altitude (m)' class='form-control altdata'><br>"
-      + "<input name='speeddata_" + tableCount + "' id='speeddata_" + tableCount + "' type='text' placeholder='Speed (m/s)' class='form-control speeddata'>"
-      + "<select class='form-control actiondata' id='actiondata_" + tableCount + "'>"
+      + "<label for='latdata_" + tableCount + "'>위도(Lat)</label><input name='latdata_" + tableCount + "' id='latdata_" + tableCount + "' type='text' placeholder='Latitude' value='"+lonLat[1]+"' class='form-control latdata'>"
+      + "<label for='lngdata_" + tableCount + "'>경도(Lng)</label><input name='lngdata_" + tableCount + "' id='lngdata_" + tableCount + "' type='text' placeholder='Longitude' value='"+lonLat[0]+"' class='form-control lngdata'>"
+      + "<label for='altdata_" + tableCount + "'>고도(Alt)</label><input name='altdata_" + tableCount + "' id='altdata_" + tableCount + "' type='text' placeholder='Altitude (m)' class='form-control altdata'><br>"
+      + "<label for='speeddata_" + tableCount + "'>속도(Speed)</label><input name='speeddata_" + tableCount + "' id='speeddata_" + tableCount + "' type='text' placeholder='Speed (m/s)' class='form-control speeddata'>"
+      + "<label for='actiondata_" + tableCount + "'>액션(Act)</label><select class='form-control actiondata' id='actiondata_" + tableCount + "'>"
           + "<option selected value=0>STAY</option>"
           + "<option value=1>START_TAKE_PHOTO</option>"
           + "<option value=2>START_RECORD</option>"
@@ -340,8 +343,9 @@ function appendDesignTable(coordinates) {
           + "<option value=5>GIMBAL_PITCH</option>"
           + "<option value=7>CAMERA_ZOOM</option>"
           + "<option value=8>CAMERA_FOCUS</option>"
-          + "</select><input name='actionparam_" + tableCount + "' id='actionparam_" + tableCount + "' placeholder='action Param' type='text' class='form-control actionparam'>"
-          + "<br><br><a href=javascript:removeDesignTableRow(" + tableCount + ");>삭제</a> <a href=javascript:moveToPositionOnMap("+lonLat[1]+","+lonLat[0]+");>이동</a>"
+          + "</select>"
+      + "<label for='actionparam_" + tableCount + "'>액션인자(Param)</label><input name='actionparam_" + tableCount + "' id='actionparam_" + tableCount + "' placeholder='action Param' type='text' class='form-control actionparam'>"
+      + "<br><br><a href=javascript:removeDesignTableRow(" + tableCount + ");>삭제</a> <a href=javascript:moveToPositionOnMap("+lonLat[1]+","+lonLat[0]+");>이동</a>"
     + "</td></tr>"
     $('#dataTable-points > tbody:last').append(appendRow);
 }
