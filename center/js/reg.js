@@ -58,7 +58,7 @@ function requestRegister() {
                       hideLoader();
                       if(r.result == "success") {
                           alert("축하드립니다, 가입이 완료 되었습니다!");
-                          window.location.href = "./index.html";
+                          window.location.href = "./index.html?fromapp=" + getCookie("isFromApp");
                       }
                       else {
                           alert("잘못된 정보입니다.");
