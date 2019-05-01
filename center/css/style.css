@@ -73,13 +73,14 @@ a img {border:none;}
 
 .topFixBanner {
     width: 100%;
-		max-width:580px; max-height:540px;
+		max-width:100%; max-height:540px;
 }
 
 .topFixBannerFixed {
     position: fixed;
+		z-index: 99;
     top: 0px;
-		max-width:580px; max-height:540px;
+		max-width:100%; max-height:540px;
 }
 
 /**
