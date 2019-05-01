@@ -316,7 +316,7 @@ function appendDesignTableWithFlightRecord(lat, lng, alt, speed, act, actparam) 
           + "<option value=7>CAMERA_ZOOM</option>"
           + "<option value=8>CAMERA_FOCUS</option>"
       + "</select><input name='actionparam_" + tableCount + "' id='actionparam_" + tableCount + "' placeholder='action Param' type='text' class='form-control actionparam' value='"+actparam+"'>"
-      + "<br><br><a href=javascript:removeDesignTableRow(" + tableCount + ");>Delete</a> <a href=javascript:moveToPositionOnMap("+lat+","+lng+");>Move</a>"
+      + "<br><br><a href=javascript:removeDesignTableRow(" + tableCount + ");>삭제</a> <a href=javascript:moveToPositionOnMap("+lat+","+lng+");>이동</a>"
       + "</td></tr>";
 
   $('#dataTable-points > tbody:last').append(appendRow);
@@ -341,7 +341,7 @@ function appendDesignTable(coordinates) {
           + "<option value=7>CAMERA_ZOOM</option>"
           + "<option value=8>CAMERA_FOCUS</option>"
           + "</select><input name='actionparam_" + tableCount + "' id='actionparam_" + tableCount + "' placeholder='action Param' type='text' class='form-control actionparam'>"
-          + "<br><br><a href=javascript:removeDesignTableRow(" + tableCount + ");>Delete</a> <a href=javascript:moveToPositionOnMap("+lonLat[1]+","+lonLat[0]+");>Move</a>"
+          + "<br><br><a href=javascript:removeDesignTableRow(" + tableCount + ");>삭제</a> <a href=javascript:moveToPositionOnMap("+lonLat[1]+","+lonLat[0]+");>이동</a>"
     + "</td></tr>"
     $('#dataTable-points > tbody:last').append(appendRow);
 }
@@ -503,7 +503,7 @@ function removeTableRow(rowname) {
 }
 
 function btnRemove(name, trname) {
-    var r = confirm("정말로 '" + name + "' Mission을 삭제하시겠습니까?");
+    var r = confirm("정말로 '" + name + "' 미션을 삭제하시겠습니까?");
     if (r == false) {
         return;
     }
@@ -524,10 +524,10 @@ function monitor(msg) {
 }
 
 function btnRegister() {
-    var mname = prompt("Mission 이름을 입력해 주세요.", "");
+    var mname = prompt("미션의 이름을 입력해 주세요.", "");
 
     if (mname == null) {
-        alert("Mission 이름을 잘못 입력하셨습니다.");
+        alert("미션의 이름을 잘못 입력하셨습니다.");
         return;
     }
 
@@ -549,7 +549,7 @@ function btnRegister() {
       if (altdata == null || altdata == ""
         || speeddata == null || speeddata == ""
         || actionparam == null || actionparam == "") {
-          monitor("index : " +index + " / some parameter is empty.");
+          monitor("오류 : 인덱스 - " +index + " / 비어있는 파라메터가 존재합니다.");
           bError++;
           return;
         }
@@ -567,7 +567,7 @@ function btnRegister() {
 
     ajaxRequest(jdata, function (r) {
       if(r.result == "success") {
-        alert("Mission이 등록되었습니다.");
+        alert("미션이 등록되었습니다.");
       }
     }, function(request,status,error) {});
 }
