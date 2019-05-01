@@ -562,6 +562,13 @@ function btnRegister() {
       alert("오류를 확인해 주세요!");
       return;
     }
+
+    if (index <= 0) {
+      alert("입력된 Waypoint가 1도 없습니다! 집중~ 집중~!");
+      return;
+    }
+
+
     var userid = getCookie("dev_user_id");
     var jdata = {"action": "mission","mname" : mname, "daction" : "set", "missiondata" : nPositions, "clientid" : userid};
 
