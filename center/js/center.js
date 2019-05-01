@@ -553,7 +553,7 @@ function btnRegister() {
       if (altdata == null || altdata == ""
         || speeddata == null || speeddata == ""
         || actionparam == null || actionparam == "") {
-          monitor("오류 : 인덱스 - " +index + " / 비어있는 파라메터가 존재합니다.");
+          monitor("오류 : 인덱스 - " + (index + 1) + " / 비어있는 파라메터가 존재합니다.");
           bError++;
           return;
         }
