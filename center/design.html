@@ -150,6 +150,31 @@ gtag('config', 'UA-130136264-4');
                             </div>
                             <!-- /.row -->
                             <div class="row">
+
+                                    <div class="col-lg-6">
+                                      <div class="panel panel-default">
+                                        <div class="panel-heading">
+
+                                          <label for="track">
+                                            현재 위치 추적하기
+                                            <input id="track" type="checkbox"/>
+                                          </label>
+                                          <hr>
+                                          <p>
+                                            정확도 : <span id="accuracy"></span>&nbsp;&nbsp;
+                                            고도 : <span id="altitude"></span>&nbsp;&nbsp;
+                                            고도 정확도 : <span id="altitudeAccuracy"></span>&nbsp;&nbsp;
+                                            방향 : <span id="heading"></span>&nbsp;&nbsp;
+                                            속도 : <span id="speed"></span>
+                                          </p>
+                                        </div>
+
+                                        <div class="panel-heading">
+                                          <span id="monitor"></span>
+                                        </div>
+                                      </div>
+                                    </div>
+
                                     <div class="col-lg-6">
                                       <div class="panel panel-default">
                                           <div class="panel-heading">
@@ -167,29 +192,6 @@ gtag('config', 'UA-130136264-4');
                                       </div>
                                     </div>
 
-                                    <div class="col-lg-6">
-                                      <div class="panel panel-default">
-                                        <div class="panel-heading">
-
-                                          <label for="track">
-                                            track position
-                                            <input id="track" type="checkbox"/>
-                                          </label>
-                                          <hr>
-                                          <p>
-                                            position accuracy : <span id="accuracy"></span>&nbsp;&nbsp;
-                                            altitude : <span id="altitude"></span>&nbsp;&nbsp;
-                                            altitude accuracy : <span id="altitudeAccuracy"></span>&nbsp;&nbsp;
-                                            heading : <span id="heading"></span>&nbsp;&nbsp;
-                                            speed : <span id="speed"></span>
-                                          </p>
-                                        </div>
-
-                                        <div class="panel-heading">
-                                          <span id="monitor"></span>
-                                        </div>
-                                      </div>
-                                    </div>
                             </div>
                         		<div class="row">
 
@@ -202,8 +204,8 @@ gtag('config', 'UA-130136264-4');
                                       </div>
 
                                       <div class="panel-heading">
-                                        <button type="button" class="btn btn-primary" onClick="btnRegister();">Register</button>
-                                        <button type="button" class="btn btn-danger" onClick="btnClear();">Clear</button>
+                                        <button type="button" class="btn btn-primary" onClick="btnRegister();">등록</button>
+                                        <button type="button" class="btn btn-danger" onClick="btnClear();">초기화</button>
                                       </div>
 
                                   </div>
