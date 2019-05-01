@@ -3,6 +3,11 @@ function fbLoginCheck() {
 };
 
 function checkFacebookLogin() {
+  if (FB == null) {
+    location.href="index.html?fromapp=" + getCookie("isFromApp");
+    return;
+  }
+
   FB.getLoginStatus(function(response) {
     var skind = getCookie("dev_kind");
     if (skind != "facebook") return;
@@ -17,6 +22,11 @@ function checkFacebookLogin() {
 
 
 function googleinit() {
+  if (gapi == null) {
+    location.href="index.html?fromapp=" + getCookie("isFromApp");
+    return;
+  }
+
   gapi.load('auth2', function() { // Ready.
     gapi.auth2.init();
   });
@@ -41,6 +51,12 @@ function naverinit() {
       }
     );
   /* (3) 네아로 로그인 정보를 초기화하기 위하여 init을 호출 */
+
+  if (naverLogin == null) {
+    location.href="index.html?fromapp=" + getCookie("isFromApp");
+    return;
+  }
+  
   naverLogin.init();
 }
 
