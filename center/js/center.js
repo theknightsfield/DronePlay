@@ -191,7 +191,7 @@ function nextMon() {
       nexttour(r.data[0]);
     }
     else {
-      alert("Mission 수행중이 아니거나 아직 드론의 위치정보를 확인할 수 없습니다.");
+      alert("미션 수행중이 아니거나 아직 드론의 위치정보를 확인할 수 없습니다.");
     }
   }, function(request,status,error) {
     alert("일시적인 오류가 발생했습니다.");
@@ -401,7 +401,7 @@ function searchAddressToCoordinate(address) {
 
 var tableCount = 0;
 function btnClear() {
-    var r = confirm("정말로 지금까지 디자인한 Mission을 삭제하시겠습니까 ?");
+    var r = confirm("정말로 지금까지 디자인한 미션을 삭제하시겠습니까 ?");
     if (r == false) {
         return;
     }
