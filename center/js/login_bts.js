@@ -123,9 +123,9 @@ function formSubmit(token) {
     if(r.result == "success") {
       setCookie("dev_user_id", r.emailid, 1);
       setCookie("user_token", r.token, 1);
-      
+
       if (getCookie("isFromApp") == "yes") {
-        Android.setToken(usertoken, userid);
+        Android.setToken(r.token, r.emailid);
         return;
       }
 
