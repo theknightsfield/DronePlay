@@ -3,7 +3,7 @@ function fbLoginCheck() {
 };
 
 function checkFacebookLogin() {
-  if (FB == null) {
+  if ((typeof FB) === "undefined" || FB == null || FB == "") {
     location.href="index.html?fromapp=" + getCookie("isFromApp");
     return;
   }
@@ -22,7 +22,7 @@ function checkFacebookLogin() {
 
 
 function googleinit() {
-  if (gapi == null) {
+  if ((typeof gapi) === "undefined" || gapi == null || gapi == "") {
     location.href="index.html?fromapp=" + getCookie("isFromApp");
     return;
   }
