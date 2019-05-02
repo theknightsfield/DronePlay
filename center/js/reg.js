@@ -13,6 +13,10 @@ function onAgree() {
       hideLoader();
 }
 
+function goHome() {
+      location.href="index.html?fromapp=" + getCookie("isFromApp");
+}
+
 function ajaxRequest(data, callback, errorcallback) {
     $.ajax({url : "https://api.droneplay.io/v1/",
            dataType : "json",

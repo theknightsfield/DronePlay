@@ -2,9 +2,14 @@ function fbLoginCheck() {
   checkFacebookLogin();
 };
 
+
+function goHome() {
+      location.href="index.html?fromapp=" + getCookie("isFromApp");
+}
+
 function checkFacebookLogin() {
   if ((typeof FB) === "undefined" || FB == null || FB == "") {
-    location.href="index.html?fromapp=" + getCookie("isFromApp");
+    goHome();
     return;
   }
 
@@ -53,10 +58,10 @@ function naverinit() {
   /* (3) 네아로 로그인 정보를 초기화하기 위하여 init을 호출 */
 
   if (naverLogin == null) {
-    location.href="index.html?fromapp=" + getCookie("isFromApp");
+    goHome();
     return;
   }
-  
+
   naverLogin.init();
 }
 
@@ -175,7 +180,7 @@ function checkLoginStatus() {
   if (isSet(dev_kind) == false) {
     setCookie("dev_user_id", '', -1);
     setCookie("user_token", '', -1);
-    location.href="index.html";
+    goHome();
     return;
   }
 
