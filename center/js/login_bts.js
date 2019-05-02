@@ -8,14 +8,6 @@ function goHome() {
 }
 
 function checkFacebookLogin() {
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId            : '570867566598427',
-      autoLogAppEvents : true,
-      xfbml            : true,
-      version          : 'v2.11'
-    });
-
     if ((typeof FB) === "undefined" || FB == null || FB == "") {
       goHome();
       return;
@@ -31,7 +23,6 @@ function checkFacebookLogin() {
           formSubmit(token);
       }
     });
-  };
 }
 
 function googleinit() {
