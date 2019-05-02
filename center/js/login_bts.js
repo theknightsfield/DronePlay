@@ -8,23 +8,31 @@ function goHome() {
 }
 
 function checkFacebookLogin() {
-  if ((typeof FB) === "undefined" || FB == null || FB == "") {
-    goHome();
-    return;
-  }
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId            : '570867566598427',
+      autoLogAppEvents : true,
+      xfbml            : true,
+      version          : 'v2.11'
+    });
 
-  FB.getLoginStatus(function(response) {
-    var skind = getCookie("dev_kind");
-    if (skind != "facebook") return;
-    //statusChangeCallback(response);
-    if (response.status == "connected") {
-      var token = response.authResponse.accessToken;
-      if (token != null && token != "")
-        formSubmit(token);
+    if ((typeof FB) === "undefined" || FB == null || FB == "") {
+      goHome();
+      return;
     }
-  });
-}
 
+    FB.getLoginStatus(function(response) {
+      var skind = getCookie("dev_kind");
+      if (skind != "facebook") return;
+      //statusChangeCallback(response);
+      if (response.status == "connected") {
+        var token = response.authResponse.accessToken;
+        if (token != null && token != "")
+          formSubmit(token);
+      }
+    });
+  };
+}
 
 function googleinit() {
   if ((typeof gapi) === "undefined" || gapi == null || gapi == "") {
