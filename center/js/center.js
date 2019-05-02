@@ -538,7 +538,7 @@ function btnRegister() {
     var nPositions = new Array();
 
     var tb = $('.dataTable-points tbody');
-    var index = 0;
+    var cindex = 0;
     var bError = 0;
     tb.find("tr").each(function(index, element) {
       var ele = $(element).find('td')[1];
@@ -559,7 +559,7 @@ function btnRegister() {
         }
 
       nPositions.push({id:mid, lat:latdata, lng:lngdata, alt:altdata, act:actiondata, actparam:actionparam, speed:speeddata});
-      index++;
+      cindex++;
     });
 
     if (bError > 0) {
@@ -567,7 +567,7 @@ function btnRegister() {
       return;
     }
 
-    if (index <= 0) {
+    if (cindex <= 0) {
       alert("입력된 Waypoint가 1도 없습니다! 집중~ 집중~!");
       return;
     }
