@@ -10,6 +10,7 @@ language_tabs: # must be one of https://git.io/vQNgJ
 toc_footers:
   - <div class="fb-like" data-href="https://www.facebook.com/386832955100142" data-width="100" data-layout="button_count" data-action="like" data-size="small" data-show-faces="false" data-share="false"></div>
   - <a href='https://dev.droneplay.io/'>DronePlay 개발자홈</a>
+  - <a href='https://groups.google.com/forum/#!forum/droneplay2018'>개발관련 문의게시판</a>
   - <a href='https://code.droneplay.io/'>DronePlay Codes</a>
   - <a href='https://facebook.droneplay.io/'>DronePlay 페이스북</a>
   - <a href='https://top.droneplay.io/'>DronePlay 홈</a>
