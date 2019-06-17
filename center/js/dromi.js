@@ -520,6 +520,7 @@ function setChartData(cdata) {
 }
 
 function openTip(oChart,datasetIndex,pointIndex){
+   if(!oChart) return;
    if(oChart.tooltip._active == undefined)
       oChart.tooltip._active = []
    var activeElements = oChart.tooltip._active;
