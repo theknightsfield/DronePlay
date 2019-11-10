@@ -112,12 +112,12 @@ function setDesignTableByFlightRecord(name) {
       setDesignTableWithFlightRecord(r.data.data);
     }
     else {
-      alert("해당 비행기록이 존재하지 않거나 오류가 발생하였습니다.");
+      alert("There is no flight record or something wrong.");
       $("#loader").hide();
     }
   }, function(request,status,error) {
 
-    alert("일시적인 오류가 발생했습니다.");
+    alert("Sorry, something wrong.");
     $("#loader").hide();
   });
 }
@@ -169,7 +169,7 @@ function flightListInit() {
 function startMon() {
   if (bMonStarted == true) {
     bMonStarted = false;
-    $('#startMonBtn').text("모니터링 시작하기");
+    $('#startMonBtn').text("Start monitoring");
     $("#startMonBtn").removeClass("btn-warning").addClass("btn-primary");
     $("#loader").hide();
   }
@@ -186,15 +186,15 @@ function nextMon() {
     if(r.result == "success") {
       bMonStarted = true;
       $("#loader").show();
-      $('#startMonBtn').text("모니터링 중지하기");
+      $('#startMonBtn').text("Stop monitoring");
       $("#startMonBtn").removeClass("btn-primary").addClass("btn-warning");
       nexttour(r.data[0]);
     }
     else {
-      alert("미션 수행중이 아니거나 아직 드론의 위치정보를 확인할 수 없습니다.");
+      alert("Sorry, Failed to get object position.");
     }
   }, function(request,status,error) {
-    alert("일시적인 오류가 발생했습니다.");
+    alert("Something wrong.");
   });
 }
 
@@ -315,7 +315,7 @@ function appendDesignTableWithFlightRecord(lat, lng, alt, speed, act, actparam) 
           + "<option value=4>ROTATE_AIRCRAFT</option>"
           + "<option value=5>GIMBAL_PITCH</option>"
           + "<option value=7>CAMERA_ZOOM</option>"
-          + "<option value=8>CAMERA_FOCUS</option>"
+          //+ "<option value=8>CAMERA_FOCUS</option>"
       + "</select>"
       + "<label for='actionparam_" + tableCount + "'>액션인자(Param)</label><input name='actionparam_" + tableCount + "' id='actionparam_" + tableCount + "' placeholder='action Param' type='text' class='form-control actionparam' value='"+actparam+"'>"
       + "<br><br><a href=javascript:removeDesignTableRow(" + tableCount + ");>삭제</a> <a href=javascript:moveToPositionOnMap("+lat+","+lng+");>이동</a>"
@@ -342,7 +342,7 @@ function appendDesignTable(coordinates) {
           + "<option value=4>ROTATE_AIRCRAFT</option>"
           + "<option value=5>GIMBAL_PITCH</option>"
           + "<option value=7>CAMERA_ZOOM</option>"
-          + "<option value=8>CAMERA_FOCUS</option>"
+          //+ "<option value=8>CAMERA_FOCUS</option>"
           + "</select>"
       + "<label for='actionparam_" + tableCount + "'>액션인자(Param)</label><input name='actionparam_" + tableCount + "' id='actionparam_" + tableCount + "' placeholder='action Param' type='text' class='form-control actionparam'>"
       + "<br><br><a href=javascript:removeDesignTableRow(" + tableCount + ");>삭제</a> <a href=javascript:moveToPositionOnMap("+lonLat[1]+","+lonLat[0]+");>이동</a>"
@@ -405,7 +405,7 @@ function searchAddressToCoordinate(address) {
 
 var tableCount = 0;
 function btnClear() {
-    var r = confirm("정말로 지금까지 디자인한 미션을 삭제하시겠습니까 ?");
+    var r = confirm("Are you sure ?");
     if (r == false) {
         return;
     }

@@ -61,11 +61,11 @@ function requestRegister() {
               ajaxRequest(data, function(r) {
                       hideLoader();
                       if(r.result == "success") {
-                          alert("축하드립니다, 가입이 완료 되었습니다!");
+                          alert("Congratulation !! Successfully, registered.");
                           window.location.href = "./index.html?fromapp=" + getCookie("isFromApp");
                       }
                       else {
-                          alert("잘못된 정보입니다.");
+                          alert("Something wrong. Please, input valid information.");
                           $("#show_2").show();
                       }
                   },
