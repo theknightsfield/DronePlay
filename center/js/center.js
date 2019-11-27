@@ -834,6 +834,44 @@ function nexttour(r) {
 }
 
 
+function uploadFlightList() {
+	
+			$('#djifname').val("tempasdfasdf");
+			var form = $('#djifileform')[0]; 
+       // Create an FormData object 
+      var data = new FormData(form);
+       
+      $("#uploadFlightRecBtn").prop("disabled", true);
+        
+			$.ajax({
+            type: 'POST',
+            url: "http://ec2-52-79-233-162.ap-northeast-2.compute.amazonaws.com/djip/djiupload.php",
+            enctype: 'multipart/form-data',
+            data: data,
+            cache: false,
+            timeout: 600000,
+            processData: false,
+            contentType: false,
+            async: false,
+			      beforeSend: function(request) {
+			          request.setRequestHeader("droneplay-token", getCookie('user_token'));
+			          request.setRequestHeader("droneplay-clientid", getCookie('dev_user_id'));
+			      },
+            success: function (data) {
+            		$("#uploadFlightRecBtn").prop("disabled", false);
+                console.log('Thank God it worked!');
+                alert("Good job");
+            },
+            error: function (e) {
+                console.log("ERROR : ", e);
+                $("#uploadFlightRecBtn").prop("disabled", false);
+                alert("fail");
+            }
+        }
+    );
+}
+
+
 
 function el(id) {
         return document.getElementById(id);
