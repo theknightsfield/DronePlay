@@ -835,40 +835,36 @@ function nexttour(r) {
 
 
 function uploadFlightList() {
-	
-			$('#djifname').val("tempasdfasdf");
-			var form = $('#djifileform')[0]; 
-       // Create an FormData object 
-      var data = new FormData(form);
-       
-      $("#uploadFlightRecBtn").prop("disabled", true);
-        
-			$.ajax({
-            type: 'POST',
-            url: "http://ec2-52-79-233-162.ap-northeast-2.compute.amazonaws.com/djip/djiupload.php",
-            enctype: 'multipart/form-data',
-            data: data,
-            cache: false,
-            timeout: 600000,
-            processData: false,
-            contentType: false,
-            async: false,
-			      beforeSend: function(request) {
-			          request.setRequestHeader("droneplay-token", getCookie('user_token'));
-			          request.setRequestHeader("droneplay-clientid", getCookie('dev_user_id'));
-			      },
-            success: function (data) {
-            		$("#uploadFlightRecBtn").prop("disabled", false);
-                console.log('Thank God it worked!');
-                alert("Good job");
-            },
-            error: function (e) {
-                console.log("ERROR : ", e);
-                $("#uploadFlightRecBtn").prop("disabled", false);
-                alert("fail");
-            }
-        }
-    );
+	var files = document.getElementById('file').files;
+  if (files.length > 0) {
+    getBase64(files[0], uploadFlightListCallback);
+  }  	
+}
+
+function getBase64(file, callback) {
+   var reader = new FileReader();
+   reader.readAsDataURL(file);
+   reader.onload = function () {
+     callback(reader.result);
+   };
+   reader.onerror = function (error) {
+     console.log('Error: ', error);
+   };
+}
+
+
+function uploadFlightListCallback(base64file) {	
+		var userid = getCookie("dev_user_id");
+    var jdata = {"action" : "position", "daction" : "convert", "clientid" : userid, "name" : "tempName", "recordfile" : base64file};
+
+    ajaxRequest(jdata, function (r) {
+      if(r.result == "success") {
+        appendMissionList(r.data);
+        $('#getListBtn').hide(1500);
+      }
+    }, function(request,status,error) {
+      alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    });	
 }
 
 
