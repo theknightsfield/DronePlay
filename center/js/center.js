@@ -160,6 +160,8 @@ function setDesignTableWithFlightRecord(data) {
   });
 
   map.addLayer(posLayer);
+  
+  moveToPositionOnMap(data[0].lat, data[0].lng);
 }
 
 function flightListInit() {
