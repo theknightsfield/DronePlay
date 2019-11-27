@@ -858,9 +858,10 @@ function uploadFlightListCallback(base64file) {
     var jdata = {"action" : "position", "daction" : "convert", "clientid" : userid, "name" : "tempName", "recordfile" : base64file};
 
     ajaxRequest(jdata, function (r) {
-      if(r.result == "success") {
-        appendMissionList(r.data);
-        $('#getListBtn').hide(1500);
+      if(r.result == "success") {        
+        $('#uploadFlightRecBtn').hide(1500);
+        $('#djifileform').hide(1500);
+        alert("Successfully, uploaded !, Please refresh this page and click 'load' button again.");        
       }
     }, function(request,status,error) {
       alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
