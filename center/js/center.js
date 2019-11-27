@@ -837,15 +837,26 @@ function nexttour(r) {
 function uploadFlightList() {
 	var files = document.getElementById('file').files;
   if (files.length > 0) {
-    getBase64(files[0], uploadFlightListCallback);
+  	var mname = prompt("비행기록의 이름을 입력해 주세요.", "");
+
+	  if (mname == null) {
+	      alert("잘못 입력하셨습니다.");
+	      return;
+	  }
+	  
+    getBase64(files[0], mname, uploadFlightListCallback);
   }  	
+  else {
+  	alert("Please, select any file, first !");  	  	
+  	return;
+  }    
 }
 
-function getBase64(file, callback) {
+function getBase64(file, mname, callback) {
    var reader = new FileReader();
    reader.readAsDataURL(file);
    reader.onload = function () {
-     callback(reader.result);
+     callback(mname, reader.result);
    };
    reader.onerror = function (error) {
      console.log('Error: ', error);
@@ -853,9 +864,9 @@ function getBase64(file, callback) {
 }
 
 
-function uploadFlightListCallback(base64file) {	
+function uploadFlightListCallback(mname, base64file) {	
 		var userid = getCookie("dev_user_id");
-    var jdata = {"action" : "position", "daction" : "convert", "clientid" : userid, "name" : "tempName", "recordfile" : base64file};
+    var jdata = {"action" : "position", "daction" : "convert", "clientid" : userid, "name" : mname, "recordfile" : base64file};
 
     ajaxRequest(jdata, function (r) {
       if(r.result == "success") {        
