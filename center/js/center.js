@@ -844,6 +844,7 @@ function uploadFlightList() {
 	      return;
 	  }
 	  
+	  showLoader();  
     getBase64(files[0], mname, uploadFlightListCallback);
   }  	
   else {
@@ -859,6 +860,7 @@ function getBase64(file, mname, callback) {
      callback(mname, reader.result);
    };
    reader.onerror = function (error) {
+   	 hideLoader();
      console.log('Error: ', error);
    };
 }
@@ -872,9 +874,11 @@ function uploadFlightListCallback(mname, base64file) {
       if(r.result == "success") {        
         $('#uploadFlightRecBtn').hide(1500);
         $('#djifileform').hide(1500);
-        alert("Successfully, uploaded !, Please refresh this page and click 'load' button again.");        
+        alert("Successfully, uploaded !, Please refresh this page and click 'load' button again.");
+        hideLoader();
       }
     }, function(request,status,error) {
+    	hideLoader();
       alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
     });	
 }
