@@ -740,7 +740,7 @@ mname | 삭제할 Mission 이름을 입력합니다.
 
 
 
-# 비행기록 저장하기/파일 업로드/가져오기
+# 비행기록 저장하기/가져오기
 
 ## 비행기록 저장하기
 
@@ -1150,8 +1150,120 @@ daction | 'download_spe'을 입력합니다.
 name | 비행기록 이름을 입력합니다.
 
 
+## 비행기록 삭제하기
 
-## DJI 비행기록 파일 업로드
+```shell
+
+curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"position", "daction":"delete", "name":"FLIGHTRECORDNAME"}' https://api.droneplay.io/v1/
+
+```
+
+```php
+
+$body['action'] = 'position';
+$body['daction'] = 'delete';
+$body['clientid'] = 'EMAILADDRESS';
+$body['name'] = "FLIGHTRECORDNAME";
+
+$headers = array(
+        'Content-Type: application/json',
+        'droneplay-token: DRONEPLAYTOKEN'
+);
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, 'https://api.droneplay.io/v1/');
+curl_setopt($ch, CURLOPT_HTTPHEADER,  $headers);
+curl_setopt($ch, CURLOPT_POST,    true);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_POSTFIELDS,json_encode($body));
+$response = curl_exec($ch);
+//$json_list= json_decode($response, true);
+curl_close($ch);
+
+echo $response;
+
+
+```
+
+```javascript
+
+var jdata = {"action":"position", "daction": "delete", "clientid" : "EMAILADDRESS", "name" : "FLIGHTRECORDNAME"};
+
+$.ajax({url : "https://api.droneplay.io/v1/",
+       dataType : "json",
+       contentType : "application/json",
+       crossDomain: true,
+       cache : false,
+       data : JSON.stringify(jdata),
+       type : "POST",
+       async: false,
+       beforeSend: function(request) {
+          request.setRequestHeader("droneplay-token", "DRONEPLAYTOKEN");
+        },
+       success : function(r) {
+         console.log(JSON.stringify(r));
+         if(r.result == "success") {
+           //r.data;
+         }
+       },
+       error:function(request,status,error){
+           alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+       }
+});
+
+```
+
+```python
+
+import requests
+headers = {
+    'Content-Type': 'application/json',
+    'droneplay-token' : 'DRONEPLAYTOKEN'
+}
+data = {
+    'action': 'position',
+    'daction': 'delete',
+    'clientid' : 'EMAILADDRESS',
+    'mname' : 'MISSIONNAME'
+}
+
+url = 'https://api.droneplay.io/v1/'
+response = requests.post(url, headers=headers,
+                         data=json.dumps(data))
+response.raise_for_status()
+'response.json()
+
+```
+
+> 상기의 명령은 아래와 같이 JSON 구조로 응답합니다:
+
+```json
+  {
+    "result":"success"
+  }
+```
+비행기록 1개 삭제합니다.
+
+### HTTP 요청
+
+`POST https://apis.droneplay.io/v1/`
+
+### URL 파라메터
+
+파라메터 | 설명
+--------- | -----------
+droneplay-token | 부여받은 개발자 Token값을 헤더에 입력합니다.
+clientid | 개발자 Token을 받기위해 입력한 이메일 주소를 입력합니다.
+action | 'position' 입력합니다.
+daction | 'delete' 입력합니다.
+name | 삭제할 비행기록의 이름을 입력합니다.
+
+
+
+# 비행기록 업로드
+
+## DJI 비행기록 파일 업로드 하기
 
 
 ```shell
@@ -1265,114 +1377,3 @@ recordfile | Base64로 인코딩된 DJI Flight Record File 입니다. (포멧. "
 
 DJI Flight Record file 위치:
 https://forum.dji.com/thread-98213-1-1.html
-
-
-
-## 비행기록 삭제하기
-
-```shell
-
-curl -H "droneplay-token: DRONEPLAYTOKEN" -H "Content-type: application/json" -X POST -d '{"clientid":"EMAILADDRESS", "action":"position", "daction":"delete", "name":"FLIGHTRECORDNAME"}' https://api.droneplay.io/v1/
-
-```
-
-```php
-
-$body['action'] = 'position';
-$body['daction'] = 'delete';
-$body['clientid'] = 'EMAILADDRESS';
-$body['name'] = "FLIGHTRECORDNAME";
-
-$headers = array(
-        'Content-Type: application/json',
-        'droneplay-token: DRONEPLAYTOKEN'
-);
-
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://api.droneplay.io/v1/');
-curl_setopt($ch, CURLOPT_HTTPHEADER,  $headers);
-curl_setopt($ch, CURLOPT_POST,    true);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-curl_setopt($ch, CURLOPT_POSTFIELDS,json_encode($body));
-$response = curl_exec($ch);
-//$json_list= json_decode($response, true);
-curl_close($ch);
-
-echo $response;
-
-
-```
-
-```javascript
-
-var jdata = {"action":"position", "daction": "delete", "clientid" : "EMAILADDRESS", "name" : "FLIGHTRECORDNAME"};
-
-$.ajax({url : "https://api.droneplay.io/v1/",
-       dataType : "json",
-       contentType : "application/json",
-       crossDomain: true,
-       cache : false,
-       data : JSON.stringify(jdata),
-       type : "POST",
-       async: false,
-       beforeSend: function(request) {
-          request.setRequestHeader("droneplay-token", "DRONEPLAYTOKEN");
-        },
-       success : function(r) {
-         console.log(JSON.stringify(r));
-         if(r.result == "success") {
-           //r.data;
-         }
-       },
-       error:function(request,status,error){
-           alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-       }
-});
-
-```
-
-```python
-
-import requests
-headers = {
-    'Content-Type': 'application/json',
-    'droneplay-token' : 'DRONEPLAYTOKEN'
-}
-data = {
-    'action': 'position',
-    'daction': 'delete',
-    'clientid' : 'EMAILADDRESS',
-    'mname' : 'MISSIONNAME'
-}
-
-url = 'https://api.droneplay.io/v1/'
-response = requests.post(url, headers=headers,
-                         data=json.dumps(data))
-response.raise_for_status()
-'response.json()
-
-```
-
-> 상기의 명령은 아래와 같이 JSON 구조로 응답합니다:
-
-```json
-  {
-    "result":"success"
-  }
-```
-비행기록 1개 삭제합니다.
-
-### HTTP 요청
-
-`POST https://apis.droneplay.io/v1/`
-
-### URL 파라메터
-
-파라메터 | 설명
---------- | -----------
-droneplay-token | 부여받은 개발자 Token값을 헤더에 입력합니다.
-clientid | 개발자 Token을 받기위해 입력한 이메일 주소를 입력합니다.
-action | 'position' 입력합니다.
-daction | 'delete' 입력합니다.
-name | 삭제할 비행기록의 이름을 입력합니다.
