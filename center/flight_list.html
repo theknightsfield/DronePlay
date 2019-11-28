@@ -144,7 +144,18 @@ gtag('config', 'UA-130136264-4');
                                       <h3>비행기록 목록</h3>
                                       <button id="getFlightListBtn" class="btn btn-primary" type="button" onClick="getFlightList()">
                                           비행기록 불러오기
+                                      </button>                                                                            
+                                    </div>
+                                    
+                                    <div class="panel-body">
+                                      <button id="uploadFlightRecBtn" class="btn btn-primary" type="button" onClick="uploadFlightList()">
+                                          DJI 비행기록 업로드
                                       </button>
+                                      
+	                                    <form action="" enctype="multipart/form-data" method="post" id="djifileform">
+	     																			<input type="file" name="file" id="file" accept="text/plain" required>
+	     																			<input type="hidden" name="name" id="djifname">
+																			</form>
                                     </div>
                                   </div>
                               </div>
