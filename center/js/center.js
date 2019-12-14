@@ -536,6 +536,13 @@ function btnRegister() {
         alert("미션의 이름을 잘못 입력하셨습니다.");
         return;
     }
+    
+    var mspeed = prompt("미션 수행시 비행속도를 입력해 주세요.", "");
+
+    if (mspeed == null || parseFloat(mspeed) <= 0.0) {
+        alert("비행속도를 잘못 입력하셨습니다.");
+        return;
+    }
 
     var nPositions = new Array();
 
@@ -576,7 +583,7 @@ function btnRegister() {
 
 
     var userid = getCookie("dev_user_id");
-    var jdata = {"action": "mission","mname" : mname, "daction" : "set", "missiondata" : nPositions, "clientid" : userid};
+    var jdata = {"action": "mission","mname" : mname, "daction" : "set", "missionspeed": mspeed, "missiondata" : nPositions, "clientid" : userid};
 
     ajaxRequest(jdata, function (r) {
       if(r.result == "success") {
