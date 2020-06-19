@@ -155,7 +155,7 @@ function processSeek(curTime) {
     var index = 0;
     chartLocData.some(function(item) {
       if ("dsec" in item) {
-        var ds = item.dsec *1;
+        var ds = item.dsec;
         if((ds + 2) >= curTime && (ds - 2) <= curTime) {
             openTip(window.myScatter, 0, index);
             var latLng = ol.proj.fromLonLat([item.lng *= 1, item.lat *= 1]);
@@ -388,7 +388,7 @@ function addMapAndChartItem(i, item) {
   }
 
   if ("lat" in item && "lng" in item && "alt" in item) {
-    var dsec = (item.dsec * 1) / 1000;
+    var dsec = item.dsec * 1;
     chartLocData.push({lat : item.lat, lng : item.lng, alt: item.alt, dsec : dsec});
 
     var pos_icon = new ol.Feature({
@@ -448,7 +448,7 @@ function setChartData(cdata) {
 
                   var locdata = chartLocData[ii];
                   if ("dsec" in locdata) {
-                    youtubeSeekTo(locdata.dsec *= 1);
+                    youtubeSeekTo(locdata.dsec);
                   }
               }
           });
@@ -509,7 +509,7 @@ function setChartData(cdata) {
                           }
 
                           if ("dsec" in locdata) {
-                            youtubeSeekTo(locdata.dsec *= 1);
+                            youtubeSeekTo(locdata.dsec);
                           }
                         }
 
