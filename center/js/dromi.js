@@ -389,6 +389,9 @@ function addMapAndChartItem(i, item) {
 
   if ("lat" in item && "lng" in item && "alt" in item) {
     var dsec = item.dsec * 1;
+    if (dsec > 3600)
+    	dsec = dsec / 1000;
+    	
     chartLocData.push({lat : item.lat, lng : item.lng, alt: item.alt, dsec : dsec});
 
     var pos_icon = new ol.Feature({
