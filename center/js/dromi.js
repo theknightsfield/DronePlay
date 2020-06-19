@@ -71,7 +71,20 @@ function deleteData(index) {
   });
 }
 
+function btnSetMovie() {	
+	var data_id = $('#movieData').val();
+	setYoutubePlayer(data_id);
+}
+
 function setYoutubePlayer(data_id) {
+	if (data_id == null || data_id == "") {
+		$("#youTubePlayer").hide();
+		return;
+	}
+	else {
+		$("#youTubePlayer").show();
+	}
+	
   if (youTubePlayer != null) {
     youTubePlayer.loadVideoById(data_id, 0, "large");
     return;
