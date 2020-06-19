@@ -176,6 +176,8 @@ function youtubeSeekTo(where) {
 function showData(index) {
   if (dromiDataArray.length == 0) return;
 
+	showLoader();
+	
   var item = dromiDataArray[index];
 
   if ("youtube_data_id" in item) {
@@ -186,6 +188,7 @@ function showData(index) {
   }
 
   setChartData(item.data);
+  hideLoader();
 }
 
 function setFlightlistForDromi(data) {
