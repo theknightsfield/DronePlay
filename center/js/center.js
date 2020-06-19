@@ -230,6 +230,9 @@ function getList() {
         appendMissionList(r.data);
         $('#getListBtn').hide(1500);
       }
+      else {
+      	alert("Error ! - 0");
+      }
     }, function(request,status,error) {
       alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
     });
@@ -253,6 +256,9 @@ function getMissionToMonitor(id) {
         });
 
         $("#loader").hide();
+      }
+      else {
+      	alert("Error ! - 1");
       }
     }, function(request,status,error) {
       alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -448,6 +454,9 @@ function getFlightList() {
       setFlightlist(r.data);
       $('#getFlightListBtn').hide(1500);
     }
+    else {
+    	alert("Error ! - 2");
+    }
   }, function(request,status,error) {
     hideLoader();
     alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -521,6 +530,9 @@ function btnRemove(name, trname) {
       if(r.result == "success") {
         $("#" + trname).remove();
       }
+      else {
+      	alert("Error ! - 4");
+      }
     }, function(request,status,error) {});
 }
 
@@ -588,6 +600,9 @@ function btnRegister() {
     ajaxRequest(jdata, function (r) {
       if(r.result == "success") {
         alert("미션이 등록되었습니다.");
+      }
+      else {
+      	alert("Error ! - 7");
       }
     }, function(request,status,error) {});
 }
@@ -880,11 +895,15 @@ function uploadFlightListCallback(mname, base64file) {
     var jdata = {"action" : "position", "daction" : "convert", "clientid" : userid, "name" : mname, "recordfile" : base64file};
 
     ajaxRequest(jdata, function (r) {
+    	hideLoader();
+    	
       if(r.result == "success") {        
         $('#uploadFlightRecBtn').hide(1500);
         $('#djifileform').hide(1500);
-        alert("Successfully, uploaded !, Please refresh this page and click 'load' button again.");
-        hideLoader();
+        alert("Successfully, uploaded !, Please refresh this page and click 'load' button again.");        
+      }
+      else {
+      	alert("Error ! : (" + r.reason + ")");
       }
     }, function(request,status,error) {
     	hideLoader();
