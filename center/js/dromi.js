@@ -73,7 +73,8 @@ function deleteData(index) {
 
 function btnSetMovie() {	
 	var data_id = $('#movieData').val();
-	setYoutubePlayer(data_id);
+	var r_id = data_id.split('=');
+	setYoutubePlayer(r_id);
 }
 
 function setYoutubePlayer(data_id) {
