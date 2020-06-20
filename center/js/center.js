@@ -8,6 +8,8 @@ var geolocation;
 var posSource;
 var posIcons = new Array();
 
+var mapPopup;
+
 var flightDataArray = new Array();
 
 $(function() {
@@ -692,6 +694,10 @@ function mapInit() {
   var vectorLayer = new ol.layer.Vector({
       source: vectorSource
     });
+    
+  mapPopup = new ol.Overlay({
+        element: document.getElementById('popup');
+  });
 
   pointSource = new ol.source.Vector({});
   var pointLayer = new ol.layer.Vector({
@@ -730,6 +736,8 @@ function mapInit() {
       loadTilesWhileAnimating: true,
       view: dokdo_view
     });
+    
+    map.addOverlay(mapPopup);
 
 
     // update the HTML page when the position changes.

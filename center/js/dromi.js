@@ -28,6 +28,23 @@ function dromiListInit() {
   $("#chartView").hide();
   $("#googlePhotoPlayer").hide();
   $("#youTubePlayer").hide();
+  
+  map.on('click', function(evt) {
+        var coordinates = evt.coordinate;
+        //alert(coordinates);
+        var element = mapPopup.getElement();
+  			var coordinate = evt.coordinate;
+  			var hdms = ol.coordinate.toStringHDMS(ol.proj.toLonLat(coordinates));
+  			$(element).popover('destroy');
+			  mapPopup.setPosition(coordinate);
+			  $(element).popover({
+			    placement: 'top',
+			    animation: false,
+			    html: true,
+			    content: '<p>The location you clicked was:</p><code>' + hdms + '</code>'
+			  });
+			  $(element).popover('show');
+  });
   //getDromiList();
 }
 
