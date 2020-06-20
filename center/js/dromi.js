@@ -211,7 +211,7 @@ function isHidden(el) {
 function movieSeekTo(where) {		  
   fromMap = true;
   
-  if (googlePhotoPlayer != null && isHidden(googlePhotoPlayer) == false) {
+  if (googlePhotoPlayer != null && googlePhotoPlayerAr.is(":visible") == true) {
   	googlePhotoPlayer.currentTime = where;
   }
   
