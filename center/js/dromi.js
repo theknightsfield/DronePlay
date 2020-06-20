@@ -15,6 +15,7 @@ var youTubePlayer = null;
 var youtube_data_id;
 
 var googlePhotoPlayer = null;
+var googlePhotoPlayerAr = null;
 
 var cur_flightrecord_name = "";
 
@@ -230,6 +231,7 @@ function showData(index) {
   }
   else {
     $("#youTubePlayer").hide();
+    $("#googlePhotoPlayer").hide();    
   }
 
   setChartData(item.data);
