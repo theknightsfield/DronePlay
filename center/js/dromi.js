@@ -101,7 +101,8 @@ function setGooglePhotoPlayer(data_url) {
 	}
 		
 	googlePhotoPlayer.setAttribute('src', 'https://lh3.googleusercontent.com/s88pW8IFXchzZ-HjYEMlZt1sKBNGPBEtJGfcCEhpO2YbFkLhEsiVro_7oOn6RIQp8G87KPHFfWG1na9SYRpohTFe2xyiqTzPZ5bCWP9nCO2YeFylgeBbnzwcipZX-1i8FLj53juUYPQ=m37');	
-	googlePhotoPlayerAr.show();
+	googlePhotoPlayer.load();
+	googlePhotoPlayerAr.show();	
 }
 
 function setYoutubePlayer(d_id) {
