@@ -110,11 +110,11 @@ function setGooglePhotoPlayer(data_url) {
 
 function setYoutubePlayer(d_id) {
 	if (d_id == null || d_id == "" || d_id == "-") {
-		$("#youTubePlayer").hide();
+		$("#youTubePlayer").hide();		
 		return;
 	}
 	else {
-		$("#youTubePlayer").show();
+		$("#youTubePlayer").show();		
 	}
 	
 	var data_id = d_id;
@@ -210,7 +210,7 @@ function movieSeekTo(where) {
   	googlePhotoPlayer.currentTime = where;
   }
   
-  if (youTubePlayer != null && youTubePlayer.is(":visible") == true) { 
+  if (youTubePlayer != null && $('#youTubePlayer').is(":visible") == true) { 
   	youTubePlayer.seekTo(where, true);
   }
 }
