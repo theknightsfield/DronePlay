@@ -241,23 +241,12 @@ function showData(index) {
     $("#googlePhotoPlayer").hide();  
   }
 	
-	if (item.data == null || item.data == "") {
+	if (!("data" in item) || item.data == null || item.data == "") {
 		var userid = getCookie("dev_user_id");
 		var jdata = {"action": "dromi", "daction": "get", "clientid" : userid, "name" : item.dname};
 	
 	  showDromiLoader();
-	  ajaxRequest(jdata, function (r) {	    
-	    if(r.result != "success") {
-	      alert("Failed to load data!");
-	    }
-	    else {
-	      setChartData(r.data);
-	      hideDromiLoader();
-	    }
-	  }, function(request,status,error) {
-	    hideDromiLoader();
-	    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	  });
+	  
 	}
 	else {
 		showDromiLoader();
