@@ -196,7 +196,7 @@ function processSeek(curTime) {
             var latLng = ol.proj.fromLonLat([item.lng *= 1, item.lat *= 1]);
                         
           	var hdms = ol.coordinate.toStringHDMS(latLng);			  			
-					  $("#position_info").text(hdms);
+					  $("#position_info").text(hdms + " [ Lat: " + item.lat + " / Lng: " + item.lng + " ]");
 						  
             flyTo(latLng, function() {isMoved=true;});
             return true;
@@ -532,7 +532,8 @@ function setChartData(cdata) {
 			        //alert(coordinates);
 			        var element = mapPopup.getElement();
 			  			var coordinate = evt.coordinate;
-			  			var hdms = ol.coordinate.toStringHDMS(ol.proj.toLonLat(coordinates));
+			  			var latlng = ol.proj.toLonLat(coordinates);
+			  			var hdms = ol.coordinate.toStringHDMS(latlng);
 			  			$(element).popover('destroy');
 						  mapPopup.setPosition(coordinate);
 						  $(element).popover({
@@ -542,7 +543,8 @@ function setChartData(cdata) {
 						    content: '<p>The location you clicked was:</p><code>' + hdms + '</code>'
 						  });
 						  $(element).popover('show');
-						  $("#position_info").text(hdms);
+						  
+						  $("#position_info").text(hdms + " [ Lat: " + latlng.lat + " / Lng: " + latlng.lon + " ]");						  
           });
 
           var posSource = new ol.source.Vector({
