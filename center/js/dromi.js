@@ -65,14 +65,14 @@ function deleteData(index) {
   var userid = getCookie("dev_user_id");
   var jdata = {"action": "dromi", "daction": "delete", "clientid" : userid, "name" : item.dname};
 
-  showLoader();
+  showDromiLoader();
   ajaxRequest(jdata, function (r) {
-    hideLoader();
+    hideDromiLoader();
     if(r.result == "success") {
       removeTableRow("dromi-list-" + index);
     }
   }, function(request,status,error) {
-    hideLoader();
+    hideDromiLoader();
     alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
   });
 }
@@ -245,24 +245,24 @@ function showData(index) {
 		var userid = getCookie("dev_user_id");
 		var jdata = {"action": "dromi", "daction": "get", "clientid" : userid, "name" : item.dname};
 	
-	  showLoader();
+	  showDromiLoader();
 	  ajaxRequest(jdata, function (r) {	    
 	    if(r.result != "success") {
 	      alert("Failed to load data!");
 	    }
 	    else {
 	      setChartData(r.data);
-	      hideLoader();
+	      hideDromiLoader();
 	    }
 	  }, function(request,status,error) {
-	    hideLoader();
+	    hideDromiLoader();
 	    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 	  });
 	}
 	else {
-		showLoader();
+		showDromiLoader();
   	setChartData(item.data);
-  	hideLoader();
+  	hideDromiLoader();
   }
   
 }
@@ -301,9 +301,9 @@ function deleteFlightData(index) {
   var userid = getCookie("dev_user_id");
   var jdata = {"action": "position", "daction": "delete", "clientid" : userid, "name" : item.name};
 
-  showLoader();
+  showDromiLoader();
   ajaxRequest(jdata, function (r) {
-    hideLoader();
+    hideDromiLoader();
     if(r.result != "success") {
       alert("삭제 실패!");
     }
@@ -311,7 +311,7 @@ function deleteFlightData(index) {
       removeTableRow("flight-list-" + index);
     }
   }, function(request,status,error) {
-    hideLoader();
+    hideDromiLoader();
     alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
   });
 }
@@ -326,9 +326,9 @@ function getFlightListForDromi() {
   var userid = getCookie("dev_user_id");
   var jdata = {"action": "position", "daction": "download", "clientid" : userid};
 
-  showLoader();
+  showDromiLoader();
   ajaxRequest(jdata, function (r) {
-    hideLoader();
+    hideDromiLoader();
     if(r.result == "success") {
       if (r.data == null || r.data.length == 0) {
         alert("no data");
@@ -339,7 +339,7 @@ function getFlightListForDromi() {
       $('#getFlightListBtn').hide(1500);
     }
   }, function(request,status,error) {
-    hideLoader();
+    hideDromiLoader();
     alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
   });
 }
@@ -348,9 +348,9 @@ function getDromiList() {
   var userid = getCookie("dev_user_id");
   var jdata = {"action": "dromi", "daction": "list", "clientid" : userid};
 
-  showLoader();
+  showDromiLoader();
   ajaxRequest(jdata, function (r) {
-    hideLoader();
+    hideDromiLoader();
     if(r.result == "success") {
       if (r.data == null || r.data.length == 0) {
         alert("no data");
@@ -361,7 +361,7 @@ function getDromiList() {
       $('#getListBtn').hide(1500);
     }
   }, function(request,status,error) {
-    hideLoader();
+    hideDromiLoader();
     alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
   });
 }
@@ -413,10 +413,10 @@ function uploadData(name, mname) {
     else
       jdata = {"action": "dromi", "daction": "set", "name" :  name, "data" : arrayData, "clientid" : userid};
 
-    showLoader();
+    showDromiLoader();
     ajaxRequest(jdata, function (r) {
       cur_flightrecord_name = "";
-      hideLoader();
+      hideDromiLoader();
       if(r.result == "success") {
         if (r.data == null || r.data.length == 0) {
           alert("no data");
@@ -427,16 +427,18 @@ function uploadData(name, mname) {
       }
     }, function(request,status,error) {
       cur_flightrecord_name = "";
-      hideLoader();
+      hideDromiLoader();
       alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
     });
 }
 
-function showLoader() {
+function showDromiLoader() {
+	$("#position_info").text("Wait please ...");
   $("#loading").show();
 }
 
-function hideLoader() {
+function hideDromiLoader() {
+	$("#position_info").text("...");
   $("#loading").fadeOut(800);
 }
 
