@@ -92,18 +92,20 @@ function btnSetMovie() {
 }
 
 function setGooglePhotoPlayer(data_url) {
-	if (data_url == "") {
-		googlePhotoPlayer.hide();
+	googlePhotoPlayer = $("#googlePhotoPlayer")[0];	
+	googlePhotoPlayerAr = $("#googlePhotoPlayer");	
+	
+	if (data_url == "" || data_url == "-") {	
+		googlePhotoPlayerAr.hide();			
 		return;
 	}
-	
-	googlePhotoPlayer = $("#googlePhotoPlayer")[0];	
+		
 	googlePhotoPlayer.setAttribute('src', 'https://lh3.googleusercontent.com/s88pW8IFXchzZ-HjYEMlZt1sKBNGPBEtJGfcCEhpO2YbFkLhEsiVro_7oOn6RIQp8G87KPHFfWG1na9SYRpohTFe2xyiqTzPZ5bCWP9nCO2YeFylgeBbnzwcipZX-1i8FLj53juUYPQ=m37');	
-	googlePhotoPlayer.show();
+	googlePhotoPlayerAr.show();
 }
 
 function setYoutubePlayer(d_id) {
-	if (d_id == null || d_id == "") {
+	if (d_id == null || d_id == "" || d_id == "-") {
 		$("#youTubePlayer").hide();
 		return;
 	}
