@@ -86,6 +86,8 @@ function btnSetMovie() {
 		return;
 	}
 			
+	moviePlayerVisible = false;
+	
 	if (data_id.indexOf("youtube") >=0) {
 		setGooglePhotoPlayer("");	
 		setYoutubePlayer(data_id);							
@@ -108,8 +110,7 @@ function setGooglePhotoPlayer(data_url) {
 	googlePhotoPlayerAr = $("#googlePhotoPlayer");	
 	
 	if (data_url == "" || data_url == "-") {	
-		googlePhotoPlayerAr.hide();
-		moviePlayerVisible = false;
+		googlePhotoPlayerAr.hide();		
 		return;
 	}
 		
@@ -121,8 +122,7 @@ function setGooglePhotoPlayer(data_url) {
 
 function setYoutubePlayer(d_id) {
 	if (d_id == null || d_id == "" || d_id == "-") {
-		$("#youTubePlayer").hide();
-		moviePlayerVisible = false;
+		$("#youTubePlayer").hide();		
 		return;
 	}
 	else {
@@ -235,6 +235,8 @@ function showData(index) {
 		
   var item = dromiDataArray[index];
 
+	moviePlayerVisible = false;
+	
   if ("youtube_data_id" in item) {  	
   	if (item.youtube_data_id.indexOf("youtube") >=0) {		
 			setYoutubePlayer(item.youtube_data_id);					
@@ -247,8 +249,7 @@ function showData(index) {
   }
   else {
     $("#youTubePlayer").hide();
-    $("#googlePhotoPlayer").hide();
-    moviePlayerVisible = false;
+    $("#googlePhotoPlayer").hide();    
   }
   
   if (moviePlayerVisible == true) {
