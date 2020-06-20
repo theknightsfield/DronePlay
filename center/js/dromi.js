@@ -203,11 +203,6 @@ function processSeek(curTime) {
     });
 }
 
-function isHidden(el) {
-    var style = window.getComputedStyle(el);
-    return (style.display === 'none')
-}
-
 function movieSeekTo(where) {		  
   fromMap = true;
   
@@ -215,7 +210,7 @@ function movieSeekTo(where) {
   	googlePhotoPlayer.currentTime = where;
   }
   
-  if (youTubePlayer != null && isHidden(youTubePlayer) == false) { 
+  if (youTubePlayer != null && youTubePlayer.is(":visible") == false) { 
   	youTubePlayer.seekTo(where, true);
   }
 }
