@@ -247,6 +247,22 @@ function showData(index) {
 	
 	  showDromiLoader();
 	  
+	  setTimeout(function() {
+	
+				ajaxRequest(jdata, function (r) {	    
+			    if(r.result != "success") {
+			      alert("Failed to load data!");
+			    }
+			    else {
+			      setChartData(r.data);
+			      hideDromiLoader();
+			    }
+			  }, function(request,status,error) {
+			    hideDromiLoader();
+			    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			  });
+	
+		}, 1000);	  	  
 	}
 	else {
 		showDromiLoader();
