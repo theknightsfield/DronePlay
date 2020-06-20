@@ -29,22 +29,6 @@ function dromiListInit() {
   $("#googlePhotoPlayer").hide();
   $("#youTubePlayer").hide();
   
-  map.on('click', function(evt) {
-        var coordinates = evt.coordinate;
-        //alert(coordinates);
-        var element = mapPopup.getElement();
-  			var coordinate = evt.coordinate;
-  			var hdms = ol.coordinate.toStringHDMS(ol.proj.toLonLat(coordinates));
-  			$(element).popover('destroy');
-			  mapPopup.setPosition(coordinate);
-			  $(element).popover({
-			    placement: 'top',
-			    animation: false,
-			    html: true,
-			    content: '<p>The location you clicked was:</p><code>' + hdms + '</code>'
-			  });
-			  $(element).popover('show');
-  });
   //getDromiList();
 }
 
@@ -213,7 +197,7 @@ function processSeek(curTime) {
             flyTo(latLng, function() {isMoved=true;});
             return true;
         }
-      }
+      }            
 
       index++;
       return false;
@@ -539,6 +523,21 @@ function setChartData(cdata) {
                     movieSeekTo(locdata.dsec);
                   }
               }
+              
+              var coordinates = evt.coordinate;
+			        //alert(coordinates);
+			        var element = mapPopup.getElement();
+			  			var coordinate = evt.coordinate;
+			  			var hdms = ol.coordinate.toStringHDMS(ol.proj.toLonLat(coordinates));
+			  			$(element).popover('destroy');
+						  mapPopup.setPosition(coordinate);
+						  $(element).popover({
+						    placement: 'top',
+						    animation: false,
+						    html: true,
+						    content: '<p>The location you clicked was:</p><code>' + hdms + '</code>'
+						  });
+						  $(element).popover('show');
           });
 
           var posSource = new ol.source.Vector({
