@@ -696,7 +696,7 @@ function mapInit() {
     });
     
   mapPopup = new ol.Overlay({
-        element: document.getElementById('popup');
+        element: document.getElementById('popup')
   });
 
   pointSource = new ol.source.Vector({});
