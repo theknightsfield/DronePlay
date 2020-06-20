@@ -544,7 +544,7 @@ function setChartData(cdata) {
 						  });
 						  $(element).popover('show');
 						  
-						  $("#position_info").text(hdms + " [ Lat: " + latlng.lat + " / Lng: " + latlng.lon + " ]");						  
+						  $("#position_info").text(hdms + " [ Lat: " + latlng[1] + " / Lng: " + latlng[0] + " ]");						  
           });
 
           var posSource = new ol.source.Vector({
