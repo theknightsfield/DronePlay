@@ -194,6 +194,10 @@ function processSeek(curTime) {
         if((ds + 10) >= curTime && (ds - 10) <= curTime) {
             openTip(window.myScatter, 0, index);
             var latLng = ol.proj.fromLonLat([item.lng *= 1, item.lat *= 1]);
+                        
+          	var hdms = ol.coordinate.toStringHDMS(latLng);			  			
+					  $("#position_info").text(hdms);
+						  
             flyTo(latLng, function() {isMoved=true;});
             return true;
         }
