@@ -538,6 +538,7 @@ function setChartData(cdata) {
 						    content: '<p>The location you clicked was:</p><code>' + hdms + '</code>'
 						  });
 						  $(element).popover('show');
+						  $("#position_info").text(hdms);
           });
 
           var posSource = new ol.source.Vector({
