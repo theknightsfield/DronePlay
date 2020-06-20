@@ -222,22 +222,48 @@ function movieSeekTo(where) {
 
 function showData(index) {
   if (dromiDataArray.length == 0) return;
-
-	showLoader();
-	
+		
   var item = dromiDataArray[index];
 
   if ("youtube_data_id" in item) {
-    setYoutubePlayer(item.youtube_data_id);
-    setGooglePhotoPlayer(item.youtubue_data_id);
+  	
+  	if (item.youtube_data_id.indexOf("youtube") >=0) {		
+			setYoutubePlayer(item.youtube_data_id);					
+			setGooglePhotoPlayer("");
+		}
+		else {		
+			setYoutubePlayer("");
+			setGooglePhotoPlayer(item.youtube_data_id);		
+		}  	
   }
   else {
     $("#youTubePlayer").hide();
     $("#googlePhotoPlayer").hide();  
   }
-
-  setChartData(item.data);
-  hideLoader();
+	
+	if (item.data == null || item.data == "") {
+		var jdata = {"action": "dromi", "daction": "get", "clientid" : userid, "name" : item.name};
+	
+	  showLoader();
+	  ajaxRequest(jdata, function (r) {
+	    hideLoader();
+	    if(r.result != "success") {
+	      alert("Failed to load data!");
+	    }
+	    else {
+	      setChartData(r.data);
+	    }
+	  }, function(request,status,error) {
+	    hideLoader();
+	    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	  });
+	}
+	else {
+		showLoader();
+  	setChartData(item.data);
+  	hideLoader();
+  }
+  
 }
 
 function setFlightlistForDromi(data) {
