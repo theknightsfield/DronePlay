@@ -26,6 +26,8 @@ function dromiInit() {
 
 function dromiListInit() {
   $("#chartView").hide();
+  $("#googlePhotoPlayer").hide();
+  $("#youTubePlayer").hide();
   //getDromiList();
 }
 
@@ -231,7 +233,7 @@ function showData(index) {
   }
   else {
     $("#youTubePlayer").hide();
-    $("#googlePhotoPlayer").hide();    
+    $("#googlePhotoPlayer").hide();  
   }
 
   setChartData(item.data);
