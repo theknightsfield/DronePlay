@@ -19,6 +19,8 @@ var googlePhotoPlayerAr = null;
 
 var cur_flightrecord_name = "";
 
+var moviePlayerVisible = false;
+
 function dromiInit() {
   $("#chartView").hide();
   setUploadData();
@@ -84,15 +86,21 @@ function btnSetMovie() {
 		return;
 	}
 			
-	if (data_id.indexOf("youtube") >=0) {		
-		setYoutubePlayer(data_id);					
-		setGooglePhotoPlayer("");
+	if (data_id.indexOf("youtube") >=0) {
+		setGooglePhotoPlayer("");	
+		setYoutubePlayer(data_id);							
 	}
 	else {		
-		setYoutubePlayer("");
-		setGooglePhotoPlayer(data_id);		
+		setGooglePhotoPlayer(data_id);
+		setYoutubePlayer("");		
 	}
-			
+	
+	if (moviePlayerVisible == true) {
+		$("#movieDataSet").hide();
+	}
+	else {
+		$("#movieDataSet").show();
+	}			
 }
 
 function setGooglePhotoPlayer(data_url) {
@@ -100,26 +108,26 @@ function setGooglePhotoPlayer(data_url) {
 	googlePhotoPlayerAr = $("#googlePhotoPlayer");	
 	
 	if (data_url == "" || data_url == "-") {	
-		googlePhotoPlayerAr.hide();			
-		$("#movieDataSet").show();
+		googlePhotoPlayerAr.hide();
+		moviePlayerVisible = false;
 		return;
 	}
 		
 	googlePhotoPlayer.setAttribute('src', data_url);	
 	googlePhotoPlayer.load();
 	googlePhotoPlayerAr.show();
-	$("#movieDataSet").hide();
+	moviePlayerVisible = true;
 }
 
 function setYoutubePlayer(d_id) {
 	if (d_id == null || d_id == "" || d_id == "-") {
 		$("#youTubePlayer").hide();
-		$("#movieDataSet").show();
+		moviePlayerVisible = false;
 		return;
 	}
 	else {
 		$("#youTubePlayer").show();
-		$("#movieDataSet").hide();
+		moviePlayerVisible = true;
 	}
 	
 	var data_id = d_id;
@@ -227,8 +235,7 @@ function showData(index) {
 		
   var item = dromiDataArray[index];
 
-  if ("youtube_data_id" in item) {
-  	
+  if ("youtube_data_id" in item) {  	
   	if (item.youtube_data_id.indexOf("youtube") >=0) {		
 			setYoutubePlayer(item.youtube_data_id);					
 			setGooglePhotoPlayer("");
@@ -236,12 +243,20 @@ function showData(index) {
 		else {		
 			setYoutubePlayer("");
 			setGooglePhotoPlayer(item.youtube_data_id);		
-		}  	
+		}  					
   }
   else {
     $("#youTubePlayer").hide();
-    $("#googlePhotoPlayer").hide();  
+    $("#googlePhotoPlayer").hide();
+    moviePlayerVisible = false;
   }
+  
+  if (moviePlayerVisible == true) {
+		$("#movieDataSet").hide();
+	}
+	else {
+		$("#movieDataSet").show();
+	}
 	
 	if (!("data" in item) || item.data == null || item.data == "") {
 		var userid = getCookie("dev_user_id");
