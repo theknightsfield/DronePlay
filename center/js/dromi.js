@@ -210,7 +210,7 @@ function movieSeekTo(where) {
   	googlePhotoPlayer.currentTime = where;
   }
   
-  if (youTubePlayer != null && youTubePlayer.is(":visible") == false) { 
+  if (youTubePlayer != null && youTubePlayer.is(":visible") == true) { 
   	youTubePlayer.seekTo(where, true);
   }
 }
