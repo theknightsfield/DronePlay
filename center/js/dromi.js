@@ -243,7 +243,7 @@ function showData(index) {
 	
 	if (item.data == null || item.data == "") {
 		var userid = getCookie("dev_user_id");
-		var jdata = {"action": "dromi", "daction": "get", "clientid" : userid, "name" : item.name};
+		var jdata = {"action": "dromi", "daction": "get", "clientid" : userid, "name" : item.dname};
 	
 	  showLoader();
 	  ajaxRequest(jdata, function (r) {
