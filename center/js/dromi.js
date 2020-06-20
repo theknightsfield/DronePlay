@@ -14,6 +14,8 @@ var flightDataArrayForDromi = new Array();
 var youTubePlayer = null;
 var youtube_data_id;
 
+var googlePhotoPlayer = null;
+
 var cur_flightrecord_name = "";
 
 function dromiInit() {
@@ -73,21 +75,47 @@ function deleteData(index) {
 
 function btnSetMovie() {	
 	var data_id = $('#movieData').val();
-	var r_id = data_id.split('=');
-	if (r_id.length > 1)
-		setYoutubePlayer(r_id[1]);
-	else
-		setYoutubePlayer(r_id[0]);
+	if (data_id == "") {
+		alert("Invalid URL");
+		return;
+	}
+			
+	if (data_id.indexOf("youtube") >=0) {		
+		setYoutubePlayer(data_id);					
+		setGooglePhotoPlayer("");
+	}
+	else {		
+		setYoutubePlayer("");
+		setGooglePhotoPlayer(data_id);		
+	}
+			
 }
 
-function setYoutubePlayer(data_id) {
-	if (data_id == null || data_id == "") {
+function setGooglePhotoPlayer(data_url) {
+	if (data_url == "") {
+		googlePhotoPlayer.hide();
+		return;
+	}
+	
+	googlePhotoPlayer = $("#googlePhotoPlayer")[0];	
+	googlePhotoPlayer.setAttribute('src', 'https://lh3.googleusercontent.com/s88pW8IFXchzZ-HjYEMlZt1sKBNGPBEtJGfcCEhpO2YbFkLhEsiVro_7oOn6RIQp8G87KPHFfWG1na9SYRpohTFe2xyiqTzPZ5bCWP9nCO2YeFylgeBbnzwcipZX-1i8FLj53juUYPQ=m37');	
+	googlePhotoPlayer.show();
+}
+
+function setYoutubePlayer(d_id) {
+	if (d_id == null || d_id == "") {
 		$("#youTubePlayer").hide();
 		return;
 	}
 	else {
 		$("#youTubePlayer").show();
 	}
+	
+	var data_id = d_id;
+	var r_id = d_id.split('=');
+	if (r_id.length > 1) {
+		data_id = r_id[1];
+	}	
 	
   if (youTubePlayer != null) {
     youTubePlayer.loadVideoById(data_id, 0, "large");
@@ -156,7 +184,7 @@ function processSeek(curTime) {
     chartLocData.some(function(item) {
       if ("dsec" in item) {
         var ds = item.dsec;
-        if((ds + 2) >= curTime && (ds - 2) <= curTime) {
+        if((ds + 10) >= curTime && (ds - 10) <= curTime) {
             openTip(window.myScatter, 0, index);
             var latLng = ol.proj.fromLonLat([item.lng *= 1, item.lat *= 1]);
             flyTo(latLng, function() {isMoved=true;});
@@ -169,11 +197,21 @@ function processSeek(curTime) {
     });
 }
 
-function youtubeSeekTo(where) {
-  if (youTubePlayer == null) return;
+function isHidden(el) {
+    var style = window.getComputedStyle(el);
+    return (style.display === 'none')
+}
 
+function movieSeekTo(where) {		  
   fromMap = true;
-  youTubePlayer.seekTo(where, true);
+  
+  if (googlePhotoPlayer != null && googlePhotoPlayer.is(":visible")) {
+  	googlePhotoPlayer.currentTime = where;
+  }
+  
+  if (youTubePlayer != null && isHidden(youTubePlayer) == false) { 
+  	youTubePlayer.seekTo(where, true);
+  }
 }
 
 function showData(index) {
@@ -185,6 +223,7 @@ function showData(index) {
 
   if ("youtube_data_id" in item) {
     setYoutubePlayer(item.youtube_data_id);
+    setGooglePhotoPlayer(item.youtubue_data_id);
   }
   else {
     $("#youTubePlayer").hide();
@@ -451,7 +490,7 @@ function setChartData(cdata) {
 
                   var locdata = chartLocData[ii];
                   if ("dsec" in locdata) {
-                    youtubeSeekTo(locdata.dsec);
+                    movieSeekTo(locdata.dsec);
                   }
               }
           });
@@ -512,7 +551,7 @@ function setChartData(cdata) {
                           }
 
                           if ("dsec" in locdata) {
-                            youtubeSeekTo(locdata.dsec);
+                            movieSeekTo(locdata.dsec);
                           }
                         }
 
