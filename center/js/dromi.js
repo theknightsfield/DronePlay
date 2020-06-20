@@ -28,7 +28,7 @@ function dromiListInit() {
   $("#chartView").hide();
   $("#googlePhotoPlayer").hide();
   $("#youTubePlayer").hide();
-  
+  $("#movieDataSet").hide();
   //getDromiList();
 }
 
@@ -101,21 +101,25 @@ function setGooglePhotoPlayer(data_url) {
 	
 	if (data_url == "" || data_url == "-") {	
 		googlePhotoPlayerAr.hide();			
+		$("#movieDataSet").show();
 		return;
 	}
 		
-	googlePhotoPlayer.setAttribute('src', 'https://lh3.googleusercontent.com/s88pW8IFXchzZ-HjYEMlZt1sKBNGPBEtJGfcCEhpO2YbFkLhEsiVro_7oOn6RIQp8G87KPHFfWG1na9SYRpohTFe2xyiqTzPZ5bCWP9nCO2YeFylgeBbnzwcipZX-1i8FLj53juUYPQ=m37');	
+	googlePhotoPlayer.setAttribute('src', data_url);	
 	googlePhotoPlayer.load();
-	googlePhotoPlayerAr.show();	
+	googlePhotoPlayerAr.show();
+	$("#movieDataSet").hide();
 }
 
 function setYoutubePlayer(d_id) {
 	if (d_id == null || d_id == "" || d_id == "-") {
-		$("#youTubePlayer").hide();		
+		$("#youTubePlayer").hide();
+		$("#movieDataSet").show();
 		return;
 	}
 	else {
-		$("#youTubePlayer").show();		
+		$("#youTubePlayer").show();
+		$("#movieDataSet").hide();
 	}
 	
 	var data_id = d_id;
@@ -147,9 +151,7 @@ function onYouTubeIframeAPIReady() {
           'onReady': onPlayerReady, //로딩할때 이벤트 실행
           'onStateChange': onPlayerStateChange //플레이어 상태 변화시 이벤트실행
         }
-    });//youTubePlayer1셋팅
-
-    $("#youTubePlayer").show();
+    });//youTubePlayer1셋팅        
 }
 
 var fromMap = false;
@@ -535,22 +537,9 @@ function setChartData(cdata) {
                   }
               }
               
-              var coordinates = evt.coordinate;
-			        //alert(coordinates);
-			        var element = mapPopup.getElement();
-			  			var coordinate = evt.coordinate;
+              var coordinates = evt.coordinate;			  			
 			  			var latlng = ol.proj.toLonLat(coordinates);
-			  			var hdms = ol.coordinate.toStringHDMS(latlng);
-			  			$(element).popover('destroy');
-						  mapPopup.setPosition(coordinate);
-						  $(element).popover({
-						    placement: 'top',
-						    animation: false,
-						    html: true,
-						    content: '<p>The location you clicked was:</p><code>' + hdms + '</code>'
-						  });
-						  $(element).popover('show');
-						  
+			  			var hdms = ol.coordinate.toStringHDMS(latlng);			  									  						  						  
 						  $("#position_info").text(hdms + " [ Lat: " + latlng[1] + " / Lng: " + latlng[0] + " ]");						  
           });
 
