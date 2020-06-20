@@ -246,13 +246,13 @@ function showData(index) {
 		var jdata = {"action": "dromi", "daction": "get", "clientid" : userid, "name" : item.dname};
 	
 	  showLoader();
-	  ajaxRequest(jdata, function (r) {
-	    hideLoader();
+	  ajaxRequest(jdata, function (r) {	    
 	    if(r.result != "success") {
 	      alert("Failed to load data!");
 	    }
 	    else {
 	      setChartData(r.data);
+	      hideLoader();
 	    }
 	  }, function(request,status,error) {
 	    hideLoader();
