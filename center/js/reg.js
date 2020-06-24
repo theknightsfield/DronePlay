@@ -48,6 +48,14 @@ function requestRegister() {
               var emailid = getCookie("temp_user_id");
               var droneplay_phonenumber = $('#droneplay_phonenumber').val();
 
+              if (droneplay_name == null || droneplay_name == ""
+                  || droneplay_email == null || droneplay_email == ""
+                  || emailid == null || emailid == ""
+                  || droneplay_phonenumber == null || droneplay_phonenumber == "") {
+                alert("Please, input valid information.");
+                return;
+              }
+
               var data = {
                   "action": "member",
                   "daction" : "register",
