@@ -650,11 +650,11 @@ function drawLineGraph() {
                                                
                         var locdata = chartLocData[tooltipItem.index];
                         if(locdata && "lng" in locdata && "lat" in locdata) {
-                          var latLng = ol.proj.fromLonLat([locdata.lng * 1, locdata.lat * 1]);
+                          var latlng = ol.proj.fromLonLat([locdata.lng * 1, locdata.lat * 1]);
 
                           if (isMoved == true) {
                             isMoved = false;
-                            flyTo(latLng, locdata.yaw, function() {isMoved=true;});
+                            flyTo(latlng, locdata.yaw, function() {isMoved=true;});
                             
                             var hdms = ol.coordinate.toStringHDMS(latlng);		
 														var itext = hdms + " [ Lat: " + latlng[1] + " / Lng: " + latlng[0] + " / Alt: " + locdata.alt + " ]";
