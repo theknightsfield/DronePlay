@@ -1,7 +1,7 @@
 
 var bMonStarted = false;
 var pointSource;
-var dokdo_view;
+var current_view;
 var current_pos;
 var current_pos_image;
 var map;
@@ -161,7 +161,7 @@ function setDesignTableWithFlightRecord(data) {
   
   var lines = new ol.geom.LineString(coordinates);
   
-  //lines.transform('EPSG:4326', dokdo_view.getProjection());
+  //lines.transform('EPSG:4326', current_view.getProjection());
   
   var lineSource = new ol.source.Vector({
           features: [new ol.Feature({
@@ -665,7 +665,7 @@ function mapInit() {
   var dokdo = ol.proj.fromLonLat([131.8661992, 37.2435813]);
   var scaleLineControl = new ol.control.ScaleLine();
 
-  dokdo_view = new ol.View({
+  current_view = new ol.View({
       center: dokdo,
       zoom: 17
     });
@@ -675,7 +675,7 @@ function mapInit() {
           trackingOptions: {
             enableHighAccuracy: true
           },
-          projection: dokdo_view.getProjection()
+          projection: current_view.getProjection()
   });
 
   var accuracyFeature = new ol.Feature();
@@ -754,7 +754,7 @@ function mapInit() {
       // Improve user experience by loading tiles while animating. Will make
       // animations stutter on mobile or slow devices.
       loadTilesWhileAnimating: true,
-      view: dokdo_view
+      view: current_view
     });
         
     // update the HTML page when the position changes.
@@ -822,7 +822,7 @@ function hideLoader() {
 
 function flyTo(location, yaw, done) {
     var duration = 1500;
-    var zoom = dokdo_view.getZoom();
+    var zoom = current_view.getZoom();
     var parts = 2;
     var called = false;
 
@@ -840,11 +840,11 @@ function flyTo(location, yaw, done) {
         }
     }
 
-    dokdo_view.animate({
+    current_view.animate({
       center: location,
       duration: duration
     }, callback);
-    dokdo_view.animate({
+    current_view.animate({
       zoom: zoom - 1,
       duration: duration / 2
     }, {
