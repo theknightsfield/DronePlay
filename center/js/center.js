@@ -154,7 +154,7 @@ function setDesignTableWithFlightRecord(data) {
 	      posIcons.push(pos_icon);
 	    */
 	    
-      posLines.push([item.lat, item.lng]);
+      posLines.push([item.lng, item.lat]);
       i++;
   });
   
