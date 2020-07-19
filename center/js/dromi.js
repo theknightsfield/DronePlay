@@ -598,14 +598,15 @@ function setChartData(cdata) {
       }
 
 			var ctx2 = document.getElementById('lineGraph').getContext('2d');
-   		var linedataSet = {datasets: [
+   		var linedataSet = {
+   			datasets: [
           {
               label: '고도',
               borderColor: '#f00',
               backgroundColor: '#f66',
               data: lineGraphData
          }
-      ]};
+      	]};
    
      	var lineChart = new Chart(ctx2, {
       	type: 'scatter',
@@ -634,7 +635,7 @@ function setChartData(cdata) {
                           }
                         }
 
-                        return chartLabelData[tooltipItem.index] + " / " + JSON.stringify(chartLocData[tooltipItem.index]);
+                        return JSON.stringify(chartLocData[tooltipItem.index]);
 
                     }
                   },
@@ -709,7 +710,7 @@ function setChartData(cdata) {
                           }
                         }
 
-                        return chartLabelData[tooltipItem.index] + " / " + JSON.stringify(chartLocData[tooltipItem.index]);
+                        return JSON.stringify(chartLocData[tooltipItem.index]);
 
                     }
                   },
