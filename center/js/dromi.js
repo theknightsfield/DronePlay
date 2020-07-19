@@ -80,11 +80,11 @@ function setLineGraph(data) {
 		    width = 960 - margin.left - margin.right,
 		    height = 500 - margin.top - margin.bottom;
 		 
-		var x = d3.scale.linear()
+		var x = d3.scaleLinear()
 		    .domain([0, n - 1])
 		    .range([0, width]);
 		 
-		var y = d3.scale.linear()
+		var y = d3.scaleLinear()
 		    .domain([0, 200])
 		    .range([height, 0]);
 		 
