@@ -42,7 +42,7 @@ var uvStatusSvg;
 var uvStatusSvg_path_d;
 
 function initUVStatus() {
-	uvStatusSvg = d3.select("uvstatus").append("svg")
+	uvStatusSvg = d3.select("#uvstatus").append("svg")
       .attr("width", 200)
       .attr("height", 200)
       .attr('viewBox', '-50 -50 100 100')
