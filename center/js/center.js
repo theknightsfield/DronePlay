@@ -141,7 +141,8 @@ function setDesignTableWithFlightRecord(data) {
           image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
             color: pos_icon_color,
             crossOrigin: 'anonymous',
-            src: pos_icon_image
+            src: pos_icon_image,
+            rotation : item.yaw
           }))
       }));
 
