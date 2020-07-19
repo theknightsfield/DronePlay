@@ -510,7 +510,7 @@ function addChartItem(i, item) {
     pos_icon.setStyle(new ol.style.Style({
         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
           color: pos_icon_color,
-          crossOrigin: 'anonymous,
+          crossOrigin: 'anonymous',
           src: pos_icon_image
         }))
     }));
