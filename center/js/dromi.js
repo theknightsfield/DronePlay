@@ -203,12 +203,9 @@ function processSeek(curTime) {
         var ds = item.dsec;
         if((ds + 10) >= curTime && (ds - 10) <= curTime) {
             openTip(window.myScatter, 0, index);
-            var latLng = ol.proj.fromLonLat([item.lng * 1, item.lat * 1]);
-                        
-          	var hdms = ol.coordinate.toStringHDMS(latLng);			  			
-					  $("#position_info").text(hdms + " [ Lat: " + item.lat + " / Lng: " + item.lng + " ]");
-						  
+            var latLng = ol.proj.fromLonLat([item.lng * 1, item.lat * 1]);                                  													
             flyTo(latLng, item.yaw, function() {isMoved=true;});
+            showCurrentInfo([item.lng * 1, item.lat * 1], item.alt);
             return true;
         }
       }            
