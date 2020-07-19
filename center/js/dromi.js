@@ -471,7 +471,6 @@ function convert2data(t) {
 }
 
 var lineData = Array();
-var lineGraphLabel = Array();
 
 function addChartItem(i, item) {
   if ("etc" in item && "t" in item.etc && "h" in item.etc) {
@@ -523,8 +522,7 @@ function addChartItem(i, item) {
     
     lineData.push(ol.proj.fromLonLat([item.lng * 1, item.lat * 1]));
     
-    lineGraphData.push(item.alt * 1);
-    lineGraphLabel.push(i);
+    lineGraphData.push({x: i, y: item.alt});    
 	}
 }
 
@@ -600,20 +598,65 @@ function setChartData(cdata) {
       }
 
 			var ctx2 = document.getElementById('lineGraph').getContext('2d');
-   
+   		var linedataSet = {datasets: [
+          {
+              label: '고도',
+              borderColor: '#f00',
+              backgroundColor: '#f66',
+              data: lineGraphData
+         }
+      ]};
    
      	var lineChart = new Chart(ctx2, {
-      	type: 'line',
-      	labels: lineGraphLabel,
-        datasets: [{
-            label: 'Altitude',
-            data: lineGraphData            
-        }],
+      	type: 'scatter',
+        data: linedataSet,
         options: {
           title: {
-            text: 'Altitude'
+            display: false,
+            text: 'Temperature : RED / Humidity : BLUE'
+          },
+          tooltips: {
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        var d = data.datasets[tooltipItem.datasetIndex].data[0];
+                        //var t = d.y;
+                        var locdata = chartLocData[tooltipItem.index];
+                        if(locdata && "lng" in locdata && "lat" in locdata) {
+                          var latLng = ol.proj.fromLonLat([locdata.lng * 1, locdata.lat * 1]);
+
+                          if (isMoved == true) {
+                            isMoved = false;
+                            flyTo(latLng, locdata.yaw, function() {isMoved=true;});
+                          }
+
+                          if ("dsec" in locdata) {
+                            movieSeekTo(locdata.dsec);
+                          }
+                        }
+
+                        return chartLabelData[tooltipItem.index] + " / " + JSON.stringify(chartLocData[tooltipItem.index]);
+
+                    }
+                  },
+                scales: {
+                    xAxes: [{
+                      ticks: {
+                        userCallback: function(label, index, labels) {
+                          return chartLabelData[label];
+                        }
+                      }
+                    }]
+                  },
+                layout: {
+                  padding: {
+                      left: 20,
+                      right: 30,
+                      top: 20,
+                      bottom: 20
+                  }
+                }
+              }
           }
-        }
       });
 
       if (chartTData.length == 0) {
