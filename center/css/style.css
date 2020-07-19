@@ -211,3 +211,17 @@ h6 {
 body {
     -webkit-text-size-adjust: none;
 }
+
+
+.line {
+      fill: none;
+      stroke: #000;
+      stroke-width: 1.5px;
+    }
+    .axis path,
+    .axis line {
+      fill: none;
+      stroke: #000;
+      shape-rendering: crispEdges;
+    }
+
