@@ -12,8 +12,7 @@ var flightDataArray = new Array();
 
 $(function() {
   showLoader();
-  mapInit();
-  initUVStatus();
+  mapInit();  
   hideLoader();
   if (askToken() == false) {
     location.href="index.html";
@@ -847,10 +846,7 @@ function flyTo(location, yaw, done) {
             done(complete);
         }
     }
-    
-    var yy = (yaw * 1.0) < 0 ? (360.0 + yaw) : yaw;
-    updateAngle(yy);    
-
+        
     current_view.animate({
       center: location,
       duration: duration
@@ -946,45 +942,6 @@ function uploadFlightListCallback(mname, base64file) {
     	hideLoader();
       alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
     });	
-}
-
-
-
-var uvStatusSvg;
-var uvStatusSvg_path_d;
-
-function initUVStatus() {
-	uvStatusSvg = d3.select("#uvstatus").append("svg")
-      .attr("width", 50)
-      .attr("height", 50)
-      .attr('viewBox', '-20 -20 20 20')
-	
-  uvStatusSvg_path_d = "M 0,0 L 0,-10 L 20,0 L 0,10 Z"; 
-}
-
-function updateAngle(value) {
-	if(!uvStatusSvg) return;
-	
-  var angle = parseInt(value);
-  var data = [{
-    angle: angle,
-    color: 'black'
-  }, {
-    angle: (180 + angle) % 360,
-    color: 'red'
-  }];
-
-  paths = uvStatusSvg.selectAll('path')
-    .data(data);
-
-  paths.enter()
-    .append('path')
-    .attr('d', uvStatusSvg_path_d)
-    .merge(paths)
-    .style('fill', d => d.color)
-    .attr('transform', d => `rotate(${d.angle})`);
-
-  paths.exit().remove();
 }
 
 

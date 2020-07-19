@@ -5,6 +5,7 @@ var chartTData = new Array();
 var chartHData = new Array();
 var chartLabelData = new Array();
 var chartLocData = new Array();
+var lineGraphData = Array();
 
 var bMoved = false;
 var tableCount = 0;
@@ -31,54 +32,6 @@ function dromiListInit() {
   $("#googlePhotoPlayer").hide();
   $("#youTubePlayer").hide();
   $("#movieDataSet").hide();  
-}
-
-function setLineGraph(data) {
-	 	var n = data.length;		 
-	 	
-	 	var lcontainer = $("#lineGraph");
-		var width = lcontainer.width();
-    var height = lcontainer.height();
-    
-		var x = d3.scaleLinear()
-		    .domain([0, n - 1])
-		    .range([0, width]);
-		 
-		var y = d3.scaleLinear()
-		    .domain([0, 100])
-		    .range([height, 0]);
-		 
-		var line = d3.line()
-		    .x(function(d, i) { return x(i); })
-		    .y(function(d, i) { return y(d); });				
-        
-		var svg = d3.select("#lineGraph").append("svg")
-		    .attr("width", '100%')
-		    .attr("height", '100%')
-		  	.append("g")
-		    .attr("transform", "translate(" + Math.min(width,height) / 2 + "," + Math.min(width,height) / 2 + ")");
-		 
-		svg.append("defs").append("clipPath")
-		    .attr("id", "clip")
-		  	.append("rect")
-		    .attr("width", width)
-		    .attr("height", height);
-		 
-		svg.append("g")
-		    .attr("class", "x axis")
-		    .attr("transform", "translate(0," + y(0) + ")")
-		    .call(d3.axisBottom(x));
-		 
-		svg.append("g")
-		    .attr("class", "y axis")
-		    .call(d3.axisLeft(y));
-		 
-		var path = svg.append("g")
-		    .attr("clip-path", "url(#clip)")
-		  	.append("path")
-		    .datum(data)
-		    .attr("class", "line")
-		    .attr("d", line);
 }
 
 function setDromilist(data) {
@@ -518,7 +471,6 @@ function convert2data(t) {
 }
 
 var lineData = Array();
-var lineGraphData = Array();
 
 function addChartItem(i, item) {
   if ("etc" in item && "t" in item.etc && "h" in item.etc) {
@@ -570,7 +522,7 @@ function addChartItem(i, item) {
     
     lineData.push(ol.proj.fromLonLat([item.lng * 1, item.lat * 1]));
     
-    lineGraphData.push(item.alt * 1);
+    lineGraphData.push([i, item.alt * 1]);
 	}
 }
 
@@ -581,14 +533,13 @@ function setChartData(cdata) {
       chartHData = new Array();
       chartLabelData = new Array();
       chartLocData = new Array();
+      lineGraphData = new Array();
 
       var i = 0;
       cdata.forEach(function (item) {
         addChartItem(i, item);                
         i++;
-      });
-      
-      setLineGraph(lineGraphData);
+      });            
             
 			var lines = new ol.geom.LineString(lineData);  
 		  var lineSource = new ol.source.Vector({
@@ -719,6 +670,19 @@ function setChartData(cdata) {
                 }
               }
           }
+      });
+      
+      
+      var ctx2 = document.getElementById('lineGraph').getContext('2d');
+   
+     	var lineChart = Chart(ctx2, {
+      	type: 'line',
+        data: lineGraphData,
+        options: {
+          title: {
+            text: 'Altitude'
+          }
+        }
       });
 }
 
