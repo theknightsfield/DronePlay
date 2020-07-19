@@ -723,7 +723,7 @@ function mapInit() {
 
   var vectorLayer = new ol.layer.Vector({
       source: vectorSource,
-      zIndex:100
+      zIndex: 100000
     });      
 
   pointSource = new ol.source.Vector({});

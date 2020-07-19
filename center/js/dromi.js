@@ -587,7 +587,8 @@ function setChartData(cdata) {
               features: posIcons
           });
           var posLayer = new ol.layer.Vector({
-              source: posSource
+              source: posSource,
+              zIndex: 100000
           });
 
           map.addLayer(posLayer);
