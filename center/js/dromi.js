@@ -599,7 +599,7 @@ function setChartData(cdata) {
 
 			var ctx2 = document.getElementById('lineGraph').getContext('2d');
    
-     	var lineChart = Chart(ctx2, {
+     	var lineChart = new Chart(ctx2, {
       	type: 'line',
         data: lineGraphData,
         options: {
