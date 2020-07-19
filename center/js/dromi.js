@@ -34,11 +34,7 @@ function dromiListInit() {
 }
 
 function setLineGraph(data) {
-	 	var n = data.length;
-		var margin = {top: 20, right: 20, bottom: 20, left: 40},
-		    width = 960 - margin.left - margin.right,
-		    height = 500 - margin.top - margin.bottom;
-		 
+	 	var n = data.length;		 
 		var x = d3.scaleLinear()
 		    .domain([0, n - 1])
 		    .range([0, width]);
@@ -50,12 +46,15 @@ function setLineGraph(data) {
 		var line = d3.line()
 		    .x(function(d, i) { return x(i); })
 		    .y(function(d, i) { return y(d); });
-		 
+		var $container = $("#lineGraph"),
+		var width = $container.width();
+    var height = $container.height();
+        
 		var svg = d3.select("#lineGraph").append("svg")
-		    .attr("width", width + margin.left + margin.right)
-		    .attr("height", height + margin.top + margin.bottom)
+		    .attr("width", '100%')
+		    .attr("height", '100%')
 		  .append("g")
-		    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+		    .attr("transform", "translate(" + Math.min(width,height) / 2 + "," + Math.min(width,height) / 2 + ")");
 		 
 		svg.append("defs").append("clipPath")
 		    .attr("id", "clip")
