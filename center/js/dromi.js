@@ -206,6 +206,7 @@ function processSeek(curTime) {
             var latLng = ol.proj.fromLonLat([item.lng * 1, item.lat * 1]);                                  													
             flyTo(latLng, item.yaw, function() {isMoved=true;});
             showCurrentInfo([item.lng * 1, item.lat * 1], item.alt);
+            setSliderPos(index); 
             return true;
         }
       }            
