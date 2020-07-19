@@ -606,12 +606,11 @@ function drawPosIcon() {
           setSliderPos(ii);                
       }    
       
-      var coordinates = evt.coordinate;
-				
+  		var lonlat = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');  						
 			if (locdata)
-				showCurrentInfo([coordinates[0], coordinates[1]], locdata.alt);
+				showCurrentInfo([lonlat[0], lonlat[1]], locdata.alt);
 			else
-				showCurrentInfo([coordinates[0], coordinates[1]], '-');
+				showCurrentInfo([lonlat[0], lonlat[1]], '-');
 				
   });
 
