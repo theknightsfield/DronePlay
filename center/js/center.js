@@ -955,11 +955,11 @@ var uvStatusSvg_path_d;
 
 function initUVStatus() {
 	uvStatusSvg = d3.select("#uvstatus").append("svg")
-      .attr("width", 80)
-      .attr("height", 80)
-      .attr('viewBox', '-20 -20 40 40')
+      .attr("width", 50)
+      .attr("height", 50)
+      .attr('viewBox', '-20 -20 20 20')
 	
-  uvStatusSvg_path_d = "M 0,0 L 0,-10 L 50,0 L 0,10 Z"; 
+  uvStatusSvg_path_d = "M 0,0 L 0,-10 L 20,0 L 0,10 Z"; 
 }
 
 function updateAngle(value) {
