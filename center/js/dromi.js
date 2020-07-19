@@ -202,8 +202,8 @@ function processSeek(curTime) {
       if ("dsec" in item) {
         var ds = item.dsec;
         if((ds + 10) >= curTime && (ds - 10) <= curTime) {
-            openTip(window.myScatter, 0, index);
-            openTip(window.myLine, 0, index);
+            openLineTip(window.myLine, 0, index);
+            openScatterTip(window.myScatter, 0, index);
             
             var latLng = ol.proj.fromLonLat([item.lng * 1, item.lat * 1]);                                  													
             flyTo(latLng, item.yaw, function() {isMoved=true;});
@@ -541,8 +541,8 @@ function setSlider(i) {
 					step : 1,									
 					slide : function( event, ui ){						
 						$('#sliderText').html( ui.value );
-						openTip(window.myScatter, 0, ui.value);
-						openTip(window.myLine, 0, ui.value);
+						openLineTip(window.myLine, 0, ui.value);
+						openScatterTip(window.myScatter, 0, ui.value);
 
             var locdata = chartLocData[ui.value];
             if ("dsec" in locdata) {
@@ -598,8 +598,8 @@ function drawPosIcon() {
           //alert(feature.get('name'));
           var ii = feature.get('mindex');
           //alert("index:" + ii);
-          openTip(window.myScatter, 0, ii);
-          openTip(window.myLine, 0, ii);
+          openLineTip(window.myLine, 0, ii);
+          openScatterTip(window.myScatter, 0, ii);
 
           locdata = chartLocData[ii];
           if ("dsec" in locdata) {
@@ -803,15 +803,50 @@ function setChartData(cdata) {
       drawScatterGraph();           
 }
 
-function openTip(oChart,datasetIndex,pointIndex){	
+var oldScatterdatasetIndex = -1;
+var oldScatterpointIndex = -1;
+
+var oldLinedatasetIndex = -1;
+var oldLinepointIndex = -1;
+
+function openLineTip(oChart,datasetIndex,pointIndex){	
    if(!oChart || oChart == undefined) return;
-         
-   closeTip();
+   
+   if (oldScatterdatasetIndex > 0)
+   	closeTip(oChart,oldLinedatasetIndex,oldLinepointIndex);
    
    if(oChart.tooltip._active == undefined)
       oChart.tooltip._active = []
    var activeElements = oChart.tooltip._active;
    var requestedElem = oChart.getDatasetMeta(datasetIndex).data[pointIndex];
+   
+   oldLinedatasetIndex = datasetIndex;
+   oldLinepointIndex = pointIndex;
+   
+   for(var i = 0; i < activeElements.length; i++) {
+       if(requestedElem._index == activeElements[i]._index)
+          return;
+   }
+   activeElements.push(requestedElem);
+   oChart.tooltip._active = activeElements;
+   oChart.tooltip.update(true);
+   oChart.draw();
+}
+
+function openScatterTip(oChart,datasetIndex,pointIndex){	
+   if(!oChart || oChart == undefined) return;
+   
+   if (oldScatterdatasetIndex > 0)
+   	closeTip(oChart,oldScatterdatasetIndex,oldScatterpointIndex);
+   
+   if(oChart.tooltip._active == undefined)
+      oChart.tooltip._active = []
+   var activeElements = oChart.tooltip._active;
+   var requestedElem = oChart.getDatasetMeta(datasetIndex).data[pointIndex];
+   
+   oldScatterdatasetIndex = datasetIndex;
+   oldScatterpointIndex = pointIndex;
+   
    for(var i = 0; i < activeElements.length; i++) {
        if(requestedElem._index == activeElements[i]._index)
           return;
@@ -825,7 +860,8 @@ function openTip(oChart,datasetIndex,pointIndex){
 function closeTip(oChart,datasetIndex,pointIndex){
    var activeElements = oChart.tooltip._active;
    if(activeElements == undefined || activeElements.length == 0)
-     return;
+     return;        
+   
    var requestedElem = oChart.getDatasetMeta(datasetIndex).data[pointIndex];
    for(var i = 0; i < activeElements.length; i++) {
        if(requestedElem._index == activeElements[i]._index)  {
