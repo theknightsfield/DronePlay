@@ -602,9 +602,13 @@ function setChartData(cdata) {
 
 			var ctx2 = document.getElementById('lineGraph').getContext('2d');
    
+   
      	var lineChart = new Chart(ctx2, {
       	type: 'line',
-        data: lineGraphData,
+        datasets: [{
+            label: 'Altitude',
+            data: lineGraphData            
+        }],
         options: {
           title: {
             text: 'Altitude'
