@@ -203,7 +203,7 @@ function processSeek(curTime) {
         var ds = item.dsec;
         if((ds + 10) >= curTime && (ds - 10) <= curTime) {
             openTip(window.myScatter, 0, index);
-            var latLng = ol.proj.fromLonLat([item.lng *= 1, item.lat *= 1]);
+            var latLng = ol.proj.fromLonLat([item.lng * 1, item.lat * 1]);
                         
           	var hdms = ol.coordinate.toStringHDMS(latLng);			  			
 					  $("#position_info").text(hdms + " [ Lat: " + item.lat + " / Lng: " + item.lng + " ]");
@@ -391,7 +391,7 @@ function getDromiList() {
 
 function convert2time(stime) {
   var gapTime = document.getElementById("gmtGapTime").value;
-  return (new Date(stime).getTime() + (3600000 * (gapTime*=1)));
+  return (new Date(stime).getTime() + (3600000 * (gapTime*1)));
 }
 
 function uploadData(name, mname) {
@@ -510,7 +510,7 @@ function addChartItem(i, item) {
     pos_icon.setStyle(new ol.style.Style({
         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
           color: pos_icon_color,
-          crossOrigin: 'anonymous
+          crossOrigin: 'anonymous,
           src: pos_icon_image
         }))
     }));
@@ -631,7 +631,7 @@ function setChartData(cdata) {
                         //var t = d.y;
                         var locdata = chartLocData[tooltipItem.index];
                         if(locdata && "lng" in locdata && "lat" in locdata) {
-                          var latLng = ol.proj.fromLonLat([locdata.lng *= 1, locdata.lat *= 1]);
+                          var latLng = ol.proj.fromLonLat([locdata.lng * 1, locdata.lat * 1]);
 
                           if (isMoved == true) {
                             isMoved = false;

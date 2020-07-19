@@ -135,7 +135,7 @@ function setDesignTableWithFlightRecord(data) {
 
 			
       var pos_icon = new ol.Feature({
-          geometry: new ol.geom.Point(ol.proj.fromLonLat([item.lng *= 1, item.lat *= 1])),
+          geometry: new ol.geom.Point(ol.proj.fromLonLat([item.lng * 1, item.lat * 1])),
           name: "lat: " + item.lat + ", lng: " + item.lng + ", alt: " + item.alt,
           mindex : i
       });
@@ -324,7 +324,7 @@ function appendMissionsToMonitor(mission) {
 }
 
 function moveToPositionOnMap(lat, lng, yaw) {
-  var npos = ol.proj.fromLonLat([lng *= 1, lat *= 1]);
+  var npos = ol.proj.fromLonLat([lng * 1, lat * 1]);
   flyTo(npos, yaw, function() {});
 }
 
@@ -879,7 +879,7 @@ function nexttour(r) {
   }
 
   beforeTime = r.positiontime;
-  var npos = ol.proj.fromLonLat([r.lng *= 1, r.lat *= 1]);
+  var npos = ol.proj.fromLonLat([r.lng * 1, r.lat * 1]);
   flyTo(npos, r.yaw, function() {});
 
   setTimeout(function() {
@@ -951,7 +951,7 @@ function el(id) {
 function setCookie(cName, cValue, cDay){
     var expire = new Date();
     expire.setDate(expire.getDate() + cDay);
-    cookies = cName + '=' + escape(cValue) + '; path=/ '; // 한글 깨짐을 막기위해 escape(cValue)를 합니다.
+    var cookies = cName + '=' + escape(cValue) + '; path=/ '; // 한글 깨짐을 막기위해 escape(cValue)를 합니다.
     if(typeof cDay != 'undefined') cookies += ';expires=' + expire.toGMTString() + ';';
     document.cookie = cookies;
 }
