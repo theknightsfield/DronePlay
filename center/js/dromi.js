@@ -597,6 +597,17 @@ function setChartData(cdata) {
           map.addLayer(posLayer);
       }
 
+			var ctx2 = document.getElementById('lineGraph').getContext('2d');
+   
+     	var lineChart = Chart(ctx2, {
+      	type: 'line',
+        data: lineGraphData,
+        options: {
+          title: {
+            text: 'Altitude'
+          }
+        }
+      });
 
       if (chartTData.length == 0) {
         $("#chartView").hide();
@@ -670,20 +681,7 @@ function setChartData(cdata) {
                 }
               }
           }
-      });
-      
-      
-      var ctx2 = document.getElementById('lineGraph').getContext('2d');
-   
-     	var lineChart = Chart(ctx2, {
-      	type: 'line',
-        data: lineGraphData,
-        options: {
-          title: {
-            text: 'Altitude'
-          }
-        }
-      });
+      });                  
 }
 
 function openTip(oChart,datasetIndex,pointIndex){
