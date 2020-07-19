@@ -7,7 +7,7 @@ var current_pos_image;
 var map;
 var geolocation;
 var posSource = null;
-//var posIcons = new Array();
+var posIcons = new Array();
 var flightDataArray = new Array();
 
 $(function() {
@@ -126,7 +126,7 @@ function setDesignTableWithFlightRecord(data) {
   if (data == null) return;
   var i = 0;  
 	
-	//posIcons = Array();
+	posIcons = Array();
 	
 	var coordinates  = Array();
 	
@@ -176,7 +176,7 @@ function setDesignTableWithFlightRecord(data) {
         })
   });
   
-  var posSource = new ol.source.Vector({
+  posSource = new ol.source.Vector({
               features: posIcons
           });
           
@@ -330,8 +330,8 @@ function moveToPositionOnMap(lat, lng, yaw) {
 
 function removeDesignTableRow(index) {
   removeTableRow('misstr_' + index);
-  if (posSource)
-    map.removeLayer(posSource);
+  if (posSource && (posIcons.length > 0))
+    posSource.removeFeature(posIcons[index]);        
     
   posSource = null;
 }
