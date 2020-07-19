@@ -812,7 +812,7 @@ var oldLinepointIndex = -1;
 function openLineTip(oChart,datasetIndex,pointIndex){	
    if(!oChart || oChart == undefined) return;
    
-   if (oldScatterdatasetIndex > 0)
+   if (oldLinedatasetIndex > 0)
    	closeTip(oChart,oldLinedatasetIndex,oldLinepointIndex);
    
    if(oChart.tooltip._active == undefined)
