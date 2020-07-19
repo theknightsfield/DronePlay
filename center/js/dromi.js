@@ -528,6 +528,10 @@ function addChartItem(i, item) {
 
 var isMoved = true;
 
+function setSliderPos(i) {
+		$("#slider").slider('value',i);
+}
+
 function setSlider(i) {
 	$('#slider').slider({					
 					min : 0,								
@@ -593,7 +597,9 @@ function drawPosIcon() {
           locdata = chartLocData[ii];
           if ("dsec" in locdata) {
             movieSeekTo(locdata.dsec);
-          }                    
+          }
+          
+          setSliderPos(ii);                    
       }    
       
       var coordinates = evt.coordinate;			  			
@@ -664,6 +670,8 @@ function drawLineGraph() {
                           if ("dsec" in locdata) {
                             movieSeekTo(locdata.dsec);
                           }
+                          
+                          setSliderPos(tooltipItem.index);                                                    
                         }
 
                         return JSON.stringify(locdata);
