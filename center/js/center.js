@@ -826,6 +826,19 @@ function hideLoader() {
   $("#loading").fadeOut(800);
 }
 
+function flyDirectTo(location, yaw, done) {
+		var duration = 1;
+    var called = false;
+
+    current_pos.setGeometry(new ol.geom.Point(location));
+    current_pos_image.setRotation(yaw);
+        
+    current_view.animate({
+      center: location,
+      duration: duration
+    }, callback);
+}
+
 
 function flyTo(location, yaw, done) {
     var duration = 1500;

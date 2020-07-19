@@ -544,7 +544,7 @@ function setSlider(i) {
             }			
             
             var latLng = ol.proj.fromLonLat([locdata.lng * 1, locdata.lat * 1]);
-            flyTo(latLng, locdata.yaw, function() {isMoved=true;});
+            flyDirectTo(latLng, locdata.yaw, function() {isMoved=true;});
 					}				
 	});
 }
@@ -636,7 +636,7 @@ function drawLineGraph() {
                 callbacks: {
                     label: function(tooltipItem, data) {
                         var d = data.datasets[tooltipItem.datasetIndex].data[0];
-                        //var t = d.y;
+                       
                         var locdata = chartLocData[tooltipItem.index];
                         if(locdata && "lng" in locdata && "lat" in locdata) {
                           var latLng = ol.proj.fromLonLat([locdata.lng * 1, locdata.lat * 1]);
@@ -652,7 +652,6 @@ function drawLineGraph() {
                         }
 
                         return JSON.stringify(chartLocData[tooltipItem.index]);
-
                     }
                   },
                 scales: {
