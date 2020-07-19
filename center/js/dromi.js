@@ -549,7 +549,7 @@ function setSlider(i) {
             
             var latlng = ol.proj.fromLonLat([locdata.lng * 1, locdata.lat * 1]);
             flyDirectTo(latlng, locdata.yaw, function() {isMoved=true;});            
-						showCurrentInfo(latlng, locdata.alt); 
+						showCurrentInfo([locdata.lng * 1, locdata.lat * 1], locdata.alt); 
 					}				
 	});
 }
@@ -575,9 +575,10 @@ function drawLineToMap() {
 	map.addLayer(lineLayer);
 }
 
-function showCurrentInfo(latlng, alt) {			
+function showCurrentInfo(dlatlng, alt) {		
+	var latlng = ol.proj.fromLonLat(dlatlng);	
 	var hdms = ol.coordinate.toStringHDMS(latlng);
-	var itext = hdms + " [ Lat: " + latlng[1] + " / Lng: " + latlng[0] + " / Alt: " + alt + " ]";	
+	var itext = hdms + " [ Lat: " + dlatlng[1] + " / Lng: " + dlatlng[0] + " / Alt: " + alt + " ]";	
 	$("#position_info").text(itext);						  
 }
 
@@ -605,13 +606,12 @@ function drawPosIcon() {
           setSliderPos(ii);                
       }    
       
-      var coordinates = evt.coordinate;			  			
-			var latlng = ol.proj.toLonLat(coordinates);
+      var coordinates = evt.coordinate;
 				
 			if (locdata)
-				showCurrentInfo(latlng, locdata.alt);
+				showCurrentInfo([coordinates[0], coordinates[1]], locdata.alt);
 			else
-				showCurrentInfo(latlng, '-');
+				showCurrentInfo([coordinates[0], coordinates[1]], '-');
 				
   });
 
@@ -661,7 +661,7 @@ function drawLineGraph() {
                           if (isMoved == true) {
                             isMoved = false;
                             flyTo(latlng, locdata.yaw, function() {isMoved=true;});                                                        
-                            showCurrentInfo(latlng, locdata.alt);
+                            showCurrentInfo([locdata.lng * 1, locdata.lat * 1], locdata.alt);
                           }
 
                           if ("dsec" in locdata) {
@@ -747,7 +747,7 @@ function drawScatterGraph() {
                       }
                       
                       setSliderPos(tooltipItem.index);                      					          						            
-											showCurrentInfo(latlng, locdata.alt); 
+											showCurrentInfo([locdata.lng * 1, locdata.lat * 1], locdata.alt); 
                     }
 
                     return JSON.stringify(locdata);
