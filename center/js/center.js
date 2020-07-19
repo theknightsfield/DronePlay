@@ -154,13 +154,13 @@ function setDesignTableWithFlightRecord(data) {
 	      posIcons.push(pos_icon);
 	    */
 	    
-      coordinates.push(ol.proj.fromLonLat([item.lng, item.lat]));
+      coordinates.push(ol.proj.fromLonLat([item.lng * 1, item.lat * 1]));
       i++;
   });
   
   var lines = new ol.geom.LineString(coordinates);
   
-  lines.transform('EPSG:4326', dokdo_view.getProjection());
+  //lines.transform('EPSG:4326', dokdo_view.getProjection());
   
   var lineSource = new ol.source.Vector({
           features: [new ol.Feature({
