@@ -127,7 +127,7 @@ function setDesignTableWithFlightRecord(data) {
 	
 	posIcons = Array();
 	
-	var posLines = Array();
+	var coordinates  = Array();
 	
   data.forEach(function (item) {
       appendDesignTableWithFlightRecord(item.lat, item.lng, item.alt, item.speed, item.act, item.actparam);
@@ -154,23 +154,26 @@ function setDesignTableWithFlightRecord(data) {
 	      posIcons.push(pos_icon);
 	    */
 	    
-      posLines.push([item.lng, item.lat]);
+      coordinates.push(ol.proj.fromLonLat([item.lng, item.lat]));
       i++;
   });
   
   
-  var lines = new ol.geom.LineString(posLines);
-  lines.transform('EPSG:4326', 'EPSG:3857');
-  
   var lineSource = new ol.source.Vector({
           features: [new ol.Feature({
-              geometry: lines,
+              geometry: new ol.geom.LineString(coordinates),
               name: 'Line'
           })]
   });
   
 	posSource = new ol.layer.Vector({
       source: lineSource,
+      style: new ol.style.Style({
+            stroke: new ol.style.Stroke({
+                color: '#ff0000',
+                width: 3
+            })
+        })
   });
 	
   map.addLayer(posSource);
