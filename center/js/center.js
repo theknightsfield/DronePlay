@@ -43,6 +43,7 @@ $(function() {
   else if (page_action == "dromi_list") {
     dromiListInit();
   }
+  
 });
 
 function monitorInit() {
@@ -721,7 +722,8 @@ function mapInit() {
     });
 
   var vectorLayer = new ol.layer.Vector({
-      source: vectorSource
+      source: vectorSource,
+      zIndex:100
     });      
 
   pointSource = new ol.source.Vector({});
