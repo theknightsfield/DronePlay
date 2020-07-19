@@ -130,7 +130,7 @@ function setDesignTableWithFlightRecord(data) {
 	var coordinates  = Array();
 	
   data.forEach(function (item) {
-      appendDesignTableWithFlightRecord(item.lat, item.lng, item.alt, item.speed, item.act, item.actparam);
+      appendDesignTableWithFlightRecord(item.lat, item.lng, item.alt, item.yaw, item.speed, item.act, item.actparam);
 
 			/*
 	      var pos_icon = new ol.Feature({
@@ -182,7 +182,7 @@ function setDesignTableWithFlightRecord(data) {
   map.addLayer(posSource);
   
   
-  moveToPositionOnMap(data[0].lat, data[0].lng);
+  moveToPositionOnMap(data[0].lat, data[0].lng, data[0].yaw);
 }
 
 function flightListInit() {
@@ -317,9 +317,9 @@ function appendMissionsToMonitor(mission) {
     });
 }
 
-function moveToPositionOnMap(lat, lng) {
+function moveToPositionOnMap(lat, lng, yaw) {
   var npos = ol.proj.fromLonLat([lng *= 1, lat *= 1]);
-  flyTo(npos, function() {});
+  flyTo(npos, yaw, function() {});
 }
 
 function removeDesignTableRow(index) {
@@ -330,7 +330,7 @@ function removeDesignTableRow(index) {
   posSource = null;
 }
 
-function appendDesignTableWithFlightRecord(lat, lng, alt, speed, act, actparam) {
+function appendDesignTableWithFlightRecord(lat, lng, alt, yaw, speed, act, actparam) {
   tableCount++;
   var strid = "mission-" + tableCount;
   var appendRow = "<tr class='odd gradeX' id='misstr_" + tableCount + "'><td>" + tableCount + "</td><td colspan=3>"
@@ -349,7 +349,7 @@ function appendDesignTableWithFlightRecord(lat, lng, alt, speed, act, actparam) 
           //+ "<option value=8>CAMERA_FOCUS</option>"
       + "</select>"
       + "<label for='actionparam_" + tableCount + "'>액션인자(Param)</label><input name='actionparam_" + tableCount + "' id='actionparam_" + tableCount + "' placeholder='action Param' type='text' class='form-control actionparam' value='"+actparam+"'>"
-      + "<br><br><a href=javascript:removeDesignTableRow(" + tableCount + ");>삭제</a> <a href=javascript:moveToPositionOnMap("+lat+","+lng+");>이동</a>"
+      + "<br><br><a href=javascript:removeDesignTableRow(" + tableCount + ");>삭제</a> <a href=javascript:moveToPositionOnMap(" + lat + "," + lng + "," + yaw + ");>이동</a>"
       + "</td></tr>";
 
   $('#dataTable-points > tbody:last').append(appendRow);
@@ -376,7 +376,7 @@ function appendDesignTable(coordinates) {
           //+ "<option value=8>CAMERA_FOCUS</option>"
           + "</select>"
       + "<label for='actionparam_" + tableCount + "'>액션인자(Param)</label><input name='actionparam_" + tableCount + "' id='actionparam_" + tableCount + "' placeholder='action Param' type='text' class='form-control actionparam'>"
-      + "<br><br><a href=javascript:removeDesignTableRow(" + tableCount + ");>삭제</a> <a href=javascript:moveToPositionOnMap("+lonLat[1]+","+lonLat[0]+");>이동</a>"
+      + "<br><br><a href=javascript:removeDesignTableRow(" + tableCount + ");>삭제</a> <a href=javascript:moveToPositionOnMap(" + lonLat[1] + "," + lonLat[0] + ",0);>이동</a>"
     + "</td></tr>"
     $('#dataTable-points > tbody:last').append(appendRow);
 }
@@ -427,7 +427,7 @@ function searchAddressToCoordinate(address) {
     ajaxRequestAddress(address, function (r) {
       //if(r.result == "success") {
         var latLng = ol.proj.fromLonLat([r['results'][0].geometry.location.lng, r['results'][0].geometry.location.lat]);
-        flyTo(latLng, function() {});
+        flyTo(latLng, 0, function() {});
       //}
     }, function(request,status,error) {
       alert("잘못된 주소이거나 요청을 처리하는데 일시적인 오류가 발생했습니다.");
@@ -702,9 +702,9 @@ function mapInit() {
 
   dokdo_icon.setStyle(new ol.style.Style({
       image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-        color: '#8959A8',
+        //color: '#8959A8',
         crossOrigin: 'anonymous',
-        src: './imgs/position.png'
+        src: './imgs/position2.png'
       }))
     }));
 
@@ -762,7 +762,7 @@ function mapInit() {
       el('heading').innerText = geolocation.getHeading() + ' [rad]';
       el('speed').innerText = geolocation.getSpeed() + ' [m/s]';
       showLoader();
-      flyTo(geolocation.getPosition(), function(){hideLoader();});
+      flyTo(geolocation.getPosition(), 0, function(){hideLoader();});
     });
 
     // handle geolocation error.
@@ -817,13 +817,14 @@ function hideLoader() {
 }
 
 
-function flyTo(location, done) {
+function flyTo(location, yaw, done) {
     var duration = 1500;
     var zoom = dokdo_view.getZoom();
     var parts = 2;
     var called = false;
 
     dokdo_icon.setGeometry(new ol.geom.Point(location));
+    dokdo_icon.setRotation(yaw);
 
     function callback(complete) {
         --parts;
@@ -871,7 +872,7 @@ function nexttour(r) {
 
   beforeTime = r.positiontime;
   var npos = ol.proj.fromLonLat([r.lng *= 1, r.lat *= 1]);
-  flyTo(npos, function() {});
+  flyTo(npos, r.yaw, function() {});
 
   setTimeout(function() {
             if (bMonStarted == false) return;
