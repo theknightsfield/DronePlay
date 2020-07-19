@@ -164,7 +164,7 @@ function setDesignTableWithFlightRecord(data) {
   
   var lineSource = new ol.source.Vector({
           features: [new ol.Feature({
-              geometry: new ol.geom.LineString(coordinates),
+              geometry: lines,
               name: 'Line'
           })]
   });
