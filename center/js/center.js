@@ -832,11 +832,22 @@ function flyDirectTo(location, yaw, done) {
 
     current_pos.setGeometry(new ol.geom.Point(location));
     current_pos_image.setRotation(yaw);
+    
+    function dcallback(complete) {        
+        if (called) {
+            return;
+        }
+        
+        if (!complete) {
+            called = true;
+            done(complete);
+        }
+    }
         
     current_view.animate({
       center: location,
       duration: duration
-    }, callback);
+    }, dcallback);
 }
 
 
