@@ -527,76 +527,90 @@ function addChartItem(i, item) {
 }
 
 var isMoved = true;
-function setChartData(cdata) {
-      posIcons = new Array();
-      chartTData = new Array();
-      chartHData = new Array();
-      chartLabelData = new Array();
-      chartLocData = new Array();
-      lineGraphData = new Array();
 
-      var i = 0;
-      cdata.forEach(function (item) {
-        addChartItem(i, item);                
-        i++;
-      });            
+function setSlider(i) {
+	$('#slider').slider({					
+					min : 0,								
+					max : i - 1,								
+					value : 0,								
+					step : 1,									
+					slide : function( event, ui ){						
+						$('#sliderText').html( ui.value );			
+						openTip(window.myScatter, 0, ui.value);
+
+            var locdata = chartLocData[ui.value];
+            if ("dsec" in locdata) {
+              movieSeekTo(locdata.dsec);              
+            }			
             
-			var lines = new ol.geom.LineString(lineData);  
-		  var lineSource = new ol.source.Vector({
-		          features: [new ol.Feature({
-		              geometry: lines,
-		              name: 'Line'
-		          })]
-		  });		  
-			var lineLayer = new ol.layer.Vector({
-		      source: lineSource,
-		      style: new ol.style.Style({
-		            stroke: new ol.style.Stroke({
-		                color: '#ff0000',
-		                width: 3
-		            })
-		        })
-		  });
+            var latLng = ol.proj.fromLonLat([locdata.lng * 1, locdata.lat * 1]);
+            flyTo(latLng, locdata.yaw, function() {isMoved=true;});
+					}				
+	});
+}
+
+function drawLineToMap() {
+	var lines = new ol.geom.LineString(lineData);  
+  var lineSource = new ol.source.Vector({
+          features: [new ol.Feature({
+              geometry: lines,
+              name: 'Line'
+          })]
+  });		  
+	var lineLayer = new ol.layer.Vector({
+      source: lineSource,
+      style: new ol.style.Style({
+            stroke: new ol.style.Stroke({
+                color: '#ff0000',
+                width: 3
+            })
+        })
+  });
 			
-		  map.addLayer(lineLayer);      	                  
+	map.addLayer(lineLayer);
+}
 
-      if (posIcons.length > 0) {
-          map.on('click', function (evt) {
-              var feature = map.forEachFeatureAtPixel(evt.pixel,
-                  function (feature) {
-                      return feature;
-                  });
-
-              if (feature) {
-                  //alert(feature.get('name'));
-                  var ii = feature.get('mindex');
-                  //alert("index:" + ii);
-                  openTip(window.myScatter, 0, ii);
-
-                  var locdata = chartLocData[ii];
-                  if ("dsec" in locdata) {
-                    movieSeekTo(locdata.dsec);
-                  }
-              }
-              
-              var coordinates = evt.coordinate;			  			
-			  			var latlng = ol.proj.toLonLat(coordinates);
-			  			var hdms = ol.coordinate.toStringHDMS(latlng);		
-			  			//todo	  									  						  						  
-						  $("#position_info").text(hdms + " [ Lat: " + latlng[1] + " / Lng: " + latlng[0] + " ]");						  
+function drawPosIcon() {
+	if (posIcons.length <= 0) return;
+	
+  map.on('click', function (evt) {
+      var feature = map.forEachFeatureAtPixel(evt.pixel,
+          function (feature) {
+              return feature;
           });
 
-          var posSource = new ol.source.Vector({
-              features: posIcons
-          });
-          var posLayer = new ol.layer.Vector({
-              source: posSource              
-          });
+      if (feature) {
+          //alert(feature.get('name'));
+          var ii = feature.get('mindex');
+          //alert("index:" + ii);
+          openTip(window.myScatter, 0, ii);
 
-          map.addLayer(posLayer);
+          var locdata = chartLocData[ii];
+          if ("dsec" in locdata) {
+            movieSeekTo(locdata.dsec);
+          }
       }
+      
+      var coordinates = evt.coordinate;			  			
+			var latlng = ol.proj.toLonLat(coordinates);
+			var hdms = ol.coordinate.toStringHDMS(latlng);		
+			//todo	  									  						  						  
+		  $("#position_info").text(hdms + " [ Lat: " + latlng[1] + " / Lng: " + latlng[0] + " ]");						  
+  });
 
-			var ctx2 = document.getElementById('lineGraph').getContext('2d');
+  var posSource = new ol.source.Vector({
+      features: posIcons
+  });
+  var posLayer = new ol.layer.Vector({
+      source: posSource              
+  });
+
+  map.addLayer(posLayer);
+  
+}
+
+function drawLineGraph() {
+	var ctx2 = document.getElementById('lineGraph').getContext('2d');
    		var linedataSet = {
    			datasets: [
           {
@@ -661,81 +675,108 @@ function setChartData(cdata) {
               }
           }
       });
+}
 
-      if (chartTData.length == 0) {
-        $("#chartView").hide();
-        return;
-      }
+function drawScatterGraph() {
+	if (chartTData.length == 0) {
+    $("#chartView").hide();
+    return;
+  }
 
-      $("#chartView").show();
+  $("#chartView").show();
 
-      var dataSet = {datasets: [
-          {
-              label: '온도',
-              borderColor: '#f00',
-              backgroundColor: '#f66',
-              data: chartTData
-         },
-         {
-             label: '습도',
-             borderColor: '#00f',
-             backgroundColor: '#66f',
-             data: chartHData
-         }
-      ]};
+  var dataSet = {datasets: [
+      {
+          label: '온도',
+          borderColor: '#f00',
+          backgroundColor: '#f66',
+          data: chartTData
+     },
+     {
+         label: '습도',
+         borderColor: '#00f',
+         backgroundColor: '#66f',
+         data: chartHData
+     }
+  ]};
 
-      var ctx = document.getElementById('chartArea').getContext('2d');
-      window.myScatter = new Chart(ctx, {
-      	type: 'scatter',
-        data: dataSet,
-        options: {
-          title: {
-            display: false,
-            text: 'Temperature : RED / Humidity : BLUE'
-          },
-          tooltips: {
-                callbacks: {
-                    label: function(tooltipItem, data) {
-                        var d = data.datasets[tooltipItem.datasetIndex].data[0];
-                        //var t = d.y;
-                        var locdata = chartLocData[tooltipItem.index];
-                        if(locdata && "lng" in locdata && "lat" in locdata) {
-                          var latLng = ol.proj.fromLonLat([locdata.lng * 1, locdata.lat * 1]);
+  var ctx = document.getElementById('chartArea').getContext('2d');
+  window.myScatter = new Chart(ctx, {
+  	type: 'scatter',
+    data: dataSet,
+    options: {
+      title: {
+        display: false,
+        text: 'Temperature : RED / Humidity : BLUE'
+      },
+      tooltips: {
+            callbacks: {
+                label: function(tooltipItem, data) {
+                    var d = data.datasets[tooltipItem.datasetIndex].data[0];
+                    //var t = d.y;
+                    var locdata = chartLocData[tooltipItem.index];
+                    if(locdata && "lng" in locdata && "lat" in locdata) {
+                      var latLng = ol.proj.fromLonLat([locdata.lng * 1, locdata.lat * 1]);
 
-                          if (isMoved == true) {
-                            isMoved = false;
-                            flyTo(latLng, locdata.yaw, function() {isMoved=true;});
-                          }
-
-                          if ("dsec" in locdata) {
-                            movieSeekTo(locdata.dsec);
-                          }
-                        }
-
-                        return JSON.stringify(chartLocData[tooltipItem.index]);
-
-                    }
-                  },
-                scales: {
-                    xAxes: [{
-                      ticks: {
-                        userCallback: function(label, index, labels) {
-                          return chartLabelData[label];
-                        }
+                      if (isMoved == true) {
+                        isMoved = false;
+                        flyTo(latLng, locdata.yaw, function() {isMoved=true;});
                       }
-                    }]
-                  },
-                layout: {
-                  padding: {
-                      left: 20,
-                      right: 30,
-                      top: 20,
-                      bottom: 20
-                  }
+
+                      if ("dsec" in locdata) {
+                        movieSeekTo(locdata.dsec);
+                      }
+                    }
+
+                    return JSON.stringify(chartLocData[tooltipItem.index]);
+
                 }
+              },
+            scales: {
+                xAxes: [{
+                  ticks: {
+                    userCallback: function(label, index, labels) {
+                      return chartLabelData[label];
+                    }
+                  }
+                }]
+              },
+            layout: {
+              padding: {
+                  left: 20,
+                  right: 30,
+                  top: 20,
+                  bottom: 20
               }
+            }
           }
-      });                  
+      }
+  });       
+}
+
+function setChartData(cdata) {
+      posIcons = new Array();
+      chartTData = new Array();
+      chartHData = new Array();
+      chartLabelData = new Array();
+      chartLocData = new Array();
+      lineGraphData = new Array();
+
+      var i = 0;
+      cdata.forEach(function (item) {
+        addChartItem(i, item);                
+        i++;
+      });            
+      
+      setSlider(i);
+            
+			drawLineToMap();			   	                  
+
+      drawPosIcon();
+
+			drawLineGraph();
+
+      drawScatterGraph();           
 }
 
 function openTip(oChart,datasetIndex,pointIndex){
