@@ -548,10 +548,8 @@ function setSlider(i) {
             }			
             
             var latlng = ol.proj.fromLonLat([locdata.lng * 1, locdata.lat * 1]);
-            flyDirectTo(latlng, locdata.yaw, function() {isMoved=true;});
-                        
-						itext = hdms + " [ Lat: " + latlng[1] + " / Lng: " + latlng[0] + " / Alt: " + locdata.alt + " ]";														
-						showCurrentInfo(itext); 
+            flyDirectTo(latlng, locdata.yaw, function() {isMoved=true;});            
+						showCurrentInfo(latlng, locdata.alt); 
 					}				
 	});
 }
@@ -577,7 +575,9 @@ function drawLineToMap() {
 	map.addLayer(lineLayer);
 }
 
-function showCurrentInfo(itext) {								  						  
+function showCurrentInfo(latlng, alt) {			
+	var hdms = ol.coordinate.toStringHDMS(latlng);
+	var itext = hdms + " [ Lat: " + latlng[1] + " / Lng: " + latlng[0] + " / Alt: " + alt + " ]";	
 	$("#position_info").text(itext);						  
 }
 
@@ -607,15 +607,12 @@ function drawPosIcon() {
       
       var coordinates = evt.coordinate;			  			
 			var latlng = ol.proj.toLonLat(coordinates);
-			var hdms = ol.coordinate.toStringHDMS(latlng);					
-			var itext;
-			
-			if (locdata)
-				itext = hdms + " [ Lat: " + latlng[1] + " / Lng: " + latlng[0] + " / Alt: " + locdata.alt + " ]";	
-			else
-				itext = hdms + " [ Lat: " + latlng[1] + " / Lng: " + latlng[0] + " ]";	
 				
-			showCurrentInfo(itext);        
+			if (locdata)
+				showCurrentInfo(latlng, locdata.alt);
+			else
+				showCurrentInfo(latlng, '-');
+				
   });
 
   var posSource = new ol.source.Vector({
@@ -663,11 +660,8 @@ function drawLineGraph() {
 
                           if (isMoved == true) {
                             isMoved = false;
-                            flyTo(latlng, locdata.yaw, function() {isMoved=true;});
-                            
-                            var hdms = ol.coordinate.toStringHDMS(latlng);		
-														var itext = hdms + " [ Lat: " + latlng[1] + " / Lng: " + latlng[0] + " / Alt: " + locdata.alt + " ]";
-                            showCurrentInfo(itext);
+                            flyTo(latlng, locdata.yaw, function() {isMoved=true;});                                                        
+                            showCurrentInfo(latlng, locdata.alt);
                           }
 
                           if ("dsec" in locdata) {
