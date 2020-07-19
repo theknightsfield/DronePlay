@@ -848,7 +848,7 @@ function flyTo(location, yaw, done) {
         }
     }
     
-    var yy = yaw < 0 : (360 + yaw) : yaw;
+    var yy = yaw < 0 ? (360 + yaw) : yaw;
     updateAngle(yy);    
 
     current_view.animate({
