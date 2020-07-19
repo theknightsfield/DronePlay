@@ -47,7 +47,7 @@ function setLineGraph(data) {
 		    .domain([0, 200])
 		    .range([height, 0]);
 		 
-		var line = d3.svg.line()
+		var line = d3.line()
 		    .x(function(d, i) { return x(i); })
 		    .y(function(d, i) { return y(d); });
 		 
@@ -66,11 +66,11 @@ function setLineGraph(data) {
 		svg.append("g")
 		    .attr("class", "x axis")
 		    .attr("transform", "translate(0," + y(0) + ")")
-		    .call(d3.svg.axis().scale(x).orient("bottom"));
+		    .call(d3.axisBottom(x));
 		 
 		svg.append("g")
 		    .attr("class", "y axis")
-		    .call(d3.svg.axis().scale(y).orient("left"));
+		    .call(d3.axisLeft(y));
 		 
 		var path = svg.append("g")
 		    .attr("clip-path", "url(#clip)")
