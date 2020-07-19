@@ -602,7 +602,7 @@ function drawPosIcon() {
             movieSeekTo(locdata.dsec);
           }
           
-          setSliderPos(ii);                    
+          setSliderPos(ii);                
       }    
       
       var coordinates = evt.coordinate;			  			
@@ -734,20 +734,23 @@ function drawScatterGraph() {
                     var d = data.datasets[tooltipItem.datasetIndex].data[0];
                     //var t = d.y;
                     var locdata = chartLocData[tooltipItem.index];
-                    if(locdata && "lng" in locdata && "lat" in locdata) {
-                      var latLng = ol.proj.fromLonLat([locdata.lng * 1, locdata.lat * 1]);
+                    if("lng" in locdata && "lat" in locdata) {
+                      var latlng = ol.proj.fromLonLat([locdata.lng * 1, locdata.lat * 1]);
 
                       if (isMoved == true) {
                         isMoved = false;
-                        flyTo(latLng, locdata.yaw, function() {isMoved=true;});
+                        flyTo(latlng, locdata.yaw, function() {isMoved=true;});
                       }
 
                       if ("dsec" in locdata) {
                         movieSeekTo(locdata.dsec);
                       }
+                      
+                      setSliderPos(tooltipItem.index);                      					          						            
+											showCurrentInfo(latlng, locdata.alt); 
                     }
 
-                    return JSON.stringify(chartLocData[tooltipItem.index]);
+                    return JSON.stringify(locdata);
 
                 }
               },
