@@ -5,7 +5,7 @@ var dokdo_view;
 var dokdo_icon;
 var map;
 var geolocation;
-var posSource;
+var posSource = null;
 var posIcons = new Array();
 var flightDataArray = new Array();
 
@@ -125,40 +125,55 @@ function setDesignTableWithFlightRecord(data) {
   if (data == null) return;
   var i = 0;  
 	
+	posIcons = Array();
+	
+	var posLines = Array();
+	
   data.forEach(function (item) {
       appendDesignTableWithFlightRecord(item.lat, item.lng, item.alt, item.speed, item.act, item.actparam);
 
-      var pos_icon = new ol.Feature({
-          geometry: new ol.geom.Point(ol.proj.fromLonLat([item.lng *= 1, item.lat *= 1])),
-          name: "lat: " + item.lat + ", lng: " + item.lng + ", alt: " + item.alt,
-          mindex : i
-      });
-
-      var pos_icon_image = './imgs/position2.png';
-      //var pos_icon_color = '#557799';
-
-      pos_icon.setStyle(new ol.style.Style({
-          image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-            //color: pos_icon_color,
-            crossOrigin: 'anonymous',
-            src: pos_icon_image,
-            rotation : item.yaw
-          }))
-      }));          
-
-      posIcons.push(pos_icon);
+			/*
+	      var pos_icon = new ol.Feature({
+	          geometry: new ol.geom.Point(ol.proj.fromLonLat([item.lng *= 1, item.lat *= 1])),
+	          name: "lat: " + item.lat + ", lng: " + item.lng + ", alt: " + item.alt,
+	          mindex : i
+	      });
+	
+	      var pos_icon_image = './imgs/position2.png';
+	      //var pos_icon_color = '#557799';
+	
+	      pos_icon.setStyle(new ol.style.Style({
+	          image: new ol.style.Icon( ({
+	            //color: pos_icon_color,
+	            crossOrigin: 'anonymous',
+	            src: pos_icon_image,
+	            rotation : item.yaw
+	          }))
+	      }));          
+	
+	      posIcons.push(pos_icon);
+	    */
+	    
+      posLines.push([item.lat, item.lng]);
       i++;
   });
-
-  posSource = new ol.source.Vector({
-      features: posIcons
+  
+  
+  var lines = new ol.geom.LineString(posLines);
+  lines.transform('EPSG:4326', 'EPSG:3857');
+  
+  var lineSource = new ol.source.Vector({
+          features: [new ol.Feature({
+              geometry: lines,
+              name: 'Line'
+          })]
   });
-
-  var posLayer = new ol.layer.Vector({
-      source: posSource
+  
+	posSource = new ol.layer.Vector({
+      source: lineSource,
   });
-
-  map.addLayer(posLayer);
+	
+  map.addLayer(posSource);
   
   moveToPositionOnMap(data[0].lat, data[0].lng);
 }
@@ -302,8 +317,10 @@ function moveToPositionOnMap(lat, lng) {
 
 function removeDesignTableRow(index) {
   removeTableRow('misstr_' + index);
-  if (posSource && (posIcons.length > 0))
-    posSource.removeFeature(posIcons[index]);
+  if (posSource)
+    map.removeLayer(posSource);
+    
+  posSource = null;
 }
 
 function appendDesignTableWithFlightRecord(lat, lng, alt, speed, act, actparam) {
