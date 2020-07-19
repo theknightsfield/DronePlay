@@ -6,7 +6,7 @@ var dokdo_icon;
 var map;
 var geolocation;
 var posSource = null;
-var posIcons = new Array();
+//var posIcons = new Array();
 var flightDataArray = new Array();
 
 $(function() {
@@ -125,7 +125,7 @@ function setDesignTableWithFlightRecord(data) {
   if (data == null) return;
   var i = 0;  
 	
-	posIcons = Array();
+	//posIcons = Array();
 	
 	var coordinates  = Array();
 	
@@ -158,6 +158,9 @@ function setDesignTableWithFlightRecord(data) {
       i++;
   });
   
+  var lines = new ol.geom.LineString(coordinates);
+  
+  lines.transform('EPSG:4326', dokdo_view.getProjection());
   
   var lineSource = new ol.source.Vector({
           features: [new ol.Feature({
@@ -177,6 +180,7 @@ function setDesignTableWithFlightRecord(data) {
   });
 	
   map.addLayer(posSource);
+  
   
   moveToPositionOnMap(data[0].lat, data[0].lng);
 }
