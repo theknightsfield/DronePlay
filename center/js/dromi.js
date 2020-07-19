@@ -804,8 +804,8 @@ function setChartData(cdata) {
 }
 
 function openTip(oChart,datasetIndex,pointIndex){	
-   if(!oChart) return;
-   
+   if(!oChart || oChart == undefined) return;
+         
    closeTip();
    
    if(oChart.tooltip._active == undefined)
