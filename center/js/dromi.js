@@ -46,9 +46,10 @@ function setLineGraph(data) {
 		var line = d3.line()
 		    .x(function(d, i) { return x(i); })
 		    .y(function(d, i) { return y(d); });
-		var $container = $("#lineGraph"),
-		var width = $container.width();
-    var height = $container.height();
+		
+		var lcontainer = $("#lineGraph");
+		var width = lcontainer.width();
+    var height = lcontainer.height();
         
 		var svg = d3.select("#lineGraph").append("svg")
 		    .attr("width", '100%')
@@ -628,7 +629,8 @@ function setChartData(cdata) {
               
               var coordinates = evt.coordinate;			  			
 			  			var latlng = ol.proj.toLonLat(coordinates);
-			  			var hdms = ol.coordinate.toStringHDMS(latlng);			  									  						  						  
+			  			var hdms = ol.coordinate.toStringHDMS(latlng);		
+			  			//todo	  									  						  						  
 						  $("#position_info").text(hdms + " [ Lat: " + latlng[1] + " / Lng: " + latlng[0] + " ]");						  
           });
 
