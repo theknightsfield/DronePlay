@@ -471,6 +471,7 @@ function convert2data(t) {
 }
 
 var lineData = Array();
+var lineGraphLabel = Array();
 
 function addChartItem(i, item) {
   if ("etc" in item && "t" in item.etc && "h" in item.etc) {
@@ -522,10 +523,8 @@ function addChartItem(i, item) {
     
     lineData.push(ol.proj.fromLonLat([item.lng * 1, item.lat * 1]));
     
-    lineGraphData.push({
-    	x: i,
-    	y: item.alt * 1
-		});
+    lineGraphData.push(item.alt * 1);
+    lineGraphLabel.push(i);
 	}
 }
 
@@ -605,6 +604,7 @@ function setChartData(cdata) {
    
      	var lineChart = new Chart(ctx2, {
       	type: 'line',
+      	labels: lineGraphLabel,
         datasets: [{
             label: 'Altitude',
             data: lineGraphData            
