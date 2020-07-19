@@ -35,31 +35,32 @@ function dromiListInit() {
 
 function setLineGraph(data) {
 	 	var n = data.length;		 
+	 	
+	 	var lcontainer = $("#lineGraph");
+		var width = lcontainer.width();
+    var height = lcontainer.height();
+    
 		var x = d3.scaleLinear()
 		    .domain([0, n - 1])
 		    .range([0, width]);
 		 
 		var y = d3.scaleLinear()
-		    .domain([0, 200])
+		    .domain([0, 100])
 		    .range([height, 0]);
 		 
 		var line = d3.line()
 		    .x(function(d, i) { return x(i); })
-		    .y(function(d, i) { return y(d); });
-		
-		var lcontainer = $("#lineGraph");
-		var width = lcontainer.width();
-    var height = lcontainer.height();
+		    .y(function(d, i) { return y(d); });				
         
 		var svg = d3.select("#lineGraph").append("svg")
 		    .attr("width", '100%')
 		    .attr("height", '100%')
-		  .append("g")
+		  	.append("g")
 		    .attr("transform", "translate(" + Math.min(width,height) / 2 + "," + Math.min(width,height) / 2 + ")");
 		 
 		svg.append("defs").append("clipPath")
 		    .attr("id", "clip")
-		  .append("rect")
+		  	.append("rect")
 		    .attr("width", width)
 		    .attr("height", height);
 		 
