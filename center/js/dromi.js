@@ -632,7 +632,8 @@ function setChartData(cdata) {
       ]};
 
       var ctx = document.getElementById('chartArea').getContext('2d');
-      window.myScatter = Chart.Scatter(ctx, {
+      window.myScatter = new Chart(ctx, {
+      	type: 'scatter',
         data: dataSet,
         options: {
           title: {
