@@ -123,8 +123,8 @@ function setDesignTableByFlightRecord(name) {
 
 function setDesignTableWithFlightRecord(data) {
   if (data == null) return;
-  var i = 0;
-
+  var i = 0;  
+	
   data.forEach(function (item) {
       appendDesignTableWithFlightRecord(item.lat, item.lng, item.alt, item.speed, item.act, item.actparam);
 
@@ -144,12 +144,11 @@ function setDesignTableWithFlightRecord(data) {
             src: pos_icon_image,
             rotation : item.yaw
           }))
-      }));
+      }));          
 
       posIcons.push(pos_icon);
       i++;
   });
-
 
   posSource = new ol.source.Vector({
       features: posIcons
