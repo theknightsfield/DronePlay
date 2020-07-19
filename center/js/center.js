@@ -2,7 +2,8 @@
 var bMonStarted = false;
 var pointSource;
 var dokdo_view;
-var dokdo_icon;
+var current_pos;
+var current_pos_image;
 var map;
 var geolocation;
 var posSource = null;
@@ -696,20 +697,22 @@ function mapInit() {
     })
   }));
 
-  dokdo_icon = new ol.Feature({
+  current_pos = new ol.Feature({
       geometry: new ol.geom.Point(ol.proj.fromLonLat([131.8661992, 37.2435813]))
   });
-
-  dokdo_icon.setStyle(new ol.style.Style({
-      image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
+  
+  current_pos_image = new ol.style.Icon(({
         //color: '#8959A8',
         crossOrigin: 'anonymous',
         src: './imgs/position2.png'
-      }))
+      }));
+
+  current_pos.setStyle(new ol.style.Style({
+      image: current_pos_image
     }));
 
   var vectorSource = new ol.source.Vector({
-      features: [dokdo_icon, accuracyFeature, positionFeature]
+      features: [current_pos, accuracyFeature, positionFeature]
     });
 
   var vectorLayer = new ol.layer.Vector({
@@ -823,8 +826,8 @@ function flyTo(location, yaw, done) {
     var parts = 2;
     var called = false;
 
-    dokdo_icon.setGeometry(new ol.geom.Point(location));
-    dokdo_icon.setRotation(yaw);
+    current_pos.setGeometry(new ol.geom.Point(location));
+    current_pos_image.setRotation(yaw);
 
     function callback(complete) {
         --parts;
