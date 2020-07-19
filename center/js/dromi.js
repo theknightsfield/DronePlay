@@ -522,7 +522,10 @@ function addChartItem(i, item) {
     
     lineData.push(ol.proj.fromLonLat([item.lng * 1, item.lat * 1]));
     
-    lineGraphData.push(item.alt * 1);
+    lineGraphData.push({
+    	x: i,
+    	y: item.alt * 1
+		});
 	}
 }
 
