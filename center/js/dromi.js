@@ -31,7 +31,46 @@ function dromiListInit() {
   $("#googlePhotoPlayer").hide();
   $("#youTubePlayer").hide();
   $("#movieDataSet").hide();
+  
+  initUVStatus();  
+  
   //getDromiList();
+}
+
+
+var uvStatusSvg;
+var uvStatusSvg_path_d;
+
+function initUVStatus() {
+	uvStatusSvg = d3.select("uvstatus").append("svg")
+      .attr("width", 200)
+      .attr("height", 200)
+      .attr('viewBox', '-50 -50 100 100')
+
+  uvStatusSvg_path_d = "M 0,0 L 0,-10 L 50,0 L 0,10 Z"; 
+}
+
+function updateAngle(value) {
+  var angle = parseInt(value);
+  var data = [{
+    angle: angle,
+    color: 'black'
+  }, {
+    angle: (180 + angle) % 360,
+    color: 'red'
+  }];
+
+  paths = uvStatusSvg.selectAll('path')
+    .data(data);
+
+  paths.enter()
+    .append('path')
+    .attr('d', uvStatusSvg_path_d)
+    .merge(paths)
+    .style('fill', d => d.color)
+    .attr('transform', d => `rotate(${d.angle})`);
+
+  paths.exit().remove();
 }
 
 function setDromilist(data) {
@@ -501,7 +540,7 @@ function addChartItem(i, item) {
     });
 
     var pos_icon_image = './imgs/position3.png';
-    var pos_icon_color = '#aa5555';
+    var pos_icon_color = '#777777';
     
     if("etc" in item && "marked" in item.etc) {
       pos_icon_color = '#ff0000';
