@@ -570,6 +570,10 @@ function drawLineToMap() {
 	map.addLayer(lineLayer);
 }
 
+function showCurrentInfo(itext) {								  						  
+	$("#position_info").text(itext);						  
+}
+
 function drawPosIcon() {
 	if (posIcons.length <= 0) return;
 	
@@ -579,23 +583,30 @@ function drawPosIcon() {
               return feature;
           });
 
+			var locdata = null;
       if (feature) {
           //alert(feature.get('name'));
           var ii = feature.get('mindex');
           //alert("index:" + ii);
           openTip(window.myScatter, 0, ii);
 
-          var locdata = chartLocData[ii];
+          locdata = chartLocData[ii];
           if ("dsec" in locdata) {
             movieSeekTo(locdata.dsec);
-          }
-      }
+          }                    
+      }    
       
       var coordinates = evt.coordinate;			  			
 			var latlng = ol.proj.toLonLat(coordinates);
-			var hdms = ol.coordinate.toStringHDMS(latlng);		
-			//todo	  									  						  						  
-		  $("#position_info").text(hdms + " [ Lat: " + latlng[1] + " / Lng: " + latlng[0] + " ]");						  
+			var hdms = ol.coordinate.toStringHDMS(latlng);					
+			var itext;
+			
+			if (locdata)
+				itext = hdms + " [ Lat: " + latlng[1] + " / Lng: " + latlng[0] + " / Alt: " + locdata.alt + " ]";	
+			else
+				itext = hdms + " [ Lat: " + latlng[1] + " / Lng: " + latlng[0] + " ]";	
+				
+			showCurrentInfo(itext);        
   });
 
   var posSource = new ol.source.Vector({
@@ -635,8 +646,8 @@ function drawLineGraph() {
           tooltips: {
                 callbacks: {
                     label: function(tooltipItem, data) {
-                        var d = data.datasets[tooltipItem.datasetIndex].data[0];
-                       
+                        //var d = data.datasets[tooltipItem.datasetIndex].data[0];
+                                               
                         var locdata = chartLocData[tooltipItem.index];
                         if(locdata && "lng" in locdata && "lat" in locdata) {
                           var latLng = ol.proj.fromLonLat([locdata.lng * 1, locdata.lat * 1]);
@@ -644,6 +655,10 @@ function drawLineGraph() {
                           if (isMoved == true) {
                             isMoved = false;
                             flyTo(latLng, locdata.yaw, function() {isMoved=true;});
+                            
+                            var hdms = ol.coordinate.toStringHDMS(latlng);		
+														var itext = hdms + " [ Lat: " + latlng[1] + " / Lng: " + latlng[0] + " / Alt: " + locdata.alt + " ]";
+                            showCurrentInfo(itext);
                           }
 
                           if ("dsec" in locdata) {
@@ -651,7 +666,7 @@ function drawLineGraph() {
                           }
                         }
 
-                        return JSON.stringify(chartLocData[tooltipItem.index]);
+                        return JSON.stringify(locdata);
                     }
                   },
                 scales: {
