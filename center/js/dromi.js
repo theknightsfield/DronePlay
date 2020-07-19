@@ -547,8 +547,11 @@ function setSlider(i) {
               movieSeekTo(locdata.dsec);              
             }			
             
-            var latLng = ol.proj.fromLonLat([locdata.lng * 1, locdata.lat * 1]);
-            flyDirectTo(latLng, locdata.yaw, function() {isMoved=true;});
+            var latlng = ol.proj.fromLonLat([locdata.lng * 1, locdata.lat * 1]);
+            flyDirectTo(latlng, locdata.yaw, function() {isMoved=true;});
+                        
+						itext = hdms + " [ Lat: " + latlng[1] + " / Lng: " + latlng[0] + " / Alt: " + locdata.alt + " ]";														
+						showCurrentInfo(itext); 
 					}				
 	});
 }
