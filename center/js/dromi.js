@@ -812,7 +812,7 @@ var oldLinepointIndex = -1;
 function openLineTip(oChart,datasetIndex,pointIndex){	
    if(!oChart || oChart == undefined) return;
    
-   if (oldLinedatasetIndex > 0)
+   if (oldLinedatasetIndex >= 0)
    	closeTip(oChart,oldLinedatasetIndex,oldLinepointIndex);
    
    if(oChart.tooltip._active == undefined)
@@ -836,7 +836,7 @@ function openLineTip(oChart,datasetIndex,pointIndex){
 function openScatterTip(oChart,datasetIndex,pointIndex){	
    if(!oChart || oChart == undefined) return;
    
-   if (oldScatterdatasetIndex > 0)
+   if (oldScatterdatasetIndex >= 0)
    	closeTip(oChart,oldScatterdatasetIndex,oldScatterpointIndex);
    
    if(oChart.tooltip._active == undefined)
