@@ -208,7 +208,7 @@ function processSeek(curTime) {
           	var hdms = ol.coordinate.toStringHDMS(latLng);			  			
 					  $("#position_info").text(hdms + " [ Lat: " + item.lat + " / Lng: " + item.lng + " ]");
 						  
-            flyTo(latLng, function() {isMoved=true;});
+            flyTo(latLng, item.yaw, function() {isMoved=true;});
             return true;
         }
       }            
@@ -470,7 +470,9 @@ function convert2data(t) {
     return date;
 }
 
-function addMapAndChartItem(i, item) {
+var lineData = Array();
+
+function addChartItem(i, item) {
   if ("etc" in item && "t" in item.etc && "h" in item.etc) {
     chartTData.push({x: i, y: item.etc.t});
     chartHData.push({x: i, y: item.etc.h});
@@ -483,32 +485,32 @@ function addMapAndChartItem(i, item) {
     var valS = String(date.getSeconds()).padStart(2, '0');
     var dateString = date.getFullYear() + "-" + valM + "-" + valD + " " + valH + ":" + valMin + ":" + valS;
     chartLabelData.push(dateString);
-  }
-
+  }  
+  
   if ("lat" in item && "lng" in item && "alt" in item) {
     var dsec = item.dsec * 1;
     if (dsec > 3600)
     	dsec = dsec / 1000;
     	
-    chartLocData.push({lat : item.lat, lng : item.lng, alt: item.alt, dsec : dsec});
-
+    chartLocData.push({lat : item.lat, lng : item.lng, alt: item.alt, yaw : item.yaw, dsec : dsec});    
+    
     var pos_icon = new ol.Feature({
-        geometry: new ol.geom.Point(ol.proj.fromLonLat([item.lng *= 1, item.lat *= 1])),
+        geometry: new ol.geom.Point(ol.proj.fromLonLat([item.lng * 1, item.lat * 1])),
         name: dateString + " / lat: " + item.lat + ", lng: " + item.lng + ", alt: " + item.alt,
         mindex : i
     });
 
-    var pos_icon_image = './imgs/position2.png';
-    var pos_icon_color = '#557799';
+    var pos_icon_image = './imgs/position3.png';
+    var pos_icon_color = '#aa5555';
+    
     if("etc" in item && "marked" in item.etc) {
-      pos_icon_image = './imgs/position3.png';
-      pos_icon_color = '#993333';
+      pos_icon_color = '#ff0000';
     }
 
     pos_icon.setStyle(new ol.style.Style({
         image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
           color: pos_icon_color,
-          crossOrigin: 'anonymous',
+          crossOrigin: 'anonymous
           src: pos_icon_image
         }))
     }));
@@ -516,8 +518,10 @@ function addMapAndChartItem(i, item) {
     posIcons.push(pos_icon);
 
     if (bMoved == false)
-      flyTo(ol.proj.fromLonLat([item.lng *= 1, item.lat *= 1]), function() {bMoved=true;});
-  }
+      flyTo(ol.proj.fromLonLat([item.lng * 1, item.lat * 1]), item.yaw, function() {bMoved=true;});
+    
+    lineData.push(ol.proj.fromLonLat([item.lng * 1, item.lat * 1]));
+	}
 }
 
 var isMoved = true;
@@ -530,9 +534,29 @@ function setChartData(cdata) {
 
       var i = 0;
       cdata.forEach(function (item) {
-        addMapAndChartItem(i, item);
+        addChartItem(i, item);                
         i++;
       });
+      
+      
+			var lines = new ol.geom.LineString(lineData);  
+		  var lineSource = new ol.source.Vector({
+		          features: [new ol.Feature({
+		              geometry: lines,
+		              name: 'Line'
+		          })]
+		  });		  
+			var lineLayer = new ol.layer.Vector({
+		      source: lineSource,
+		      style: new ol.style.Style({
+		            stroke: new ol.style.Stroke({
+		                color: '#ff0000',
+		                width: 3
+		            })
+		        })
+		  });
+			
+		  map.addLayer(lineLayer);      	                  
 
       if (posIcons.length > 0) {
           map.on('click', function (evt) {
@@ -611,7 +635,7 @@ function setChartData(cdata) {
 
                           if (isMoved == true) {
                             isMoved = false;
-                            flyTo(latLng, function() {isMoved=true;});
+                            flyTo(latLng, locdata.yaw, function() {isMoved=true;});
                           }
 
                           if ("dsec" in locdata) {

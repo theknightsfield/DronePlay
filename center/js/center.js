@@ -133,35 +133,31 @@ function setDesignTableWithFlightRecord(data) {
   data.forEach(function (item) {
       appendDesignTableWithFlightRecord(item.lat, item.lng, item.alt, item.yaw, item.speed, item.act, item.actparam);
 
-			/*
-	      var pos_icon = new ol.Feature({
-	          geometry: new ol.geom.Point(ol.proj.fromLonLat([item.lng *= 1, item.lat *= 1])),
-	          name: "lat: " + item.lat + ", lng: " + item.lng + ", alt: " + item.alt,
-	          mindex : i
-	      });
-	
-	      var pos_icon_image = './imgs/position2.png';
-	      //var pos_icon_color = '#557799';
-	
-	      pos_icon.setStyle(new ol.style.Style({
-	          image: new ol.style.Icon( ({
-	            //color: pos_icon_color,
-	            crossOrigin: 'anonymous',
-	            src: pos_icon_image,
-	            rotation : item.yaw
-	          }))
-	      }));          
-	
-	      posIcons.push(pos_icon);
-	    */
+			
+      var pos_icon = new ol.Feature({
+          geometry: new ol.geom.Point(ol.proj.fromLonLat([item.lng *= 1, item.lat *= 1])),
+          name: "lat: " + item.lat + ", lng: " + item.lng + ", alt: " + item.alt,
+          mindex : i
+      });
+
+      var pos_icon_image = './imgs/position3.png';	      
+
+      pos_icon.setStyle(new ol.style.Style({
+          image: new ol.style.Icon( ({
+            //color: pos_icon_color,
+            crossOrigin: 'anonymous',
+            src: pos_icon_image	            
+          }))
+      }));          
+
+      posIcons.push(pos_icon);
+	    
 	    
       coordinates.push(ol.proj.fromLonLat([item.lng * 1, item.lat * 1]));
       i++;
   });
   
   var lines = new ol.geom.LineString(coordinates);
-  
-  //lines.transform('EPSG:4326', current_view.getProjection());
   
   var lineSource = new ol.source.Vector({
           features: [new ol.Feature({
@@ -170,7 +166,7 @@ function setDesignTableWithFlightRecord(data) {
           })]
   });
   
-	posSource = new ol.layer.Vector({
+	var lineLayer = new ol.layer.Vector({
       source: lineSource,
       style: new ol.style.Style({
             stroke: new ol.style.Stroke({
@@ -179,8 +175,17 @@ function setDesignTableWithFlightRecord(data) {
             })
         })
   });
+  
+  var posSource = new ol.source.Vector({
+              features: posIcons
+          });
+          
+  var posLayer = new ol.layer.Vector({
+      source: posSource
+  });
 	
-  map.addLayer(posSource);
+  map.addLayer(lineLayer);
+  map.addLayer(posLayer);
   
   
   moveToPositionOnMap(data[0].lat, data[0].lng, data[0].yaw);
