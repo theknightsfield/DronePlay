@@ -13,6 +13,7 @@ var flightDataArray = new Array();
 $(function() {
   showLoader();
   mapInit();
+  initUVStatus();
   hideLoader();
   if (askToken() == false) {
     location.href="index.html";
@@ -846,6 +847,9 @@ function flyTo(location, yaw, done) {
             done(complete);
         }
     }
+    
+    var yy = yaw < 0 : (360 + yaw) : yaw;
+    updateAngle(yy);    
 
     current_view.animate({
       center: location,
@@ -944,6 +948,44 @@ function uploadFlightListCallback(mname, base64file) {
     });	
 }
 
+
+
+var uvStatusSvg;
+var uvStatusSvg_path_d;
+
+function initUVStatus() {
+	uvStatusSvg = d3.select("#uvstatus").append("svg")
+      .attr("width", 80)
+      .attr("height", 80)
+      .attr('viewBox', '-20 -20 40 40')
+	
+  uvStatusSvg_path_d = "M 0,0 L 0,-10 L 50,0 L 0,10 Z"; 
+}
+
+function updateAngle(value) {
+	if(!uvStatusSvg) return;
+	
+  var angle = parseInt(value);
+  var data = [{
+    angle: angle,
+    color: 'black'
+  }, {
+    angle: (180 + angle) % 360,
+    color: 'red'
+  }];
+
+  paths = uvStatusSvg.selectAll('path')
+    .data(data);
+
+  paths.enter()
+    .append('path')
+    .attr('d', uvStatusSvg_path_d)
+    .merge(paths)
+    .style('fill', d => d.color)
+    .attr('transform', d => `rotate(${d.angle})`);
+
+  paths.exit().remove();
+}
 
 
 function el(id) {
