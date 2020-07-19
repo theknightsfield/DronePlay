@@ -135,11 +135,11 @@ function setDesignTableWithFlightRecord(data) {
       });
 
       var pos_icon_image = './imgs/position2.png';
-      var pos_icon_color = '#557799';
+      //var pos_icon_color = '#557799';
 
       pos_icon.setStyle(new ol.style.Style({
           image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-            color: pos_icon_color,
+            //color: pos_icon_color,
             crossOrigin: 'anonymous',
             src: pos_icon_image,
             rotation : item.yaw
