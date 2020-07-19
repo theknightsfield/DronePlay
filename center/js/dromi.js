@@ -203,6 +203,8 @@ function processSeek(curTime) {
         var ds = item.dsec;
         if((ds + 10) >= curTime && (ds - 10) <= curTime) {
             openTip(window.myScatter, 0, index);
+            openTip(window.myLine, 0, index);
+            
             var latLng = ol.proj.fromLonLat([item.lng * 1, item.lat * 1]);                                  													
             flyTo(latLng, item.yaw, function() {isMoved=true;});
             showCurrentInfo([item.lng * 1, item.lat * 1], item.alt);
@@ -528,6 +530,7 @@ var isMoved = true;
 
 function setSliderPos(i) {
 		$("#slider").slider('value',i);
+		$('#sliderText').html( i );
 }
 
 function setSlider(i) {
@@ -537,8 +540,9 @@ function setSlider(i) {
 					value : 0,								
 					step : 1,									
 					slide : function( event, ui ){						
-						$('#sliderText').html( ui.value );			
+						$('#sliderText').html( ui.value );
 						openTip(window.myScatter, 0, ui.value);
+						openTip(window.myLine, 0, ui.value);
 
             var locdata = chartLocData[ui.value];
             if ("dsec" in locdata) {
@@ -595,6 +599,7 @@ function drawPosIcon() {
           var ii = feature.get('mindex');
           //alert("index:" + ii);
           openTip(window.myScatter, 0, ii);
+          openTip(window.myLine, 0, ii);
 
           locdata = chartLocData[ii];
           if ("dsec" in locdata) {
@@ -635,7 +640,7 @@ function drawLineGraph() {
          }
       	]};
    
-     	var lineChart = new Chart(ctx2, {
+  window.myLine = new Chart(ctx2, {
       	type: 'scatter',
         data: linedataSet,
         options: {
@@ -798,8 +803,11 @@ function setChartData(cdata) {
       drawScatterGraph();           
 }
 
-function openTip(oChart,datasetIndex,pointIndex){
+function openTip(oChart,datasetIndex,pointIndex){	
    if(!oChart) return;
+   
+   closeTip();
+   
    if(oChart.tooltip._active == undefined)
       oChart.tooltip._active = []
    var activeElements = oChart.tooltip._active;
