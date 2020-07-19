@@ -612,6 +612,9 @@ function setChartData(cdata) {
       	type: 'scatter',
         data: linedataSet,
         options: {
+        	legend: {
+        		display: false
+    			},
           title: {
             display: false,
             text: 'Temperature : RED / Humidity : BLUE'
