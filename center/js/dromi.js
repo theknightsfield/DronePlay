@@ -672,7 +672,7 @@ function drawLineGraph() {
                           
                           setSliderPos(tooltipItem.index);                                                    
                         }
-
+												
                         return JSON.stringify(locdata);
                     }
                   },
