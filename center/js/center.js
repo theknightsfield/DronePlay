@@ -19,19 +19,19 @@ var currentFlightData;
 var pos_icon_image = './imgs/position3.png';
 
 $(function() {
-  
+
   centerInit();
-  
+
 });
 
-function centerInit() {	
-	bMonStarted = false;	
-	posSource = null;	
+function centerInit() {
+	bMonStarted = false;
+	posSource = null;
 	flightDataArray = new Array();
-	currentFlightData = new Array();		
-	
+	currentFlightData = new Array();
+
 	showLoader();
-  mapInit();  
+  mapInit();
   hideLoader();
   if (askToken() == false) {
     location.href="index.html";
@@ -56,12 +56,22 @@ function centerInit() {
   else if (page_action == "flightlist") {
     flightListInit();
   }
+  else if (page_action == "flight_view") {
+    flightViewInit();
+  }
   else if (page_action == "dromi") {
     dromiInit();
   }
   else if (page_action == "dromi_list") {
     dromiListInit();
   }
+}
+
+function flightViewInit() {
+    $("#chartView").hide();
+    $("#googlePhotoPlayer").hide();
+    $("#youTubePlayer").hide();
+    $("#movieDataSet").hide();
 }
 
 function monitorInit() {
@@ -74,37 +84,37 @@ function monitorInit() {
 }
 
 
-function designInit() {	 
+function designInit() {
 	initSlider(1);
-	  
+
  	map.on('click', function (evt) {
       var feature = map.forEachFeatureAtPixel(evt.pixel,
           function (feature) {
               return feature;
           });
-			
-      if (feature) {          
-          var ii = feature.get('mindex');     
+
+      if (feature) {
+          var ii = feature.get('mindex');
           if (ii == null || ii == undefined) return;
-          
-          setSliderPos(ii);      
-          setDataToDesignTableWithFlightRecord(ii);          
+
+          setSliderPos(ii);
+          setDataToDesignTableWithFlightRecord(ii);
           return;
-      }    
-        		
-			appendNewRecord(evt.coordinate);				
-  }); 	 	 	
-    
+      }
+
+			appendNewRecord(evt.coordinate);
+  });
+
   el('track').addEventListener('change', function() {
     geolocation.setTracking(this.checked);
   });
-    
+
 	var record_name = location.search.split('record_name=')[1];
   var mission_name = location.search.split('mission_name=')[1];
 
-	if (record_name != null) {		
+	if (record_name != null) {
 		record_name = record_name.split('&')[0];
-    setDesignTableByFlightRecord(record_name);    
+    setDesignTableByFlightRecord(record_name);
   }
 	else if (mission_name != null) {
 		mission_name = mission_name.split('&')[0];
@@ -123,60 +133,60 @@ function designInit() {
           map.updateSize();
         }
    });
-  */     
+  */
 }
 
 function setSliderPos(i) {
-		if (i < 0 || currentFlightData.length <= i) {			
+		if (i < 0 || currentFlightData.length <= i) {
 			$('#sliderText').html( "-" );
 			return;
 		}
-		
+
 		$("#slider").slider('value',i + 1);
 		$('#sliderText').html( i + 1 );
 }
 
 function initSlider(i) {
-	$('#slider').slider({					
-					min : 0,								
-					max : i,								
-					value : 0,								
-					step : 1,									
+	$('#slider').slider({
+					min : 0,
+					max : i,
+					value : 0,
+					step : 1,
 					slide : function( event, ui ){
 						$('#sliderText').html( ui.value );
-												
-						if (currentFlightData.length <= 0) {							
+
+						if (currentFlightData.length <= 0) {
 							return;
 						}
-						
+
 						var d = currentFlightData[ui.value - 1];
-						
-						setDataToDesignTableWithFlightRecord(ui.value - 1);			
+
+						setDataToDesignTableWithFlightRecord(ui.value - 1);
 						var npos = ol.proj.fromLonLat([d.lng * 1, d.lat * 1]);
-									
+
 						flyDirectTo(npos, d.yaw, function() {});
-					}				
+					}
 	});
-	
+
 	$('#goItemBtn').click(function() {
 			var index = $('#goItemIndex').val();
 			if (index == "" || $.isNumeric( index ) == false) {
 				alert("Please input valid value !");
 				return;
 			}
-			
+
 			index = parseInt(index);
-												
-			if (index <= 0 || index > currentFlightData.length) {		
-				alert("Please input valid value !");					
+
+			if (index <= 0 || index > currentFlightData.length) {
+				alert("Please input valid value !");
 				return;
 			}
-			
+
 			var d = currentFlightData[index - 1];
-			
-			setDataToDesignTableWithFlightRecord(index - 1);												
+
+			setDataToDesignTableWithFlightRecord(index - 1);
 			moveToPositionOnMap(d.lat * 1, d.lng * 1, d.yaw, function() {});
-			
+
 			$("#slider").slider('value', index);
 			$('#sliderText').html( index );
 	});
@@ -215,15 +225,15 @@ function createNewIcon(i, item) {
           name: "lat: " + item.lat + ", lng: " + item.lng + ", alt: " + item.alt,
           mindex : i
       });
-      	      
+
   pos_icon.setStyle(new ol.style.Style({
       image: new ol.style.Icon( ({
         //color: pos_icon_color,
         crossOrigin: 'anonymous',
-        src: pos_icon_image	            
+        src: pos_icon_image
       }))
-  }));          
-    
+  }));
+
   return pos_icon;
 }
 
@@ -244,33 +254,33 @@ function removeIconOnMap(i) {
 
 function setDesignTableWithFlightRecord(data) {
   if (data == null || data.length == 0) return;
-  var i = 0;  		
+  var i = 0;
 	var coordinates = new Array();
-	
+
 	currentFlightData = data;
-	
+
 	posSource = new ol.source.Vector();
-			
-  data.forEach(function (item) {      			      
-      addIconToMap(i, item);  	    	 
+
+  data.forEach(function (item) {
+      addIconToMap(i, item);
   		coordinates.push(ol.proj.fromLonLat([item.lng * 1, item.lat * 1]));
       i++;
   });
-  
+
   setDataToDesignTableWithFlightRecord(0);
-  
+
   $("#slider").slider('option',{min: 1, max: i});
-  setSliderPos(i);  
-  
+  setSliderPos(i);
+
   var lines = new ol.geom.LineString(coordinates);
-  
+
   lineSource = new ol.source.Vector({
           features: [new ol.Feature({
               geometry: lines,
               name: 'Line'
           })]
   });
-  
+
 	var lineLayer = new ol.layer.Vector({
       source: lineSource,
       style: new ol.style.Style({
@@ -280,16 +290,16 @@ function setDesignTableWithFlightRecord(data) {
             })
         })
   });
-    
-          
+
+
   var posLayer = new ol.layer.Vector({
       source: posSource
   });
-	
+
   map.addLayer(lineLayer);
   map.addLayer(posLayer);
-  
-  
+
+
   moveToPositionOnMap(data[0].lat, data[0].lng, data[0].yaw);
 }
 
@@ -297,35 +307,35 @@ function setDesignTableWithFlightRecord(data) {
 function appendNewRecord(coordinates) {
 	var lonLat = ol.proj.toLonLat(coordinates);
 	var index = currentFlightData.length;
-		
+
 	if (index <= 0) {
 		$("#slider").show();
 		$("#dataTable-points").show();
 	}
-	
-	var data = new Array();	
+
+	var data = new Array();
 	data['alt'] = 0;
 	data['speed'] = 0;
-	data['yaw'] = 0;		
+	data['yaw'] = 0;
 	data['pitch'] = 0;
 	data['roll'] = 0;
 	data['act'] = 0;
 	data['actparam'] = 0;
 	data['lng'] = lonLat[0];
-	data['lat'] = lonLat[1];		
-			
+	data['lat'] = lonLat[1];
+
 	currentFlightData.push(data);
-		
-	$("#slider").slider('option',{min: 1, max: (index + 1) });	
+
+	$("#slider").slider('option',{min: 1, max: (index + 1) });
 	$("#slider").slider('value', index + 1);
-	
-	setDataToDesignTableWithFlightRecord(index);	
+
+	setDataToDesignTableWithFlightRecord(index);
 	addIconToMap(index, data);
 }
 
 
 function flightListInit() {
-	
+
 }
 
 function startMon() {
@@ -461,12 +471,12 @@ function moveToPositionOnMap(lat, lng, yaw) {
 }
 
 function clearDataToDesignTableWithFlightRecord() {
-	
+
 }
 
-function setDataToDesignTableWithFlightRecord(index) { 
+function setDataToDesignTableWithFlightRecord(index) {
 	if ( currentFlightData.length <= 0) return;
-	
+
 	var lat = currentFlightData[index].lat;
 	var lng = currentFlightData[index].lng;
 	var alt = currentFlightData[index].alt;
@@ -476,7 +486,7 @@ function setDataToDesignTableWithFlightRecord(index) {
 	var speed = currentFlightData[index].speed;
 	var act = currentFlightData[index].act;
 	var actparam = currentFlightData[index].actparam;
-	
+
 	$('#tr_index').text(index + 1);
 	$('#latdata_index').val(lat);
 	$('#lngdata_index').val(lng);
@@ -484,26 +494,26 @@ function setDataToDesignTableWithFlightRecord(index) {
 	$('#rolldata_index').val(roll);
 	$('#pitchdata_index').val(pitch);
 	$('#yawdata_index').val(yaw);
-	
-	$('#speeddata_index').val(speed);	
+
+	$('#speeddata_index').val(speed);
 	$('#actiondata_index').val(act).prop("selected", true);
 	$('#actionparam_index').val(actparam);
-	
+
 	$('#removeItemBtn').off('click');
-	$('#removeItemBtn').click(function(){	
+	$('#removeItemBtn').click(function(){
 		removeFlightData(index);
 		removeIconOnMap(index);
-	});	
-	
+	});
+
 	$('#saveItemBtn').off('click');
-	$('#saveItemBtn').click(function(){	
+	$('#saveItemBtn').click(function(){
 		saveFlightData(index);
 	});
 }
 
-function saveFlightData(index) {	
+function saveFlightData(index) {
 	if (currentFlightData.length <= 0) return;
-			
+
 	currentFlightData[index].lat = $('#latdata_index').val();
 	currentFlightData[index].lng = $('#lngdata_index').val();
 	currentFlightData[index].alt = $('#altdata_index').val();
@@ -517,11 +527,11 @@ function saveFlightData(index) {
 
 function removeSelectedFeature(selectedFeatureID) {
 	var features = pointSource.getFeatures();
-	
+
 	if (features != null && features.length > 0) {
    for (x in features) {
       var properties = features[x].getProperties();
-      
+
       var id = properties.id;
       if (id == selectedFeatureID) {
         pointSource.removeFeature(features[x]);
@@ -533,21 +543,21 @@ function removeSelectedFeature(selectedFeatureID) {
 
 function removeFlightData(index) {
 	currentFlightData.splice(index, 1);
-	
+
 	removeSelectedFeature(index);
-				
+
 	if (currentFlightData.length <= 0) {
 		$("#slider").hide();
 		$("#dataTable-points").hide();
 		return;
 	}
-	
+
 	var newIndex = currentFlightData.length-1;
-	
+
 	setDataToDesignTableWithFlightRecord(newIndex);
 	$("#slider").slider('value', newIndex + 1);
 	$("#slider").slider('option',{min: 1, max: (newIndex + 1)});
-		
+
 	moveToPositionOnMap(currentFlightData[newIndex].lat, currentFlightData[newIndex].lng, currentFlightData[newIndex].yaw);
 }
 
@@ -611,7 +621,7 @@ function btnClear() {
     if (r == false) {
         return;
     }
-    
+
     lineSource.clear();
     pointSource.clear();
     posSource.clear();
@@ -657,9 +667,10 @@ function setFlightlist(data) {
 
 function appendFlightListTable(name, dtimestamp, data) {
   var appendRow = "<tr class='odd gradeX' id='flight-list-" + tableCount + "'><td width='10%'>" + (tableCount + 1) + "</td>"
-      + "<td class='center' bgcolor='#eee'><a href='design.html?record_name=" + name + "'>"
-      + name + "</a></td><td width='30%' class='center'> " + dtimestamp + "</td>"
+      + "<td class='center' bgcolor='#eee'>" + name + "</td><td width='30%' class='center'> " + dtimestamp + "</td>"
       + "<td width='20%' bgcolor='#fff'>"
+      + "<a href='design.html?record_name=" + name + "'>수정</a> "
+      + "<a href='flight_view.html?record_name=" + name + "'>기록보기</a> "
       + "<button class='btn btn-primary' type='button' onClick='deleteFlightData(" + tableCount + ");'>삭제</button></td>"
       + "</tr>";
   $('#dataTable-Flight_list > tbody:last').append(appendRow);
@@ -730,25 +741,25 @@ function btnRegister() {
         alert("미션의 이름을 잘못 입력하셨습니다.");
         return;
     }
-    
+
     var mspeed = prompt("미션 수행시 비행속도를 입력해 주세요.", "");
 
     if (mspeed == null || parseFloat(mspeed) <= 0.0) {
         alert("비행속도를 잘못 입력하셨습니다.");
         return;
     }
-    
-    
+
+
     if (currentFlightData.length <= 0) {
       alert("입력된 Waypoint가 1도 없습니다! 집중~ 집중~!");
       return;
     }
 
-    var nPositions = new Array();        
+    var nPositions = new Array();
     var bError = 0;
     for (var index=0;index<currentFlightData.length;index++) {
     	var item = currentFlightData[index];
-    
+
       if (item.act == undefined || item.act === ""
         || item.lat == undefined || item.lat === ""
         || item.lng == undefined || item.lng === ""
@@ -764,7 +775,7 @@ function btnRegister() {
         }
 
 			var mid = "mid-" + index;
-      nPositions.push({id:mid, lat:item.lat, lng:item.lng, alt:item.alt, act:item.act, actparam:item.actparam, speed:item.speed, roll:item.roll, pitch:item.pitch, yaw:item.yaw});      
+      nPositions.push({id:mid, lat:item.lat, lng:item.lng, alt:item.alt, act:item.act, actparam:item.actparam, speed:item.speed, roll:item.roll, pitch:item.pitch, yaw:item.yaw});
     }
 
     if (bError > 0) {
@@ -854,7 +865,7 @@ function mapInit() {
   current_pos = new ol.Feature({
       geometry: new ol.geom.Point(ol.proj.fromLonLat([131.8661992, 37.2435813]))
   });
-  
+
   current_pos_image = new ol.style.Icon(({
         //color: '#8959A8',
         crossOrigin: 'anonymous',
@@ -872,7 +883,7 @@ function mapInit() {
   var vectorLayer = new ol.layer.Vector({
       source: vectorSource,
       zIndex: 10000
-    });      
+    });
 
   pointSource = new ol.source.Vector({});
   var pointLayer = new ol.layer.Vector({
@@ -911,7 +922,7 @@ function mapInit() {
       loadTilesWhileAnimating: true,
       view: current_view
     });
-        
+
     // update the HTML page when the position changes.
     geolocation.on('change', function() {
       el('accuracy').innerText = geolocation.getAccuracy() + ' [m]';
@@ -980,18 +991,18 @@ function flyDirectTo(location, yaw, done) {
 
     current_pos.setGeometry(new ol.geom.Point(location));
     current_pos_image.setRotation(yaw);
-    
-    function dcallback(complete) {        
+
+    function dcallback(complete) {
         if (called) {
             return;
         }
-        
+
         if (!complete) {
             called = true;
             done(complete);
         }
     }
-        
+
     current_view.animate({
       center: location,
       duration: duration
@@ -1018,7 +1029,7 @@ function flyTo(location, yaw, done) {
             done(complete);
         }
     }
-        
+
     current_view.animate({
       center: location,
       duration: duration
@@ -1072,14 +1083,14 @@ function uploadFlightList() {
 	      alert("잘못 입력하셨습니다.");
 	      return;
 	  }
-	  
-	  showLoader();  
+
+	  showLoader();
     getBase64(files[0], mname, uploadFlightListCallback);
-  }  	
+  }
   else {
-  	alert("Please, select any file, first !");  	  	
+  	alert("Please, select any file, first !");
   	return;
-  }    
+  }
 }
 
 function getBase64(file, mname, callback) {
@@ -1095,17 +1106,17 @@ function getBase64(file, mname, callback) {
 }
 
 
-function uploadFlightListCallback(mname, base64file) {	
+function uploadFlightListCallback(mname, base64file) {
 		var userid = getCookie("dev_user_id");
     var jdata = {"action" : "position", "daction" : "convert", "clientid" : userid, "name" : mname, "recordfile" : base64file};
 
     ajaxRequest(jdata, function (r) {
     	hideLoader();
-    	
-      if(r.result == "success") {        
+
+      if(r.result == "success") {
         $('#uploadFlightRecBtn').hide(1500);
         $('#djifileform').hide(1500);
-        alert("Successfully, uploaded !, Please refresh this page and click 'load' button again.");        
+        alert("Successfully, uploaded !, Please refresh this page and click 'load' button again.");
       }
       else {
       	alert("Error ! : (" + r.reason + ")");
@@ -1113,7 +1124,7 @@ function uploadFlightListCallback(mname, base64file) {
     }, function(request,status,error) {
     	hideLoader();
       alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-    });	
+    });
 }
 
 
