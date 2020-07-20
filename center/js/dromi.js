@@ -660,11 +660,11 @@ function drawLineGraph() {
                         if(locdata && "lng" in locdata && "lat" in locdata) {
                           var latlng = ol.proj.fromLonLat([locdata.lng * 1, locdata.lat * 1]);
 
-                          if (isMoved == true) {
-                            isMoved = false;                            
+                          //if (isMoved == true) {
+                          //  isMoved = false;                            
                             flyDirectTo(latlng, locdata.yaw, function() {isMoved=true;});
                             showCurrentInfo([locdata.lng * 1, locdata.lat * 1], locdata.alt);
-                          }
+                          //}
 
                           if ("dsec" in locdata) {
                             movieSeekTo(locdata.dsec);
