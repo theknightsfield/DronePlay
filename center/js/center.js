@@ -728,7 +728,7 @@ function showDataForHistory(index) {
 	if (!("data" in item) || item.data == null || item.data == "") {
     var userid = getCookie("dev_user_id");
     var jdata = {"action" : "position", "daction" : "download_spe", "name" : item.name, "clientid" : userid};
-
+    $("#record_name_field").text(item.name);
 	  showLoader();
 
 	  setTimeout(function() {
