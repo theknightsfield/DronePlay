@@ -122,6 +122,8 @@ function designInit() {
           map.updateSize();
         }
    });
+   
+  initSlider(1);
 }
 
 function setSliderPos(i) {
@@ -134,7 +136,7 @@ function setSliderPos(i) {
 		$('#sliderText').html( i );
 }
 
-function setSlider(i) {
+function initSlider(i) {
 	$('#slider').slider({					
 					min : 0,								
 					max : i - 1,								
@@ -209,7 +211,8 @@ function setDesignTableWithFlightRecord(data) {
   
   setDataToDesignTableWithFlightRecord(0);
   
-  setSlider(i);
+  $("#slider").slider('option',{min: 0, max: (i - 1) });
+  setSliderPos(i);
   oldIndex = 0;
   
   var lines = new ol.geom.LineString(coordinates);
