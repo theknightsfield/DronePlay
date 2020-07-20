@@ -273,6 +273,10 @@ function appendNewRecord(coordinates) {
 	data.lng = lonLat[0];
 	data.lat = lonLat[1];	
 	currentFlightData.push(data);
+	
+	$("#slider").slider('value', index);
+	$("#slider").slider('option',{min: 0, max: index });
+	
 	setDataToDesignTableWithFlightRecord(index);
 }
 
