@@ -1,17 +1,16 @@
 
-var bMonStarted = false;
+var bMonStarted;
 var pointSource;
 var current_view;
 var current_pos;
 var current_pos_image;
 var map;
 var geolocation;
-var posSource = null;
-var posIcons = new Array();
-var flightDataArray = new Array();
-var currentFlightData = new Array();
-var oldIndex = -1;
-var flightRecordShow = false;
+var posSource;
+var posIcons;
+var flightDataArray;
+var currentFlightData;
+var oldIndex;
 
 $(function() {
   
@@ -26,9 +25,7 @@ function centerInit() {
 	posIcons = new Array();
 	flightDataArray = new Array();
 	currentFlightData = new Array();
-	oldIndex = -1;
-	flightRecordShow = false;
-	
+	oldIndex = -1;		
 	
 	showLoader();
   mapInit();  
@@ -92,8 +89,7 @@ function designInit() {
 	var record_name = location.search.split('record_name=')[1];
   var mission_name = location.search.split('mission_name=')[1];
 
-	if (record_name != null) {
-		flightRecordShow = true;		
+	if (record_name != null) {		
 		record_name = record_name.split('&')[0];
     setDesignTableByFlightRecord(record_name);    
   }
@@ -133,11 +129,7 @@ function setSlider(i) {
 					step : 1,									
 					slide : function( event, ui ){
 						$('#sliderText').html( ui.value );
-						
-						if (oldIndex >= 0 && ui.value != oldIndex) {
-							removeDesignTableRowForFlightRecord(oldIndex);
-						}
-						
+												
 						setDataToDesignTableWithFlightRecord(ui.value);
 						
 						oldIndex = ui.value;
@@ -407,8 +399,8 @@ function moveToPositionOnMap(lat, lng, yaw) {
   flyTo(npos, yaw, function() {});
 }
 
-function removeDesignTableRowForFlightRecord(index) {
-  removeTableRow('misstr_' + index);  
+function clearDataToDesignTableWithFlightRecord() {
+	
 }
 
 function setDataToDesignTableWithFlightRecord(index) {  
@@ -438,9 +430,8 @@ function setDataToDesignTableWithFlightRecord(index) {
 		removeFlightData(index);
 	});
 	
-	$('#moveItemBtn').click(function(){
-		var latLng = ol.proj.fromLonLat([lng, lat]);
-    flyTo(latLng, 0, function() {});
+	$('#moveItemBtn').click(function(){		
+    moveToPositionOnMap(lat * 1, lng * 1, yaw, function() {});
 	});					
 }
 
@@ -512,6 +503,7 @@ function searchAddressToCoordinate(address) {
 }
 
 var tableCount = 0;
+
 function btnClear() {
     var r = confirm("Are you sure ?");
     if (r == false) {
@@ -519,7 +511,8 @@ function btnClear() {
     }
     
     pointSource.clear();
-    centerInit();
+    currentFlightData = Array();
+    $("#dataTable-points").hide();
 }
 
 
