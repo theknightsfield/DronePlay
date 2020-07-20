@@ -284,7 +284,7 @@ function appendNewRecord(coordinates) {
 
 
 function flightListInit() {
-
+	initSlider(1);
 }
 
 function startMon() {
