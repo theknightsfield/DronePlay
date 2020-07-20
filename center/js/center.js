@@ -138,6 +138,69 @@ function designInit() {
   */
 }
 
+
+function showFlightData(index) {
+  if (dromiDataArray.length == 0) return;
+
+  var item = dromiDataArray[index];
+
+	moviePlayerVisible = false;
+
+  if ("youtube_data_id" in item) {
+  	if (item.youtube_data_id.indexOf("youtube") >=0) {
+			setYoutubePlayer(item.youtube_data_id);
+			setGooglePhotoPlayer("");
+		}
+		else {
+			setYoutubePlayer("");
+			setGooglePhotoPlayer(item.youtube_data_id);
+		}
+  }
+  else {
+    $("#youTubePlayer").hide();
+    $("#googlePhotoPlayer").hide();
+  }
+
+  if (moviePlayerVisible == true) {
+		$("#movieDataSet").hide();
+	}
+	else {
+		$("#movieDataSet").show();
+	}
+
+	if (!("data" in item) || item.data == null || item.data == "") {
+		var userid = getCookie("dev_user_id");
+		var jdata = {"action": "dromi", "daction": "get", "clientid" : userid, "name" : item.dname};
+
+	  showDromiLoader();
+
+	  setTimeout(function() {
+
+				ajaxRequest(jdata, function (r) {
+			    if(r.result != "success") {
+			      alert("Failed to load data!");
+			    }
+			    else {
+			      setChartData(r.data);
+			      hideDromiLoader();
+			    }
+			  }, function(request,status,error) {
+			    hideDromiLoader();
+			    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			  });
+
+		}, 1000);
+	}
+	else {
+		showDromiLoader();
+  	setChartData(item.data);
+  	hideDromiLoader();
+  }
+
+}
+
+
+
 function setSliderPos(i) {
 		if (i < 0 || currentFlightData.length <= i) {
 			$('#sliderText').html( "-" );
@@ -632,6 +695,117 @@ function btnClear() {
 }
 
 
+
+function getFlightListForHistory() {
+  var userid = getCookie("dev_user_id");
+  var jdata = {"action": "position", "daction": "download", "clientid" : userid};
+
+  showLoader();
+  ajaxRequest(jdata, function (r) {
+    hideLoader();
+    if(r.result == "success") {
+      if (r.data == null || r.data.length == 0) {
+        alert("no data");
+        return;
+      }
+
+      setFlightlistHistory(r.data);
+      $('#getFlightListBtn').hide(1500);
+    }
+    else {
+    	alert("Error ! - 2");
+    }
+  }, function(request,status,error) {
+    hideLoader();
+    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+  });
+}
+
+
+
+function setFlightlistHistory(data) {
+  if (data == null || data.length == 0)
+    return;
+
+  data.forEach(function(item) {
+    appendFlightListTableForHistory(item.name, item.dtime, item.data);
+    flightDataArray.push(item);
+  });
+}
+
+
+function showDataForHistory(index) {
+  if (flightDataArray.length == 0) return;
+
+  var item = flightDataArray[index];
+
+	moviePlayerVisible = false;
+
+  if ("youtube_data_id" in item) {
+  	if (item.youtube_data_id.indexOf("youtube") >=0) {
+			setYoutubePlayer(item.youtube_data_id);
+			setGooglePhotoPlayer("");
+		}
+		else {
+			setYoutubePlayer("");
+			setGooglePhotoPlayer(item.youtube_data_id);
+		}
+  }
+  else {
+    $("#youTubePlayer").hide();
+    $("#googlePhotoPlayer").hide();
+  }
+
+  if (moviePlayerVisible == true) {
+		$("#movieDataSet").hide();
+	}
+	else {
+		$("#movieDataSet").show();
+	}
+
+	if (!("data" in item) || item.data == null || item.data == "") {
+    var userid = getCookie("dev_user_id");
+    var jdata = {"action" : "position", "daction" : "download_spe", "name" : name, "clientid" : userid};
+
+	  showLoader();
+
+	  setTimeout(function() {
+
+				ajaxRequest(jdata, function (r) {
+			    if(r.result != "success") {
+			      alert("Failed to load data!");
+			    }
+			    else {
+			      setChartData(r.data.data);
+			      hideLoader();
+			    }
+			  }, function(request,status,error) {
+			    hideLoader();
+			    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			  });
+
+		}, 1000);
+	}
+	else {
+		showLoader();
+  	setChartData(item.data);
+  	hideLoader();
+  }
+
+}
+
+function appendFlightListTableForHistory(name, dtimestamp, data) {
+  var appendRow = "<tr class='odd gradeX' id='flight-list-" + tableCount + "'><td width='10%'>" + (tableCount + 1) + "</td>"
+      + "<td class='center' bgcolor='#eee'><a href='javascript:showDataForHistory(" + tableCount + ");'>" + name + "</a></td><td width='30%' class='center'> " + dtimestamp + "</td>"
+      + "<td width='20%' bgcolor='#fff'>"
+      + "<a href='design.html?record_name=" + name + "'>수정</a> "
+      + "<button class='btn btn-primary' type='button' onClick='deleteFlightData(" + tableCount + ");'>삭제</button></td>"
+      + "</tr>";
+  $('#dataTable-Flight_list > tbody:last').append(appendRow);
+  tableCount++;
+}
+
+
 function getFlightList() {
   var userid = getCookie("dev_user_id");
   var jdata = {"action": "position", "daction": "download", "clientid" : userid};
@@ -669,10 +843,9 @@ function setFlightlist(data) {
 
 function appendFlightListTable(name, dtimestamp, data) {
   var appendRow = "<tr class='odd gradeX' id='flight-list-" + tableCount + "'><td width='10%'>" + (tableCount + 1) + "</td>"
-      + "<td class='center' bgcolor='#eee'>" + name + "</td><td width='30%' class='center'> " + dtimestamp + "</td>"
+      + "<td class='center' bgcolor='#eee'><a href='flight_view.html?record_name=" + name + "'>" + name + "</a></td><td width='30%' class='center'> " + dtimestamp + "</td>"
       + "<td width='20%' bgcolor='#fff'>"
       + "<a href='design.html?record_name=" + name + "'>수정</a> "
-      + "<a href='flight_view.html?record_name=" + name + "'>기록보기</a> "
       + "<button class='btn btn-primary' type='button' onClick='deleteFlightData(" + tableCount + ");'>삭제</button></td>"
       + "</tr>";
   $('#dataTable-Flight_list > tbody:last').append(appendRow);
