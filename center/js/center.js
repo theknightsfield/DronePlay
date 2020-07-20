@@ -87,7 +87,8 @@ function designInit() {
 			
       if (feature) {          
           var ii = feature.get('mindex');          
-          setSliderPos(ii);                
+          setSliderPos(ii);      
+          setDataToDesignTableWithFlightRecord(ii);          
           return;
       }    
         		
