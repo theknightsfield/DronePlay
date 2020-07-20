@@ -605,6 +605,7 @@ function btnClear() {
     }
     
     pointSource.clear();
+    posSource.clear();
     currentFlightData = Array();
     $("#dataTable-points").hide();
 }
