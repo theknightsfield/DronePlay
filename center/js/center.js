@@ -73,6 +73,8 @@ function monitorInit() {
 
 
 function designInit() {	 
+	initSlider(1);
+	
   draw = new ol.interaction.Draw({
       source: pointSource,
       type: "Point"      
@@ -121,9 +123,7 @@ function designInit() {
           map.updateSize();
         }
    });
-  */
-   
-  initSlider(1);
+  */     
 }
 
 function setSliderPos(i) {
@@ -284,7 +284,7 @@ function appendNewRecord(coordinates) {
 
 
 function flightListInit() {
-	initSlider(1);
+	
 }
 
 function startMon() {
