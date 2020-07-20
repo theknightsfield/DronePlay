@@ -744,11 +744,11 @@ function btnRegister() {
       return;
     }
 
-    var nPositions = new Array();
-    
-    var cindex = 0;
+    var nPositions = new Array();        
     var bError = 0;
-    currentFlightData.forEach(function(item, index, array) {      
+    for (var index=0;index<currentFlightData.length;index++) {
+    	var item = currentFlightData[i];
+    
       if (item.act == null || item.act == ""
         || item.lat == null || item.lat == ""
         || item.lng == null || item.lng == ""
