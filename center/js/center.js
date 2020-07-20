@@ -289,7 +289,7 @@ function appendNewRecord(coordinates) {
 	$("#slider").slider('value', index + 1);
 	
 	setDataToDesignTableWithFlightRecord(index);	
-	addIconToMap(index);
+	addIconToMap(index, data);
 }
 
 
