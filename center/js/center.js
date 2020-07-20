@@ -74,7 +74,7 @@ function flightViewInit() {
     $("#movieDataSet").show();
 
     var record_name = location.search.split('record_name=')[1];
-    if (record_name !== null && record_name !== "") {
+    if (record_name != null && record_name != "") {
       showDataForHistoryWithName(decodeURI(record_name));
     }
 }
