@@ -13,7 +13,6 @@ var currentFlightData;
 var oldIndex;
 
 var draw;
-var featureID;
 var singleClick;
 var selectedFeatureID;
 
@@ -23,9 +22,7 @@ $(function() {
   
 });
 
-function centerInit() {
-	
-	featureID = 0;
+function centerInit() {	
 	bMonStarted = false;	
 	posSource = null;
 	posIcons = new Array();
@@ -76,34 +73,19 @@ function monitorInit() {
   getMissionToMonitor(page_id);
 }
 
-function addSelect() {
-    map.removeInteraction(draw);
-    singleClick = new ol.interaction.Select();
-    map.addInteraction(singleClick);
 
-   	singleClick.getFeatures().on('add', function (event) {
-		   var properties = event.element.getProperties();
-		   selectedFeatureID = properties.id;       
-		});
-}
-
-function removeSelectedFeature() {
-   var features = source.getFeatures();
-   if (features != null && features.length > 0) {
-       for (x in features) {
-          var properties = features[x].getProperties();
-          console.log(properties);
-          var id = properties.id;
-          if (id == selectedFeatureID) {
-            source.removeFeature(features[x]);
-            break;
-          }
-        }
-	 }
-}
- 
-function designInit() {	  	
-  map.removeInteraction(singleClick);
+function designInit() {
+	var modify = new ol.interaction.Modify({
+    features: features,
+    // the SHIFT key must be pressed to delete vertices, so
+    // that new vertices can be drawn at the same position
+    // of existing vertices
+    deleteCondition: function(event) {
+      return ol.events.condition.shiftKeyOnly(event) &&
+          ol.events.condition.singleClick(event);
+    }
+  });
+  map.addInteraction(modify);
   
   draw = new ol.interaction.Draw({
       source: pointSource      
@@ -111,7 +93,7 @@ function designInit() {
 
  	// Create drawend event of feature and set ID to feature
   draw.on('drawend', function (event) {
-    featureID = featureID + 1;
+    var featureID = currentFlightData.length;
     event.feature.setProperties({
         'id': featureID
     })
@@ -120,6 +102,8 @@ function designInit() {
     appendNewRecord(event.feature.getGeometry().getCoordinates());
  	})
  	
+ 	var selectInteraction = new ol.interaction.Select();
+	map.addInteraction(selectInteraction);
  	map.addInteraction(draw); 	      	  
     
   el('track').addEventListener('change', function() {
