@@ -11,7 +11,7 @@ var posIcons = new Array();
 var flightDataArray = new Array();
 var currentFlightData = new Array();
 var oldIndex = -1;
-
+var flightRecordShow = false;
 
 $(function() {
   showLoader();
@@ -66,6 +66,8 @@ function designInit() {
 
   map.addInteraction(draw);
   map.on('click', function(evt) {
+  			if (flightRecordShow == true) return;
+  			
         var coordinates = evt.coordinate;
         //alert(coordinates);
         appendDesignTable(coordinates);
@@ -79,6 +81,7 @@ function designInit() {
   var mission_name = location.search.split('mission_name=')[1];
 
 	if (record_name != null) {
+		flightRecordShow = true;		
 		record_name = record_name.split('&')[0];
     setDesignTableByFlightRecord(record_name);    
   }
@@ -97,7 +100,7 @@ function designInit() {
           $( '.topFixBanner' ).removeClass( 'topFixBannerFixed' );
           map.updateSize();
         }
-   });		
+   });
 }
 
 function setSliderPos(i) {
@@ -120,13 +123,10 @@ function setSlider(i) {
 						$('#sliderText').html( ui.value );
 						
 						if (oldIndex >= 0 && ui.value != oldIndex) {
-							removeDesignTableRow(oldIndex);
+							removeDesignTableRowForFlightRecord(oldIndex);
 						}
 						
-						appendDesignTableWithFlightRecord(currentFlightData[ui.value].lat
-						, currentFlightData[ui.value].lng, currentFlightData[ui.value].alt
-						, currentFlightData[ui.value].yaw, currentFlightData[ui.value].speed
-						, currentFlightData[ui.value].act, currentFlightData[ui.value].actparam);
+						appendDesignTableWithFlightRecord(ui.value);
 						
 						oldIndex = ui.value;
 					}				
@@ -190,7 +190,7 @@ function setDesignTableWithFlightRecord(data) {
       i++;
   });
   
-  appendDesignTableWithFlightRecord(data[0].lat, data[0].lng, data[0].alt, data[0].yaw, data[0].speed, data[0].act, data[0].actparam);
+  appendDesignTableWithFlightRecord(0);
   
   setSlider(i);
   oldIndex = 0;
@@ -366,23 +366,26 @@ function moveToPositionOnMap(lat, lng, yaw) {
   flyTo(npos, yaw, function() {});
 }
 
-function removeDesignTableRow(index) {
-  removeTableRow('misstr_' + index);
-  if (posSource && (posIcons.length > 0))
-    posSource.removeFeature(posIcons[index]);        
-    
-  posSource = null;
+function removeDesignTableRowForFlightRecord(index) {
+  removeTableRow('misstr_' + index);  
 }
 
-function appendDesignTableWithFlightRecord(lat, lng, alt, yaw, speed, act, actparam) {
-  tableCount++;
-  var strid = "mission-" + tableCount;
-  var appendRow = "<tr class='odd gradeX' id='misstr_" + tableCount + "'><td>" + tableCount + "</td><td colspan=3>"
-      + "<label for='latdata_" + tableCount + "'>위도(Lat)</label><input name='latdata_" + tableCount + "' id='latdata_" + tableCount + "' type='text' placeholder='Latitude' value='"+lat+"' class='form-control latdata'>"
-      + "<label for='lngdata_" + tableCount + "'>경도(Lng)</label><input name='lngdata_" + tableCount + "' id='lngdata_" + tableCount + "' type='text' placeholder='Longitude' value='"+lng+"' class='form-control lngdata'>"
-      + "<label for='altdata_" + tableCount + "'>고도(Alt)</label><input name='altdata_" + tableCount + "' id='altdata_" + tableCount + "' type='text' placeholder='Altitude (m)' class='form-control altdata' value='"+alt+"'><br>"
-      + "<label for='speeddata_" + tableCount + "'>속도(Speed)</label><input name='speeddata_" + tableCount + "' id='speeddata_" + tableCount + "' type='text' placeholder='Speed (m/s)' class='form-control speeddata' value='"+speed+"'>"
-      + "<label for='actiondata_" + tableCount + "'>액션(Act)</label><select class='form-control actiondata' id='actiondata_" + tableCount + "'>"
+function appendDesignTableWithFlightRecord(index) {  
+	var lat = currentFlightData[index].lat;
+	var lng = currentFlightData[index].lng;
+	var alt = currentFlightData[index].alt;
+	var yaw = currentFlightData[index].yaw;
+	var speed = currentFlightData[index].speed;
+	var act = currentFlightData[index].act;
+	var actparam = currentFlightData[index].actparam;
+						
+  var strid = "mission-" + index;
+  var appendRow = "<tr class='odd gradeX' id='misstr_" + index + "'><td>" + index + "</td><td colspan=3>"
+      + "<label for='latdata_" + index + "'>위도(Lat)</label><input name='latdata_" + index + "' id='latdata_" + index + "' type='text' placeholder='Latitude' value='"+lat+"' class='form-control latdata'>"
+      + "<label for='lngdata_" + index + "'>경도(Lng)</label><input name='lngdata_" + index + "' id='lngdata_" + index + "' type='text' placeholder='Longitude' value='"+lng+"' class='form-control lngdata'>"
+      + "<label for='altdata_" + index + "'>고도(Alt)</label><input name='altdata_" + index + "' id='altdata_" + index + "' type='text' placeholder='Altitude (m)' class='form-control altdata' value='"+alt+"'><br>"
+      + "<label for='speeddata_" + index + "'>속도(Speed)</label><input name='speeddata_" + index + "' id='speeddata_" + index + "' type='text' placeholder='Speed (m/s)' class='form-control speeddata' value='"+speed+"'>"
+      + "<label for='actiondata_" + index + "'>액션(Act)</label><select class='form-control actiondata' id='actiondata_" + index + "'>"
           + "<option selected value=0>STAY</option>"
           + "<option value=1>START_TAKE_PHOTO</option>"
           + "<option value=2>START_RECORD</option>"
@@ -392,12 +395,19 @@ function appendDesignTableWithFlightRecord(lat, lng, alt, yaw, speed, act, actpa
           //+ "<option value=7>CAMERA_ZOOM</option>"
           //+ "<option value=8>CAMERA_FOCUS</option>"
       + "</select>"
-      + "<label for='actionparam_" + tableCount + "'>액션인자(Param)</label><input name='actionparam_" + tableCount + "' id='actionparam_" + tableCount + "' placeholder='action Param' type='text' class='form-control actionparam' value='"+actparam+"'>"
-      + "<br><br><a href=javascript:removeDesignTableRow(" + tableCount + ");>삭제</a> <a href=javascript:moveToPositionOnMap(" + lat + "," + lng + "," + yaw + ");>이동</a>"
+      + "<label for='actionparam_" + index + "'>액션인자(Param)</label><input name='actionparam_" + index + "' id='actionparam_" + index + "' placeholder='action Param' type='text' class='form-control actionparam' value='"+actparam+"'>"
+      + "<br><br><a href=javascript:removeDesignTableRow(" + index + ");>삭제</a> <a href=javascript:moveToPositionOnMap(" + lat + "," + lng + "," + yaw + ");>이동</a>"
       + "</td></tr>";
 
   $('#dataTable-points > tbody:last').append(appendRow);
-  $('#actiondata_' + tableCount).val(act).prop("selected", true);
+  $('#actiondata_' + index).val(act).prop("selected", true);
+}
+
+function removeDesignTableRow(index) {
+  removeTableRow('misstr_' + index);
+  if (posSource && (posIcons.length > 0))
+    posSource.removeFeature(posIcons[index]);          
+  posSource = null;  
 }
 
 function appendDesignTable(coordinates) {
@@ -501,7 +511,6 @@ function btnClear() {
 
     pointSource.clear();
     tableCount = 0;
-    //window.location.reload();
 }
 
 
