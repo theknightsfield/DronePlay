@@ -79,6 +79,7 @@ function designInit() {
       type: "Point"      
   });
 
+	/*
  	// Create drawend event of feature and set ID to feature
   draw.on('drawend', function (event) {
     var featureID = currentFlightData.length;
@@ -89,6 +90,7 @@ function designInit() {
     //event.feature.getGeometry().getCoordinates();
     
  	})
+ 	*/
  	
  	
  	map.on('click', function (evt) {
