@@ -1,12 +1,18 @@
 
 var bMonStarted;
-var pointSource;
+
 var current_view;
 var current_pos;
 var current_pos_image;
-var map;
+
 var geolocation;
+
+var map;
+
 var posSource;
+var pointSource;
+var lineSource;
+
 var flightDataArray;
 var currentFlightData;
 
@@ -256,7 +262,7 @@ function setDesignTableWithFlightRecord(data) {
   
   var lines = new ol.geom.LineString(coordinates);
   
-  var lineSource = new ol.source.Vector({
+  lineSource = new ol.source.Vector({
           features: [new ol.Feature({
               geometry: lines,
               name: 'Line'
