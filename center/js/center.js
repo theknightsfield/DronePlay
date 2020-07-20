@@ -74,7 +74,10 @@ function flightViewInit() {
     $("#movieDataSet").hide();
 
     var record_name = location.search.split('record_name=')[1];
-    showDataForHistoryWithName(record_name);
+    if (record_name !== null && record_name !== "") {
+      $("#record_name_field").text(decodeURI(record_name));
+      showDataForHistoryWithName(decodeURI(record_name));
+    }
 }
 
 function monitorInit() {
@@ -737,9 +740,6 @@ function setFlightlistHistory(data) {
 function showDataForHistoryWithName(name) {
 
 	moviePlayerVisible = false;
-
-  $("#record_name_field").text(name);
-
   $("#youTubePlayer").hide();
   $("#googlePhotoPlayer").hide();
 
