@@ -157,7 +157,7 @@ function initSlider(i) {
 				return;
 			}
 			
-			index = int (index);
+			index = parseInt(index);
 												
 			if (index <= 0 || index > currentFlightData.length) {		
 				alert("Please input valid value !");					
