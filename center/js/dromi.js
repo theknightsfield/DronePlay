@@ -661,8 +661,8 @@ function drawLineGraph() {
                           var latlng = ol.proj.fromLonLat([locdata.lng * 1, locdata.lat * 1]);
 
                           if (isMoved == true) {
-                            isMoved = false;
-                            flyTo(latlng, locdata.yaw, function() {isMoved=true;});                                                        
+                            isMoved = false;                            
+                            flyDirectTo(latlng, locdata.yaw, function() {isMoved=true;});
                             showCurrentInfo([locdata.lng * 1, locdata.lat * 1], locdata.alt);
                           }
 
