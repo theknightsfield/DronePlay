@@ -117,6 +117,7 @@ function setSlider(i) {
 					value : 0,								
 					step : 1,									
 					slide : function( event, ui ){
+						$('#sliderText').html( ui.value );
 						
 						if (oldIndex >= 0 && ui.value != oldIndex) {
 							removeDesignTableRow(oldIndex);
@@ -192,6 +193,7 @@ function setDesignTableWithFlightRecord(data) {
   appendDesignTableWithFlightRecord(data[0].lat, data[0].lng, data[0].alt, data[0].yaw, data[0].speed, data[0].act, data[0].actparam);
   
   setSlider(i);
+  oldIndex = 0;
   
   var lines = new ol.geom.LineString(coordinates);
   
