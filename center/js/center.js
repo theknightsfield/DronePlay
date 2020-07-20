@@ -142,68 +142,6 @@ function designInit() {
 }
 
 
-function showFlightData(index) {
-  if (dromiDataArray.length == 0) return;
-
-  var item = dromiDataArray[index];
-
-	moviePlayerVisible = false;
-
-  if ("youtube_data_id" in item) {
-  	if (item.youtube_data_id.indexOf("youtube") >=0) {
-			setYoutubePlayer(item.youtube_data_id);
-			setGooglePhotoPlayer("");
-		}
-		else {
-			setYoutubePlayer("");
-			setGooglePhotoPlayer(item.youtube_data_id);
-		}
-  }
-  else {
-    $("#youTubePlayer").hide();
-    $("#googlePhotoPlayer").hide();
-  }
-
-  if (moviePlayerVisible == true) {
-		$("#movieDataSet").hide();
-	}
-	else {
-		$("#movieDataSet").show();
-	}
-
-	if (!("data" in item) || item.data == null || item.data == "") {
-		var userid = getCookie("dev_user_id");
-		var jdata = {"action": "dromi", "daction": "get", "clientid" : userid, "name" : item.dname};
-
-	  showDromiLoader();
-
-	  setTimeout(function() {
-
-				ajaxRequest(jdata, function (r) {
-			    if(r.result != "success") {
-			      alert("Failed to load data!");
-			    }
-			    else {
-			      setChartData(r.data);
-			      hideDromiLoader();
-			    }
-			  }, function(request,status,error) {
-			    hideDromiLoader();
-			    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-			  });
-
-		}, 1000);
-	}
-	else {
-		showDromiLoader();
-  	setChartData(item.data);
-  	hideDromiLoader();
-  }
-
-}
-
-
-
 function setSliderPos(i) {
 		if (i < 0 || currentFlightData.length <= i) {
 			$('#sliderText').html( "-" );
@@ -739,7 +677,6 @@ function setFlightlistHistory(data) {
 function showDataForHistoryWithName(name) {
 
   $("#record_name_field").text(name);
-	moviePlayerVisible = false;
   $("#youTubePlayer").hide();
   $("#googlePhotoPlayer").hide();
 
@@ -771,8 +708,6 @@ function showDataForHistory(index) {
 
   var item = flightDataArray[index];
 
-	moviePlayerVisible = false;
-
   if ("youtube_data_id" in item) {
   	if (item.youtube_data_id.indexOf("youtube") >=0) {
 			setYoutubePlayer(item.youtube_data_id);
@@ -788,12 +723,7 @@ function showDataForHistory(index) {
     $("#googlePhotoPlayer").hide();
   }
 
-  if (moviePlayerVisible == true) {
-		$("#movieDataSet").hide();
-	}
-	else {
-		$("#movieDataSet").show();
-	}
+	$("#movieDataSet").show();
 
 	if (!("data" in item) || item.data == null || item.data == "") {
     var userid = getCookie("dev_user_id");
