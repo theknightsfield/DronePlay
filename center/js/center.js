@@ -747,7 +747,7 @@ function btnRegister() {
     var nPositions = new Array();        
     var bError = 0;
     for (var index=0;index<currentFlightData.length;index++) {
-    	var item = currentFlightData[i];
+    	var item = currentFlightData[index];
     
       if (item.act == null || item.act == ""
         || item.lat == null || item.lat == ""
