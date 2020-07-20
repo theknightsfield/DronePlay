@@ -88,7 +88,8 @@ function designInit() {
   map.addInteraction(modify);
   
   draw = new ol.interaction.Draw({
-      source: pointSource      
+      source: pointSource,
+      type: "Point"      
   });
 
  	// Create drawend event of feature and set ID to feature
