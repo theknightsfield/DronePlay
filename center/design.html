@@ -39,6 +39,7 @@ gtag('config', 'UA-130136264-4');
     <link rel="stylesheet" href="css/ol.css" type="text/css">
     <link href="css/bootstrap-social.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <link href="css/jquery-ui.min.css" rel="stylesheet">
     <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
 </head>
 
@@ -216,42 +217,42 @@ gtag('config', 'UA-130136264-4');
                               </div>
                               <div class="col-lg-6">
                                 <div class="panel panel-primary">
-                                    <div class="panel-headeing">
-                                    	<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseActionParams" aria-expanded="false" aria-controls="collapseActionParams">
-																		    Action Parameters
-																		  </button>
-																		  
-																		  <div class="collapse" id="collapseActionParams">
-																			  <div class="card card-body">																			    
-																			    <ul>
-																						<li>STAY : Keeps the aircraft at the waypoint's location. The actionParam parameter will determine how much time in milliseconds the aircraft will stay at the location with range of [0, 32767] milliseconds.</li>
-																						<li>START_TAKE_PHOTO :	Starts to shoot a photo. The actionParam for the waypoint action will be ignored. The maximum time set to execute this waypoint action is 6 seconds. If the time while executing the waypoint action goes above 6 seconds, the aircraft will stop executing the waypoint action and will move on to the next waypoint action, if one exists.</li>
-																						<li>START_RECORD :	Starts recording. The actionParam for the waypoint action will be ignored. The maximum time set to execute this waypoint action is 6 seconds. If the time while executing the waypoint action goes above 6 seconds (e.g. the camera is not present) the aircraft will stop executing the waypoint action and will move on to the next waypoint action, if one exists.</li>
-																						<li>STOP_RECORD	: Stops recording. The actionParam for the waypoint action will be ignored. The maximum time set to execute this waypoint action is 6 seconds. If the time while executing the waypoint action goes above 6 seconds (e.g. the camera is not present) the aircraft will stop executing the waypoint action and will move on to the next waypoint action, if one exists.</li>
-																						<li>ROTATE_AIRCRAFT :	Rotates the aircraft's yaw. The rotation direction is determined by the waypoint's turnMode property. The actionParam value must be in the range of [-180, 180] degrees.</li>
-																						<li>GIMBAL_PITCH :	Rotates the gimbal's pitch. The actionParam value should be in range [-90, 0] degrees.</li>
-																					</ul>
-																			  </div>
-																			</div>                                      
-                                    </div>
-                                    
-
-                                    <table class="table table-striped table-bordered table-hover dataTable-points" id="dataTable-points">
-                                        <thead>
-                                            <tr>
-                                                <th></th>
-                                                <th>Latitude</th><th>Longitude</th><th>Altitude</th>
-                                            </tr>
-                                            <tr>
-                                                <th></th>
-                                                <th>Speed</th><th>Action</th><th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                          </tbody>
-                                    </table>
-                                    
+		                                    <div class="panel-headeing">
+				                                    	<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseActionParams" aria-expanded="false" aria-controls="collapseActionParams">
+																						    Action Parameters
+																						  </button>
+																						  
+																						  <div class="collapse" id="collapseActionParams">
+																							  <div class="card card-body">																			    
+																							    <ul>
+																										<li>STAY : Keeps the aircraft at the waypoint's location. The actionParam parameter will determine how much time in milliseconds the aircraft will stay at the location with range of [0, 32767] milliseconds.</li>
+																										<li>START_TAKE_PHOTO :	Starts to shoot a photo. The actionParam for the waypoint action will be ignored. The maximum time set to execute this waypoint action is 6 seconds. If the time while executing the waypoint action goes above 6 seconds, the aircraft will stop executing the waypoint action and will move on to the next waypoint action, if one exists.</li>
+																										<li>START_RECORD :	Starts recording. The actionParam for the waypoint action will be ignored. The maximum time set to execute this waypoint action is 6 seconds. If the time while executing the waypoint action goes above 6 seconds (e.g. the camera is not present) the aircraft will stop executing the waypoint action and will move on to the next waypoint action, if one exists.</li>
+																										<li>STOP_RECORD	: Stops recording. The actionParam for the waypoint action will be ignored. The maximum time set to execute this waypoint action is 6 seconds. If the time while executing the waypoint action goes above 6 seconds (e.g. the camera is not present) the aircraft will stop executing the waypoint action and will move on to the next waypoint action, if one exists.</li>
+																										<li>ROTATE_AIRCRAFT :	Rotates the aircraft's yaw. The rotation direction is determined by the waypoint's turnMode property. The actionParam value must be in the range of [-180, 180] degrees.</li>
+																										<li>GIMBAL_PITCH :	Rotates the gimbal's pitch. The actionParam value should be in range [-90, 0] degrees.</li>
+																									</ul>
+																							  </div>
+																							</div>                                      
+		                                    </div>
+		                                    
+																				<div class="panel-headeing">
+					                                    <table class="table table-striped table-bordered table-hover dataTable-points" id="dataTable-points">
+					                                        <thead>
+					                                            <tr>
+					                                                <th></th>
+					                                                <th>Latitude</th><th>Longitude</th><th>Altitude</th>
+					                                            </tr>
+					                                            <tr>
+					                                                <th></th>
+					                                                <th>Speed</th><th>Action</th><th></th>
+					                                            </tr>
+					                                        </thead>
+					                                        <tbody>
+					
+					                                        </tbody>
+					                                    </table>
+		                                    </div>
                                 </div>
                               </div>
                         		</div>
@@ -266,6 +267,7 @@ gtag('config', 'UA-130136264-4');
 
     <!-- jQuery -->
     <script src="./vendor/jquery/jquery.min.js"></script>
+    <script src="./vendor/jquery/jquery-ui.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="./vendor/bootstrap/js/bootstrap.min.js"></script>
