@@ -765,7 +765,7 @@ function btnRegister() {
 
 			var mid = "mid-" + index;
       nPositions.push({id:mid, lat:item.lat, lng:item.lng, alt:item.alt, act:item.act, actparam:item.actparam, speed:item.speed, roll:item.roll, pitch:item.pitch, yaw:item.yaw});      
-    });
+    }
 
     if (bError > 0) {
       alert("오류를 확인해 주세요!");
