@@ -72,6 +72,8 @@ function flightViewInit() {
     $("#googlePhotoPlayer").hide();
     $("#youTubePlayer").hide();
     $("#movieDataSet").hide();
+
+    var record_name = location.search.split('record_name=')[1];
 }
 
 function monitorInit() {
