@@ -240,14 +240,14 @@ function appendNewRecord(coordinates) {
 	
 	var data;
 	if (index < 0) {
-		index = 0;
+		data = new Array();		
 		data['alt'] = 0;
 		data['yaw'] = 0;
 		data['speed'] = 0;
 		data['roll'] = 0;
 		data['act'] = 0;
 		data['actparam'] = 0;
-		
+		index = 0;
 		$("#slider").show();
 		$("#dataTable-points").show();
 	}	
