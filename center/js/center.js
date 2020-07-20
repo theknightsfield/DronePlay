@@ -10,7 +10,6 @@ var posSource;
 var posIcons;
 var flightDataArray;
 var currentFlightData;
-var oldIndex;
 
 var draw;
 var singleClick;
@@ -27,8 +26,7 @@ function centerInit() {
 	posSource = null;
 	posIcons = new Array();
 	flightDataArray = new Array();
-	currentFlightData = new Array();
-	oldIndex = -1;		
+	currentFlightData = new Array();	
 	
 	showLoader();
   mapInit();  
@@ -132,22 +130,20 @@ function setSliderPos(i) {
 			return;
 		}
 		
-		$("#slider").slider('value',i);
-		$('#sliderText').html( i );
+		$("#slider").slider('value',i + 1);
+		$('#sliderText').html( i + 1 );
 }
 
 function initSlider(i) {
 	$('#slider').slider({					
 					min : 0,								
-					max : i - 1,								
+					max : i,								
 					value : 0,								
 					step : 1,									
 					slide : function( event, ui ){
 						$('#sliderText').html( ui.value );
 												
-						setDataToDesignTableWithFlightRecord(ui.value);
-						
-						oldIndex = ui.value;
+						setDataToDesignTableWithFlightRecord(ui.value - 1);												
 					}				
 	});
 }
@@ -211,9 +207,8 @@ function setDesignTableWithFlightRecord(data) {
   
   setDataToDesignTableWithFlightRecord(0);
   
-  $("#slider").slider('option',{min: 0, max: (i - 1) });
-  setSliderPos(i);
-  oldIndex = 0;
+  $("#slider").slider('option',{min: 1, max: i});
+  setSliderPos(i);  
   
   var lines = new ol.geom.LineString(coordinates);
   
@@ -252,33 +247,28 @@ function setDesignTableWithFlightRecord(data) {
 
 function appendNewRecord(coordinates) {
 	var lonLat = ol.proj.toLonLat(coordinates);
-	var index = currentFlightData.length - 1;
-	
-	var data;
-	if (index < 0) {
-		data = new Array();		
-		data['alt'] = 0;
-		data['speed'] = 0;
-		data['yaw'] = 0;		
-		data['pitch'] = 0;
-		data['roll'] = 0;
-		data['act'] = 0;
-		data['actparam'] = 0;
-		index = 0;
+	var index = currentFlightData.length;
+		
+	if (index <= 0) {
 		$("#slider").show();
 		$("#dataTable-points").show();
-	}	
-	else {
-		data = currentFlightData[index];
-		index++;
 	}
 	
-	data.lng = lonLat[0];
-	data.lat = lonLat[1];	
+	var data = new Array();	
+	data['alt'] = 0;
+	data['speed'] = 0;
+	data['yaw'] = 0;		
+	data['pitch'] = 0;
+	data['roll'] = 0;
+	data['act'] = 0;
+	data['actparam'] = 0;
+	data['lng'] = lonLat[0];
+	data['lat'] = lonLat[1];		
+			
 	currentFlightData.push(data);
-	
-	$("#slider").slider('value', index);
-	$("#slider").slider('option',{min: 0, max: index });
+		
+	$("#slider").slider('option',{min: 1, max: (index + 1) });	
+	$("#slider").slider('value', index + 1);
 	
 	setDataToDesignTableWithFlightRecord(index);
 }
@@ -486,8 +476,8 @@ function removeFlightData(index) {
 	var newIndex = currentFlightData.length-1;
 	
 	setDataToDesignTableWithFlightRecord(newIndex);
-	$("#slider").slider('value', newIndex);
-	$("#slider").slider('option',{min: 0, max: (newIndex)});
+	$("#slider").slider('value', newIndex + 1);
+	$("#slider").slider('option',{min: 1, max: (newIndex + 1)});
 		
 	moveToPositionOnMap(currentFlightData[newIndex].lat, currentFlightData[newIndex].lng, currentFlightData[newIndex].yaw);
 }
