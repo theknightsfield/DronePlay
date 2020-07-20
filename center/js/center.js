@@ -145,8 +145,8 @@ function designInit() {
 }
 
 function setSliderPos(i) {
-		if (i < 0 || currentFlightData.length <= i) {
-			alert("Invalid index");
+		if (i < 0 || currentFlightData.length <= i) {			
+			$('#sliderText').html( "Invalid Index" );
 			return;
 		}
 		
