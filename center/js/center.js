@@ -147,7 +147,7 @@ function initSlider(i) {
 							return;
 						}
 						
-						var d = currentFlightData[ui.value];
+						var d = currentFlightData[ui.value - 1];
 						
 						setDataToDesignTableWithFlightRecord(ui.value - 1);												
 						moveToPositionOnMap(d.lat * 1, d.lng * 1, d.yaw, function() {});
@@ -456,7 +456,7 @@ function setDataToDesignTableWithFlightRecord(index) {
 }
 
 function saveFlightData(index) {	
-	if ( currentFlightData.length <= 0) return;
+	if (currentFlightData.length <= 0) return;
 			
 	currentFlightData[index].lat = $('#latdata_index').val();
 	currentFlightData[index].lng = $('#lngdata_index').val();
