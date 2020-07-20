@@ -414,7 +414,9 @@ function clearDataToDesignTableWithFlightRecord() {
 	
 }
 
-function setDataToDesignTableWithFlightRecord(index) {  
+function setDataToDesignTableWithFlightRecord(index) { 
+	if ( currentFlightData.length <= 0) return;
+	
 	var lat = currentFlightData[index].lat;
 	var lng = currentFlightData[index].lng;
 	var alt = currentFlightData[index].alt;
