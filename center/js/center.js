@@ -133,7 +133,7 @@ function designInit() {
 
 function setSliderPos(i) {
 		if (i < 0 || currentFlightData.length <= i) {			
-			$('#sliderText').html( "Invalid Index" );
+			$('#sliderText').html( "-" );
 			return;
 		}
 		
@@ -210,6 +210,16 @@ function createNewIcon(i, item) {
 function addIconToMap(i, item) {
 	var nIcon = createNewIcon(i, item);
 	posSource.addFeature(nIcon);
+}
+
+function removeIconOnMap(i) {
+	var features = posSource.getFeatures();
+	for(var i = 0; i < features.length; i++) {
+      if (features[i].get("mindex") == i) {
+      	features.removeFeature(features[i]);
+      	return;
+      }
+	}
 }
 
 function setDesignTableWithFlightRecord(data) {
@@ -461,6 +471,7 @@ function setDataToDesignTableWithFlightRecord(index) {
 	$('#removeItemBtn').off('click');
 	$('#removeItemBtn').click(function(){	
 		removeFlightData(index);
+		removeIconOnMap(index);
 	});	
 	
 	$('#saveItemBtn').off('click');
