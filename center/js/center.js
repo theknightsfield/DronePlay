@@ -12,6 +12,11 @@ var flightDataArray;
 var currentFlightData;
 var oldIndex;
 
+var draw;
+var featureID;
+var singleClick;
+var selectedFeatureID;
+
 $(function() {
   
   centerInit();
@@ -20,6 +25,7 @@ $(function() {
 
 function centerInit() {
 	
+	featureID = 0;
 	bMonStarted = false;	
 	posSource = null;
 	posIcons = new Array();
@@ -70,17 +76,51 @@ function monitorInit() {
   getMissionToMonitor(page_id);
 }
 
-function designInit() {	  
-	var draw = new ol.interaction.Draw({
-      source: pointSource,
-      type: 'Point'
-    });
-  map.addInteraction(draw);
-  	
-  map.on('click', function(evt) {  			
-        var coordinates = evt.coordinate;                
-        appendNewRecord(coordinates);        
+function addSelect() {
+    map.removeInteraction(draw);
+    singleClick = new ol.interaction.Select();
+    map.addInteraction(singleClick);
+
+   	singleClick.getFeatures().on('add', function (event) {
+		   var properties = event.element.getProperties();
+		   selectedFeatureID = properties.id;       
+		});
+}
+
+function removeSelectedFeature() {
+   var features = source.getFeatures();
+   if (features != null && features.length > 0) {
+       for (x in features) {
+          var properties = features[x].getProperties();
+          console.log(properties);
+          var id = properties.id;
+          if (id == selectedFeatureID) {
+            source.removeFeature(features[x]);
+            break;
+          }
+        }
+	 }
+}
+ 
+function designInit() {	  	
+  map.removeInteraction(singleClick);
+  
+  draw = new ol.interaction.Draw({
+      source: pointSource      
   });
+
+ 	// Create drawend event of feature and set ID to feature
+  draw.on('drawend', function (event) {
+    featureID = featureID + 1;
+    event.feature.setProperties({
+        'id': featureID
+    })
+    
+    //event.feature.getGeometry().getCoordinates();
+    appendNewRecord(event.feature.getGeometry().getCoordinates());
+ 	})
+ 	
+ 	map.addInteraction(draw); 	      	  
     
   el('track').addEventListener('change', function() {
     geolocation.setTracking(this.checked);
@@ -242,8 +282,9 @@ function appendNewRecord(coordinates) {
 	if (index < 0) {
 		data = new Array();		
 		data['alt'] = 0;
-		data['yaw'] = 0;
 		data['speed'] = 0;
+		data['yaw'] = 0;		
+		data['pitch'] = 0;
 		data['roll'] = 0;
 		data['act'] = 0;
 		data['actparam'] = 0;
@@ -257,7 +298,7 @@ function appendNewRecord(coordinates) {
 	}
 	
 	data.lng = lonLat[0];
-	data.lat = lonLat[1];
+	data.lat = lonLat[1];	
 	currentFlightData.push(data);
 	setDataToDesignTableWithFlightRecord(index);
 }
