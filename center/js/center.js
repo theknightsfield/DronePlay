@@ -74,6 +74,7 @@ function flightViewInit() {
     $("#movieDataSet").hide();
 
     var record_name = location.search.split('record_name=')[1];
+    showDataForHistoryWithName(record_name);
 }
 
 function monitorInit() {
@@ -733,6 +734,35 @@ function setFlightlistHistory(data) {
   });
 }
 
+function showDataForHistoryWithName(name) {
+
+	moviePlayerVisible = false;
+
+  $("#youTubePlayer").hide();
+  $("#googlePhotoPlayer").hide();
+
+  var userid = getCookie("dev_user_id");
+  var jdata = {"action" : "position", "daction" : "download_spe", "name" : name, "clientid" : userid};
+
+  showLoader();
+
+  setTimeout(function() {
+
+			ajaxRequest(jdata, function (r) {
+		    if(r.result != "success") {
+		      alert("Failed to load data!");
+		    }
+		    else {
+		      setChartData(r.data.data);
+		      hideLoader();
+		    }
+		  }, function(request,status,error) {
+		    hideLoader();
+		    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		  });
+
+	}, 1000);
+}
 
 function showDataForHistory(index) {
   if (flightDataArray.length == 0) return;
