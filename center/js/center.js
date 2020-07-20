@@ -143,7 +143,14 @@ function initSlider(i) {
 					slide : function( event, ui ){
 						$('#sliderText').html( ui.value );
 												
+						if (currentFlightData.length <= 0) {							
+							return;
+						}
+						
+						var d = currentFlightData[ui.value];
+						
 						setDataToDesignTableWithFlightRecord(ui.value - 1);												
+						moveToPositionOnMap(d.lat * 1, d.lng * 1, d.yaw, function() {});
 					}				
 	});
 }
@@ -441,11 +448,25 @@ function setDataToDesignTableWithFlightRecord(index) {
 	
 	$('#removeItemBtn').click(function(){	
 		removeFlightData(index);
-	});
+	});	
 	
-	$('#moveItemBtn').click(function(){		
-    moveToPositionOnMap(lat * 1, lng * 1, yaw, function() {});
-	});					
+	$('#saveItemBtn').click(function(){	
+		saveFlightData(index);
+	});
+}
+
+function saveFlightData(index) {	
+	if ( currentFlightData.length <= 0) return;
+			
+	currentFlightData[index].lat = $('#latdata_index').val();
+	currentFlightData[index].lng = $('#lngdata_index').val();
+	currentFlightData[index].alt = $('#altdata_index').val();
+	currentFlightData[index].yaw = $('#yawdata_index').val();
+	currentFlightData[index].roll = $('#rolldata_index').val();
+	currentFlightData[index].pitch = $('#pitchdata_index').val();
+	currentFlightData[index].speed = $('#speeddata_index').val();
+	currentFlightData[index].act = $('#actiondata_index').val();
+	currentFlightData[index].actparam = $('#actionparam_index').val();
 }
 
 function removeSelectedFeature(selectedFeatureID) {
