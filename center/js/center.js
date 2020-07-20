@@ -750,14 +750,14 @@ function btnRegister() {
     	var item = currentFlightData[index];
     
       if (item.act == ""
-        || item.lat == null || item.lat == ""
-        || item.lng == null || item.lng == ""
-        || item.alt == null || item.alt == ""
-        || item.speed == null || item.speed == ""
-        || item.pitch == null || item.pitch == ""
-        || item.roll == null || item.roll == ""
-        || item.yaw == null || item.yaw == ""
-        || item.actparam == null || item.actparam == "") {
+        || item.lat == undefined || item.lat == ""
+        || item.lng == undefined || item.lng == ""
+        || item.alt == undefined || item.alt == ""
+        || item.speed == undefined || item.speed == ""
+        || item.pitch == undefined || item.pitch == ""
+        || item.roll == undefined || item.roll == ""
+        || item.yaw == undefined || item.yaw == ""
+        || item.actparam == undefined || item.actparam == "") {
           monitor("오류 : 인덱스 - " + (index + 1) + " / 비어있는 파라메터가 존재합니다.");
           bError++;
           return;
