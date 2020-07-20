@@ -455,11 +455,11 @@ function removeSelectedFeature(selectedFeatureID) {
 	if (features != null && features.length > 0) {
    for (x in features) {
       var properties = features[x].getProperties();
-      console.log(properties);
+      
       var id = properties.id;
       if (id == selectedFeatureID) {
-        source.removeFeature(features[x]);
-         break;
+        pointSource.removeFeature(features[x]);
+        break;
       }
     }
   }
