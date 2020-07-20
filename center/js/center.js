@@ -58,12 +58,7 @@ function monitorInit() {
   getMissionToMonitor(page_id);
 }
 
-function designInit() {
-  var draw = new ol.interaction.Draw({
-      source: pointSource,
-      type: 'Point'
-    });
-  
+function designInit() {	  
   map.on('click', function(evt) {
   			if (flightRecordShow == true) return;
   			
@@ -71,15 +66,11 @@ function designInit() {
         //alert(coordinates);
         appendDesignTable(coordinates);
   });
-  
-  if (flightRecordShow == false) {
-  	map.addInteraction(draw);
-  }
-
+    
   el('track').addEventListener('change', function() {
     geolocation.setTracking(this.checked);
   });
-
+    
 	var record_name = location.search.split('record_name=')[1];
   var mission_name = location.search.split('mission_name=')[1];
 
@@ -91,6 +82,17 @@ function designInit() {
 	else if (mission_name != null) {
 		mission_name = mission_name.split('&')[0];
     setDesignTableByMission(mission_name);
+  }
+  
+  if (flightRecordShow == false) {  	
+  	var draw = new ol.interaction.Draw({
+      source: pointSource,
+      type: 'Point'
+    });
+  	map.addInteraction(draw);  	  	
+  }
+  else {
+  	$('#currentSetLocView').hide();
   }
 
   var bannerOffset = $( '.topFixBanner' ).offset();
