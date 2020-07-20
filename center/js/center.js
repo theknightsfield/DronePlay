@@ -476,9 +476,13 @@ function removeFlightData(index) {
 		return;
 	}
 	
-	setDataToDesignTableWithFlightRecord(index);
-	$("#slider").slider('value',index);
-	$("#slider").slider('option',{min: 0, max: (currentFlightData.length-1)});
+	var newIndex = currentFlightData.length-1;
+	
+	setDataToDesignTableWithFlightRecord(newIndex);
+	$("#slider").slider('value', newIndex);
+	$("#slider").slider('option',{min: 0, max: (newIndex)});
+		
+	moveToPositionOnMap(currentFlightData[newIndex].lat, currentFlightData[newIndex].lng, currentFlightData[newIndex].yaw);
 }
 
 function appendMissionList(data) {
