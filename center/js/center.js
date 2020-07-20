@@ -10,9 +10,6 @@ var posSource;
 var flightDataArray;
 var currentFlightData;
 
-var draw;
-var singleClick;
-var selectedFeatureID;
 var pos_icon_image = './imgs/position3.png';
 
 $(function() {
@@ -73,12 +70,7 @@ function monitorInit() {
 
 function designInit() {	 
 	initSlider(1);
-	
-  draw = new ol.interaction.Draw({
-      source: pointSource,
-      type: "Point"      
-  });
-
+	  
  	map.on('click', function (evt) {
       var feature = map.forEachFeatureAtPixel(evt.pixel,
           function (feature) {
@@ -86,19 +78,16 @@ function designInit() {
           });
 			
       if (feature) {          
-          var ii = feature.get('mindex');          
+          var ii = feature.get('mindex');     
+          if (ii == null || ii == undefined) return;
+          
           setSliderPos(ii);      
           setDataToDesignTableWithFlightRecord(ii);          
           return;
       }    
         		
 			appendNewRecord(evt.coordinate);				
-  });
- 	
- 	
- 	var selectInteraction = new ol.interaction.Select();
-	map.addInteraction(selectInteraction);
- 	map.addInteraction(draw);
+  }); 	 	 	
     
   el('track').addEventListener('change', function() {
     geolocation.setTracking(this.checked);
@@ -299,7 +288,8 @@ function appendNewRecord(coordinates) {
 	$("#slider").slider('option',{min: 1, max: (index + 1) });	
 	$("#slider").slider('value', index + 1);
 	
-	setDataToDesignTableWithFlightRecord(index);
+	setDataToDesignTableWithFlightRecord(index);	
+	addIconToMap(index);
 }
 
 
