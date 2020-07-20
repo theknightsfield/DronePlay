@@ -75,7 +75,6 @@ function flightViewInit() {
 
     var record_name = location.search.split('record_name=')[1];
     if (record_name !== null && record_name !== "") {
-      $("#record_name_field").text(decodeURI(record_name));
       showDataForHistoryWithName(decodeURI(record_name));
     }
 }
@@ -739,6 +738,7 @@ function setFlightlistHistory(data) {
 
 function showDataForHistoryWithName(name) {
 
+  $("#record_name_field").text(name);
 	moviePlayerVisible = false;
   $("#youTubePlayer").hide();
   $("#googlePhotoPlayer").hide();
