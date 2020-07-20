@@ -428,7 +428,7 @@ function setDataToDesignTableWithFlightRecord(index) {
 	var act = currentFlightData[index].act;
 	var actparam = currentFlightData[index].actparam;
 	
-	$('#tr_index').text(index);
+	$('#tr_index').text(index + 1);
 	$('#latdata_index').val(lat);
 	$('#lngdata_index').val(lng);
 	$('#altdata_index').val(alt);
