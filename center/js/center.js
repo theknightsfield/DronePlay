@@ -76,7 +76,7 @@ function monitorInit() {
 
 function designInit() {
 	var modify = new ol.interaction.Modify({
-    features: features,
+    features: pointSource,
     // the SHIFT key must be pressed to delete vertices, so
     // that new vertices can be drawn at the same position
     // of existing vertices
