@@ -115,7 +115,7 @@ gtag('config', 'UA-130136264-4');
                               <a href="https://www.facebook.com/groups/droneplay" target="_new">커뮤니티</a>
                               <a href="https://blog.droneplay.io" target="_new">블로그</a>
                               <a href="https://dev.droneplay.io/dev/apis/index.html" target="_new">Open APIs</a>
-                              <a href="http://dev.droneplay.io" target="_new">개발자 페이지</a>
+                              <a href="https://dev.droneplay.io" target="_new">개발자 페이지</a>
                         </li>
 
                         <li>
@@ -149,47 +149,7 @@ gtag('config', 'UA-130136264-4');
                                 </div>
                                 <!-- /.col-lg-12 -->
                             </div>
-                            <!-- /.row -->
-                            <div class="row" id="currentSetLocView">
-
-                                    <div class="col-lg-6">
-                                      <div class="panel panel-default">
-                                        <div class="panel-heading">
-
-                                          <label for="track">
-                                            현재 위치를 지도에 표시하기
-                                            <input id="track" type="checkbox"/>
-                                          </label>
-                                          <hr>
-                                          <p>
-                                            정확도 : <span id="accuracy"></span>&nbsp;&nbsp;
-                                            고도 : <span id="altitude"></span>&nbsp;&nbsp;
-                                            고도 정확도 : <span id="altitudeAccuracy"></span>&nbsp;&nbsp;
-                                            방향 : <span id="heading"></span>&nbsp;&nbsp;
-                                            속도 : <span id="speed"></span>
-                                          </p>
-                                        </div>
-
-                                      </div>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                      <div class="panel panel-default">
-                                          <div class="panel-heading">
-                                                <label for="queryData">주소</label>
-                                                <div class="input-group">
-                                                      <input type="text" class="form-control" placeholder="Search..." id="queryData">
-                                                      <span class="input-group-btn">
-                                                        <button class="btn btn-default" type="button" onClick="btnSearch()">
-                                                            <i class="fa fa-search"></i>
-                                                        </button>
-                                                      </span>
-                                                </div>
-                                          </div>
-                                      </div>
-                                    </div>                                                                        
-
-                            </div>
+                            
                         		<div class="row">
 
                               <div class="col-lg-6">
@@ -203,6 +163,7 @@ gtag('config', 'UA-130136264-4');
                                                                             
 						                        	<div class="panel-body">
 						                        		<div id="slider"></div><span class="badge badge-light" id="sliderText">0</span>
+						                        		<input type=text value="0" id="goItemIndex"/><button type="button btn-primary" id="goItemBtn">바로가기</button
 						                        	</div>							                        
 
                                       <div class="panel-heading">
@@ -274,6 +235,48 @@ gtag('config', 'UA-130136264-4');
 	                                </div>
                               </div>
                         		</div>
+                        		
+                        		<!-- /.row -->
+                            <div class="row" id="currentSetLocView">
+
+                                    <div class="col-lg-6">
+                                      <div class="panel panel-default">
+                                        <div class="panel-heading">
+
+                                          <label for="track">
+                                            현재 위치를 지도에 표시하기
+                                            <input id="track" type="checkbox"/>
+                                          </label>
+                                          <hr>
+                                          <p>
+                                            정확도 : <span id="accuracy"></span>&nbsp;&nbsp;
+                                            고도 : <span id="altitude"></span>&nbsp;&nbsp;
+                                            고도 정확도 : <span id="altitudeAccuracy"></span>&nbsp;&nbsp;
+                                            방향 : <span id="heading"></span>&nbsp;&nbsp;
+                                            속도 : <span id="speed"></span>
+                                          </p>
+                                        </div>
+
+                                      </div>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                      <div class="panel panel-default">
+                                          <div class="panel-heading">
+                                                <label for="queryData">주소</label>
+                                                <div class="input-group">
+                                                      <input type="text" class="form-control" placeholder="Search..." id="queryData">
+                                                      <span class="input-group-btn">
+                                                        <button class="btn btn-default" type="button" onClick="btnSearch()">
+                                                            <i class="fa fa-search"></i>
+                                                        </button>
+                                                      </span>
+                                                </div>
+                                          </div>
+                                      </div>
+                                    </div>                                                                        
+
+                            </div>
                         </div>
                         <!-- /.container-fluid -->
                     </div>

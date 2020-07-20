@@ -149,6 +149,29 @@ function initSlider(i) {
 						moveToPositionOnMap(d.lat * 1, d.lng * 1, d.yaw, function() {});
 					}				
 	});
+	
+	$('#goItemBtn').click(function() {
+			var index = $('#goItemIndex').val();
+			if (index == "" || $.isNumeric( index ) == false) {
+				alert("Please input valid value !");
+				return;
+			}
+			
+			index = int (index);
+												
+			if (index <= 0 || index > currentFlightData.length) {		
+				alert("Please input valid value !");					
+				return;
+			}
+			
+			var d = currentFlightData[index - 1];
+			
+			setDataToDesignTableWithFlightRecord(index - 1);												
+			moveToPositionOnMap(d.lat * 1, d.lng * 1, d.yaw, function() {});
+			
+			$("#slider").slider('value', index);
+			$('#sliderText').html( index );
+	});
 }
 
 function setDesignTableByMission(name) {
