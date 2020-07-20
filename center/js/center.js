@@ -14,7 +14,23 @@ var oldIndex = -1;
 var flightRecordShow = false;
 
 $(function() {
-  showLoader();
+  
+  centerInit();
+  
+});
+
+function centerInit() {
+	
+	bMonStarted = false;	
+	posSource = null;
+	posIcons = new Array();
+	flightDataArray = new Array();
+	currentFlightData = new Array();
+	oldIndex = -1;
+	flightRecordShow = false;
+	
+	
+	showLoader();
   mapInit();  
   hideLoader();
   if (askToken() == false) {
@@ -46,8 +62,7 @@ $(function() {
   else if (page_action == "dromi_list") {
     dromiListInit();
   }
-  
-});
+}
 
 function monitorInit() {
   var url_string = window.location.href;
@@ -59,12 +74,15 @@ function monitorInit() {
 }
 
 function designInit() {	  
-  map.on('click', function(evt) {
-  			if (flightRecordShow == true) return;
-  			
-        var coordinates = evt.coordinate;
-        //alert(coordinates);
-        appendDesignTable(coordinates);
+	var draw = new ol.interaction.Draw({
+      source: pointSource,
+      type: 'Point'
+    });
+  map.addInteraction(draw);
+  	
+  map.on('click', function(evt) {  			
+        var coordinates = evt.coordinate;                
+        appendNewRecord(coordinates);        
   });
     
   el('track').addEventListener('change', function() {
@@ -82,17 +100,6 @@ function designInit() {
 	else if (mission_name != null) {
 		mission_name = mission_name.split('&')[0];
     setDesignTableByMission(mission_name);
-  }
-  
-  if (flightRecordShow == false) {  	
-  	var draw = new ol.interaction.Draw({
-      source: pointSource,
-      type: 'Point'
-    });
-  	map.addInteraction(draw);  	  	
-  }
-  else {
-  	$('#currentSetLocView').hide();
   }
 
   var bannerOffset = $( '.topFixBanner' ).offset();
@@ -131,7 +138,7 @@ function setSlider(i) {
 							removeDesignTableRowForFlightRecord(oldIndex);
 						}
 						
-						appendDesignTableWithFlightRecord(ui.value);
+						setDataToDesignTableWithFlightRecord(ui.value);
 						
 						oldIndex = ui.value;
 					}				
@@ -195,7 +202,7 @@ function setDesignTableWithFlightRecord(data) {
       i++;
   });
   
-  appendDesignTableWithFlightRecord(0);
+  setDataToDesignTableWithFlightRecord(0);
   
   setSlider(i);
   oldIndex = 0;
@@ -233,6 +240,36 @@ function setDesignTableWithFlightRecord(data) {
   
   moveToPositionOnMap(data[0].lat, data[0].lng, data[0].yaw);
 }
+
+
+function appendNewRecord(coordinates) {
+	var lonLat = ol.proj.toLonLat(coordinates);
+	var index = currentFlightData.length - 1;
+	
+	var data;
+	if (index < 0) {
+		index = 0;
+		data['alt'] = 0;
+		data['yaw'] = 0;
+		data['speed'] = 0;
+		data['roll'] = 0;
+		data['act'] = 0;
+		data['actparam'] = 0;
+		
+		$("#slider").show();
+		$("#dataTable-points").show();
+	}	
+	else {
+		data = currentFlightData[index];
+		index++;
+	}
+	
+	data.lng = lonLat[0];
+	data.lat = lonLat[1];
+	currentFlightData.push(data);
+	setDataToDesignTableWithFlightRecord(index);
+}
+
 
 function flightListInit() {
 
@@ -291,7 +328,6 @@ function isSet(value) {
 
 
 function getList() {
-
     var userid = getCookie("dev_user_id");
     var jdata = {"action" : "mission", "daction" : "get", "clientid" : userid};
 
@@ -375,69 +411,51 @@ function removeDesignTableRowForFlightRecord(index) {
   removeTableRow('misstr_' + index);  
 }
 
-function appendDesignTableWithFlightRecord(index) {  
+function setDataToDesignTableWithFlightRecord(index) {  
 	var lat = currentFlightData[index].lat;
 	var lng = currentFlightData[index].lng;
 	var alt = currentFlightData[index].alt;
 	var yaw = currentFlightData[index].yaw;
+	var roll = currentFlightData[index].roll;
+	var pitch = currentFlightData[index].pitch;
 	var speed = currentFlightData[index].speed;
 	var act = currentFlightData[index].act;
 	var actparam = currentFlightData[index].actparam;
-						
-  var strid = "mission-" + index;
-  var appendRow = "<tr class='odd gradeX' id='misstr_" + index + "'><td>" + index + "</td><td colspan=3>"
-      + "<label for='latdata_" + index + "'>위도(Lat)</label><input name='latdata_" + index + "' id='latdata_" + index + "' type='text' placeholder='Latitude' value='"+lat+"' class='form-control latdata'>"
-      + "<label for='lngdata_" + index + "'>경도(Lng)</label><input name='lngdata_" + index + "' id='lngdata_" + index + "' type='text' placeholder='Longitude' value='"+lng+"' class='form-control lngdata'>"
-      + "<label for='altdata_" + index + "'>고도(Alt)</label><input name='altdata_" + index + "' id='altdata_" + index + "' type='text' placeholder='Altitude (m)' class='form-control altdata' value='"+alt+"'><br>"
-      + "<label for='speeddata_" + index + "'>속도(Speed)</label><input name='speeddata_" + index + "' id='speeddata_" + index + "' type='text' placeholder='Speed (m/s)' class='form-control speeddata' value='"+speed+"'>"
-      + "<label for='actiondata_" + index + "'>액션(Act)</label><select class='form-control actiondata' id='actiondata_" + index + "'>"
-          + "<option selected value=0>STAY</option>"
-          + "<option value=1>START_TAKE_PHOTO</option>"
-          + "<option value=2>START_RECORD</option>"
-          + "<option value=3>STOP_RECORD</option>"
-          + "<option value=4>ROTATE_AIRCRAFT</option>"
-          + "<option value=5>GIMBAL_PITCH</option>"
-          //+ "<option value=7>CAMERA_ZOOM</option>"
-          //+ "<option value=8>CAMERA_FOCUS</option>"
-      + "</select>"
-      + "<label for='actionparam_" + index + "'>액션인자(Param)</label><input name='actionparam_" + index + "' id='actionparam_" + index + "' placeholder='action Param' type='text' class='form-control actionparam' value='"+actparam+"'>"
-      + "<br><br><a href=javascript:removeDesignTableRow(" + index + ");>삭제</a> <a href=javascript:moveToPositionOnMap(" + lat + "," + lng + "," + yaw + ");>이동</a>"
-      + "</td></tr>";
-
-  $('#dataTable-points > tbody:last').append(appendRow);
-  $('#actiondata_' + index).val(act).prop("selected", true);
+	
+	$('#tr_index').text(index);
+	$('#latdata_index').val(lat);
+	$('#lngdata_index').val(lng);
+	$('#altdata_index').val(alt);
+	$('#rolldata_index').val(roll);
+	$('#pitchdata_index').val(pitch);
+	$('#yawdata_index').val(yaw);
+	
+	$('#speeddata_index').val(speed);	
+	$('#actiondata_index').val(act).prop("selected", true);
+	$('#actionparam_index').val(actparam);
+	
+	$('#removeItemBtn').click(function(){	
+		removeFlightData(index);
+	});
+	
+	$('#moveItemBtn').click(function(){
+		var latLng = ol.proj.fromLonLat([lng, lat]);
+    flyTo(latLng, 0, function() {});
+	});					
 }
 
-function removeDesignTableRow(index) {
-  removeTableRow('misstr_' + index);
-  if (posSource && (posIcons.length > 0))
-    posSource.removeFeature(posIcons[index]);          
-  posSource = null;  
-}
-
-function appendDesignTable(coordinates) {
-  tableCount++;
-  var lonLat = ol.proj.toLonLat(coordinates);
-  var strid = "mission-" + tableCount;
-  var appendRow = "<tr class='odd gradeX' id='misstr_" + tableCount + "'><td>" + tableCount + "</td><td colspan=3>"
-      + "<label for='latdata_" + tableCount + "'>위도(Lat)</label><input name='latdata_" + tableCount + "' id='latdata_" + tableCount + "' type='text' placeholder='Latitude' value='"+lonLat[1]+"' class='form-control latdata'>"
-      + "<label for='lngdata_" + tableCount + "'>경도(Lng)</label><input name='lngdata_" + tableCount + "' id='lngdata_" + tableCount + "' type='text' placeholder='Longitude' value='"+lonLat[0]+"' class='form-control lngdata'>"
-      + "<label for='altdata_" + tableCount + "'>고도(Alt)</label><input name='altdata_" + tableCount + "' id='altdata_" + tableCount + "' type='text' placeholder='Altitude (m)' class='form-control altdata'><br>"
-      + "<label for='speeddata_" + tableCount + "'>속도(Speed)</label><input name='speeddata_" + tableCount + "' id='speeddata_" + tableCount + "' type='text' placeholder='Speed (m/s)' class='form-control speeddata'>"
-      + "<label for='actiondata_" + tableCount + "'>액션(Act)</label><select class='form-control actiondata' id='actiondata_" + tableCount + "'>"
-          + "<option selected value=0>STAY</option>"
-          + "<option value=1>START_TAKE_PHOTO</option>"
-          + "<option value=2>START_RECORD</option>"
-          + "<option value=3>STOP_RECORD</option>"
-          + "<option value=4>ROTATE_AIRCRAFT</option>"
-          + "<option value=5>GIMBAL_PITCH</option>"
-          // + "<option value=7>CAMERA_ZOOM</option>"
-          //+ "<option value=8>CAMERA_FOCUS</option>"
-          + "</select>"
-      + "<label for='actionparam_" + tableCount + "'>액션인자(Param)</label><input name='actionparam_" + tableCount + "' id='actionparam_" + tableCount + "' placeholder='action Param' type='text' class='form-control actionparam'>"
-      + "<br><br><a href=javascript:removeDesignTableRow(" + tableCount + ");>삭제</a> <a href=javascript:moveToPositionOnMap(" + lonLat[1] + "," + lonLat[0] + ",0);>이동</a>"
-    + "</td></tr>"
-    $('#dataTable-points > tbody:last').append(appendRow);
+function removeFlightData(index) {
+	currentFlightData.splice(index, 1);
+				
+	if (currentFlightData.length <= 0) {
+		$("#slider").hide();
+		$("#dataTable-points").hide();
+		return;
+	}
+	
+	setDataToDesignTableWithFlightRecord(index);
+	$("#slider").slider('value',index);
+	$("#slider").slider('option',{min: 0, max: (currentFlightData.length-1)});
 }
 
 function appendMissionList(data) {
@@ -499,23 +517,9 @@ function btnClear() {
     if (r == false) {
         return;
     }
-
-    var tb = $('.dataTable-points tbody');
-    var size = tb.find("tr").length;
-    console.log("Number of rows : " + size);
-    tb.find("tr").each(function(index, element) {
-      // var colSize = $(element).find('td').length;
-      // console.log("  Number of cols in row " + (index + 1) + " : " + colSize);
-      // $(element).find('td').each(function(index, element) {
-      //   var colVal = $(element).text();
-      //   console.log("    Value in col " + (index + 1) + " : " + colVal.trim());
-      // });
-
-      $(element).remove();
-    });
-
+    
     pointSource.clear();
-    tableCount = 0;
+    centerInit();
 }
 
 
@@ -636,44 +640,40 @@ function btnRegister() {
         alert("비행속도를 잘못 입력하셨습니다.");
         return;
     }
+    
+    
+    if (currentFlightData.length <= 0) {
+      alert("입력된 Waypoint가 1도 없습니다! 집중~ 집중~!");
+      return;
+    }
 
     var nPositions = new Array();
-
-    var tb = $('.dataTable-points tbody');
+    
     var cindex = 0;
     var bError = 0;
-    tb.find("tr").each(function(index, element) {
-      var ele = $(element).find('td')[1];
-      var altdata = $(ele).find(".altdata").val();
-      var actiondata = $(ele).find(".actiondata").val();
-      var actionparam = $(ele).find(".actionparam").val();
-      var speeddata = $(ele).find(".speeddata").val();
-      var latdata = $(ele).find(".latdata").val();
-      var lngdata = $(ele).find(".lngdata").val();
-      var mid = "mid-" + index;
-
-      if (altdata == null || altdata == ""
-        || speeddata == null || speeddata == ""
-        || actionparam == null || actionparam == "") {
+    currentFlightData.forEach(function(item, index, array) {      
+      if (item.act == null || item.act == ""
+        || item.lat == null || item.lat == ""
+        || item.lng == null || item.lng == ""
+        || item.alt == null || item.alt == ""
+        || item.speed == null || item.speed == ""
+        || item.pitch == null || item.pitch == ""
+        || item.roll == null || item.roll == ""
+        || item.yaw == null || item.yaw == ""
+        || item.actparam == null || item.actparam == "") {
           monitor("오류 : 인덱스 - " + (index + 1) + " / 비어있는 파라메터가 존재합니다.");
           bError++;
           return;
         }
 
-      nPositions.push({id:mid, lat:latdata, lng:lngdata, alt:altdata, act:actiondata, actparam:actionparam, speed:speeddata});
-      cindex++;
+			var mid = "mid-" + index;
+      nPositions.push({id:mid, lat:item.lat, lng:item.lng, alt:item.alt, act:item.act, actparam:item.actparam, speed:item.speed, roll:item.roll, pitch:item.pitch, yaw:item.yaw});      
     });
 
     if (bError > 0) {
       alert("오류를 확인해 주세요!");
       return;
     }
-
-    if (cindex <= 0) {
-      alert("입력된 Waypoint가 1도 없습니다! 집중~ 집중~!");
-      return;
-    }
-
 
     var userid = getCookie("dev_user_id");
     var jdata = {"action": "mission","mname" : mname, "daction" : "set", "missionspeed": mspeed, "missiondata" : nPositions, "clientid" : userid};

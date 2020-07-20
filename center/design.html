@@ -237,19 +237,32 @@ gtag('config', 'UA-130136264-4');
 			                                    </div>
 			                                    
 																					<div class="panel-body">
-						                                    <table class="table table-striped table-bordered table-hover dataTable-points" id="dataTable-points">
-						                                        <thead>
-						                                            <tr>
-						                                                <th></th>
-						                                                <th>Latitude</th><th>Longitude</th><th>Altitude</th>
-						                                            </tr>
-						                                            <tr>
-						                                                <th></th>
-						                                                <th>Speed</th><th>Action</th><th></th>
-						                                            </tr>
-						                                        </thead>
+						                                    <table class="table table-striped table-bordered table-hover dataTable-points" id="dataTable-points">						                                        
 						                                        <tbody>
-						
+																											<tr class='odd gradeX'><td><span id='tr_index'></span></td><td>
+																										      <label for='latdata_index'>위도(Lat)</label><input name='latdata_index' id='latdata_index' type='text' placeholder='Latitude' value='lat' class='form-control latdata'>
+																										      <label for='lngdata_index'>경도(Lng)</label><input name='lngdata_index' id='lngdata_index' type='text' placeholder='Longitude' value='lng' class='form-control lngdata'>
+																										      <label for='altdata_index'>고도(Alt)</label><input name='altdata_index' id='altdata_index' type='text' placeholder='Altitude (m)' class='form-control altdata' value='alt'><br>
+																										      
+																										      <label for='latdata_index'>Roll</label><input name='rolldata_index' id='rolldata_index' type='text' placeholder='Roll' value='0' class='form-control rolldata'>
+																										      <label for='lngdata_index'>Pitch</label><input name='pitchdata_index' id='pitchdata_index' type='text' placeholder='Pitch' value='0' class='form-control pitchdata'>
+																										      <label for='altdata_index'>Yaw</label><input name='yawdata_index' id='yawdata_index' type='text' placeholder='Yaw' class='form-control yawdata' value='yaw'><br>
+																										      
+																										      <label for='speeddata_index'>속도(Speed)</label><input name='speeddata_index' id='speeddata_index' type='text' placeholder='Speed (m/s)' class='form-control speeddata' value='speed'>
+																										      <label for='actiondata_index'>액션(Act)</label><select class='form-control actiondata' id='actiondata_index'>
+																										           <option selected value=0>STAY</option>
+																										           <option value=1>START_TAKE_PHOTO</option>
+																										           <option value=2>START_RECORD</option>
+																										           <option value=3>STOP_RECORD</option>
+																										           <option value=4>ROTATE_AIRCRAFT</option>
+																										           <option value=5>GIMBAL_PITCH</option>
+																										          // <option value=7>CAMERA_ZOOM</option>
+																										          // <option value=8>CAMERA_FOCUS</option>
+																										      </select>
+																										      <label for='actionparam_index'>액션인자(Param)</label><input name='actionparam_index' id='actionparam_index' placeholder='action Param' type='text' class='form-control actionparam' value='actparam'>
+																										      <br><br><button type="button" id="removeItemBtn">삭제</button> <button type="button" id="moveItemBtn">이동</button>
+																									       </td>
+																									      </tr>
 						                                        </tbody>
 						                                    </table>
 			                                    </div>
