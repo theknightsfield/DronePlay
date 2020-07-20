@@ -151,8 +151,10 @@ function initSlider(i) {
 						
 						var d = currentFlightData[ui.value - 1];
 						
-						setDataToDesignTableWithFlightRecord(ui.value - 1);												
-						moveToPositionOnMap(d.lat * 1, d.lng * 1, d.yaw, function() {});
+						setDataToDesignTableWithFlightRecord(ui.value - 1);			
+						var npos = ol.proj.fromLonLat([d.lng * 1, d.lat * 1]);
+									
+						flyDirectTo(npos, d.yaw, function() {});
 					}				
 	});
 	
