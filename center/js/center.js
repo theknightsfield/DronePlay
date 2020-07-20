@@ -93,7 +93,7 @@ function designInit() {
  	
  	var selectInteraction = new ol.interaction.Select();
 	map.addInteraction(selectInteraction);
- 	map.addInteraction(draw); 	      	  
+ 	map.addInteraction(draw);
     
   el('track').addEventListener('change', function() {
     geolocation.setTracking(this.checked);
@@ -449,8 +449,26 @@ function setDataToDesignTableWithFlightRecord(index) {
 	});					
 }
 
+function removeSelectedFeature(selectedFeatureID) {
+	var features = pointSource.getFeatures();
+	
+	if (features != null && features.length > 0) {
+   for (x in features) {
+      var properties = features[x].getProperties();
+      console.log(properties);
+      var id = properties.id;
+      if (id == selectedFeatureID) {
+        source.removeFeature(features[x]);
+         break;
+      }
+    }
+  }
+}
+
 function removeFlightData(index) {
 	currentFlightData.splice(index, 1);
+	
+	removeSelectedFeature(index);
 				
 	if (currentFlightData.length <= 0) {
 		$("#slider").hide();
