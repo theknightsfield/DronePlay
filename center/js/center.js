@@ -604,6 +604,7 @@ function btnClear() {
         return;
     }
     
+    lineSource.clear();
     pointSource.clear();
     posSource.clear();
     currentFlightData = Array();
