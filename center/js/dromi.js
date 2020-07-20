@@ -31,7 +31,7 @@ function dromiListInit() {
   $("#chartView").hide();
   $("#googlePhotoPlayer").hide();
   $("#youTubePlayer").hide();
-  $("#movieDataSet").hide();  
+  $("#movieDataSet").hide();
 }
 
 function setDromilist(data) {
@@ -79,42 +79,42 @@ function deleteData(index) {
   });
 }
 
-function btnSetMovie() {	
+function btnSetMovie() {
 	var data_id = $('#movieData').val();
 	if (data_id == "") {
 		alert("Invalid URL");
 		return;
 	}
-			
+
 	moviePlayerVisible = false;
-	
+
 	if (data_id.indexOf("youtube") >=0) {
-		setGooglePhotoPlayer("");	
-		setYoutubePlayer(data_id);							
+		setGooglePhotoPlayer("");
+		setYoutubePlayer(data_id);
 	}
-	else {		
+	else {
 		setGooglePhotoPlayer(data_id);
-		setYoutubePlayer("");		
+		setYoutubePlayer("");
 	}
-	
+
 	if (moviePlayerVisible == true) {
 		$("#movieDataSet").hide();
 	}
 	else {
 		$("#movieDataSet").show();
-	}			
+	}
 }
 
 function setGooglePhotoPlayer(data_url) {
-	googlePhotoPlayer = $("#googlePhotoPlayer")[0];	
-	googlePhotoPlayerAr = $("#googlePhotoPlayer");	
-	
-	if (data_url == "" || data_url == "-") {	
-		googlePhotoPlayerAr.hide();		
+	googlePhotoPlayer = $("#googlePhotoPlayer")[0];
+	googlePhotoPlayerAr = $("#googlePhotoPlayer");
+
+	if (data_url == "" || data_url == "-") {
+		googlePhotoPlayerAr.hide();
 		return;
 	}
-		
-	googlePhotoPlayer.setAttribute('src', data_url);	
+
+	googlePhotoPlayer.setAttribute('src', data_url);
 	googlePhotoPlayer.load();
 	googlePhotoPlayerAr.show();
 	moviePlayerVisible = true;
@@ -122,20 +122,20 @@ function setGooglePhotoPlayer(data_url) {
 
 function setYoutubePlayer(d_id) {
 	if (d_id == null || d_id == "" || d_id == "-") {
-		$("#youTubePlayer").hide();		
+		$("#youTubePlayer").hide();
 		return;
 	}
 	else {
 		$("#youTubePlayer").show();
 		moviePlayerVisible = true;
 	}
-	
+
 	var data_id = d_id;
 	var r_id = d_id.split('=');
 	if (r_id.length > 1) {
 		data_id = r_id[1];
-	}	
-	
+	}
+
   if (youTubePlayer != null) {
     youTubePlayer.loadVideoById(data_id, 0, "large");
     return;
@@ -159,7 +159,7 @@ function onYouTubeIframeAPIReady() {
           'onReady': onPlayerReady, //로딩할때 이벤트 실행
           'onStateChange': onPlayerStateChange //플레이어 상태 변화시 이벤트실행
         }
-    });//youTubePlayer1셋팅        
+    });//youTubePlayer1셋팅
 }
 
 var fromMap = false;
@@ -204,70 +204,72 @@ function processSeek(curTime) {
         if((ds + 10) >= curTime && (ds - 10) <= curTime) {
             openLineTip(window.myLine, 0, index);
             openScatterTip(window.myScatter, 0, index);
-            
-            var latLng = ol.proj.fromLonLat([item.lng * 1, item.lat * 1]);                                  													
+
+            var latLng = ol.proj.fromLonLat([item.lng * 1, item.lat * 1]);
             flyTo(latLng, item.yaw, function() {isMoved=true;});
             showCurrentInfo([item.lng * 1, item.lat * 1], item.alt);
-            setSliderPos(index); 
+            setSliderPos(index);
             return true;
         }
-      }            
+      }
 
       index++;
       return false;
     });
 }
 
-function movieSeekTo(where) {		  
+function movieSeekTo(where) {
   fromMap = true;
-  
+
   if (googlePhotoPlayer != null && googlePhotoPlayerAr.is(":visible") == true) {
   	googlePhotoPlayer.currentTime = where;
   }
-  
-  if (youTubePlayer != null && $('#youTubePlayer').is(":visible") == true) { 
+
+  if (youTubePlayer != null && $('#youTubePlayer').is(":visible") == true) {
   	youTubePlayer.seekTo(where, true);
   }
 }
 
 function showData(index) {
   if (dromiDataArray.length == 0) return;
-		
+
   var item = dromiDataArray[index];
 
 	moviePlayerVisible = false;
-	
-  if ("youtube_data_id" in item) {  	
-  	if (item.youtube_data_id.indexOf("youtube") >=0) {		
-			setYoutubePlayer(item.youtube_data_id);					
+
+  if ("youtube_data_id" in item) {
+  	if (item.youtube_data_id.indexOf("youtube") >=0) {
+			setYoutubePlayer(item.youtube_data_id);
 			setGooglePhotoPlayer("");
 		}
-		else {		
+		else {
 			setYoutubePlayer("");
-			setGooglePhotoPlayer(item.youtube_data_id);		
-		}  					
+			setGooglePhotoPlayer(item.youtube_data_id);
+		}
   }
   else {
     $("#youTubePlayer").hide();
-    $("#googlePhotoPlayer").hide();    
+    $("#googlePhotoPlayer").hide();
   }
-  
+
   if (moviePlayerVisible == true) {
 		$("#movieDataSet").hide();
 	}
 	else {
 		$("#movieDataSet").show();
 	}
-	
+
 	if (!("data" in item) || item.data == null || item.data == "") {
 		var userid = getCookie("dev_user_id");
 		var jdata = {"action": "dromi", "daction": "get", "clientid" : userid, "name" : item.dname};
-	
+
+    $("#record_name_field").text(item.dname);
+
 	  showDromiLoader();
-	  
+
 	  setTimeout(function() {
-	
-				ajaxRequest(jdata, function (r) {	    
+
+				ajaxRequest(jdata, function (r) {
 			    if(r.result != "success") {
 			      alert("Failed to load data!");
 			    }
@@ -279,15 +281,15 @@ function showData(index) {
 			    hideDromiLoader();
 			    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			  });
-	
-		}, 1000);	  	  
+
+		}, 1000);
 	}
 	else {
 		showDromiLoader();
   	setChartData(item.data);
   	hideDromiLoader();
   }
-  
+
 }
 
 function setFlightlistForDromi(data) {
@@ -485,15 +487,15 @@ function addChartItem(i, item) {
     var valS = String(date.getSeconds()).padStart(2, '0');
     var dateString = date.getFullYear() + "-" + valM + "-" + valD + " " + valH + ":" + valMin + ":" + valS;
     chartLabelData.push(dateString);
-  }  
-  
+  }
+
   if ("lat" in item && "lng" in item && "alt" in item) {
     var dsec = item.dsec * 1;
     if (dsec > 3600)
     	dsec = dsec / 1000;
-    	
-    chartLocData.push({lat : item.lat, lng : item.lng, alt: item.alt, yaw : item.yaw, dsec : dsec});    
-    
+
+    chartLocData.push({lat : item.lat, lng : item.lng, alt: item.alt, yaw : item.yaw, dsec : dsec});
+
     var pos_icon = new ol.Feature({
         geometry: new ol.geom.Point(ol.proj.fromLonLat([item.lng * 1, item.lat * 1])),
         name: dateString + " / lat: " + item.lat + ", lng: " + item.lng + ", alt: " + item.alt,
@@ -502,7 +504,7 @@ function addChartItem(i, item) {
 
     var pos_icon_image = './imgs/position3.png';
     var pos_icon_color = '#777777';
-    
+
     if("etc" in item && "marked" in item.etc) {
       pos_icon_color = '#ff0000';
     }
@@ -519,10 +521,10 @@ function addChartItem(i, item) {
 
     if (bMoved == false)
       flyTo(ol.proj.fromLonLat([item.lng * 1, item.lat * 1]), item.yaw, function() {bMoved=true;});
-    
+
     lineData.push(ol.proj.fromLonLat([item.lng * 1, item.lat * 1]));
-    
-    lineGraphData.push({x: i, y: item.alt});    
+
+    lineGraphData.push({x: i, y: item.alt});
 	}
 }
 
@@ -534,36 +536,36 @@ function setSliderPos(i) {
 }
 
 function setSlider(i) {
-	$('#slider').slider({					
-					min : 0,								
-					max : i - 1,								
-					value : 0,								
-					step : 1,									
-					slide : function( event, ui ){						
+	$('#slider').slider({
+					min : 0,
+					max : i - 1,
+					value : 0,
+					step : 1,
+					slide : function( event, ui ){
 						$('#sliderText').html( ui.value );
 						openLineTip(window.myLine, 0, ui.value);
 						openScatterTip(window.myScatter, 0, ui.value);
 
             var locdata = chartLocData[ui.value];
             if ("dsec" in locdata) {
-              movieSeekTo(locdata.dsec);              
-            }			
-            
+              movieSeekTo(locdata.dsec);
+            }
+
             var latlng = ol.proj.fromLonLat([locdata.lng * 1, locdata.lat * 1]);
-            flyDirectTo(latlng, locdata.yaw, function() {isMoved=true;});            
-						showCurrentInfo([locdata.lng * 1, locdata.lat * 1], locdata.alt); 
-					}				
+            flyDirectTo(latlng, locdata.yaw, function() {isMoved=true;});
+						showCurrentInfo([locdata.lng * 1, locdata.lat * 1], locdata.alt);
+					}
 	});
 }
 
 function drawLineToMap() {
-	var lines = new ol.geom.LineString(lineData);  
+	var lines = new ol.geom.LineString(lineData);
   var lineSource = new ol.source.Vector({
           features: [new ol.Feature({
               geometry: lines,
               name: 'Line'
           })]
-  });		  
+  });
 	var lineLayer = new ol.layer.Vector({
       source: lineSource,
       style: new ol.style.Style({
@@ -573,20 +575,20 @@ function drawLineToMap() {
             })
         })
   });
-			
+
 	map.addLayer(lineLayer);
 }
 
-function showCurrentInfo(dlatlng, alt) {		
-	var latlng = ol.proj.fromLonLat(dlatlng);	
+function showCurrentInfo(dlatlng, alt) {
+	var latlng = ol.proj.fromLonLat(dlatlng);
 	var hdms = ol.coordinate.toStringHDMS(latlng);
-	var itext = hdms + " [ Lat: " + dlatlng[1] + " / Lng: " + dlatlng[0] + " / Alt: " + alt + " ]";	
-	$("#position_info").text(itext);						  
+	var itext = hdms + " [ Lat: " + dlatlng[1] + " / Lng: " + dlatlng[0] + " / Alt: " + alt + " ]";
+	$("#position_info").text(itext);
 }
 
 function drawPosIcon() {
 	if (posIcons.length <= 0) return;
-	
+
   map.on('click', function (evt) {
       var feature = map.forEachFeatureAtPixel(evt.pixel,
           function (feature) {
@@ -605,27 +607,27 @@ function drawPosIcon() {
           if ("dsec" in locdata) {
             movieSeekTo(locdata.dsec);
           }
-          
-          setSliderPos(ii);                
-      }    
-      
-  		var lonlat = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');  						
+
+          setSliderPos(ii);
+      }
+
+  		var lonlat = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
 			if (locdata)
 				showCurrentInfo([lonlat[0], lonlat[1]], locdata.alt);
 			else
 				showCurrentInfo([lonlat[0], lonlat[1]], '-');
-				
+
   });
 
   var posSource = new ol.source.Vector({
       features: posIcons
   });
   var posLayer = new ol.layer.Vector({
-      source: posSource              
+      source: posSource
   });
 
   map.addLayer(posLayer);
-  
+
 }
 
 function drawLineGraph() {
@@ -639,7 +641,7 @@ function drawLineGraph() {
               data: lineGraphData
          }
       	]};
-   
+
   window.myLine = new Chart(ctx2, {
       	type: 'scatter',
         data: linedataSet,
@@ -655,13 +657,13 @@ function drawLineGraph() {
                 callbacks: {
                     label: function(tooltipItem, data) {
                         //var d = data.datasets[tooltipItem.datasetIndex].data[0];
-                                               
+
                         var locdata = chartLocData[tooltipItem.index];
                         if(locdata && "lng" in locdata && "lat" in locdata) {
                           var latlng = ol.proj.fromLonLat([locdata.lng * 1, locdata.lat * 1]);
 
                           //if (isMoved == true) {
-                          //  isMoved = false;                            
+                          //  isMoved = false;
                             flyDirectTo(latlng, locdata.yaw, function() {isMoved=true;});
                             showCurrentInfo([locdata.lng * 1, locdata.lat * 1], locdata.alt);
                           //}
@@ -669,10 +671,10 @@ function drawLineGraph() {
                           if ("dsec" in locdata) {
                             movieSeekTo(locdata.dsec);
                           }
-                          
-                          setSliderPos(tooltipItem.index);                                                    
+
+                          setSliderPos(tooltipItem.index);
                         }
-												
+
                         return JSON.stringify(locdata);
                     }
                   },
@@ -747,9 +749,9 @@ function drawScatterGraph() {
                       if ("dsec" in locdata) {
                         movieSeekTo(locdata.dsec);
                       }
-                      
-                      setSliderPos(tooltipItem.index);                      					          						            
-											showCurrentInfo([locdata.lng * 1, locdata.lat * 1], locdata.alt); 
+
+                      setSliderPos(tooltipItem.index);
+											showCurrentInfo([locdata.lng * 1, locdata.lat * 1], locdata.alt);
                     }
 
                     return JSON.stringify(locdata);
@@ -775,7 +777,7 @@ function drawScatterGraph() {
             }
           }
       }
-  });       
+  });
 }
 
 function setChartData(cdata) {
@@ -788,19 +790,19 @@ function setChartData(cdata) {
 
       var i = 0;
       cdata.forEach(function (item) {
-        addChartItem(i, item);                
+        addChartItem(i, item);
         i++;
-      });            
-      
+      });
+
       setSlider(i);
-            
-			drawLineToMap();			   	                  
+
+			drawLineToMap();
 
       drawPosIcon();
 
 			drawLineGraph();
 
-      drawScatterGraph();           
+      drawScatterGraph();
 }
 
 var oldScatterdatasetIndex = -1;
@@ -809,20 +811,20 @@ var oldScatterpointIndex = -1;
 var oldLinedatasetIndex = -1;
 var oldLinepointIndex = -1;
 
-function openLineTip(oChart,datasetIndex,pointIndex){	
+function openLineTip(oChart,datasetIndex,pointIndex){
    if(!oChart || oChart == undefined) return;
-   
+
    if (oldLinedatasetIndex >= 0)
    	closeTip(oChart,oldLinedatasetIndex,oldLinepointIndex);
-   
+
    if(oChart.tooltip._active == undefined)
       oChart.tooltip._active = []
    var activeElements = oChart.tooltip._active;
    var requestedElem = oChart.getDatasetMeta(datasetIndex).data[pointIndex];
-   
+
    oldLinedatasetIndex = datasetIndex;
    oldLinepointIndex = pointIndex;
-   
+
    for(var i = 0; i < activeElements.length; i++) {
        if(requestedElem._index == activeElements[i]._index)
           return;
@@ -833,20 +835,20 @@ function openLineTip(oChart,datasetIndex,pointIndex){
    oChart.draw();
 }
 
-function openScatterTip(oChart,datasetIndex,pointIndex){	
+function openScatterTip(oChart,datasetIndex,pointIndex){
    if(!oChart || oChart == undefined) return;
-   
+
    if (oldScatterdatasetIndex >= 0)
    	closeTip(oChart,oldScatterdatasetIndex,oldScatterpointIndex);
-   
+
    if(oChart.tooltip._active == undefined)
       oChart.tooltip._active = []
    var activeElements = oChart.tooltip._active;
    var requestedElem = oChart.getDatasetMeta(datasetIndex).data[pointIndex];
-   
+
    oldScatterdatasetIndex = datasetIndex;
    oldScatterpointIndex = pointIndex;
-   
+
    for(var i = 0; i < activeElements.length; i++) {
        if(requestedElem._index == activeElements[i]._index)
           return;
@@ -860,8 +862,8 @@ function openScatterTip(oChart,datasetIndex,pointIndex){
 function closeTip(oChart,datasetIndex,pointIndex){
    var activeElements = oChart.tooltip._active;
    if(activeElements == undefined || activeElements.length == 0)
-     return;        
-   
+     return;
+
    var requestedElem = oChart.getDatasetMeta(datasetIndex).data[pointIndex];
    for(var i = 0; i < activeElements.length; i++) {
        if(requestedElem._index == activeElements[i]._index)  {

@@ -738,6 +738,8 @@ function showDataForHistoryWithName(name) {
 
 	moviePlayerVisible = false;
 
+  $("#record_name_field").text(name);
+
   $("#youTubePlayer").hide();
   $("#googlePhotoPlayer").hide();
 
