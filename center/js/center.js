@@ -448,10 +448,12 @@ function setDataToDesignTableWithFlightRecord(index) {
 	$('#actiondata_index').val(act).prop("selected", true);
 	$('#actionparam_index').val(actparam);
 	
+	$('#removeItemBtn').off('click');
 	$('#removeItemBtn').click(function(){	
 		removeFlightData(index);
 	});	
 	
+	$('#saveItemBtn').off('click');
 	$('#saveItemBtn').click(function(){	
 		saveFlightData(index);
 	});
