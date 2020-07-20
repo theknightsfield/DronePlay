@@ -63,8 +63,7 @@ function designInit() {
       source: pointSource,
       type: 'Point'
     });
-
-  map.addInteraction(draw);
+  
   map.on('click', function(evt) {
   			if (flightRecordShow == true) return;
   			
@@ -72,6 +71,10 @@ function designInit() {
         //alert(coordinates);
         appendDesignTable(coordinates);
   });
+  
+  if (flightRecordShow == false) {
+  	map.addInteraction(draw);
+  }
 
   el('track').addEventListener('change', function() {
     geolocation.setTracking(this.checked);
