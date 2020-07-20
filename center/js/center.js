@@ -749,7 +749,7 @@ function btnRegister() {
     for (var index=0;index<currentFlightData.length;index++) {
     	var item = currentFlightData[index];
     
-      if (item.act == null || item.act == ""
+      if (item.act == ""
         || item.lat == null || item.lat == ""
         || item.lng == null || item.lng == ""
         || item.alt == null || item.alt == ""
