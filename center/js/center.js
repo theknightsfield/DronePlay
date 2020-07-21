@@ -702,13 +702,16 @@ function showDataForHistoryWithName(name) {
 							setYoutubePlayer("");
 							setGooglePhotoPlayer(fdata.youtube_data_id);
 						}
+						
+						$("#movieDataSet").hide();
 				  }
 				  else {
 				    $("#youTubePlayer").hide();
 				    $("#googlePhotoPlayer").hide();
+				    $("#movieDataSet").show();
 				  }
 				
-					$("#movieDataSet").show();		    	
+							    	
 		    	
 		      setChartData(r.data.data);
 		      hideLoader();
@@ -735,14 +738,15 @@ function showDataForHistory(index) {
 			setYoutubePlayer("");
 			setGooglePhotoPlayer(item.youtube_data_id);
 		}
+		
+		$("#movieDataSet").hide();
   }
   else {
     $("#youTubePlayer").hide();
     $("#googlePhotoPlayer").hide();
+    $("#movieDataSet").show();
   }
-
-	$("#movieDataSet").show();
-
+	
 	if (!("data" in item) || !isSet(item.data)) {
     var userid = getCookie("dev_user_id");
     var jdata = {"action" : "position", "daction" : "download_spe", "name" : item.name, "clientid" : userid};
