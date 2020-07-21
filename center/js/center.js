@@ -800,8 +800,10 @@ function showDataForHistory(index) {
 		}, 1000);
 	}
 	else {
-		showLoader();
-		$('#historyPanel').show();
+		$('#historyList').hide(1500);
+    $('#historyPanel').show();
+    
+		showLoader();				    
   	setChartData(item.data);
   	hideLoader();
   }
