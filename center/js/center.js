@@ -726,8 +726,7 @@ function showDataForHistoryWithName(name) {
 						}
 						else {
 							showMovieDataSet();
-						}
-				
+						}				
 				
       		$('#historyList').hide(1500);
       		$('#historyPanel').show();							    	
@@ -802,6 +801,7 @@ function showDataForHistory(index) {
 	}
 	else {
 		showLoader();
+		$('#historyPanel').show();
   	setChartData(item.data);
   	hideLoader();
   }
