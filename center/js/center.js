@@ -678,9 +678,7 @@ function setFlightlistHistory(data) {
 function showDataForHistoryWithName(name) {
 
   $("#record_name_field").text(name);
-  $("#youTubePlayer").hide();
-  $("#googlePhotoPlayer").hide();
-
+    
   var userid = getCookie("dev_user_id");
   var jdata = {"action" : "position", "daction" : "download_spe", "name" : name, "clientid" : userid};
 
@@ -693,6 +691,25 @@ function showDataForHistoryWithName(name) {
 		      alert("Failed to load data!");
 		    }
 		    else {
+		    	
+		    	var fdata = r.data;
+		    	if ("youtube_data_id" in fdata) {
+				  	if (fdata.youtube_data_id.indexOf("youtube") >=0) {
+							setYoutubePlayer(fdata.youtube_data_id);
+							setGooglePhotoPlayer("");
+						}
+						else {
+							setYoutubePlayer("");
+							setGooglePhotoPlayer(fdata.youtube_data_id);
+						}
+				  }
+				  else {
+				    $("#youTubePlayer").hide();
+				    $("#googlePhotoPlayer").hide();
+				  }
+				
+					$("#movieDataSet").show();		    	
+		    	
 		      setChartData(r.data.data);
 		      hideLoader();
 		    }
