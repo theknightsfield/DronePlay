@@ -100,7 +100,7 @@ function designInit() {
           var ii = feature.get('mindex');
           if (!isSet(ii)) return;
 
-          setSliderPos(ii);
+          setSliderPosForDesign(ii);
           setDataToDesignTableWithFlightRecord(ii);
           return;
       }
@@ -140,7 +140,7 @@ function designInit() {
 }
 
 
-function setSliderPos(i) {
+function setSliderPosForDesign(i) {
 		if (i < 0 || currentFlightData.length <= i) {
 			$('#sliderText').html( "-" );
 			return;
@@ -275,7 +275,7 @@ function setDesignTableWithFlightRecord() {
   setDataToDesignTableWithFlightRecord(0);
 
   $("#slider").slider('option',{min: 1, max: i});
-  setSliderPos(i);
+  setSliderPosForDesign(i);
 
   var lines = new ol.geom.LineString(coordinates);
 
