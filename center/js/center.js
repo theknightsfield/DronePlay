@@ -26,7 +26,6 @@ $(function() {
 
 function centerInit() {
 	bMonStarted = false;
-	posSource = null;
 	flightDataArray = new Array();
 	currentFlightData = new Array();	
   mapInit();
@@ -271,9 +270,7 @@ function removeIconOnMap(i) {
 function setDesignTableWithFlightRecord() {  
   var i = 0;
 	var coordinates = new Array();
-	
-	posSource = new ol.source.Vector();
-
+		
   currentFlightData.forEach(function (item) {
       addIconToMap(i, item);
   		coordinates.push(ol.proj.fromLonLat([item.lng * 1, item.lat * 1]));
@@ -1020,6 +1017,8 @@ function logOut() {
 function mapInit() {
   var dokdo = ol.proj.fromLonLat([131.8661992, 37.2435813]);
   var scaleLineControl = new ol.control.ScaleLine();
+  
+  posSource = new ol.source.Vector();
 
   current_view = new ol.View({
       center: dokdo,
