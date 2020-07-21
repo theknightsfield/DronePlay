@@ -25,6 +25,7 @@ var moviePlayerVisible = false;
 function dromiInit() {
   $("#chartView").hide();
   setUploadData();
+  hideDromiLoader();
 }
 
 function dromiListInit() {
@@ -32,6 +33,8 @@ function dromiListInit() {
   $("#googlePhotoPlayer").hide();
   $("#youTubePlayer").hide();
   $("#movieDataSet").hide();
+  
+  hideDromiLoader();
 }
 
 function setDromilist(data) {

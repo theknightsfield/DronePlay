@@ -32,8 +32,8 @@ function centerInit() {
 
 	showLoader();
   mapInit();
-  hideLoader();
-  if (askToken() == false) {
+  
+  if (askToken() == false) {  	
     location.href="index.html";
     return;
   }
@@ -75,6 +75,8 @@ function flightViewInit() {
     if (record_name != null && record_name != "") {
       showDataForHistoryWithName(decodeURI(record_name));
     }
+    
+    hideLoader();
 }
 
 function monitorInit() {
@@ -84,6 +86,8 @@ function monitorInit() {
 		page_id = page_id.split('&')[0];
 
   getMissionToMonitor(page_id);
+  
+  hideLoader();
 }
 
 
@@ -137,6 +141,8 @@ function designInit() {
         }
    });
   */
+  
+  hideLoader();
 }
 
 
@@ -340,7 +346,7 @@ function appendNewRecord(coordinates) {
 
 
 function flightListInit() {
-
+	hideLoader();
 }
 
 function startMon() {
