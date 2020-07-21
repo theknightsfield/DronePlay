@@ -761,7 +761,7 @@ function appendFlightListTableForHistory(name, dtimestamp, data) {
   var appendRow = "<tr class='odd gradeX' id='flight-list-" + tableCount + "'><td width='10%'>" + (tableCount + 1) + "</td>"
       + "<td class='center' bgcolor='#eee'><a href='javascript:showDataForHistory(" + tableCount + ");'>" + name + "</a></td><td width='30%' class='center'> " + dtimestamp + "</td>"
       + "<td width='20%' bgcolor='#fff'>"
-      + "<a href='design.html?record_name=" + name + "'>수정</a> "
+      // + "<a href='design.html?record_name=" + name + "'>수정</a> "
       + "<button class='btn btn-primary' type='button' onClick='deleteFlightData(" + tableCount + ");'>삭제</button></td>"
       + "</tr>";
   $('#dataTable-Flight_list > tbody:last').append(appendRow);
@@ -808,7 +808,7 @@ function appendFlightListTable(name, dtimestamp, data) {
   var appendRow = "<tr class='odd gradeX' id='flight-list-" + tableCount + "'><td width='10%'>" + (tableCount + 1) + "</td>"
       + "<td class='center' bgcolor='#eee'><a href='flight_view.html?record_name=" + name + "'>" + name + "</a></td><td width='30%' class='center'> " + dtimestamp + "</td>"
       + "<td width='20%' bgcolor='#fff'>"
-      + "<a href='design.html?record_name=" + name + "'>수정</a> "
+      // + "<a href='flight_view.html?record_name=" + name + "'>보기</a> "
       + "<button class='btn btn-primary' type='button' onClick='deleteFlightData(" + tableCount + ");'>삭제</button></td>"
       + "</tr>";
   $('#dataTable-Flight_list > tbody:last').append(appendRow);
