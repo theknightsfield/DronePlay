@@ -542,7 +542,7 @@ function setSlider(i) {
 					value : 0,
 					step : 1,
 					slide : function( event, ui ){
-						$('#sliderText').html( ui.value );
+						$('#sliderText').text( ui.value );
 						openLineTip(window.myLine, 0, ui.value);
 						openScatterTip(window.myScatter, 0, ui.value);
 

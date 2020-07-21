@@ -157,7 +157,7 @@ function initSlider(i) {
 					value : 0,
 					step : 1,
 					slide : function( event, ui ){
-						$('#sliderText').html( ui.value );
+						$('#sliderText').text( ui.value );
 
 						if (currentFlightData.length <= 0) {
 							return;
@@ -208,7 +208,11 @@ function setDesignTableByFlightRecord(name) {
   ajaxRequest(jdata, function (r) {
     if(r.result == "success") {
       $("#loader").hide();
-      setDesignTableWithFlightRecord(r.data.data);
+    
+      if (!isSet(r.data.data) || r.data.data.length == 0) return;
+		  currentFlightData = r.data.data;
+  
+      setDesignTableWithFlightRecord();
     }
     else {
       alert("There is no flight record or something wrong.");
@@ -256,16 +260,13 @@ function removeIconOnMap(i) {
 	}
 }
 
-function setDesignTableWithFlightRecord(data) {
-  if (data == null || data.length == 0) return;
+function setDesignTableWithFlightRecord() {  
   var i = 0;
 	var coordinates = new Array();
-
-	currentFlightData = data;
-
+	
 	posSource = new ol.source.Vector();
 
-  data.forEach(function (item) {
+  currentFlightData.forEach(function (item) {
       addIconToMap(i, item);
   		coordinates.push(ol.proj.fromLonLat([item.lng * 1, item.lat * 1]));
       i++;
@@ -304,7 +305,7 @@ function setDesignTableWithFlightRecord(data) {
   map.addLayer(posLayer);
 
 
-  moveToPositionOnMap(data[0].lat, data[0].lng, data[0].yaw);
+  moveToPositionOnMap(currentFlightData[0].lat, currentFlightData[0].lng, currentFlightData[0].yaw);
 }
 
 
