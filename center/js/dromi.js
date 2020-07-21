@@ -99,6 +99,16 @@ function saveYoutubeUrl(data_id) {
   });
 }
 
+function hideMovieDataSet() {
+	$('#movieDataSet').show();
+	$('#modifyBtnForMovieData').hide();
+}
+
+function showMovieDataSet() {
+	$('#movieDataSet').hide();
+	$('#modifyBtnForMovieData').show();
+}
+
 function btnSetMovie() {
 	var data_id = $('#movieData').val();
 	if (data_id == "") {
@@ -120,10 +130,10 @@ function btnSetMovie() {
 	}
 
 	if (moviePlayerVisible == true) {
-		$("#movieDataSet").hide();
+		showMovieDataSet();
 	}
 	else {
-		$("#movieDataSet").show();
+		hideMovieDataSet();
 	}
 }
 
