@@ -67,11 +67,9 @@ function centerInit() {
   }
 }
 
-function flightViewInit() {
-    $("#chartView").hide();
-    $("#googlePhotoPlayer").hide();
-    $("#youTubePlayer").hide();
-    $("#movieDataSet").show();
+function flightViewInit() {    
+    $('#historyPanel').hide();
+    $('#historyList').show();
 
     var record_name = location.search.split('record_name=')[1];
     if (record_name != null && record_name != "") {
@@ -653,6 +651,8 @@ function getFlightListForHistory() {
 
       setFlightlistHistory(r.data);
       $('#getFlightListBtn').hide(1500);
+      $('#historyList').hide(1500);
+      $('#historyPanel').show();
     }
     else {
     	alert("Error ! - 2");
