@@ -151,19 +151,18 @@ gtag('config', 'UA-130136264-4');
                                       <button id="uploadFlightRecBtn" class="btn btn-primary" type="button" onClick="uploadFlightList()">
                                           DJI 비행기록 업로드
                                       </button>
-																			
-																			<form class="md-form" enctype="multipart/form-data" method="post" id="djifileform">
-																			  <div class="file-field">
-																			    <div class="btn btn-primary btn-sm float-left">
-																			      <span>Choose file</span>
-																			      <input type="file" name="file" id="file" accept="text/plain" required>
-																			      <input type="hidden" name="name" id="djifname">
-																			    </div>
-																			    <div class="file-path-wrapper">
-																			      <input class="file-path validate" type="text" placeholder="Upload your file">
-																			    </div>
+                                      
+                                      <div class="input-group">					
+                                      	<form enctype="multipart/form-data" method="post" id="djifileform">														  
+																			  <div class="custom-file">
+																			    <input type="file" class="custom-file-input" id="file" aria-describedby="inputGroupFileAddon01">
+																			    <input type="hidden" name="name" id="djifname">
+																			    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
 																			  </div>
-																			</form>
+																				</form>
+																			</div>
+																			
+																			
                                     </div>
                                   </div>
                               </div>
