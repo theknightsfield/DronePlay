@@ -100,13 +100,13 @@ function saveYoutubeUrl(data_id) {
 }
 
 function hideMovieDataSet() {
-	$('#movieDataSet').show();
-	$('#modifyBtnForMovieData').hide();
-}
-
-function showMovieDataSet() {
 	$('#movieDataSet').hide();
 	$('#modifyBtnForMovieData').show();
+}
+
+function showMovieDataSet() {	
+	$('#movieDataSet').show();
+	$('#modifyBtnForMovieData').hide();
 }
 
 function btnSetMovie() {
@@ -130,10 +130,10 @@ function btnSetMovie() {
 	}
 
 	if (moviePlayerVisible == true) {
-		showMovieDataSet();
+		hideMovieDataSet();
 	}
 	else {
-		hideMovieDataSet();
+		showMovieDataSet();
 	}
 }
 
@@ -295,7 +295,7 @@ function showData(index) {
 		var userid = getCookie("dev_user_id");
 		var jdata = {"action": "dromi", "daction": "get", "clientid" : userid, "name" : item.dname};
 
-    $("#record_name_field").text("-" + item.dname);
+    $("#record_name_field").text("- " + item.dname);
         
     cur_flightrecord_name = item.dname;
 
