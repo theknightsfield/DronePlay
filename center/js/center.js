@@ -129,7 +129,16 @@ function designInit() {
 		mission_name = mission_name.split('&')[0];
     setDesignTableByMission(mission_name);
   }
-  else hideLoader();
+  else {
+  	
+  	var posLayer = new ol.layer.Vector({
+      source: posSource
+  	});
+  	
+  	map.addLayer(posLayer);
+  	
+  	hideLoader();
+  }
 
 	/*
   var bannerOffset = $( '.topFixBanner' ).offset();
