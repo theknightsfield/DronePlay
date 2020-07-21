@@ -40,14 +40,14 @@ function centerInit() {
 	var page_action = page_data.getAttribute("page_action");
 
   if (page_action == "center") {
-		
+		hideLoader();
   }
   else if (page_action == "design") {
   	showLoader();
     designInit();
   }
   else if (page_action == "list") {
-		
+		hideLoader();
   }
   else if (page_action == "monitor") {
   	showLoader();
