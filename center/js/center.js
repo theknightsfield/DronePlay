@@ -75,8 +75,7 @@ function flightViewInit() {
     if (record_name != null && record_name != "") {
       showDataForHistoryWithName(decodeURI(record_name));
     }
-    
-    hideLoader();
+    else hideLoader();    
 }
 
 function monitorInit() {
@@ -127,6 +126,7 @@ function designInit() {
 		mission_name = mission_name.split('&')[0];
     setDesignTableByMission(mission_name);
   }
+  else hideLoader();
 
 	/*
   var bannerOffset = $( '.topFixBanner' ).offset();
@@ -140,9 +140,7 @@ function designInit() {
           map.updateSize();
         }
    });
-  */
-  
-  hideLoader();
+  */    
 }
 
 
@@ -210,10 +208,10 @@ function setDesignTableByFlightRecord(name) {
   var userid = getCookie("dev_user_id");
   var jdata = {"action" : "position", "daction" : "download_spe", "name" : name, "clientid" : userid};
 
-  $("#loader").show();
+  showLoader();
   ajaxRequest(jdata, function (r) {
     if(r.result == "success") {
-      $("#loader").hide();
+      hideLoader();
     
       if (!isSet(r.data.data) || r.data.data.length == 0) return;
 		  currentFlightData = r.data.data;
@@ -222,12 +220,12 @@ function setDesignTableByFlightRecord(name) {
     }
     else {
       alert("There is no flight record or something wrong.");
-      $("#loader").hide();
+      hideLoader();
     }
   }, function(request,status,error) {
 
     alert("Sorry, something wrong.");
-    $("#loader").hide();
+    hideLoader();
   });
 }
 
