@@ -701,6 +701,9 @@ function showDataForHistoryWithName(name) {
 		    else {
 		    	
 		    	var fdata = r.data;
+		    	
+		    	moviePlayerVisible = false;
+		    	
 		    	if ("youtube_data_id" in fdata) {
 				  	if (fdata.youtube_data_id.indexOf("youtube") >=0) {
 							setYoutubePlayer(fdata.youtube_data_id);
@@ -715,9 +718,15 @@ function showDataForHistoryWithName(name) {
 				  }
 				  else {
 				    $("#youTubePlayer").hide();
-				    $("#googlePhotoPlayer").hide();
-				    $("#movieDataSet").show();
+				    $("#googlePhotoPlayer").hide();				    
 				  }
+				  
+				   if (moviePlayerVisible == true) {
+							hideMovieDataSet();
+						}
+						else {
+							showMovieDataSet();
+						}
 				
 				
       		$('#historyList').hide(1500);
@@ -739,6 +748,8 @@ function showDataForHistory(index) {
 
   var item = flightDataArray[index];
 
+	moviePlayerVisible = false;
+	
   if ("youtube_data_id" in item) {
   	if (item.youtube_data_id.indexOf("youtube") >=0) {
 			setYoutubePlayer(item.youtube_data_id);
@@ -747,15 +758,19 @@ function showDataForHistory(index) {
 		else {
 			setYoutubePlayer("");
 			setGooglePhotoPlayer(item.youtube_data_id);
-		}
-		
-		$("#movieDataSet").hide();
+		}				
   }
   else {
     $("#youTubePlayer").hide();
-    $("#googlePhotoPlayer").hide();
-    $("#movieDataSet").show();
+    $("#googlePhotoPlayer").hide();  
   }
+  
+  if (moviePlayerVisible == true) {
+		hideMovieDataSet();
+	}
+	else {
+		showMovieDataSet();
+	}
 	
 	if (!("data" in item) || !isSet(item.data)) {
     var userid = getCookie("dev_user_id");

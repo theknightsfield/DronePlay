@@ -285,10 +285,10 @@ function showData(index) {
   }
 
   if (moviePlayerVisible == true) {
-		$("#movieDataSet").hide();
+		hideMovieDataSet();
 	}
 	else {
-		$("#movieDataSet").show();
+		showMovieDataSet();
 	}
 
 	if (!("data" in item) || item.data == null || item.data == "") {
