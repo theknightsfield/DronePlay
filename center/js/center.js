@@ -50,6 +50,7 @@ function centerInit() {
 		hideLoader();
   }
   else if (page_action == "monitor") {  	
+  	hideLoader();
     monitorInit();
   }
   else if (page_action == "flightlist") {
