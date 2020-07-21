@@ -649,10 +649,8 @@ function getFlightListForHistory() {
         return;
       }
 
-      setFlightlistHistory(r.data);
-      $('#getFlightListBtn').hide(1500);
-      $('#historyList').hide(1500);
-      $('#historyPanel').show();
+			$('#getFlightListBtn').hide(1500);
+      setFlightlistHistory(r.data);      
     }
     else {
     	alert("Error ! - 2");
@@ -711,7 +709,9 @@ function showDataForHistoryWithName(name) {
 				    $("#movieDataSet").show();
 				  }
 				
-							    	
+				
+      		$('#historyList').hide(1500);
+      		$('#historyPanel').show();							    	
 		    	
 		      setChartData(r.data.data);
 		      hideLoader();
@@ -760,6 +760,10 @@ function showDataForHistory(index) {
 			      alert("Failed to load data!");
 			    }
 			    else {
+			    	
+			    	$('#historyList').hide(1500);
+      			$('#historyPanel').show();
+      		
 			      setChartData(r.data.data);
 			      hideLoader();
 			    }
