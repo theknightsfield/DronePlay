@@ -676,7 +676,7 @@ function setFlightlistHistory(data) {
 
 function showDataForHistoryWithName(name) {
 
-  $("#record_name_field").text(name);
+  $("#record_name_field").text("-" + name);
     
   var userid = getCookie("dev_user_id");
   var jdata = {"action" : "position", "daction" : "download_spe", "name" : name, "clientid" : userid};
@@ -751,7 +751,7 @@ function showDataForHistory(index) {
 	if (!("data" in item) || !isSet(item.data)) {
     var userid = getCookie("dev_user_id");
     var jdata = {"action" : "position", "daction" : "download_spe", "name" : item.name, "clientid" : userid};
-    $("#record_name_field").text(item.name);
+    $("#record_name_field").text("-" + item.name);
 	  showLoader();
 
 	  setTimeout(function() {
