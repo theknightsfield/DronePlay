@@ -143,6 +143,7 @@ function formSubmit(token) {
     if(r.result == "success") {
       setCookie("dev_user_id", r.emailid, 1);
       setCookie("user_token", r.token, 1);
+      setCookie("user_email", r.socialid, 1);
 
       if (getCookie("isFromApp") == "yes") {
         Android.setToken(r.token, r.emailid);

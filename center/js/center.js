@@ -82,7 +82,7 @@ function flightViewInit() {
 function monitorInit() {
   var url_string = window.location.href;
 	var page_id = location.search.split('mission_name=')[1];
-	if (page_id != null)
+	if (isSet(page_id))
 		page_id = page_id.split('&')[0];
 
   getMissionToMonitor(page_id);
@@ -100,7 +100,7 @@ function designInit() {
 
       if (feature) {
           var ii = feature.get('mindex');
-          if (ii == null || ii == undefined) return;
+          if (!isSet(ii)) return;
 
           setSliderPos(ii);
           setDataToDesignTableWithFlightRecord(ii);
@@ -117,11 +117,11 @@ function designInit() {
 	var record_name = location.search.split('record_name=')[1];
   var mission_name = location.search.split('mission_name=')[1];
 
-	if (record_name != null) {
+	if (isSet(record_name)) {
 		record_name = record_name.split('&')[0];
     setDesignTableByFlightRecord(record_name);
   }
-	else if (mission_name != null) {
+	else if (isSet(mission_name)) {
 		mission_name = mission_name.split('&')[0];
     setDesignTableByMission(mission_name);
   }
@@ -176,7 +176,7 @@ function initSlider(i) {
 
 	$('#goItemBtn').click(function() {
 			var index = $('#goItemIndex').val();
-			if (index == "" || $.isNumeric( index ) == false) {
+			if (!isSet(index) || $.isNumeric( index ) == false) {
 				alert("Please input valid value !");
 				return;
 			}
@@ -377,12 +377,13 @@ function nextMon() {
 }
 
 function askToken() {
-  var userid = getCookie("dev_user_id");
+  var useremail = getCookie("user_email");
   var usertoken = getCookie("user_token");
-  if (isSet(userid) == false || isSet(usertoken) == false)
+  var userid = getCookie("dev_user_id");
+  if (isSet(useremail) == false || isSet(userid) == false || isSet(usertoken) == false)
     return false;
 
-  $("#email_field").text(userid);
+  $("#email_field").text(useremail);
   $('#droneplaytoken_view').val(usertoken);
 
   return true;
@@ -725,7 +726,7 @@ function showDataForHistory(index) {
 
 	$("#movieDataSet").show();
 
-	if (!("data" in item) || item.data == null || item.data == "") {
+	if (!("data" in item) || !isSet(item.data)) {
     var userid = getCookie("dev_user_id");
     var jdata = {"action" : "position", "daction" : "download_spe", "name" : item.name, "clientid" : userid};
     $("#record_name_field").text(item.name);
@@ -1216,7 +1217,7 @@ function uploadFlightList() {
   if (files.length > 0) {
   	var mname = prompt("비행기록의 이름을 입력해 주세요.", "");
 
-	  if (mname == null) {
+	  if (!isSet(mname)) {
 	      alert("잘못 입력하셨습니다.");
 	      return;
 	  }

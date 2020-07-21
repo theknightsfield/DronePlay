@@ -46,7 +46,7 @@ function requestRegister() {
               var droneplay_name = $('#droneplay_name').val();
               var droneplay_email = $('#droneplay_email').val();
               var emailid = getCookie("temp_user_id");
-              var droneplay_phonenumber = $('#droneplay_phonenumber').val();
+              var droneplay_phonenumber = $('#droneplay_phonenumber').val();                            
 
               if (droneplay_name == null || droneplay_name == ""
                   || droneplay_email == null || droneplay_email == ""
