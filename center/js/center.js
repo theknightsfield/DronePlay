@@ -28,9 +28,7 @@ function centerInit() {
 	bMonStarted = false;
 	posSource = null;
 	flightDataArray = new Array();
-	currentFlightData = new Array();
-
-	showLoader();
+	currentFlightData = new Array();	
   mapInit();
   
   if (askToken() == false) {  	
@@ -42,27 +40,33 @@ function centerInit() {
 	var page_action = page_data.getAttribute("page_action");
 
   if (page_action == "center") {
-
+		
   }
   else if (page_action == "design") {
+  	showLoader();
     designInit();
   }
   else if (page_action == "list") {
-
+		
   }
   else if (page_action == "monitor") {
+  	showLoader();
     monitorInit();
   }
   else if (page_action == "flightlist") {
+  	showLoader();
     flightListInit();
   }
   else if (page_action == "flight_view") {
+  	showLoader();
     flightViewInit();
   }
   else if (page_action == "dromi") {
+  	showLoader();
     dromiInit();
   }
   else if (page_action == "dromi_list") {
+  	showLoader();
     dromiListInit();
   }
 }
