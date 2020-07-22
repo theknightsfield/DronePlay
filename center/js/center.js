@@ -835,7 +835,7 @@ function makeForFlightListMap(index, flat, flng) {
         src: './imgs/position2.png'
       }));
 
-  var cpos.setStyle(new ol.style.Style({
+  cpos.setStyle(new ol.style.Style({
       image: cpos_image
     }));
 
