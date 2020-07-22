@@ -26,8 +26,8 @@ $(function() {
 
 function centerInit() {
 	bMonStarted = false;
-	flightDataArray = new Array();
-	currentFlightData = new Array();	
+	flightDataArray = [];
+	currentFlightData = [];	
   mapInit();
   
   if (askToken() == false) {  	
@@ -266,10 +266,10 @@ function addIconToMap(i, item) {
 	posSource.addFeature(nIcon);
 }
 
-function removeIconOnMap(i) {
+function removeIconOnMap(index) {
 	var features = posSource.getFeatures();
 	for(var i = 0; i < features.length; i++) {
-      if (features[i].get("mindex") == i) {
+      if (features[i].get("mindex") == index) {
       	features.removeFeature(features[i]);
       	return;
       }
@@ -278,7 +278,7 @@ function removeIconOnMap(i) {
 
 function setDesignTableWithFlightRecord() {  
   var i = 0;
-	var coordinates = new Array();
+	var coordinates = [];
 		
   currentFlightData.forEach(function (item) {
       addIconToMap(i, item);
@@ -332,7 +332,7 @@ function appendNewRecord(coordinates) {
 		$("#dataTable-points").show();
 	}
 
-	var data = new Array();
+	var data = [];
 	data['alt'] = 0;
 	data['speed'] = 0;
 	data['yaw'] = 0;
@@ -916,7 +916,7 @@ function appendFlightListTable(item) {
   		appendRow += "<td>-</td>";
   }
   
-	appendRow += "<td class='center' bgcolor='#eee'><a href='flight_view.html?record_name=" + name + "'>" + name + "</a></td><td width='30%' class='center'> " + dtimestamp + "</td>"
+	appendRow = appendRow + "<td class='center' bgcolor='#eee'><a href='flight_view.html?record_name=" + name + "'>" + name + "</a></td><td width='30%' class='center'> " + dtimestamp + "</td>"
       + "<td width='20%' bgcolor='#fff'>"
       // + "<a href='flight_view.html?record_name=" + name + "'>보기</a> "
       + "<button class='btn btn-primary' type='button' onClick='deleteFlightData(" + tableCount + ");'>삭제</button></td>"
@@ -932,8 +932,7 @@ function appendFlightListTable(item) {
 }
 
 
-function appendFlightListTableForHistory(item) {
-	function appendFlightListTable(item) {
+function appendFlightListTableForHistory(item) {	
 	var name = item.name;
 	var dtimestamp = item.dtime;
 	var data = item.data;
@@ -943,17 +942,18 @@ function appendFlightListTableForHistory(item) {
   var appendRow = "<tr class='odd gradeX' id='flight-list-" + tableCount + "'><td width='10%'>" + (tableCount + 1) + "</td>";
   
   if (isSet(flat)) {
-  		appendRow += "<td><div id='map_" + tableCount + "' style='height:150px;'></div></td>";
+  		appendRow = appendRow + "<td><div id='map_" + tableCount + "' style='height:150px;'></div></td>";
   }
   else {
-  		appendRow += "<td>-</td>";
+  		appendRow = appendRow + "<td>-</td>";
   }
   	
-  appendRow += "<td class='center' bgcolor='#eee'><a href='javascript:showDataForHistory(" + tableCount + ");'>" + name + "</a></td><td width='30%' class='center'> " + dtimestamp + "</td>"
+  appendRow = appendRow + "<td class='center' bgcolor='#eee'><a href='javascript:showDataForHistory(" + tableCount + ");'>" + name + "</a></td><td width='30%' class='center'> " + dtimestamp + "</td>"
       + "<td width='20%' bgcolor='#fff'>"
       // + "<a href='design.html?record_name=" + name + "'>수정</a> "
       + "<button class='btn btn-primary' type='button' onClick='deleteFlightData(" + tableCount + ");'>삭제</button></td>"
       + "</tr>";
+      
   $('#dataTable-Flight_list > tbody:last').append(appendRow);
       
   if (isSet(flat)) {
@@ -1041,7 +1041,7 @@ function btnRegister() {
       return;
     }
 
-    var nPositions = new Array();
+    var nPositions = [];
     var bError = 0;
     for (var index=0;index<currentFlightData.length;index++) {
     	var item = currentFlightData[index];
