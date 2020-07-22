@@ -816,15 +816,52 @@ function showDataForHistory(index) {
 
 }
 
-function appendFlightListTableForHistory(name, dtimestamp, data) {
-  var appendRow = "<tr class='odd gradeX' id='flight-list-" + tableCount + "'><td width='10%'>" + (tableCount + 1) + "</td>"
-      + "<td class='center' bgcolor='#eee'><a href='javascript:showDataForHistory(" + tableCount + ");'>" + name + "</a></td><td width='30%' class='center'> " + dtimestamp + "</td>"
-      + "<td width='20%' bgcolor='#fff'>"
-      // + "<a href='design.html?record_name=" + name + "'>수정</a> "
-      + "<button class='btn btn-primary' type='button' onClick='deleteFlightData(" + tableCount + ");'>삭제</button></td>"
-      + "</tr>";
-  $('#dataTable-Flight_list > tbody:last').append(appendRow);
-  tableCount++;
+
+function makeForFlightListMap(index, flat, flng) {
+	var dpoint = ol.proj.fromLonLat([flng, flat]);
+  
+  var c_view = new ol.View({
+      center: dpoint,
+      zoom: 8
+    });
+
+  var cpos = new ol.Feature({
+      geometry: new ol.geom.Point(dpoint)
+  });
+
+  var cpos_image = new ol.style.Icon(({
+        //color: '#8959A8',
+        crossOrigin: 'anonymous',
+        src: './imgs/position2.png'
+      }));
+
+  var cpos.setStyle(new ol.style.Style({
+      image: cpos_image
+    }));
+
+  var vSource = new ol.source.Vector({
+      features: [cpos]
+    });
+
+  var vectorLayer = new ol.layer.Vector({
+      source: vSource,
+      zIndex: 10000
+    });
+
+  var map = new ol.Map({
+      target: 'map_' + index,
+      
+      layers: [
+          new ol.layer.Tile({
+              preload: 4,
+              source: new ol.source.OSM()
+          }), vectorLayer
+      ],
+      // Improve user experience by loading tiles while animating. Will make
+      // animations stutter on mobile or slow devices.
+      loadTilesWhileAnimating: true,
+      view: c_view
+    });
 }
 
 
@@ -864,13 +901,52 @@ function setFlightlist(data) {
 }
 
 function appendFlightListTable(name, dtimestamp, data) {
-  var appendRow = "<tr class='odd gradeX' id='flight-list-" + tableCount + "'><td width='10%'>" + (tableCount + 1) + "</td>"
-      + "<td class='center' bgcolor='#eee'><a href='flight_view.html?record_name=" + name + "'>" + name + "</a></td><td width='30%' class='center'> " + dtimestamp + "</td>"
+  var appendRow = "<tr class='odd gradeX' id='flight-list-" + tableCount + "'><td width='10%'>" + (tableCount + 1) + "</td>";
+  
+  if ("flat" in data) {
+  		appendRow += "<td><div id='map_" + tableCount + "' style='height:150px;'></div></td>";
+  }
+  else {
+  		appendRow += "<td>-</td>";
+  }
+  
+	appendRow += "<td class='center' bgcolor='#eee'><a href='flight_view.html?record_name=" + name + "'>" + name + "</a></td><td width='30%' class='center'> " + dtimestamp + "</td>"
       + "<td width='20%' bgcolor='#fff'>"
       // + "<a href='flight_view.html?record_name=" + name + "'>보기</a> "
       + "<button class='btn btn-primary' type='button' onClick='deleteFlightData(" + tableCount + ");'>삭제</button></td>"
       + "</tr>";
   $('#dataTable-Flight_list > tbody:last').append(appendRow);
+  
+  
+  if ("flat" in data) {
+  	makeForFlightListMap(tableCount, data.flat, data.flng);
+  }      
+  
+  tableCount++;
+}
+
+
+function appendFlightListTableForHistory(name, dtimestamp, data) {
+  var appendRow = "<tr class='odd gradeX' id='flight-list-" + tableCount + "'><td width='10%'>" + (tableCount + 1) + "</td>";
+  
+  if ("flat" in data) {
+  		appendRow += "<td><div id='map_" + tableCount + "' style='height:150px;'></div></td>";
+  }
+  else {
+  		appendRow += "<td>-</td>";
+  }
+  	
+  appendRow += "<td class='center' bgcolor='#eee'><a href='javascript:showDataForHistory(" + tableCount + ");'>" + name + "</a></td><td width='30%' class='center'> " + dtimestamp + "</td>"
+      + "<td width='20%' bgcolor='#fff'>"
+      // + "<a href='design.html?record_name=" + name + "'>수정</a> "
+      + "<button class='btn btn-primary' type='button' onClick='deleteFlightData(" + tableCount + ");'>삭제</button></td>"
+      + "</tr>";
+  $('#dataTable-Flight_list > tbody:last').append(appendRow);
+      
+  if ("flat" in data) {
+  	makeForFlightListMap(tableCount, data.flat, data.flng);
+  }      
+  
   tableCount++;
 }
 
