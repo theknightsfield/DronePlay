@@ -903,7 +903,7 @@ function setFlightlist(data) {
 function appendFlightListTable(name, dtimestamp, data) {
   var appendRow = "<tr class='odd gradeX' id='flight-list-" + tableCount + "'><td width='10%'>" + (tableCount + 1) + "</td>";
   
-  if ("flat" in data) {
+  if (isSet(data.flat)) {
   		appendRow += "<td><div id='map_" + tableCount + "' style='height:150px;'></div></td>";
   }
   else {
@@ -918,7 +918,7 @@ function appendFlightListTable(name, dtimestamp, data) {
   $('#dataTable-Flight_list > tbody:last').append(appendRow);
   
   
-  if ("flat" in data) {
+  if (isSet(data.flat)) {
   	makeForFlightListMap(tableCount, data.flat, data.flng);
   }      
   
