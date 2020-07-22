@@ -683,7 +683,7 @@ function setFlightlistHistory(data) {
     return;
 
   data.forEach(function(item) {
-    appendFlightListTableForHistory(item.name, item.dtime, item.data);
+    appendFlightListTableForHistory(item);
     flightDataArray.push(item);
   });
 }
@@ -895,15 +895,21 @@ function setFlightlist(data) {
     return;
 
   data.forEach(function(item) {
-    appendFlightListTable(item.name, item.dtime, item.data);
+    appendFlightListTable(item);
     flightDataArray.push(item);
   });
 }
 
-function appendFlightListTable(name, dtimestamp, data) {
+function appendFlightListTable(item) {
+	var name = item.name;
+	var dtimestamp = item.dtime;
+	var data = item.data;
+	var flat = item.flat;
+	var flng = item.flng;
+	
   var appendRow = "<tr class='odd gradeX' id='flight-list-" + tableCount + "'><td width='10%'>" + (tableCount + 1) + "</td>";
   
-  if (isSet(data.flat)) {
+  if (isSet(flat)) {
   		appendRow += "<td><div id='map_" + tableCount + "' style='height:150px;'></div></td>";
   }
   else {
@@ -918,18 +924,25 @@ function appendFlightListTable(name, dtimestamp, data) {
   $('#dataTable-Flight_list > tbody:last').append(appendRow);
   
   
-  if (isSet(data.flat)) {
-  	makeForFlightListMap(tableCount, data.flat, data.flng);
+  if (isSet(flat)) {
+  	makeForFlightListMap(tableCount, flat, flng);
   }      
   
   tableCount++;
 }
 
 
-function appendFlightListTableForHistory(name, dtimestamp, data) {
+function appendFlightListTableForHistory(item) {
+	function appendFlightListTable(item) {
+	var name = item.name;
+	var dtimestamp = item.dtime;
+	var data = item.data;
+	var flat = item.flat;
+	var flng = item.flng;
+	
   var appendRow = "<tr class='odd gradeX' id='flight-list-" + tableCount + "'><td width='10%'>" + (tableCount + 1) + "</td>";
   
-  if ("flat" in data) {
+  if (isSet(flat)) {
   		appendRow += "<td><div id='map_" + tableCount + "' style='height:150px;'></div></td>";
   }
   else {
@@ -943,8 +956,8 @@ function appendFlightListTableForHistory(name, dtimestamp, data) {
       + "</tr>";
   $('#dataTable-Flight_list > tbody:last').append(appendRow);
       
-  if ("flat" in data) {
-  	makeForFlightListMap(tableCount, data.flat, data.flng);
+  if (isSet(flat)) {
+  	makeForFlightListMap(tableCount, flat, flng);
   }      
   
   tableCount++;
