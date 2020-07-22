@@ -911,7 +911,7 @@ function appendFlightListTable(item) {
   appendRow = appendRow + "<td class='center' bgcolor='#eee'><a href='flight_view.html?record_name=" + name + "'>" + name + "</a>";
   
   if (isSet(flat)) {
-  		appendRow = appendRow + "<br><div id='map_" + tableCount + "' style='height:100px;' class='panel-body'></div></td>";
+  		appendRow = appendRow + "<br><div id='map_" + tableCount + "' style='height:100px;' class='panel panel-primary'></div></td>";
   }
   else {
   		appendRow = appendRow + "</td>";
@@ -944,7 +944,7 @@ function appendFlightListTableForHistory(item) {
   appendRow = appendRow + "<td class='center' bgcolor='#eee'><a href='javascript:showDataForHistory(" + tableCount + ");'>" + name + "</a>";
   
   if (isSet(flat)) {
-  		appendRow = appendRow + "<br><div id='map_" + tableCount + "' style='height:100px;' class='panel-body'></div></td>";
+  		appendRow = appendRow + "<br><div id='map_" + tableCount + "' style='height:100px;' class='panel panel-primary'></div></td>";
   }
   else {
   		appendRow = appendRow + "</td>";
