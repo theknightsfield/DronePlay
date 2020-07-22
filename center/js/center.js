@@ -908,15 +908,16 @@ function appendFlightListTable(item) {
 	var flng = item.flng;
 	
   var appendRow = "<tr class='odd gradeX' id='flight-list-" + tableCount + "'><td width='10%'>" + (tableCount + 1) + "</td>";
+  appendRow = appendRow + "<td class='center' bgcolor='#eee'><a href='flight_view.html?record_name=" + name + "'>" + name + "</a>";
   
   if (isSet(flat)) {
-  		appendRow += "<td><div id='map_" + tableCount + "' style='height:150px;'></div></td>";
+  		appendRow = appendRow + "<br><div id='map_" + tableCount + "' style='height:100px;' class='panel-body'></div></td>";
   }
   else {
-  		appendRow += "<td>-</td>";
+  		appendRow = appendRow + "</td>";
   }
   
-	appendRow = appendRow + "<td class='center' bgcolor='#eee'><a href='flight_view.html?record_name=" + name + "'>" + name + "</a></td><td width='30%' class='center'> " + dtimestamp + "</td>"
+	appendRow = appendRow + "<td width='30%' class='center'> " + dtimestamp + "</td>"
       + "<td width='20%' bgcolor='#fff'>"
       // + "<a href='flight_view.html?record_name=" + name + "'>보기</a> "
       + "<button class='btn btn-primary' type='button' onClick='deleteFlightData(" + tableCount + ");'>삭제</button></td>"
@@ -940,15 +941,16 @@ function appendFlightListTableForHistory(item) {
 	var flng = item.flng;
 	
   var appendRow = "<tr class='odd gradeX' id='flight-list-" + tableCount + "'><td width='10%'>" + (tableCount + 1) + "</td>";
+  appendRow = appendRow + "<td class='center' bgcolor='#eee'><a href='javascript:showDataForHistory(" + tableCount + ");'>" + name + "</a>";
   
   if (isSet(flat)) {
-  		appendRow = appendRow + "<td><div id='map_" + tableCount + "' style='height:150px;'></div></td>";
+  		appendRow = appendRow + "<br><div id='map_" + tableCount + "' style='height:100px;' class='panel-body'></div></td>";
   }
   else {
-  		appendRow = appendRow + "<td>-</td>";
+  		appendRow = appendRow + "</td>";
   }
   	
-  appendRow = appendRow + "<td class='center' bgcolor='#eee'><a href='javascript:showDataForHistory(" + tableCount + ");'>" + name + "</a></td><td width='30%' class='center'> " + dtimestamp + "</td>"
+  appendRow = appendRow + "<td width='30%' class='center'> " + dtimestamp + "</td>"
       + "<td width='20%' bgcolor='#fff'>"
       // + "<a href='design.html?record_name=" + name + "'>수정</a> "
       + "<button class='btn btn-primary' type='button' onClick='deleteFlightData(" + tableCount + ");'>삭제</button></td>"
