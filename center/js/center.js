@@ -827,10 +827,44 @@ function makeForFlightListMap(index, flat, flng) {
 
   var vSource = new ol.source.Vector();
   
+  var styles = [
+	  /* We are using two different styles for the polygons:
+	   *  - The first style is for the polygons themselves.
+	   *  - The second style is to draw the vertices of the polygons.
+	   *    In a custom `geometry` function the vertices of a polygon are
+	   *    returned as `MultiPoint` geometry, which will be used to render
+	   *    the style.
+	   */
+	  new Style({
+	    stroke: new Stroke({
+	      color: 'blue',
+	      width: 3
+	    }),
+	    fill: new Fill({
+	      color: 'rgba(0, 0, 255, 0.1)'
+	    })
+	  }),
+	  new Style({
+	    image: new CircleStyle({
+	      radius: 5,
+	      fill: new Fill({
+	        color: 'orange'
+	      })
+	    }),
+	    geometry: function(feature) {
+	      // return the coordinates of the first ring of the polygon
+	      var coordinates = feature.getGeometry().getCoordinates()[0];
+	      return new MultiPoint(coordinates);
+	    }
+	  })
+	];
+  
   var vVectorLayer = new ol.layer.Vector({
       source: vSource,
-      zIndex: 10000      
+      zIndex: 10000,
+      style: styles
     });    
+
     
 
   var vMap = new ol.Map({
@@ -862,16 +896,6 @@ function drawCadastral(x, y, callback){
 	    		var _features = new Array();
 	    		if (r.status != "OK") return;
 	    		
-	    		var gstyle = new ol.style.Style({
-			        stroke: new ol.style.Stroke({
-			            color: 'blue',
-			            width: 3
-			        }),
-			        fill: new ol.style.Fill({
-			            color: 'rgba(0,0,255,0.6)'
-			        })
-			    });
-	    		
           for(var idx=0; idx< r.response.result.featureCollection.features.length; idx++) {
             try{
               var geojson_Feature = r.response.result.featureCollection.features[idx];
@@ -889,9 +913,7 @@ function drawCadastral(x, y, callback){
                       feature.properties[key] = value;
                     }catch (e){
                     }
-                  }
-                  
-                  feature.setStyle(gstyle);
+                  }                  
                   _features.push(feature)
                 }catch (e){
                 }
