@@ -819,7 +819,6 @@ function showDataForHistory(index) {
 
 function makeForFlightListMap(index, flat, flng) {
 	var dpoint = ol.proj.fromLonLat([flng, flat]);
-  var geoPoint = new ol.geom.Point(dpoint);
   
   var c_view = new ol.View({
       center: dpoint,
@@ -864,7 +863,7 @@ function makeForFlightListMap(index, flat, flng) {
       view: c_view
     });
     
-  drawCadastral(geoPoint[0], geoPoint[1], function (features) {
+  drawCadastral(dpoint[0], dpoint[1], function (features) {
     		vSource.addFeatures(features);
     	});
 }
