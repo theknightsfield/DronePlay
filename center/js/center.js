@@ -884,8 +884,10 @@ function fnRequest_VWorldWFS2(x, y){
     $.ajax({
       type:'GET',
       dataType: "json",
-      jsonp : "callback",
+      crossDomain: true,
+      cache : false,      
       url: reqUrl,
+      async: false,
       success:function(data){
         try{
           var _features = new Array();
