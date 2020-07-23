@@ -12,6 +12,7 @@ var map;
 var posSource;
 var pointSource;
 var lineSource;
+var pos_icon_style;
 
 var flightDataArray;
 var currentFlightData;
@@ -250,14 +251,7 @@ function createNewIcon(i, item) {
           mindex : i
       });
 
-  pos_icon.setStyle(new ol.style.Style({
-      image: new ol.style.Icon( ({
-      	opacity: 0.75,        
-        crossOrigin: 'anonymous',
-        scale: 0.5,
-        src: pos_icon_image
-      }))
-  }));
+  pos_icon.setStyle(pos_icon_style);
 
   return pos_icon;
 }
@@ -698,59 +692,55 @@ function showDataForHistoryWithName(name) {
 
   showLoader();
 
-  setTimeout(function() {
-
-			ajaxRequest(jdata, function (r) {
-		    if(r.result != "success") {
-		      alert("Failed to load data!");
-		    }
-		    else {
-		    	
-		    	var fdata = r.data;
-		    	
-		    	moviePlayerVisible = false;
-		    			    			    	
-		    	if ("youtube_data_id" in fdata) {
-				  	if (fdata.youtube_data_id.indexOf("youtube") >=0) {
-							setYoutubePlayer(fdata.youtube_data_id);
-							setGooglePhotoPlayer("");
-						}
-						else {
-							setYoutubePlayer("");
-							setGooglePhotoPlayer(fdata.youtube_data_id);
-						}
-						
-						$("#movieDataSet").hide();
-				  }
-				  else {
-				    $("#youTubePlayer").hide();
-				    $("#googlePhotoPlayer").hide();				    
-				  }
-				  
-				   if (moviePlayerVisible == true) {
-							hideMovieDataSet();
-						}
-						else {
-							showMovieDataSet();
-						}				
+	ajaxRequest(jdata, function (r) {
+    if(r.result != "success") {
+      alert("Failed to load data!");
+    }
+    else {
+    	
+    	var fdata = r.data;
+    	
+    	moviePlayerVisible = false;
+    			    			    	
+    	if ("youtube_data_id" in fdata) {
+		  	if (fdata.youtube_data_id.indexOf("youtube") >=0) {
+					setYoutubePlayer(fdata.youtube_data_id);
+					setGooglePhotoPlayer("");
+				}
+				else {
+					setYoutubePlayer("");
+					setGooglePhotoPlayer(fdata.youtube_data_id);
+				}
 				
-      		$('#historyList').hide(1500);
-      		$('#historyPanel').show();							    	
-		    	
-		      setChartData(r.data.data);
-		      
-		      if (isSet(fdata.flat)) {		      	
-						var dpoint = ol.proj.fromLonLat([fdata.flng, fdata.flat]);
-		    		drawCadastral(dpoint[0], dpoint[1], pointSource);
-		    	}		    			   
-		    	else hideLoader();		      		      
-		    }
-		  }, function(request,status,error) {
-		    hideLoader();
-		    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-		  });
-
-	}, 1000);
+				$("#movieDataSet").hide();
+		  }
+		  else {
+		    $("#youTubePlayer").hide();
+		    $("#googlePhotoPlayer").hide();				    
+		  }
+		  
+		   if (moviePlayerVisible == true) {
+					hideMovieDataSet();
+				}
+				else {
+					showMovieDataSet();
+				}				
+		
+  		$('#historyList').hide(1500);
+  		$('#historyPanel').show();							    	
+    	
+      setChartData(r.data.data);
+      
+      if (isSet(fdata.flat)) {		      	
+				var dpoint = ol.proj.fromLonLat([fdata.flng, fdata.flat]);
+    		drawCadastral(dpoint[0], dpoint[1], pointSource);
+    	}		    			   
+    	else hideLoader();		      		      
+    }
+  }, function(request,status,error) {
+    hideLoader();
+    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+  });
 }
 
 function showDataForHistory(index) {
@@ -787,28 +777,23 @@ function showDataForHistory(index) {
     var jdata = {"action" : "position", "daction" : "download_spe", "name" : item.name, "clientid" : userid};
     $("#record_name_field").text("- " + item.name);
     cur_flightrecord_name = item.name;
-	  showLoader();
-
-	  setTimeout(function() {
-
-				ajaxRequest(jdata, function (r) {
-			    if(r.result != "success") {
-			      alert("Failed to load data!");
-			    }
-			    else {
-			    	
-			    	$('#historyList').hide(1500);
-      			$('#historyPanel').show();
-      		
-			      setChartData(r.data.data);
-			      hideLoader();
-			    }
-			  }, function(request,status,error) {
-			    hideLoader();
-			    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-			  });
-
-		}, 1000);
+	  showLoader();	  
+		ajaxRequest(jdata, function (r) {
+	    if(r.result != "success") {
+	      alert("Failed to load data!");
+	    }
+	    else {
+	    	
+	    	$('#historyList').hide(1500);
+  			$('#historyPanel').show();
+  		
+	      setChartData(r.data.data);
+	      hideLoader();
+	    }
+	  }, function(request,status,error) {
+	    hideLoader();
+	    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	  });
 	}
 	else {
 		$('#historyList').hide(1500);
@@ -1177,6 +1162,15 @@ function logOut() {
 function mapInit() {
   var dokdo = ol.proj.fromLonLat([131.8661992, 37.2435813]);
   var scaleLineControl = new ol.control.ScaleLine();
+  
+  pos_icon_style = new ol.style.Style({
+      image: new ol.style.Icon( ({
+      	opacity: 0.75,        
+        crossOrigin: 'anonymous',
+        scale: 0.3,
+        src: pos_icon_image
+      }))
+  });
   
   posSource = new ol.source.Vector();
 
