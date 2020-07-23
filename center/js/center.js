@@ -299,8 +299,8 @@ function setDesignTableWithFlightRecord() {
       source: lineSource,
       style: new ol.style.Style({
             stroke: new ol.style.Stroke({
-                color: '#ff0000',
-                width: 3
+                color: '#00ff00',
+                width: 2
             })
         })
   });
