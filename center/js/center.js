@@ -819,34 +819,35 @@ function showDataForHistory(index) {
 
 function makeForFlightListMap(index, flat, flng) {
 	var dpoint = ol.proj.fromLonLat([flng, flat]);
+  var geoPoint = new ol.geom.Point(dpoint);
   
   var c_view = new ol.View({
       center: dpoint,
       zoom: 8
     });
 
-  var cpos = new ol.Feature({
-      geometry: new ol.geom.Point(dpoint)
-  });
-
-  var cpos_image = new ol.style.Icon(({
-        //color: '#8959A8',
-        crossOrigin: 'anonymous',
-        src: './imgs/position2.png'
-      }));
-
-  cpos.setStyle(new ol.style.Style({
-      image: cpos_image
-    }));
-
-  var vSource = new ol.source.Vector({
-      features: [cpos]
-    });
-
+  var vSource = new ol.source.Vector();
+  
+  var geoStyle = new ol.Feature();
+  geoStyle.setStyle(new ol.style.Style({
+    image: new ol.style.Circle({
+      radius: 6,
+      fill: new ol.style.Fill({
+        color: '#3399CC'
+      }),
+      stroke: new ol.style.Stroke({
+        color: '#fff',
+        width: 2
+      })
+    })
+  }));
+  
   var vVectorLayer = new ol.layer.Vector({
       source: vSource,
-      zIndex: 10000
-    });
+      zIndex: 10000,
+      style: geoStyle
+    });    
+    
 
   var vMap = new ol.Map({
       target: 'map_' + index,
@@ -863,12 +864,9 @@ function makeForFlightListMap(index, flat, flng) {
       view: c_view
     });
     
-  vMap.on('click', function (evt) {      
-			var coord = vMap.getCoordinateFromPixel(evt.pixel);
-    	drawCadastral(coord[0], coord[1], function (features) {
+  drawCadastral(geoPoint[0], geoPoint[1], function (features) {
     		vSource.addFeatures(features);
-    	});    	
-  });
+    	});
 }
 
 function drawCadastral(x, y, callback){
@@ -878,6 +876,8 @@ function drawCadastral(x, y, callback){
 	 ajaxRequest(jdata, function (r) {
 	    		hideLoader();	    	    	    
 	    		var _features = new Array();
+	    		if (r.status != "OK") return;
+	    		
           for(var idx=0; idx< r.response.result.featureCollection.features.length; idx++) {
             try{
               var geojson_Feature = r.response.result.featureCollection.features[idx];
