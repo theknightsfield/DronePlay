@@ -905,10 +905,8 @@ function makeForFlightListMap(index, flat, flng) {
   var vVectorLayer = new ol.layer.Vector({
       source: vSource,
       zIndex: 10000,
-      style: styleFunction
-    });    
-
-    
+      //style: styleFunction
+    });
 
   var vMap = new ol.Map({
       target: 'map_' + index,
