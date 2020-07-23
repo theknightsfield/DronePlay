@@ -18,6 +18,7 @@ var flightDataArray;
 var currentFlightData;
 
 var flightHistorySource;
+var flightHistoryView;
 
 var pos_icon_image = './imgs/position3.png';
 
@@ -89,7 +90,7 @@ function flightViewInit() {
 function FlightHistoryMapInit() {	
 	var dpoint = ol.proj.fromLonLat([0, 0]);
   
-  var c_view = new ol.View({
+  flightHistoryView = new ol.View({
       center: dpoint,
       zoom: 23
     });
@@ -128,7 +129,7 @@ function FlightHistoryMapInit() {
       // Improve user experience by loading tiles while animating. Will make
       // animations stutter on mobile or slow devices.
       loadTilesWhileAnimating: true,
-      view: c_view
+      view: flightHistoryView
     });	
 }
 
@@ -911,6 +912,11 @@ function makeForFlightListMap(index, flat, flng) {
   if (isSet(flightHistorySource)) {  	  	
   	flightHistorySource.addFeature(icon);  
   	drawCadastral(dpoint[0], dpoint[1], flightHistorySource);
+  	
+  	flightHistoryView.animate({
+      center: dpoint,
+      duration: 0
+    }, function(){});
   }
     
   vSource.addFeature(icon);
