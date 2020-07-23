@@ -876,21 +876,34 @@ function drawCadastral(x, y, callback){
    var jdata = {"action": "position", "daction": "cada", "clientid" : userid, "x" : x, "y": y};
   
 	 ajaxRequest(jdata, function (r) {
-	    hideLoader();	    	    	    
-	    try{
-          var _features = new Array();
-          for(var idx=0; idx< r.response.result.featureCollection.features.length; idx++) {
+	    		hideLoader();	    	    	    
+	    		var _features = new Array();
+          for(var idx=0; idx< data.response.result.featureCollection.features.length; idx++) {
             try{
-              var geojson_Feature = r.response.result.featureCollection.features[idx];
+              var geojson_Feature = data.response.result.featureCollection.features[idx];
               var geojsonObject = geojson_Feature.geometry;
               var features =  (new ol.format.GeoJSON()).readFeatures(geojsonObject);
-              callback(features);
+              for(var i=0; i< features.length; i++) {
+                try{
+                  var feature = features[i];
+                  feature["id_"] = geojson_Feature.id;
+                  feature["properties"] = {};
+                  for (var key in geojson_Feature.properties) {
+                    try{
+                      var value = geojson_Feature.properties[key];
+                      feature.values_[key] = value;
+                      feature.properties[key] = value;
+                    }catch (e){
+                    }
+                  }
+                  _features.push(feature)
+                }catch (e){
+                }
+              }
             }catch (e){
             }
           }
-          //Call_backfunction(_features);
-        }catch (e){
-        }	    	    	    	    
+          callback(_features);	    	    	    
   }, function(request,status,error) {
     hideLoader();
     alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
