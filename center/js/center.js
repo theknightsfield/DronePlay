@@ -879,7 +879,7 @@ function fnRequest_VWorldWFS2(x, y){
     param += "&format=json";
     param += "&crs=EPSG:900913";
     param += "&key=" + VWorldKey;
-    param += "&domain=" + _getServerName(mainurl);
+    param += "&domain=https://droneplay.io";
     var reqUrl = encodeURI(searchUrl + param);
     $.ajax({
       type:'GET',
