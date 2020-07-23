@@ -829,13 +829,7 @@ function makeForFlightListMap(index, flat, flng) {
   
   var vVectorLayer = new ol.layer.Vector({
       source: vSource,
-      zIndex: 10000,
-      style: new ol.style.Style({
-                stroke: new ol.style.Stroke({
-                    color: "#ff000",
-                    width: 2.5,                     
-                })
-			})
+      zIndex: 10000      
     });    
     
 
@@ -868,6 +862,16 @@ function drawCadastral(x, y, callback){
 	    		var _features = new Array();
 	    		if (r.status != "OK") return;
 	    		
+	    		var gstyle = new ol.style.Style({
+			        stroke: new ol.style.Stroke({
+			            color: 'blue',
+			            width: 3
+			        }),
+			        fill: new ol.style.Fill({
+			            color: 'rgba(0,0,255,0.6)'
+			        })
+			    });
+	    		
           for(var idx=0; idx< r.response.result.featureCollection.features.length; idx++) {
             try{
               var geojson_Feature = r.response.result.featureCollection.features[idx];
@@ -886,6 +890,8 @@ function drawCadastral(x, y, callback){
                     }catch (e){
                     }
                   }
+                  
+                  feature.setStyle(gstyle);
                   _features.push(feature)
                 }catch (e){
                 }
