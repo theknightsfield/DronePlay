@@ -865,31 +865,20 @@ function makeForFlightListMap(index, flat, flng) {
     
   vMap.on('click', function (evt) {      
 			var coord = vMap.getCoordinateFromPixel(evt.pixel);
-    	fnRequest_VWorldWFS2(coord[0], coord[1]);
+    	drawCadastral(coord[0], coord[1]);
   });
 }
 
-function fnRequest_VWorldWFS2(x, y){
-	  var VWorldKey = "F715820F-C29C-300A-99C7-EA0D11CA8729";
-    var searchUrl = "https://api.vworld.kr/req/data?";
-    var param = "service=data";
-    param += "&request=GetFeature";
-    param += "&data=LP_PA_CBND_BUBUN";
-    param += "&geomFilter=" + "POINT(" + x + " " + y +")";
-    param += "&format=json";
-    param += "&crs=EPSG:900913";
-    param += "&key=" + VWorldKey;
-    param += "&domain=https://droneplay.io";
-    var reqUrl = encodeURI(searchUrl + param);
-    $.ajax({
-      type:'GET',
-      dataType: "json",
-      crossDomain: true,
-      cache : false,      
-      url: reqUrl,
-      async: false,
-      success:function(data){
-        try{
+function drawCadastral(x, y){
+	 var userid = getCookie("dev_user_id");
+   var jdata = {"action": "position", "daction": "cada", "clientid" : useridm, "x" : x, "y": y};
+  
+	 ajaxRequest(jdata, function (r) {
+	    hideLoader();
+	    
+	    
+	    
+	    try{
           var _features = new Array();
           for(var idx=0; idx< data.response.result.featureCollection.features.length; idx++) {
             try{
@@ -919,12 +908,15 @@ function fnRequest_VWorldWFS2(x, y){
           //Call_backfunction(_features);
         }catch (e){
         }
-      },
-      
-      error : function(xhr, status, error){
-         //alert(‎"error: "+error);
-      }
-    });
+	    
+	    
+	    
+	    
+  }, function(request,status,error) {
+    hideLoader();
+    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+  });
+ 
 }
 
 
