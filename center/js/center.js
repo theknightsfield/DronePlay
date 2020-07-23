@@ -605,8 +605,7 @@ function ajaxRequestAddress(address, callback, errorcallback) {
     $.ajax({url : "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyANkdJYJ3zKXAjOdPFrhEEeq4M8WETn0-4",
            crossDomain: true,
            cache : false,
-           type : "GET",
-           async: false,
+           type : "GET",           
            success : function(r) {
              console.log(JSON.stringify(r));
              callback(r);
@@ -1213,8 +1212,7 @@ function ajaxRequest(data, callback, errorcallback) {
            cache : false,
            data : JSON.stringify(data),
            type : "POST",
-           contentType: "application/json; charset=utf-8",
-           async: false,
+           contentType: "application/json; charset=utf-8",           
            beforeSend: function(request) {
               request.setRequestHeader("droneplay-token", getCookie('user_token'));
             },
