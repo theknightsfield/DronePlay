@@ -866,7 +866,7 @@ function makeForFlightListMap(index, flat, flng) {
   vMap.on('click', function (evt) {      
 			var coord = vMap.getCoordinateFromPixel(evt.pixel);
     	drawCadastral(coord[0], coord[1], function (features) {
-    		vSource.addFeature(features);
+    		vSource.addFeatures(features);
     	});    	
   });
 }
