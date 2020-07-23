@@ -883,7 +883,7 @@ function fnRequest_VWorldWFS2(x, y){
     var reqUrl = encodeURI(searchUrl + param);
     $.ajax({
       type:'GET',
-      dataType: "jsonp",
+      dataType: "json",
       jsonp : "callback",
       url: reqUrl,
       success:function(data){
