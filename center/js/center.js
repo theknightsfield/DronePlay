@@ -709,7 +709,7 @@ function showDataForHistoryWithName(name) {
 		    	var fdata = r.data;
 		    	
 		    	moviePlayerVisible = false;
-		    	
+		    			    			    	
 		    	if ("youtube_data_id" in fdata) {
 				  	if (fdata.youtube_data_id.indexOf("youtube") >=0) {
 							setYoutubePlayer(fdata.youtube_data_id);
@@ -738,7 +738,15 @@ function showDataForHistoryWithName(name) {
       		$('#historyPanel').show();							    	
 		    	
 		      setChartData(r.data.data);
-		      hideLoader();
+		      
+		      if (isSet(fdata.flat)) {		      	
+						var dpoint = ol.proj.fromLonLat([fdata.flng, fdata.flat]);
+		    		drawCadastral(dpoint[0], dpoint[1], function (features) {		    			
+    					pointSource.addFeatures(features);
+    					hideLoader();
+    				});
+		    	}		    			   
+		    	else hideLoader();		      		      
 		    }
 		  }, function(request,status,error) {
 		    hideLoader();

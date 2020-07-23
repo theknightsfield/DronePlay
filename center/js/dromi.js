@@ -307,7 +307,7 @@ function showData(index) {
 			    if(r.result != "success") {
 			      alert("Failed to load data!");
 			    }
-			    else {
+			    else {			    				    				    	
 			      setChartData(r.data);
 			      hideDromiLoader();
 			    }
