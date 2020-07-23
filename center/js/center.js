@@ -822,7 +822,7 @@ function makeForFlightListMap(index, flat, flng) {
   
   var c_view = new ol.View({
       center: dpoint,
-      zoom: 8
+      zoom: 20
     });
 
   var vSource = new ol.source.Vector();
