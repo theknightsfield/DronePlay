@@ -827,24 +827,15 @@ function makeForFlightListMap(index, flat, flng) {
 
   var vSource = new ol.source.Vector();
   
-  var geoStyle = new ol.Feature();
-  geoStyle.setStyle(new ol.style.Style({
-    image: new ol.style.Circle({
-      radius: 6,
-      fill: new ol.style.Fill({
-        color: '#3399CC'
-      }),
-      stroke: new ol.style.Stroke({
-        color: '#fff',
-        width: 2
-      })
-    })
-  }));
-  
   var vVectorLayer = new ol.layer.Vector({
       source: vSource,
       zIndex: 10000,
-      style: geoStyle
+      style: new ol.style.Style({
+                stroke: new ol.style.Stroke({
+                    color: "#ff000",
+                    width: 2.5,                     
+                })
+			})
     });    
     
 
