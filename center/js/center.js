@@ -878,9 +878,9 @@ function drawCadastral(x, y, callback){
 	 ajaxRequest(jdata, function (r) {
 	    		hideLoader();	    	    	    
 	    		var _features = new Array();
-          for(var idx=0; idx< data.response.result.featureCollection.features.length; idx++) {
+          for(var idx=0; idx< r.response.result.featureCollection.features.length; idx++) {
             try{
-              var geojson_Feature = data.response.result.featureCollection.features[idx];
+              var geojson_Feature = r.response.result.featureCollection.features[idx];
               var geojsonObject = geojson_Feature.geometry;
               var features =  (new ol.format.GeoJSON()).readFeatures(geojsonObject);
               for(var i=0; i< features.length; i++) {
