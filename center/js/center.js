@@ -843,24 +843,85 @@ function makeForFlightListMap(index, flat, flng) {
       features: [cpos]
     });
 
-  var vectorLayer = new ol.layer.Vector({
+  var vVectorLayer = new ol.layer.Vector({
       source: vSource,
       zIndex: 10000
     });
 
-  var map = new ol.Map({
+  var vMap = new ol.Map({
       target: 'map_' + index,
       
       layers: [
           new ol.layer.Tile({
               preload: 4,
               source: new ol.source.OSM()
-          }), vectorLayer
+          }), vVectorLayer
       ],
       // Improve user experience by loading tiles while animating. Will make
       // animations stutter on mobile or slow devices.
       loadTilesWhileAnimating: true,
       view: c_view
+    });
+    
+  vMap.on('click', function (evt) {      
+			var coord = vMap.getCoordinateFromPixel(evt.pixel);
+    	alert(coord);
+  });
+}
+
+function fnRequest_VWorldWFS2(x, y){
+	  var VWorldKey = "F715820F-C29C-300A-99C7-EA0D11CA8729";
+    var searchUrl = "http://api.vworld.kr/req/data?";
+    var param = "service=data";
+    param += "&request=GetFeature";
+    param += "&data=LP_PA_CBND_BUBUN";
+    param += "&geomFilter=" + "POINT(" + x + " " + y +")";
+    param += "&format=json";
+    param += "&crs=EPSG:900913";
+    param += "&key=" + VWorldKey;
+    param += "&domain=" + _getServerName(mainurl);
+    var reqUrl = encodeURI(searchUrl + param);
+    $.ajax({
+      type:'GET',
+      dataType: "jsonp",
+      jsonp : "callback",
+      url: reqUrl,
+      success:function(data){
+        try{
+          var _features = new Array();
+          for(var idx=0; idx< data.response.result.featureCollection.features.length; idx++) {
+            try{
+              var geojson_Feature = data.response.result.featureCollection.features[idx];
+              var geojsonObject = geojson_Feature.geometry;
+              var features =  (new ol.format.GeoJSON()).readFeatures(geojsonObject);
+              for(var i=0; i< features.length; i++) {
+                try{
+                  var feature = features[i];
+                  feature["id_"] = geojson_Feature.id;
+                  feature["properties"] = {};
+                  for (var key in geojson_Feature.properties) {
+                    try{
+                      var value = geojson_Feature.properties[key];
+                      feature.values_[key] = value;
+                      feature.properties[key] = value;
+                    }catch (e){
+                    }
+                  }
+                  _features.push(feature)
+                }catch (e){
+                }
+              }
+            }catch (e){
+            }
+          }
+          //Call_backfunction(_features);
+        }catch (e){
+        }
+      },
+      
+      error : function(xhr, status, error){
+         //alert(‎"error: "+error);
+      }
     });
 }
 
