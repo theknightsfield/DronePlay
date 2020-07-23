@@ -865,7 +865,8 @@ function makeForFlightListMap(index, flat, flng) {
     
   vMap.on('click', function (evt) {      
 			var coord = vMap.getCoordinateFromPixel(evt.pixel);
-    	drawCadastral(coord[0], coord[1]);
+    	var retFeatures = drawCadastral(coord[0], coord[1]);
+    	vSource.addFeature(retFeatures);
   });
 }
 
@@ -880,28 +881,12 @@ function drawCadastral(x, y){
 	    
 	    try{
           var _features = new Array();
-          for(var idx=0; idx< data.response.result.featureCollection.features.length; idx++) {
+          for(var idx=0; idx< r.response.result.featureCollection.features.length; idx++) {
             try{
-              var geojson_Feature = data.response.result.featureCollection.features[idx];
+              var geojson_Feature = r.response.result.featureCollection.features[idx];
               var geojsonObject = geojson_Feature.geometry;
               var features =  (new ol.format.GeoJSON()).readFeatures(geojsonObject);
-              for(var i=0; i< features.length; i++) {
-                try{
-                  var feature = features[i];
-                  feature["id_"] = geojson_Feature.id;
-                  feature["properties"] = {};
-                  for (var key in geojson_Feature.properties) {
-                    try{
-                      var value = geojson_Feature.properties[key];
-                      feature.values_[key] = value;
-                      feature.properties[key] = value;
-                    }catch (e){
-                    }
-                  }
-                  _features.push(feature)
-                }catch (e){
-                }
-              }
+              return features;
             }catch (e){
             }
           }
