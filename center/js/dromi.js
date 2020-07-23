@@ -1076,8 +1076,7 @@ function ajaxRequest(data, callback, errorcallback) {
            cache : false,
            data : JSON.stringify(data),
            type : "POST",
-           contentType: "application/json; charset=utf-8",
-           async: false,
+           contentType: "application/json; charset=utf-8",           
            beforeSend: function(request) {
               request.setRequestHeader("droneplay-token", getCookie('user_token'));
             },
