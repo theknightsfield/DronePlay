@@ -956,7 +956,7 @@ function drawCadastral(x, y, vSource){
                     try{
                       var value = geojson_Feature.properties[key];
                       
-                      if (_addressText == "" && value == "addr") {
+                      if (_addressText == "" && key == "addr") {
                       	_addressText = value;
                       }
                       
