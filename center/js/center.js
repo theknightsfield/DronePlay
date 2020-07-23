@@ -865,7 +865,7 @@ function makeForFlightListMap(index, flat, flng) {
     
   vMap.on('click', function (evt) {      
 			var coord = vMap.getCoordinateFromPixel(evt.pixel);
-    	alert(coord);
+    	fnRequest_VWorldWFS2(coord[0], coord[1]);
   });
 }
 
