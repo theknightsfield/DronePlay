@@ -252,8 +252,9 @@ function createNewIcon(i, item) {
 
   pos_icon.setStyle(new ol.style.Style({
       image: new ol.style.Icon( ({
-        //color: pos_icon_color,
+      	opacity: 0.75,        
         crossOrigin: 'anonymous',
+        scale: 0.5,
         src: pos_icon_image
       }))
   }));
