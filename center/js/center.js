@@ -788,8 +788,13 @@ function showDataForHistory(index) {
   			$('#historyPanel').show();
   		
 	      setChartData(r.data.data);
-	      hideLoader();
-	    }
+	      
+	      if (isSet(r.data.flat)) {		      	
+					var dpoint = ol.proj.fromLonLat([r.data.flng, r.data.flat]);
+	    		drawCadastral(dpoint[0], dpoint[1], pointSource);
+	    	}		    			   
+	    	else hideLoader();
+		    }
 	  }, function(request,status,error) {
 	    hideLoader();
 	    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
