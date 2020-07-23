@@ -871,7 +871,7 @@ function makeForFlightListMap(index, flat, flng) {
 
 function fnRequest_VWorldWFS2(x, y){
 	  var VWorldKey = "F715820F-C29C-300A-99C7-EA0D11CA8729";
-    var searchUrl = "http://api.vworld.kr/req/data?";
+    var searchUrl = "https://api.vworld.kr/req/data?";
     var param = "service=data";
     param += "&request=GetFeature";
     param += "&data=LP_PA_CBND_BUBUN";
