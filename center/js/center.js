@@ -741,10 +741,7 @@ function showDataForHistoryWithName(name) {
 		      
 		      if (isSet(fdata.flat)) {		      	
 						var dpoint = ol.proj.fromLonLat([fdata.flng, fdata.flat]);
-		    		drawCadastral(dpoint[0], dpoint[1], function (features) {		    			
-    					pointSource.addFeatures(features);
-    					hideLoader();
-    				});
+		    		drawCadastral(dpoint[0], dpoint[1], pointSource);
 		    	}		    			   
 		    	else hideLoader();		      		      
 		    }
@@ -931,12 +928,10 @@ function makeForFlightListMap(index, flat, flng) {
       view: c_view
     });
     
-  drawCadastral(dpoint[0], dpoint[1], function (features) {
-    		vSource.addFeatures(features);
-    	});
+  drawCadastral(dpoint[0], dpoint[1], vSource);
 }
 
-function drawCadastral(x, y, callback){
+function drawCadastral(x, y, vSource){
 	 var userid = getCookie("dev_user_id");
    var jdata = {"action": "position", "daction": "cada", "clientid" : userid, "x" : x, "y": y};
   
@@ -970,7 +965,9 @@ function drawCadastral(x, y, callback){
             }catch (e){
             }
           }
-          callback(_features);	    	    	    
+          
+          vSource.addFeatures(_features);
+          	    	    	    
   }, function(request,status,error) {
     hideLoader();
     alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
