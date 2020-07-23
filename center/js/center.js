@@ -17,6 +17,8 @@ var pos_icon_style;
 var flightDataArray;
 var currentFlightData;
 
+var flightHistorySource;
+
 var pos_icon_image = './imgs/position3.png';
 
 $(function() {
@@ -74,12 +76,60 @@ function centerInit() {
 function flightViewInit() {    
     $('#historyPanel').hide();
     $('#historyList').show();
+    
+    FlightHistoryMapInit();
 
     var record_name = location.search.split('record_name=')[1];
     if (record_name != null && record_name != "") {
       showDataForHistoryWithName(decodeURI(record_name));
     }
     else hideLoader();    
+}
+
+function FlightHistoryMapInit() {	
+	var dpoint = ol.proj.fromLonLat([0, 0]);
+  
+  var c_view = new ol.View({
+      center: dpoint,
+      zoom: 23
+    });
+
+  flightHistorySource = new ol.source.Vector();  
+	
+  var vVectorLayer = new ol.layer.Vector({
+      source: vSource,
+      zIndex: 10000,
+      style: new ol.style.Style({
+            fill: new ol.style.Fill({
+              color: 'rgba(255, 255, 255, 0.2)'
+            }),
+            stroke: new ol.style.Stroke({
+              color: '#ff0000',
+              width: 2
+            }),
+            image: new ol.style.Circle({
+              radius: 7,
+              fill: new ol.style.Fill({
+                color: '#ff0000'
+              })
+            })
+          })
+    });
+    
+
+  var vMap = new ol.Map({
+      target: 'historyMap',      
+      layers: [
+          new ol.layer.Tile({
+              preload: 4,
+              source: new ol.source.OSM()
+          }), vVectorLayer
+      ],
+      // Improve user experience by loading tiles while animating. Will make
+      // animations stutter on mobile or slow devices.
+      loadTilesWhileAnimating: true,
+      view: c_view
+    });	
 }
 
 function monitorInit() {
@@ -842,9 +892,6 @@ function makeForFlightListMap(index, flat, flng) {
           })
     });
     
-  var icon = createNewIcon(0, {lat:flat, lng:flng, alt:0});
-  vSource.addFeature(icon);  
-
   var vMap = new ol.Map({
       target: 'map_' + index,      
       layers: [
@@ -859,6 +906,13 @@ function makeForFlightListMap(index, flat, flng) {
       view: c_view
     });
     
+  if (isSet(flightHistorySource)) {  	  	
+  	flightHistorySource.addFeature(icon);  
+  	drawCadastral(dpoint[0], dpoint[1], flightHistorySource);
+  }
+  
+  var icon = createNewIcon(0, {lat:flat, lng:flng, alt:0});  
+  vSource.addFeature(icon);
   drawCadastral(dpoint[0], dpoint[1], vSource);
 }
 
