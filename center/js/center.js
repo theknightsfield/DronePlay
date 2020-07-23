@@ -97,7 +97,7 @@ function FlightHistoryMapInit() {
   flightHistorySource = new ol.source.Vector();  
 	
   var vVectorLayer = new ol.layer.Vector({
-      source: vSource,
+      source: flightHistorySource,
       zIndex: 10000,
       style: new ol.style.Style({
             fill: new ol.style.Fill({
