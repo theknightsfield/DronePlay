@@ -865,20 +865,18 @@ function makeForFlightListMap(index, flat, flng) {
     
   vMap.on('click', function (evt) {      
 			var coord = vMap.getCoordinateFromPixel(evt.pixel);
-    	var retFeatures = drawCadastral(coord[0], coord[1]);
-    	vSource.addFeature(retFeatures);
+    	drawCadastral(coord[0], coord[1], function (features) {
+    		vSource.addFeatrue(features);
+    	});    	
   });
 }
 
-function drawCadastral(x, y){
+function drawCadastral(x, y, callback){
 	 var userid = getCookie("dev_user_id");
    var jdata = {"action": "position", "daction": "cada", "clientid" : userid, "x" : x, "y": y};
   
 	 ajaxRequest(jdata, function (r) {
-	    hideLoader();
-	    
-	    
-	    
+	    hideLoader();	    	    	    
 	    try{
           var _features = new Array();
           for(var idx=0; idx< r.response.result.featureCollection.features.length; idx++) {
@@ -886,17 +884,13 @@ function drawCadastral(x, y){
               var geojson_Feature = r.response.result.featureCollection.features[idx];
               var geojsonObject = geojson_Feature.geometry;
               var features =  (new ol.format.GeoJSON()).readFeatures(geojsonObject);
-              return features;
+              callback(features);
             }catch (e){
             }
           }
           //Call_backfunction(_features);
         }catch (e){
-        }
-	    
-	    
-	    
-	    
+        }	    	    	    	    
   }, function(request,status,error) {
     hideLoader();
     alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
