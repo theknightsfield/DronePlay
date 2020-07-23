@@ -77,9 +77,7 @@ function centerInit() {
 function flightViewInit() {    
     $('#historyPanel').hide();
     $('#historyList').show();
-    
-    FlightHistoryMapInit();
-
+            
     var record_name = location.search.split('record_name=')[1];
     if (record_name != null && record_name != "") {
       showDataForHistoryWithName(decodeURI(record_name));
@@ -710,6 +708,9 @@ function getFlightListForHistory() {
       }
 
 			$('#getFlightListBtn').hide(1500);
+			
+			$('#historyMap').show();
+			FlightHistoryMapInit();
       setFlightlistHistory(r.data);      
     }
     else {
