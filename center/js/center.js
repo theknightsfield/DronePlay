@@ -1172,7 +1172,7 @@ function mapInit() {
       image: new ol.style.Icon( ({
       	opacity: 0.75,        
         crossOrigin: 'anonymous',
-        scale: 3,
+        scale: 2,
         src: pos_icon_image
       }))
   });
