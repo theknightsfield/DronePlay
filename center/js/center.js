@@ -937,7 +937,7 @@ function drawCadastral(x, y, vSource){
   
 	 ajaxRequest(jdata, function (r) {
 	    		hideLoader();	    	    	    	    		
-	    		if (r.status !== "OK") return;
+	    		if (r.response.status !== "OK") return;
 	    		
 	    		var _features = new Array();
 	    		
