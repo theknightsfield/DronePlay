@@ -851,6 +851,9 @@ function makeForFlightListMap(index, flat, flng) {
             })
           })
     });
+    
+  var icon = createNewIcon(0, {lat:flat, lng:flng, alt:0});
+  vSource.addFeature(icon);  
 
   var vMap = new ol.Map({
       target: 'map_' + index,      
