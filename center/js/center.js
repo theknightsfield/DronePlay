@@ -905,13 +905,14 @@ function makeForFlightListMap(index, flat, flng) {
       loadTilesWhileAnimating: true,
       view: c_view
     });
+  
+  var icon = createNewIcon(0, {lat:flat, lng:flng, alt:0});  
     
   if (isSet(flightHistorySource)) {  	  	
   	flightHistorySource.addFeature(icon);  
   	drawCadastral(dpoint[0], dpoint[1], flightHistorySource);
   }
-  
-  var icon = createNewIcon(0, {lat:flat, lng:flng, alt:0});  
+    
   vSource.addFeature(icon);
   drawCadastral(dpoint[0], dpoint[1], vSource);
 }
