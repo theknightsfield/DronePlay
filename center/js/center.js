@@ -871,7 +871,7 @@ function makeForFlightListMap(index, flat, flng) {
 
 function drawCadastral(x, y){
 	 var userid = getCookie("dev_user_id");
-   var jdata = {"action": "position", "daction": "cada", "clientid" : useridm, "x" : x, "y": y};
+   var jdata = {"action": "position", "daction": "cada", "clientid" : userid, "x" : x, "y": y};
   
 	 ajaxRequest(jdata, function (r) {
 	    hideLoader();
