@@ -940,6 +940,7 @@ function drawCadastral(x, y, vSource){
 	    		if (r.response.status !== "OK") return;
 	    		
 	    		var _features = new Array();
+	    		var _addressText = "";
 	    		
           for(var idx=0; idx< r.response.result.featureCollection.features.length; idx++) {
             try{
@@ -954,6 +955,11 @@ function drawCadastral(x, y, vSource){
                   for (var key in geojson_Feature.properties) {
                     try{
                       var value = geojson_Feature.properties[key];
+                      
+                      if (_addressText == "" && value == "addr") {
+                      	_addressText = value;
+                      }
+                      
                       feature.values_[key] = value;
                       feature.properties[key] = value;
                     }catch (e){
@@ -967,6 +973,8 @@ function drawCadastral(x, y, vSource){
             }
           }
           
+          var curText = $("#record_name_field").text();
+          $("#record_name_field").text(curText + " / " + _addressText);
           vSource.addFeatures(_features);
           	    	    	    
   }, function(request,status,error) {
