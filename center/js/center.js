@@ -221,7 +221,8 @@ function setYawStatus(degrees) {
 		if (!isSet(degrees)) return;
 		if (!isSet($('#yawStatus'))) return;
 		
-		var degress = (degress * 1) < 0 ? (360 + degrees) : degrees;
+		degrees *= 1;
+				
 		$("#yawStatus").attr("src", $("#yawStatus").attr("src")+"?timestamp=" + new Date().getTime());
 		
     $('#yawStatus').css({
@@ -232,6 +233,7 @@ function setYawStatus(degrees) {
       '-o-transform': 'rotate(' + degrees + 'deg)'
     }); 
 }
+
 
 function setRollStatus(degrees) {
 		if (!isSet(degrees)) return;
@@ -251,10 +253,10 @@ function setRollStatus(degrees) {
       var context = canvas.getContext('2d');      
 			context.clearRect(0, 0, canvas.width, canvas.height);
       context.beginPath();
-      context.arc(20, 20, 10, radians1, radians2, false);
+      context.arc(30, 30, 20, radians1, radians2, false);
       context.closePath();
       context.lineWidth = 1;
-      context.fillStyle = 'red';
+      context.fillStyle = 'blue';
       context.fill();
       //context.strokeStyle = '#550000';
       context.stroke();
