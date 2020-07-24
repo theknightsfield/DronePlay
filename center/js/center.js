@@ -1448,6 +1448,9 @@ function flyDirectTo(location, yaw, done) {
 		var duration = 1;
     var called = false;
 
+		yaw *= 1;
+		yaw = yaw < 0 ? (360 + yaw) : yaw;
+				
     current_pos.setGeometry(new ol.geom.Point(location));
     current_pos_image.setRotation(yaw);
 
@@ -1474,6 +1477,9 @@ function flyTo(location, yaw, done) {
     var zoom = current_view.getZoom();
     var parts = 2;
     var called = false;
+    
+    yaw *= 1;
+		yaw = yaw < 0 ? (360 + yaw) : yaw;
 
     current_pos.setGeometry(new ol.geom.Point(location));
     current_pos_image.setRotation(yaw);
