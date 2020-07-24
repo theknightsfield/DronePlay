@@ -178,9 +178,7 @@ gtag('config', 'UA-130136264-4');
 
 
                       <div class="col-lg-6">
-		                        <div class="panel panel-default" id="map" style="height:400px;">
-
-		                        </div>
+		                        <div class="panel panel-default" id="map" style="height:400px;"></div>
 
 		                        <div class="panel panel-primary">
 		                        	<div class="panel-heading">
@@ -189,14 +187,23 @@ gtag('config', 'UA-130136264-4');
 		                        	<div class="panel-body">
 				                      		<span id="position_info"> ... </span>
 				                      </div>
-															<div class="panel-body" id="chartView">
-								                      <canvas id="chartArea"></canvas>
-					                    </div>
+				                      
+				                     	<div class="panel-body">
+				                      		<img src="imgs/roll.png" id="rollStatus" style="width:60;height:60">
+				                      </div>												
 		                        </div>
                       </div>
 
                     </div>
-
+                    
+                    <div class="row">
+                    		<div class="col-lg-6">		                        	
+                    					<div class="panel-default" id="chartView">
+								                      <canvas id="chartArea"></canvas>
+					                    </div>
+  											</div>
+                    </div>
+                    
                     <div class="row" id="historyList">
                       <div class="col-lg-6">
 														<div class="panel panel-primary">

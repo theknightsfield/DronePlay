@@ -586,6 +586,7 @@ function setSlider(i) {
             }
 
             var latlng = ol.proj.fromLonLat([locdata.lng * 1, locdata.lat * 1]);
+            setRollStatus(locdata.roll);
             flyDirectTo(latlng, locdata.yaw, function() {isMoved=true;});
 						showCurrentInfo([locdata.lng * 1, locdata.lat * 1], locdata.alt);
 					}
@@ -698,6 +699,7 @@ function drawLineGraph() {
 
                           //if (isMoved == true) {
                           //  isMoved = false;
+                          	setRollStatus(locdata.roll);
                             flyDirectTo(latlng, locdata.yaw, function() {isMoved=true;});
                             showCurrentInfo([locdata.lng * 1, locdata.lat * 1], locdata.alt);
                           //}
