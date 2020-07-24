@@ -236,12 +236,20 @@ function setYawStatus(degrees) {
 function setRollStatus(degrees) {
 		if (!isSet(degrees)) return;
 		if (!isSet($('#rollCanvas'))) return;
+		
+		var degrees = (degress * 1) < 0 ? (360 + degrees) : degrees;
+		var degrees2 = degrees + 180;
+		
+		if (degrees2 > 360) degrees2 = degrees2 - 360;
+		
+		var radians1 = (Math.PI/180)*degrees;
+		var radians2 = (Math.PI/180)*degrees2;
 						
 			var canvas = document.getElementById('rollCanvas');
       var context = canvas.getContext('2d');      
 			context.clearRect(0, 0, canvas.width, canvas.height);
       context.beginPath();
-      context.arc(20, 20, 10, -degrees, degrees, false);
+      context.arc(20, 20, 10, radians1, radians2, false);
       context.closePath();
       context.lineWidth = 1;
       context.fillStyle = 'red';
