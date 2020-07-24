@@ -1282,6 +1282,7 @@ function mapInit() {
   var dokdo = ol.proj.fromLonLat([131.8661992, 37.2435813]);
   var scaleLineControl = new ol.control.ScaleLine();
   
+  
   pos_icon_style = new ol.style.Style({
       image: new ol.style.Icon( ({
       	opacity: 0.75,        
@@ -1347,6 +1348,7 @@ function mapInit() {
       source: vectorSource,
       zIndex: 10000
     });
+ 
 
   pointSource = new ol.source.Vector({});
   var pointLayer = new ol.layer.Vector({
@@ -1369,16 +1371,39 @@ function mapInit() {
     });
 
   scaleLineControl.setUnits("metric");
+  
+     
+    
+  
+  var bingLayer = new ol.layer.Tile({
+    visible: true,
+    preload: Infinity,
+    source: new ol.source.BingMaps({
+        // We need a key to get the layer from the provider. 
+        // Sign in with Bing Maps and you will get your key (for free)
+        key: 'AgMfldbj_9tx3cd298eKeRqusvvGxw1EWq6eOgaVbDsoi7Uj9kvdkuuid-bbb6CK',
+        imagerySet: 'AerialWithLabels', // or 'Road', 'AerialWithLabels', etc.
+        // use maxZoom 19 to see stretched tiles instead of the Bing Maps
+        // "no photos at this zoom level" tiles
+        maxZoom: 19
+    })
+	});
+  
+  
   map = new ol.Map({
       target: 'map',
       controls: ol.control.defaults().extend([
             scaleLineControl
           ]),
       layers: [
+      		/*
           new ol.layer.Tile({
               preload: 4,
               source: new ol.source.OSM()
-          }), vectorLayer, pointLayer
+          })
+          */
+          bingLayer
+          , vectorLayer, pointLayer
       ],
       // Improve user experience by loading tiles while animating. Will make
       // animations stutter on mobile or slow devices.
