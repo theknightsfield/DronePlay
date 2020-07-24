@@ -1450,6 +1450,8 @@ function flyDirectTo(location, yaw, done) {
 
 		yaw *= 1;
 		yaw = yaw < 0 ? (360 + yaw) : yaw;
+		
+		yaw = Math.PI/180 * yaw;
 				
     current_pos.setGeometry(new ol.geom.Point(location));
     current_pos_image.setRotation(yaw);
@@ -1480,6 +1482,7 @@ function flyTo(location, yaw, done) {
     
     yaw *= 1;
 		yaw = yaw < 0 ? (360 + yaw) : yaw;
+		yaw = Math.PI/180 * yaw;
 
     current_pos.setGeometry(new ol.geom.Point(location));
     current_pos_image.setRotation(yaw);
