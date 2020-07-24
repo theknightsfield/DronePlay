@@ -237,7 +237,9 @@ function setRollStatus(degrees) {
 		if (!isSet(degrees)) return;
 		if (!isSet($('#rollCanvas'))) return;
 		
-		var degrees = (degrees * 1) < 0 ? (360 + degrees) : degrees;
+		degrees *= 1;
+		
+		var degrees = degrees < 0 ? (360 + degrees) : degrees;
 		var degrees2 = degrees + 180;
 		
 		if (degrees2 > 360) degrees2 = degrees2 - 360;
