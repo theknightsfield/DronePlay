@@ -236,11 +236,10 @@ function setYawStatus(degrees) {
 function setRollStatus(degrees) {
 		if (!isSet(degrees)) return;
 		if (!isSet($('#rollCanvas'))) return;
-		
-		
-		
+						
 			var canvas = document.getElementById('rollCanvas');
-      var context = canvas.getContext('2d');
+      var context = canvas.getContext('2d');      
+			context.clearRect(0, 0, canvas.width, canvas.height);
       context.beginPath();
       context.arc(20, 20, 10, -degrees, degrees, false);
       context.closePath();
