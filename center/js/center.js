@@ -1332,7 +1332,7 @@ function mapInit() {
   current_pos_image = new ol.style.Icon(({
         //color: '#8959A8',
         crossOrigin: 'anonymous',
-        src: './imgs/position2.png        
+        src: './imgs/position2.png'
       }));
 
   current_pos.setStyle(new ol.style.Style({
