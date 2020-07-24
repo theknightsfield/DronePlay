@@ -1329,6 +1329,7 @@ function mapInit() {
         //color: '#8959A8',
         crossOrigin: 'anonymous',
         src: './imgs/position2.png'
+        rotateWithView: true 
       }));
 
   current_pos.setStyle(new ol.style.Style({
