@@ -221,12 +221,14 @@ function setRollStatus(degrees) {
 		if (!isSet(degrees)) return;
 		if (!isSet($('#rollStatus'))) return;
 		
+		var degress = (degress * 1) < 0 ? (360 + degrees) : degrees;
+		
     $('#rollStatus').css({
-      'transform': 'rotate(' + degrees + 'rad)',
-      '-ms-transform': 'rotate(' + degrees + 'rad)',
-      '-moz-transform': 'rotate(' + degrees + 'rad)',
-      '-webkit-transform': 'rotate(' + degrees + 'rad)',
-      '-o-transform': 'rotate(' + degrees + 'rad)'
+      'transform': 'rotate(' + degrees + 'deg)',
+      '-ms-transform': 'rotate(' + degrees + 'deg)',
+      '-moz-transform': 'rotate(' + degrees + 'deg)',
+      '-webkit-transform': 'rotate(' + degrees + 'deg)',
+      '-o-transform': 'rotate(' + degrees + 'deg)'
     }); 
 }
 
