@@ -217,7 +217,22 @@ function setSliderPosForDesign(i) {
 		$('#sliderText').html( i + 1 );
 }
 
-function setRollStatus(degrees) {	  
+function setYawStatus(degrees) {
+		if (!isSet(degrees)) return;
+		if (!isSet($('#yawStatus'))) return;
+		
+		var degress = (degress * 1) < 0 ? (360 + degrees) : degrees;
+		
+    $('#yawStatus').css({
+      'transform': 'rotate(' + degrees + 'deg)',
+      '-ms-transform': 'rotate(' + degrees + 'deg)',
+      '-moz-transform': 'rotate(' + degrees + 'deg)',
+      '-webkit-transform': 'rotate(' + degrees + 'deg)',
+      '-o-transform': 'rotate(' + degrees + 'deg)'
+    }); 
+}
+
+function setRollStatus(degrees) {
 		if (!isSet(degrees)) return;
 		if (!isSet($('#rollStatus'))) return;
 		
@@ -251,6 +266,7 @@ function initSlider(i) {
 						var npos = ol.proj.fromLonLat([d.lng * 1, d.lat * 1]);
 						
 						setRollStatus(d.roll);
+						setYawStatus(d.yaw);
 						flyDirectTo(npos, d.yaw, function() {});
 					}
 	});
@@ -550,6 +566,7 @@ function moveToPositionOnMap(lat, lng, yaw, roll) {
   var npos = ol.proj.fromLonLat([lng * 1, lat * 1]);
   
   setRollStatus(roll);      
+  setYawStatus(yaw);
   flyTo(npos, yaw, function() {});
 }
 
