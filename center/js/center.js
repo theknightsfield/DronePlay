@@ -91,7 +91,7 @@ function FlightHistoryMapInit() {
   
   flightHistoryView = new ol.View({
       center: dpoint,
-      zoom: 6
+      zoom: 8
     });
 
   flightHistorySource = new ol.source.Vector();  
@@ -126,7 +126,7 @@ function FlightHistoryMapInit() {
         imagerySet: 'AerialWithLabels', // or 'Road', 'AerialWithLabels', etc.
         // use maxZoom 19 to see stretched tiles instead of the Bing Maps
         // "no photos at this zoom level" tiles
-        maxZoom: 5
+        maxZoom: 19
     })
 	});
 	
