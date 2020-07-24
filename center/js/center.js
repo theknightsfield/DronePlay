@@ -243,7 +243,7 @@ function setPitchStatus(degrees) {
 		if (!isSet($('#pitchStatus'))) return;
 		
 		degrees *= 1;
-		degrees = 180 + degrees;		
+		degrees = degrees < 0 ? (360 + degrees) : degrees;
 						
 		$("#pitchStatus").attr("src", $("#pitchStatus").attr("src"));
 		
