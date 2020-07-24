@@ -239,7 +239,7 @@ function setYawStatus(degrees) {
 
 
 function setRollStatus(roll) {
-		if (!isSet(degrees)) return;
+		if (!isSet(roll)) return;
 		if (!isSet($('#rollCanvas'))) return;
 		
 		var degrees = roll * 1;
