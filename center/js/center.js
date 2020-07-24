@@ -244,7 +244,7 @@ function setRollStatus(degrees) {
 		
 		degrees *= 1;
 		
-		degrees = degrees < 0 ? (180 + degrees) : degrees;
+		degrees = 90 + degree;
 		var degrees2 = degrees + 180;						
 		
 		if (degrees2 > 360) degrees2 = degrees2 - 360;
