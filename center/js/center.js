@@ -235,18 +235,20 @@ function setYawStatus(degrees) {
 
 function setRollStatus(degrees) {
 		if (!isSet(degrees)) return;
-		if (!isSet($('#rollStatus'))) return;
+		if (!isSet($('#rollCanvas'))) return;
 		
-		var degress = (degress * 1) < 0 ? (360 + degrees) : degrees;
-		$("#rollStatus").attr("src", $("#rollStatus").attr("src")+"?timestamp=" + new Date().getTime());
 		
-    $('#rollStatus').css({
-      'transform': 'rotate(' + degrees + 'deg)',
-      '-ms-transform': 'rotate(' + degrees + 'deg)',
-      '-moz-transform': 'rotate(' + degrees + 'deg)',
-      '-webkit-transform': 'rotate(' + degrees + 'deg)',
-      '-o-transform': 'rotate(' + degrees + 'deg)'
-    }); 
+		
+			var canvas = document.getElementById('rollCanvas');
+      var context = canvas.getContext('2d');
+      context.beginPath();
+      context.arc(20, 20, 10, -degrees, degrees, false);
+      context.closePath();
+      context.lineWidth = 1;
+      context.fillStyle = 'red';
+      context.fill();
+      //context.strokeStyle = '#550000';
+      context.stroke();
 }
 
 function initSlider(i) {
