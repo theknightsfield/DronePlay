@@ -78,7 +78,7 @@ function deleteData(index) {
     }
   }, function(request,status,error) {
     hideDromiLoader();
-    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    monitor("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
   });
 }
 
@@ -95,7 +95,7 @@ function saveYoutubeUrl(data_id) {
     }
   }, function(request,status,error) {
     hideDromiLoader();
-    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    monitor("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
   });
 }
 
@@ -313,7 +313,7 @@ function showData(index) {
 			    }
 			  }, function(request,status,error) {
 			    hideDromiLoader();
-			    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			    monitor("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			  });
 
 		}, 1000);
@@ -371,7 +371,7 @@ function deleteFlightData(index) {
     }
   }, function(request,status,error) {
     hideDromiLoader();
-    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    monitor("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
   });
 }
 
@@ -399,7 +399,7 @@ function getFlightListForDromi() {
     }
   }, function(request,status,error) {
     hideDromiLoader();
-    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    monitor("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
   });
 }
 
@@ -421,7 +421,7 @@ function getDromiList() {
     }
   }, function(request,status,error) {
     hideDromiLoader();
-    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    monitor("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
   });
 }
 
@@ -487,7 +487,7 @@ function uploadData(name, mname) {
     }, function(request,status,error) {
       cur_flightrecord_name = "";
       hideDromiLoader();
-      alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+      monitor("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
     });
 }
 
@@ -587,6 +587,7 @@ function setSlider(i) {
 
             var latlng = ol.proj.fromLonLat([locdata.lng * 1, locdata.lat * 1]);
             setRollStatus(locdata.roll);
+            setYawStatus(locdata.yaw);
             flyDirectTo(latlng, locdata.yaw, function() {isMoved=true;});
 						showCurrentInfo([locdata.lng * 1, locdata.lat * 1], locdata.alt);
 					}
@@ -631,10 +632,8 @@ function drawPosIcon() {
           });
 
 			var locdata = null;
-      if (feature) {
-          //alert(feature.get('name'));
-          var ii = feature.get('mindex');
-          //alert("index:" + ii);
+      if (feature) {          
+          var ii = feature.get('mindex');          
           openLineTip(window.myLine, 0, ii);
           openScatterTip(window.myScatter, 0, ii);
 
@@ -700,6 +699,7 @@ function drawLineGraph() {
                           //if (isMoved == true) {
                           //  isMoved = false;
                           	setRollStatus(locdata.roll);
+                          	setYawStatus(locdata.yaw);
                             flyDirectTo(latlng, locdata.yaw, function() {isMoved=true;});
                             showCurrentInfo([locdata.lng * 1, locdata.lat * 1], locdata.alt);
                           //}
@@ -1066,7 +1066,7 @@ function setUploadData() {
     if (window.File && window.FileReader && window.FileList && window.Blob) {
         document.getElementById('filePicker').addEventListener('change', handleFileSelect, false);
     } else {
-        alert('The File APIs are not fully supported in this browser.');
+        monitor('The File APIs are not fully supported in this browser.');
     }
 }
 

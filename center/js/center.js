@@ -319,7 +319,7 @@ function setDesignTableByFlightRecord(name) {
     }
   }, function(request,status,error) {
 
-    alert("Sorry, something wrong.");
+    monitor("Sorry, something wrong.");
     hideLoader();
   });
 }
@@ -500,7 +500,7 @@ function getList() {
       	alert("Error ! - 0");
       }
     }, function(request,status,error) {
-      alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+      monitor("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
     });
 }
 
@@ -527,7 +527,7 @@ function getMissionToMonitor(id) {
       	alert("Error ! - 1");
       }
     }, function(request,status,error) {
-      alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+      monitor("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
       $("#loader").hide();
     });
 }
@@ -664,9 +664,7 @@ function removeFlightData(index) {
 function appendMissionList(data) {
     if (data == null) return;
     if (data.length == 0) return;
-    data.forEach(function (item, index, array) {
-        console.log(item, index);
-
+    data.forEach(function (item, index, array) {        
         var appendRow = "<tr class='odd gradeX' id='row_" + index + "'><td class='center'>"
         + "<a href='./monitor.html?mission_name=" + item['name'] + "'>"
         + item['name']
@@ -685,12 +683,11 @@ function ajaxRequestAddress(address, callback, errorcallback) {
            crossDomain: true,
            cache : false,
            type : "GET",           
-           success : function(r) {
-             console.log(JSON.stringify(r));
+           success : function(r) {             
              callback(r);
            },
            error:function(request,status,error){
-               console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+               monitor("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                errorcallback(request,status,error);
            }
     });
@@ -754,7 +751,7 @@ function getFlightListForHistory() {
     }
   }, function(request,status,error) {
     hideLoader();
-    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    monitor("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
   });
 }
 
@@ -827,7 +824,7 @@ function showDataForHistoryWithName(name) {
     }
   }, function(request,status,error) {
     hideLoader();
-    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    monitor("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
   });
 }
 
@@ -885,7 +882,7 @@ function showDataForHistory(index) {
 		    }
 	  }, function(request,status,error) {
 	    hideLoader();
-	    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+	    monitor("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 	  });
 	}
 	else {
@@ -1008,7 +1005,7 @@ function drawCadastral(x, y, vSource){
           	    	    	    
   }, function(request,status,error) {
     hideLoader();
-    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    monitor("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
   });
  
 }
@@ -1035,7 +1032,7 @@ function getFlightList() {
     }
   }, function(request,status,error) {
     hideLoader();
-    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    monitor("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
   });
 }
 
@@ -1138,7 +1135,7 @@ function deleteFlightData(index) {
     }
   }, function(request,status,error) {
     hideLoader();
-    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    monitor("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
   });
 }
 
@@ -1161,7 +1158,7 @@ function btnRemove(name, trname) {
         $("#" + trname).remove();
       }
       else {
-      	alert("Error ! - 4");
+      	monitor("Error ! - 4");
       }
     }, function(request,status,error) {});
 }
@@ -1245,12 +1242,11 @@ function ajaxRequest(data, callback, errorcallback) {
            beforeSend: function(request) {
               request.setRequestHeader("droneplay-token", getCookie('user_token'));
             },
-           success : function(r) {
-             console.log(JSON.stringify(r));
+           success : function(r) {             
              callback(r);
            },
            error:function(request,status,error){
-               console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+               monitor("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
                errorcallback(request,status,error);
            }
     });
@@ -1548,7 +1544,7 @@ function getBase64(file, mname, callback) {
    };
    reader.onerror = function (error) {
    	 hideLoader();
-     console.log('Error: ', error);
+     monitor('Error: ', error);
    };
 }
 
@@ -1570,7 +1566,7 @@ function uploadFlightListCallback(mname, base64file) {
       }
     }, function(request,status,error) {
     	hideLoader();
-      alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+      monitor("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
     });
 }
 
