@@ -244,13 +244,8 @@ function setRollStatus(degrees) {
 		
 		degrees *= 1;
 		
-		degrees = degrees < 0 ? (360 + degrees) : degrees;
-		var degrees2 = degrees + 180;
-		
-		var bdClock = false;
-		if (degrees >= 180) {
-			bdClock = true;
-		}
+		degrees = degrees < 0 ? (180 + degrees) : degrees;
+		var degrees2 = degrees + 180;						
 		
 		if (degrees2 > 360) degrees2 = degrees2 - 360;
 		
@@ -261,7 +256,7 @@ function setRollStatus(degrees) {
       var context = canvas.getContext('2d');      
 			context.clearRect(0, 0, canvas.width, canvas.height);
       context.beginPath();
-      context.arc(30, 30, 20, radians1, radians2, bdClock);
+      context.arc(30, 30, 20, radians1, radians2, false);
       context.closePath();
       context.lineWidth = 1;
       context.fillStyle = 'blue';
