@@ -247,7 +247,7 @@ function setPitchStatus(degrees) {
 						
 		$("#pitchStatus").attr("src", $("#pitchStatus").attr("src"));
 		
-    $('#yawStatus').css({
+    $('#pitchStatus').css({
       'transform': 'rotate(' + degrees + 'deg)',
       '-ms-transform': 'rotate(' + degrees + 'deg)',
       '-moz-transform': 'rotate(' + degrees + 'deg)',
