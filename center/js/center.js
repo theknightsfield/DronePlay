@@ -238,11 +238,11 @@ function setYawStatus(degrees) {
 }
 
 
-function setPitchStatus(degrees) {
-		if (!isSet(degrees)) return;
+function setPitchStatus(pitch) {
+		if (!isSet(pitch)) return;
 		if (!isSet($('#pitchStatus'))) return;
 		
-		degrees *= 1;
+		var degrees = pitch *= 1;
 		degrees = degrees < 0 ? (360 + degrees) : degrees;
 						
 		$("#pitchStatus").attr("src", $("#pitchStatus").attr("src"));
@@ -255,7 +255,7 @@ function setPitchStatus(degrees) {
       '-o-transform': 'rotate(' + degrees + 'deg)'
     }); 
     
-    $('#pitchText').text(degrees);
+    $('#pitchText').text(pitch);
 }
 
 function setRollStatus(roll) {
