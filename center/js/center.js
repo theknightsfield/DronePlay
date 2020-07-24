@@ -238,6 +238,26 @@ function setYawStatus(degrees) {
 }
 
 
+function setPitchStatus(degrees) {
+		if (!isSet(degrees)) return;
+		if (!isSet($('#pitchStatus'))) return;
+		
+		degrees *= 1;
+		degrees = 180 + degrees;		
+						
+		$("#pitchStatus").attr("src", $("#pitchStatus").attr("src")+"?timestamp=" + new Date().getTime());
+		
+    $('#yawStatus').css({
+      'transform': 'rotate(' + degrees + 'deg)',
+      '-ms-transform': 'rotate(' + degrees + 'deg)',
+      '-moz-transform': 'rotate(' + degrees + 'deg)',
+      '-webkit-transform': 'rotate(' + degrees + 'deg)',
+      '-o-transform': 'rotate(' + degrees + 'deg)'
+    }); 
+    
+    $('#pitchText').text(degrees);
+}
+
 function setRollStatus(roll) {
 		if (!isSet(roll)) return;
 		if (!isSet($('#rollCanvas'))) return;
@@ -287,6 +307,7 @@ function initSlider(i) {
 						
 						setRollStatus(d.roll);
 						setYawStatus(d.yaw);
+						setPitchStatus(d.pitch);
 						flyDirectTo(npos, d.yaw, function() {});
 					}
 	});
@@ -308,7 +329,7 @@ function initSlider(i) {
 			var d = currentFlightData[index - 1];
 
 			setDataToDesignTableWithFlightRecord(index - 1);
-			moveToPositionOnMap(d.lat * 1, d.lng * 1, d.yaw, d.roll, function() {});
+			moveToPositionOnMap(d.lat * 1, d.lng * 1, d.yaw, d.roll, d.pitch, function() {});
 
 			$("#slider").slider('value', index);
 			$('#sliderText').html( index );
@@ -416,7 +437,7 @@ function setDesignTableWithFlightRecord() {
   map.addLayer(posLayer);
 
 
-  moveToPositionOnMap(currentFlightData[0].lat, currentFlightData[0].lng, currentFlightData[0].yaw, currentFlightData[0].roll);
+  moveToPositionOnMap(currentFlightData[0].lat, currentFlightData[0].lng, currentFlightData[0].yaw, currentFlightData[0].roll, currentFlightData[0].pitch);
 }
 
 
@@ -582,11 +603,12 @@ function appendMissionsToMonitor(mission) {
     });
 }
 
-function moveToPositionOnMap(lat, lng, yaw, roll) {
+function moveToPositionOnMap(lat, lng, yaw, roll, pitch) {
   var npos = ol.proj.fromLonLat([lng * 1, lat * 1]);
   
   setRollStatus(roll);      
   setYawStatus(yaw);
+  setPitchStatus(pitch);
   flyTo(npos, yaw, function() {});
 }
 
@@ -678,7 +700,7 @@ function removeFlightData(index) {
 	$("#slider").slider('value', newIndex + 1);
 	$("#slider").slider('option',{min: 1, max: (newIndex + 1)});
 
-	moveToPositionOnMap(currentFlightData[newIndex].lat, currentFlightData[newIndex].lng, currentFlightData[newIndex].yaw, currentFlightData[newIndex].roll);
+	moveToPositionOnMap(currentFlightData[newIndex].lat, currentFlightData[newIndex].lng, currentFlightData[newIndex].yaw, currentFlightData[newIndex].roll, currentFlightData[newIndex].pitch);
 }
 
 function appendMissionList(data) {
