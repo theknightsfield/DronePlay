@@ -528,7 +528,7 @@ function addChartItem(i, item) {
     if (dsec > 3600)
     	dsec = dsec / 1000;
 
-    chartLocData.push({lat : item.lat, lng : item.lng, alt: item.alt, yaw : item.yaw, dsec : dsec});
+    chartLocData.push({lat : item.lat, lng : item.lng, alt: item.alt, yaw : item.yaw, roll: item.roll, pitch: item.pitch, dsec : dsec});
 
     var pos_icon = new ol.Feature({
         geometry: new ol.geom.Point(ol.proj.fromLonLat([item.lng * 1, item.lat * 1])),
