@@ -233,6 +233,8 @@ function setYawStatus(degrees) {
       '-webkit-transform': 'rotate(' + degrees + 'deg)',
       '-o-transform': 'rotate(' + degrees + 'deg)'
     }); 
+    
+    $('#yawText').text(degrees);
 }
 
 
@@ -261,6 +263,8 @@ function setRollStatus(degrees) {
       context.fill();
       //context.strokeStyle = '#550000';
       context.stroke();
+      
+    $('#rollText').text(degrees);
 }
 
 function initSlider(i) {
@@ -1328,8 +1332,7 @@ function mapInit() {
   current_pos_image = new ol.style.Icon(({
         //color: '#8959A8',
         crossOrigin: 'anonymous',
-        src: './imgs/position2.png'
-        rotateWithView: true 
+        src: './imgs/position2.png        
       }));
 
   current_pos.setStyle(new ol.style.Style({
