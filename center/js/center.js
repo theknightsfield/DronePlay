@@ -254,7 +254,7 @@ function setRollStatus(degrees) {
       var context = canvas.getContext('2d');      
 			context.clearRect(0, 0, canvas.width, canvas.height);
       context.beginPath();
-      context.arc(30, 30, 20, radians1, radians2, false);
+      context.arc(30, 30, 20, radians1, radians2, true);
       context.closePath();
       context.lineWidth = 1;
       context.fillStyle = 'blue';
