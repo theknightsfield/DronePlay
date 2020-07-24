@@ -224,7 +224,7 @@ function setYawStatus(degrees) {
 		degrees *= 1;
 		degrees = degrees < 0 ? (360 + degrees) : degrees;
 						
-		$("#yawStatus").attr("src", $("#yawStatus").attr("src")+"?timestamp=" + new Date().getTime());
+		$("#yawStatus").attr("src", $("#yawStatus").attr("src"));
 		
     $('#yawStatus').css({
       'transform': 'rotate(' + degrees + 'deg)',
@@ -245,7 +245,7 @@ function setPitchStatus(degrees) {
 		degrees *= 1;
 		degrees = 180 + degrees;		
 						
-		$("#pitchStatus").attr("src", $("#pitchStatus").attr("src")+"?timestamp=" + new Date().getTime());
+		$("#pitchStatus").attr("src", $("#pitchStatus").attr("src"));
 		
     $('#yawStatus').css({
       'transform': 'rotate(' + degrees + 'deg)',
