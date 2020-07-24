@@ -219,7 +219,7 @@ function setSliderPosForDesign(i) {
 
 function setRollStatus(degrees) {	  
 		if (!isSet(degrees)) return;
-		if (!isSet($('#rollStatus')) return;
+		if (!isSet($('#rollStatus'))) return;
 		
     $('#rollStatus').css({
       'transform': 'rotate(' + degrees + 'deg)',
