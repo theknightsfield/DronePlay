@@ -248,7 +248,7 @@ function setRollStatus(degrees) {
 		var degrees2 = degrees + 180;
 		
 		var bdClock = false;
-		if (degrees > 180) {
+		if (degrees >= 180) {
 			bdClock = true;
 		}
 		
