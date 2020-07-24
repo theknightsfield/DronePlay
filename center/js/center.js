@@ -238,11 +238,11 @@ function setYawStatus(degrees) {
 }
 
 
-function setRollStatus(degrees) {
+function setRollStatus(roll) {
 		if (!isSet(degrees)) return;
 		if (!isSet($('#rollCanvas'))) return;
 		
-		degrees *= 1;
+		var degrees = roll * 1;
 		
 		degrees = 180 + degrees;
 		var degrees2 = degrees + 180;						
@@ -261,10 +261,10 @@ function setRollStatus(degrees) {
       context.lineWidth = 1;
       context.fillStyle = 'blue';
       context.fill();
-      //context.strokeStyle = '#550000';
+      context.strokeStyle = '#0000aa';
       context.stroke();
       
-    $('#rollText').text(360 - degrees);
+    $('#rollText').text(roll);
 }
 
 function initSlider(i) {
