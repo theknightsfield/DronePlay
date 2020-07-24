@@ -116,14 +116,24 @@ function FlightHistoryMapInit() {
           })
     });
     
-
+  var bingLayer = new ol.layer.Tile({
+    visible: true,
+    preload: Infinity,
+    source: new ol.source.BingMaps({
+        // We need a key to get the layer from the provider. 
+        // Sign in with Bing Maps and you will get your key (for free)
+        key: 'AgMfldbj_9tx3cd298eKeRqusvvGxw1EWq6eOgaVbDsoi7Uj9kvdkuuid-bbb6CK',
+        imagerySet: 'AerialWithLabels', // or 'Road', 'AerialWithLabels', etc.
+        // use maxZoom 19 to see stretched tiles instead of the Bing Maps
+        // "no photos at this zoom level" tiles
+        maxZoom: 5
+    })
+	});
+	
   var vMap = new ol.Map({
       target: 'historyMap',      
       layers: [
-          new ol.layer.Tile({
-              preload: 4,
-              source: new ol.source.OSM()
-          }), vVectorLayer
+          bingLayer, vVectorLayer
       ],
       // Improve user experience by loading tiles while animating. Will make
       // animations stutter on mobile or slow devices.
