@@ -869,10 +869,11 @@ function showDataForHistoryWithName(name) {
       setChartData(r.data.data);
       
       if (isSet(fdata.flat)) {		      	
-				var dpoint = ol.proj.fromLonLat([fdata.flng, fdata.flat]);
-    		drawCadastral(dpoint[0], dpoint[1], pointSource);
+				var dpoint = ol.proj.fromLonLat([fdata.flng, fdata.flat]);			
+    		drawCadastral(dpoint[0], dpoint[1], pointSource);    		
     	}		    			   
-    	else hideLoader();		      		      
+    	
+    	hideLoader();		      		      
     }
   }, function(request,status,error) {
     hideLoader();
@@ -927,10 +928,11 @@ function showDataForHistory(index) {
 	      setChartData(r.data.data);
 	      
 	      if (isSet(r.data.flat)) {		      	
-					var dpoint = ol.proj.fromLonLat([r.data.flng, r.data.flat]);
+					var dpoint = ol.proj.fromLonLat([r.data.flng, r.data.flat]);				
 	    		drawCadastral(dpoint[0], dpoint[1], pointSource);
 	    	}		    			   
-	    	else hideLoader();
+	    	
+	    	hideLoader();
 		    }
 	  }, function(request,status,error) {
 	    hideLoader();
