@@ -222,15 +222,17 @@ function setYawStatus(degrees) {
 		if (!isSet($('#yawStatus'))) return;
 		
 		degrees *= 1;
+		degrees = degrees < 0 ? (360 + degrees) : degrees;
+		var radians = (Math.PI/180)*degrees;
 				
 		$("#yawStatus").attr("src", $("#yawStatus").attr("src")+"?timestamp=" + new Date().getTime());
 		
     $('#yawStatus').css({
-      'transform': 'rotate(' + degrees + 'deg)',
-      '-ms-transform': 'rotate(' + degrees + 'deg)',
-      '-moz-transform': 'rotate(' + degrees + 'deg)',
-      '-webkit-transform': 'rotate(' + degrees + 'deg)',
-      '-o-transform': 'rotate(' + degrees + 'deg)'
+      'transform': 'rotate(' + radians + 'deg)',
+      '-ms-transform': 'rotate(' + radians + 'deg)',
+      '-moz-transform': 'rotate(' + radians + 'deg)',
+      '-webkit-transform': 'rotate(' + radians + 'deg)',
+      '-o-transform': 'rotate(' + radians + 'deg)'
     }); 
 }
 
@@ -241,7 +243,7 @@ function setRollStatus(degrees) {
 		
 		degrees *= 1;
 		
-		var degrees = degrees < 0 ? (360 + degrees) : degrees;
+		degrees = degrees < 0 ? (360 + degrees) : degrees;
 		var degrees2 = degrees + 180;
 		
 		if (degrees2 > 360) degrees2 = degrees2 - 360;
