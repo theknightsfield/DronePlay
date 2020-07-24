@@ -222,6 +222,7 @@ function setYawStatus(degrees) {
 		if (!isSet($('#yawStatus'))) return;
 		
 		var degress = (degress * 1) < 0 ? (360 + degrees) : degrees;
+		$("#yawStatus").attr("src", $("#yawStatus").attr("src")+"?timestamp=" + new Date().getTime());
 		
     $('#yawStatus').css({
       'transform': 'rotate(' + degrees + 'deg)',
@@ -237,6 +238,7 @@ function setRollStatus(degrees) {
 		if (!isSet($('#rollStatus'))) return;
 		
 		var degress = (degress * 1) < 0 ? (360 + degrees) : degrees;
+		$("#rollStatus").attr("src", $("#rollStatus").attr("src")+"?timestamp=" + new Date().getTime());
 		
     $('#rollStatus').css({
       'transform': 'rotate(' + degrees + 'deg)',
