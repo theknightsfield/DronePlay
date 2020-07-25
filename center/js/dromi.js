@@ -207,7 +207,7 @@ function onPlayerReady(event) {
             if(youTubePlayer.getPlayerState() == YT.PlayerState.PLAYING ) {
                 var t = youTubePlayer.getCurrentTime();
                 ///expecting 1 second interval , with 500 ms margin
-                if (Math.abs(t - lastTime - 1) > 0.5) {
+                if (Math.abs(t - lastTime) > 0.5) {
                     // there was a seek occuring
                     processSeek(t);
                 }
