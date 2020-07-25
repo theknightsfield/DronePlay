@@ -1761,7 +1761,14 @@ function setMoveActionFromMap(index, item) {
   setSliderPos(index);
 }
 
-function setMoveActionFromMovie(index, item) {		
+
+var bFromMovie = false;
+var bFromScatterChart = false;
+var bFromLineChart = false;
+
+function setMoveActionFromMovie(index, item) {
+	bFromMovie = true;
+	
   if (openScatterTip(window.myScatter, 0, index) == true) return;
   if (openLineTip(window.myLine, 0, index) == true) return;
     
@@ -1770,23 +1777,26 @@ function setMoveActionFromMovie(index, item) {
   
   showCurrentInfo([item.lng * 1, item.lat * 1], item.alt);	
 	moveToPositionOnMap(item.lat * 1, item.lng * 1, item.yaw, item.roll, item.pitch, false);
+	
+	bFromMovie = false;
 }
 
-var bFromScatterChart = false;
-var bFromLineChart = false;
 function setMoveActionFromScatterChart(index, item) {
 	bFromScatterChart = true;
 	
 	if (bFromLineChart == false && openLineTip(window.myLine, 0, index) == true) return;
 	
-	if ("dsec" in item) {
+	if (bFromMovie == false && "dsec" in item) {
     movieSeekTo(item.dsec);
   }
 
   setSliderPos(index);
   showCurrentInfo([item.lng * 1, item.lat * 1], item.alt);  
   moveToPositionOnMap(item.lat * 1, item.lng * 1, item.yaw, item.roll, item.pitch, true);
+
+
   bFromLineChart = false;
+  bFromMovie = false;
 }
 
 function setMoveActionFromLineChart(index, item) {     
@@ -1794,12 +1804,15 @@ function setMoveActionFromLineChart(index, item) {
 	
 	if (bFromScatterChart == false && openScatterTip(window.myScatter, 0, index) == true) return;
 	 	
-  if ("dsec" in item) {
+  if (bFromMovie == false && "dsec" in item) {
     movieSeekTo(item.dsec);
   }
 
   setSliderPos(index);
   showCurrentInfo([item.lng * 1, item.lat * 1], item.alt);  
   moveToPositionOnMap(item.lat * 1, item.lng * 1, item.yaw, item.roll, item.pitch, true);
-  bFromScatterChart = false;
+  
+  
+  bFromScatterChart = false;  
+  bFromMovie = false;
 }
