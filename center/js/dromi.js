@@ -643,6 +643,7 @@ function drawLineGraph() {
   window.myLine = new Chart(ctx2, {
       	type: 'scatter',
         data: linedataSet,
+        tooltipEvents: ["mousemove", "touchstart", "touchmove", "click"],
         options: {
         	legend: {
         		display: false
@@ -651,6 +652,7 @@ function drawLineGraph() {
             display: false,
             text: 'Temperature : RED / Humidity : BLUE'
           },
+          events: ['click'],
           tooltips: {
                 callbacks: {
                     label: function(tooltipItem, data) {
@@ -712,12 +714,14 @@ function drawScatterGraph() {
   var ctx = document.getElementById('chartArea').getContext('2d');
   window.myScatter = new Chart(ctx, {
   	type: 'scatter',
+  	tooltipEvents: ["mousemove", "touchstart", "touchmove", "click"],
     data: dataSet,
     options: {
       title: {
         display: false,
         text: 'Temperature : RED / Humidity : BLUE'
       },
+      events: ['click'],
       tooltips: {
             callbacks: {
                 label: function(tooltipItem, data) {
