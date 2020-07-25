@@ -201,6 +201,8 @@ function designInit() {
 
 
 function setSliderPos(i) {
+		if (!isSet($("#slider"))) return;
+		
 		if (i < 0) {
 			$('#sliderText').html( "-" );
 			return;

@@ -602,16 +602,10 @@ function drawPosIcon() {
 
 			var locdata = null;
       if (feature) {          
-          var ii = feature.get('mindex');          
-          openLineTip(window.myLine, 0, ii);
-          openScatterTip(window.myScatter, 0, ii);
-
+          var ii = feature.get('mindex');     
           locdata = chartLocData[ii];
-          if ("dsec" in locdata) {
-            movieSeekTo(locdata.dsec);
-          }
-
-          setSliderPos(ii);
+               
+          setMoveActionFromMap(ii, locdata);
       }
 
   		var lonlat = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
