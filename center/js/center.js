@@ -200,6 +200,73 @@ function designInit() {
 }
 
 
+function drawLineGraph() {
+	var ctx2 = document.getElementById('lineGraph').getContext('2d');
+   		var linedataSet = {
+   			datasets: [
+          {
+              label: '고도',
+              borderColor: '#f00',
+              backgroundColor: '#f66',
+              data: lineGraphData
+         }
+      	]};
+      	
+  document.getElementById("lineGraph").onclick = function(evt){
+    var activePoints = window.myLine.getElementsAtEvent(evt);
+        
+    if (activePoints.length > 0) {
+       var clickedDatasetIndex = activePoints[0]._index;
+              
+       var locdata = chartLocData[clickedDatasetIndex];
+	     if("lng" in locdata && "lat" in locdata) {
+	        setMoveActionFromLineChart(clickedDatasetIndex, locdata);
+	     }
+     }
+	};
+
+  window.myLine = new Chart(ctx2, {
+      	type: 'scatter',
+        data: linedataSet,
+        tooltipEvents: ["click"],
+        options: {
+        	legend: {
+        		display: false
+    			},
+          title: {
+            display: false,
+            text: 'Temperature : RED / Humidity : BLUE'
+          },
+          events: ['click'],
+          tooltips: {
+                callbacks: {
+                    label: function(tooltipItem, data) {
+                        var locdata = chartLocData[tooltipItem.index];                        
+                        return JSON.stringify(locdata);
+                    }
+                  },
+                scales: {
+                    xAxes: [{
+                      ticks: {
+                        userCallback: function(label, index, labels) {
+                          return chartLabelData[label];
+                        }
+                      }
+                    }]
+                  },
+                layout: {
+                  padding: {
+                      left: 20,
+                      right: 30,
+                      top: 20,
+                      bottom: 20
+                  }
+                }
+              }
+          }
+      });
+}
+
 function setSliderPos(i) {
 		if (!isSet($("#slider"))) return;
 		
