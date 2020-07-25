@@ -877,8 +877,7 @@ function getRecordTitle() {
 
 function setRecordTitle(msg) {
 	if (!isSet($("#record_name_field"))) return;
-	
-	return;//녹화용
+		
 	$("#record_name_field").text(msg);
 }
 
