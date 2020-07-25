@@ -178,16 +178,22 @@ gtag('config', 'UA-130136264-4');
 				                      </div>
 				                      				                      				                      
 				                     	<div class="panel-body">
-				                     		<div class="row">
-																  <div class="col-md-2"><canvas id="rollCanvas" width="60" height="60"></canvas></div>
-																  <div class="col-md-2"><img src="imgs/yaw.png" id="yawStatus" width="40" height="40"></div>  
-																  <div class="col-md-2"><img src="imgs/pitch.png" id="pitchStatus" width="40" height="40"></div>  
-																</div>				                     			        						                      						                      		
-																<div class="row">
-																  <div class="col-md-2"><h5>Roll</h5> <span id="rollText"></span></div>
-																  <div class="col-md-2"><h5>Yaw</h5> <span id="yawText"></span></div>  
-																  <div class="col-md-2"><h5>Pitch</h5> <span id="pitchText"></span></div>  
-																</div>
+				                     		<table width="100%" class="table table-condensed" id="dataTable-Flight_list">
+	                                <thead>
+	                                    <tr>
+	                                        <th><h5>Roll</h5> <span id="rollText"></span></th>
+	                                        <th><h5>Yaw</h5> <span id="yawText"></span></th>
+	                                        <th><h5>Pitch</h5> <span id="pitchText"></span></th>	                                        
+	                                    </tr>
+	                                </thead>
+	                                <tbody>
+	                                		<tr>
+	                                			<td><canvas id="rollCanvas" width="60" height="60"></canvas></td>
+	                                			<td><img src="imgs/yaw.png" id="yawStatus" width="40" height="40"></td>
+	                                			<td><img src="imgs/pitch.png" id="pitchStatus" width="40" height="40"></td>
+	                                		</tr>
+	                                </tbody>
+	                            	</table>
 				                      </div>												
 				                      
 				                      <div class="panel-body">
