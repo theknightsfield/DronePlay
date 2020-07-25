@@ -1426,8 +1426,8 @@ function mapInit() {
     $('#accuracy').text(geolocation.getAccuracy() + ' [m]');
     $('#altitude').text(geolocation.getAltitude() + ' [m]');
     $('#altitudeAccuracy').text(geolocation.getAltitudeAccuracy() + ' [m]');
-    $('#heading')..text(geolocation.getHeading() + ' [rad]');
-    $('#speed')..text(geolocation.getSpeed() + ' [m/s]');
+    $('#heading').text(geolocation.getHeading() + ' [rad]');
+    $('#speed').text(geolocation.getSpeed() + ' [m/s]');
     showLoader();
     flyTo(geolocation.getPosition(), 0, function(){hideLoader();});
   });
@@ -1445,7 +1445,7 @@ function mapInit() {
       new ol.geom.Point(coordinates) : null);
   });
   
-  if (isSet($('#track')) {
+  if (isSet($('#track'))) {
   	$('#track').addEventListener('change', function() {
     	geolocation.setTracking(this.checked);
   	});
