@@ -794,6 +794,8 @@ function setFlightlistHistory(data) {
   if (data == null || data.length == 0)
     return;
 
+	$('#historyList').show();
+	
   data.forEach(function(item) {
     appendFlightListTableForHistory(item);
     flightRecArray.push(item);
