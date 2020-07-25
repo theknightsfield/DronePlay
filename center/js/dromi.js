@@ -591,13 +591,6 @@ function drawLineToMap() {
 	map.addLayer(lineLayer);
 }
 
-function showCurrentInfo(dlatlng, alt) {
-	var latlng = ol.proj.fromLonLat(dlatlng);
-	var hdms = ol.coordinate.toStringHDMS(latlng);
-	var itext = hdms + " [ Lat: " + dlatlng[1] + " / Lng: " + dlatlng[0] + " / Alt: " + alt + " ]";
-	$("#position_info").text(itext);
-}
-
 function drawPosIcon() {
 	if (posIcons.length <= 0) return;
 

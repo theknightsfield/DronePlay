@@ -749,7 +749,9 @@ function btnClear() {
         return;
     }
 
-    lineSource.clear();
+		if(isSet(lineSource))
+    	lineSource.clear();
+    	
     pointSource.clear();
     posSource.clear();
     flightRecDataArray = Array();
