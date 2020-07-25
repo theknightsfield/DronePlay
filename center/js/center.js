@@ -1649,6 +1649,76 @@ function getCookie(cName) {
 
 
 
+function openLineTip(oChart,datasetIndex,pointIndex){
+   if(!oChart || oChart == undefined) return false;
+
+   if (oldLinedatasetIndex >= 0)
+   	closeTip(oChart,oldLinedatasetIndex,oldLinepointIndex);
+
+   if(oChart.tooltip._active == undefined)
+      oChart.tooltip._active = []
+   var activeElements = oChart.tooltip._active;
+   var requestedElem = oChart.getDatasetMeta(datasetIndex).data[pointIndex];
+
+   oldLinedatasetIndex = datasetIndex;
+   oldLinepointIndex = pointIndex;
+
+   for(var i = 0; i < activeElements.length; i++) {
+       if(requestedElem._index == activeElements[i]._index)
+          return false;
+   }
+   activeElements.push(requestedElem);
+   oChart.tooltip._active = activeElements;
+   oChart.tooltip.update(true);
+   oChart.draw();
+   
+   return true;
+}
+
+function openScatterTip(oChart,datasetIndex,pointIndex){
+   if(!oChart || oChart == undefined) return false;
+
+   if (oldScatterdatasetIndex >= 0)
+   	closeTip(oChart,oldScatterdatasetIndex,oldScatterpointIndex);
+
+   if(oChart.tooltip._active == undefined)
+      oChart.tooltip._active = []
+   var activeElements = oChart.tooltip._active;
+   var requestedElem = oChart.getDatasetMeta(datasetIndex).data[pointIndex];
+
+   oldScatterdatasetIndex = datasetIndex;
+   oldScatterpointIndex = pointIndex;
+
+   for(var i = 0; i < activeElements.length; i++) {
+       if(requestedElem._index == activeElements[i]._index)
+          return false;
+   }
+   activeElements.push(requestedElem);
+   oChart.tooltip._active = activeElements;
+   oChart.tooltip.update(true);
+   oChart.draw();
+   
+   return true;
+}
+
+function closeTip(oChart,datasetIndex,pointIndex){
+   var activeElements = oChart.tooltip._active;
+   if(activeElements == undefined || activeElements.length == 0)
+     return;
+
+   var requestedElem = oChart.getDatasetMeta(datasetIndex).data[pointIndex];
+   for(var i = 0; i < activeElements.length; i++) {
+       if(requestedElem._index == activeElements[i]._index)  {
+          activeElements.splice(i, 1);
+          break;
+       }
+   }
+   oChart.tooltip._active = activeElements;
+   oChart.tooltip.update(true);
+   oChart.draw();
+}
+
+
 function setMoveActionFromSlider(index, item) {							
 	if (openScatterTip(window.myScatter, 0, index) == true) return;
 	if (openLineTip(window.myLine, 0, index) == true) return;
