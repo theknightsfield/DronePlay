@@ -1739,7 +1739,7 @@ function setMoveActionFromMovie(index, item) {
   setSliderPos(index);
   
   showCurrentInfo([item.lng * 1, item.lat * 1], item.alt);	
-	moveToPositionOnMap(item.lat * 1, item.lng * 1, item.yaw, item.roll, item.pitch, false);	
+	moveToPositionOnMap(item.lat * 1, item.lng * 1, item.yaw, item.roll, item.pitch, true);	
 }
 
 function setMoveActionFromScatterChart(index, item) {		
