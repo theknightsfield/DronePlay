@@ -195,7 +195,6 @@ function onYouTubeIframeAPIReady() {
 }
 
 var movieProcess = false;
-var playVideo = false;
 
 function onPlayerReady(event) {
     event.target.playVideo();//자동재생
