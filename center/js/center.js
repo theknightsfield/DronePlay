@@ -1779,7 +1779,7 @@ function setMoveActionFromScatterChart(index, item) {
 
   setSliderPos(index);
   showCurrentInfo([item.lng * 1, item.lat * 1], item.alt);  
-  moveToPositionOnMap(item.lat * 1, item.lng * 1, item.yaw, item.roll, item.pitch, false);
+  moveToPositionOnMap(item.lat * 1, item.lng * 1, item.yaw, item.roll, item.pitch, true);
 }
 
 function setMoveActionFromLineChart(index, item) {     
@@ -1791,5 +1791,5 @@ function setMoveActionFromLineChart(index, item) {
 
   setSliderPos(index);
   showCurrentInfo([item.lng * 1, item.lat * 1], item.alt);  
-  moveToPositionOnMap(item.lat * 1, item.lng * 1, item.yaw, item.roll, item.pitch, false);
+  moveToPositionOnMap(item.lat * 1, item.lng * 1, item.yaw, item.roll, item.pitch, true);
 }
