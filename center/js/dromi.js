@@ -234,13 +234,7 @@ function processSeek(curTime) {
       if ("dsec" in item) {
         var ds = item.dsec;
         if((ds + 10) >= curTime && (ds - 10) <= curTime) {
-            openLineTip(window.myLine, 0, index);
-            openScatterTip(window.myScatter, 0, index);
-
-            var latLng = ol.proj.fromLonLat([item.lng * 1, item.lat * 1]);
-            flyTo(latLng, item.yaw, function() {isMoved=true;});
-            showCurrentInfo([item.lng * 1, item.lat * 1], item.alt);
-            setSliderForDromi(index);
+            setMoveActionFromMovie(index, item);
             return true;
         }
       }
@@ -535,8 +529,7 @@ function addChartItem(i, item) {
         name: dateString + " / lat: " + item.lat + ", lng: " + item.lng + ", alt: " + item.alt,
         mindex : i
     });
-
-    var pos_icon_image = './imgs/position3.png';
+    
     var pos_icon_color = '#777777';
 
     if("etc" in item && "marked" in item.etc) {
@@ -564,33 +557,15 @@ function addChartItem(i, item) {
 
 var isMoved = true;
 
-function setSliderForDromi(i) {
-		$("#slider").slider('value',i);
-		$('#sliderText').html( i );
-}
-
 function setSlider(i) {
 	$('#slider').slider({
 					min : 0,
 					max : i - 1,
 					value : 0,
 					step : 1,
-					slide : function( event, ui ){
-						$('#sliderText').text( ui.value );
-						openLineTip(window.myLine, 0, ui.value);
-						openScatterTip(window.myScatter, 0, ui.value);
-
-            var locdata = chartLocData[ui.value];
-            if ("dsec" in locdata) {
-              movieSeekTo(locdata.dsec);
-            }
-
-            var latlng = ol.proj.fromLonLat([locdata.lng * 1, locdata.lat * 1]);
-            setRollStatus(locdata.roll);
-            setYawStatus(locdata.yaw);
-            setPitchStatus(locdata.pitch);
-            flyDirectTo(latlng, locdata.yaw, function() {isMoved=true;});
-						showCurrentInfo([locdata.lng * 1, locdata.lat * 1], locdata.alt);
+					slide : function( event, ui ){						
+            var locdata = chartLocData[ui.value];                        
+						setMoveActionFromSlider(ui.value, locdata);
 					}
 	});
 }
@@ -643,7 +618,7 @@ function drawPosIcon() {
             movieSeekTo(locdata.dsec);
           }
 
-          setSliderForDromi(ii);
+          setSliderPos(ii);
       }
 
   		var lonlat = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
@@ -664,6 +639,7 @@ function drawPosIcon() {
   map.addLayer(posLayer);
 
 }
+
 
 function drawLineGraph() {
 	var ctx2 = document.getElementById('lineGraph').getContext('2d');
@@ -695,22 +671,7 @@ function drawLineGraph() {
 
                         var locdata = chartLocData[tooltipItem.index];
                         if(locdata && "lng" in locdata && "lat" in locdata) {
-                          var latlng = ol.proj.fromLonLat([locdata.lng * 1, locdata.lat * 1]);
-
-                          //if (isMoved == true) {
-                          //  isMoved = false;
-                          	setRollStatus(locdata.roll);
-                          	setYawStatus(locdata.yaw);
-                          	setPitchStatus(locdata.pitch);
-                            flyDirectTo(latlng, locdata.yaw, function() {isMoved=true;});
-                            showCurrentInfo([locdata.lng * 1, locdata.lat * 1], locdata.alt);
-                          //}
-
-                          if ("dsec" in locdata) {
-                            movieSeekTo(locdata.dsec);
-                          }
-
-                          setSliderForDromi(tooltipItem.index);
+                          	setMovedActionFromChart(tooltipItem.index, locdata);                          	
                         }
 
                         return JSON.stringify(locdata);
@@ -788,7 +749,7 @@ function drawScatterGraph() {
                         movieSeekTo(locdata.dsec);
                       }
 
-                      setSliderForDromi(tooltipItem.index);
+                      setSliderPos(tooltipItem.index);
 											showCurrentInfo([locdata.lng * 1, locdata.lat * 1], locdata.alt);
                     }
 
@@ -850,7 +811,7 @@ var oldLinedatasetIndex = -1;
 var oldLinepointIndex = -1;
 
 function openLineTip(oChart,datasetIndex,pointIndex){
-   if(!oChart || oChart == undefined) return;
+   if(!oChart || oChart == undefined) return false;
 
    if (oldLinedatasetIndex >= 0)
    	closeTip(oChart,oldLinedatasetIndex,oldLinepointIndex);
@@ -865,12 +826,14 @@ function openLineTip(oChart,datasetIndex,pointIndex){
 
    for(var i = 0; i < activeElements.length; i++) {
        if(requestedElem._index == activeElements[i]._index)
-          return;
+          return false;
    }
    activeElements.push(requestedElem);
    oChart.tooltip._active = activeElements;
    oChart.tooltip.update(true);
    oChart.draw();
+   
+   return true;
 }
 
 function openScatterTip(oChart,datasetIndex,pointIndex){

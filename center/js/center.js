@@ -5,17 +5,16 @@ var current_view;
 var current_pos;
 var current_pos_image;
 
-var geolocation;
-
 var map;
 
 var posSource;
 var pointSource;
+
 var lineSource;
 var pos_icon_style;
 
-var flightDataArray;
-var currentFlightData;
+var flightRecArray;
+var flightRecDataArray;
 
 var flightHistorySource;
 var flightHistoryView;
@@ -30,8 +29,8 @@ $(function() {
 
 function centerInit() {
 	bMonStarted = false;
-	flightDataArray = [];
-	currentFlightData = [];	
+	flightRecArray = [];
+	flightRecDataArray = [];	
   mapInit();
   
   if (askToken() == false) {  	
@@ -155,7 +154,7 @@ function monitorInit() {
 
 
 function designInit() {
-	initSlider(1);
+	initSliderForDesign(1);
 
  	map.on('click', function (evt) {
       var feature = map.forEachFeatureAtPixel(evt.pixel,
@@ -166,18 +165,16 @@ function designInit() {
       if (feature) {
           var ii = feature.get('mindex');
           if (!isSet(ii)) return;
-
-          setSliderPosForDesign(ii);
-          setDataToDesignTableWithFlightRecord(ii);
+                    
+          setDataToDesignTableWithFlightRecord(ii);                    
+          
+          var item = flightRecDataArray[ii];
+          setMoveActionFromMap(ii,item);
           return;
       }
 
 			appendNewRecord(evt.coordinate);
-  });
-
-  el('track').addEventListener('change', function() {
-    geolocation.setTracking(this.checked);
-  });
+  });  
 
 	var record_name = location.search.split('record_name=')[1];
   var mission_name = location.search.split('mission_name=')[1];
@@ -200,25 +197,11 @@ function designInit() {
   	
   	hideLoader();
   }
-
-	/*
-  var bannerOffset = $( '.topFixBanner' ).offset();
-  $( window ).scroll( function() {  //window에 스크롤링이 발생하면
-        if ( $( document ).scrollTop() > bannerOffset.top ) {   // 위치 및 사이즈를 파악하여 미리 정한 css class를 add 또는 remove 합니다.
-          $( '.topFixBanner' ).addClass( 'topFixBannerFixed' );
-          map.updateSize();
-        }
-        else {
-          $( '.topFixBanner' ).removeClass( 'topFixBannerFixed' );
-          map.updateSize();
-        }
-   });
-  */    
 }
 
 
-function setSliderPosForDesign(i) {
-		if (i < 0 || currentFlightData.length <= i) {
+function setSliderPos(i) {
+		if (i < 0) {
 			$('#sliderText').html( "-" );
 			return;
 		}
@@ -297,28 +280,22 @@ function setRollStatus(roll) {
     $('#rollText').text(roll);
 }
 
-function initSlider(i) {
+function initSliderForDesign(i) {
 	$('#slider').slider({
 					min : 0,
-					max : i,
+					max : i - 1,
 					value : 0,
 					step : 1,
-					slide : function( event, ui ){
-						$('#sliderText').text( ui.value );
-
-						if (currentFlightData.length <= 0) {
+					slide : function( event, ui ){						
+						if (flightRecDataArray.length <= 0) {
 							return;
 						}
 
-						var d = currentFlightData[ui.value - 1];
+						var d = flightRecDataArray[ui.value];
 
-						setDataToDesignTableWithFlightRecord(ui.value - 1);
-						var npos = ol.proj.fromLonLat([d.lng * 1, d.lat * 1]);
+						setDataToDesignTableWithFlightRecord(ui.value);
 						
-						setRollStatus(d.roll);
-						setYawStatus(d.yaw);
-						setPitchStatus(d.pitch);
-						flyDirectTo(npos, d.yaw, function() {});
+						setMoveActionFromSlider(ui.value, d);												
 					}
 	});
 
@@ -331,18 +308,16 @@ function initSlider(i) {
 
 			index = parseInt(index);
 
-			if (index <= 0 || index > currentFlightData.length) {
+			if (index < 0 || index >= flightRecDataArray.length) {
 				alert("Please input valid value !");
 				return;
 			}
 
-			var d = currentFlightData[index - 1];
-
-			setDataToDesignTableWithFlightRecord(index - 1);
-			moveToPositionOnMap(d.lat * 1, d.lng * 1, d.yaw, d.roll, d.pitch, function() {});
-
-			$("#slider").slider('value', index);
-			$('#sliderText').html( index );
+			var d = flightRecDataArray[index];
+			$("#slider").slider('value', index);			
+			setDataToDesignTableWithFlightRecord(index);
+			
+			setMoveActionFromSlider(index, d);
 	});
 }
 
@@ -360,7 +335,7 @@ function setDesignTableByFlightRecord(name) {
       hideLoader();
     
       if (!isSet(r.data.data) || r.data.data.length == 0) return;
-		  currentFlightData = r.data.data;
+		  flightRecDataArray = r.data.data;
   
       setDesignTableWithFlightRecord();
     }
@@ -408,7 +383,7 @@ function setDesignTableWithFlightRecord() {
   var i = 0;
 	var coordinates = [];
 		
-  currentFlightData.forEach(function (item) {
+  flightRecDataArray.forEach(function (item) {
       addIconToMap(i, item);
   		coordinates.push(ol.proj.fromLonLat([item.lng * 1, item.lat * 1]));
       i++;
@@ -416,8 +391,8 @@ function setDesignTableWithFlightRecord() {
 
   setDataToDesignTableWithFlightRecord(0);
 
-  $("#slider").slider('option',{min: 1, max: i});
-  setSliderPosForDesign(i);
+  $("#slider").slider('option',{min: 0, max: i-1});
+  setSliderPos(i);
 
   var lines = new ol.geom.LineString(coordinates);
 
@@ -447,13 +422,13 @@ function setDesignTableWithFlightRecord() {
   map.addLayer(posLayer);
 
 
-  moveToPositionOnMap(currentFlightData[0].lat, currentFlightData[0].lng, currentFlightData[0].yaw, currentFlightData[0].roll, currentFlightData[0].pitch);
+  moveToPositionOnMap(flightRecDataArray[0].lat, flightRecDataArray[0].lng, flightRecDataArray[0].yaw, flightRecDataArray[0].roll, flightRecDataArray[0].pitch);
 }
 
 
 function appendNewRecord(coordinates) {
 	var lonLat = ol.proj.toLonLat(coordinates);
-	var index = currentFlightData.length;
+	var index = flightRecDataArray.length;
 
 	if (index <= 0) {
 		$("#slider").show();
@@ -471,10 +446,10 @@ function appendNewRecord(coordinates) {
 	data['lng'] = lonLat[0];
 	data['lat'] = lonLat[1];
 
-	currentFlightData.push(data);
+	flightRecDataArray.push(data);
 
-	$("#slider").slider('option',{min: 1, max: (index + 1) });
-	$("#slider").slider('value', index + 1);
+	$("#slider").slider('option',{min: 0, max: index });
+	$("#slider").slider('value', index);
 
 	setDataToDesignTableWithFlightRecord(index);
 	addIconToMap(index, data);
@@ -613,13 +588,17 @@ function appendMissionsToMonitor(mission) {
     });
 }
 
-function moveToPositionOnMap(lat, lng, yaw, roll, pitch) {
+function moveToPositionOnMap(lat, lng, yaw, roll, pitch, bDirect) {
   var npos = ol.proj.fromLonLat([lng * 1, lat * 1]);
   
   setRollStatus(roll);      
   setYawStatus(yaw);
   setPitchStatus(pitch);
-  flyTo(npos, yaw, function() {});
+  
+  if (bDirect == true)
+  	flyDirectTo(npos, yaw);
+  else
+  	flyTo(npos, yaw, function() {});
 }
 
 function clearDataToDesignTableWithFlightRecord() {
@@ -627,17 +606,17 @@ function clearDataToDesignTableWithFlightRecord() {
 }
 
 function setDataToDesignTableWithFlightRecord(index) {
-	if ( currentFlightData.length <= 0) return;
+	if ( flightRecDataArray.length <= 0) return;
 
-	var lat = currentFlightData[index].lat;
-	var lng = currentFlightData[index].lng;
-	var alt = currentFlightData[index].alt;
-	var yaw = currentFlightData[index].yaw;
-	var roll = currentFlightData[index].roll;
-	var pitch = currentFlightData[index].pitch;
-	var speed = currentFlightData[index].speed;
-	var act = currentFlightData[index].act;
-	var actparam = currentFlightData[index].actparam;
+	var lat = flightRecDataArray[index].lat;
+	var lng = flightRecDataArray[index].lng;
+	var alt = flightRecDataArray[index].alt;
+	var yaw = flightRecDataArray[index].yaw;
+	var roll = flightRecDataArray[index].roll;
+	var pitch = flightRecDataArray[index].pitch;
+	var speed = flightRecDataArray[index].speed;
+	var act = flightRecDataArray[index].act;
+	var actparam = flightRecDataArray[index].actparam;
 
 	$('#tr_index').text(index + 1);
 	$('#latdata_index').val(lat);
@@ -664,17 +643,17 @@ function setDataToDesignTableWithFlightRecord(index) {
 }
 
 function saveFlightData(index) {
-	if (currentFlightData.length <= 0) return;
+	if (flightRecDataArray.length <= 0) return;
 
-	currentFlightData[index].lat = $('#latdata_index').val();
-	currentFlightData[index].lng = $('#lngdata_index').val();
-	currentFlightData[index].alt = $('#altdata_index').val();
-	currentFlightData[index].yaw = $('#yawdata_index').val();
-	currentFlightData[index].roll = $('#rolldata_index').val();
-	currentFlightData[index].pitch = $('#pitchdata_index').val();
-	currentFlightData[index].speed = $('#speeddata_index').val();
-	currentFlightData[index].act = $('#actiondata_index').val();
-	currentFlightData[index].actparam = $('#actionparam_index').val();
+	flightRecDataArray[index].lat = $('#latdata_index').val();
+	flightRecDataArray[index].lng = $('#lngdata_index').val();
+	flightRecDataArray[index].alt = $('#altdata_index').val();
+	flightRecDataArray[index].yaw = $('#yawdata_index').val();
+	flightRecDataArray[index].roll = $('#rolldata_index').val();
+	flightRecDataArray[index].pitch = $('#pitchdata_index').val();
+	flightRecDataArray[index].speed = $('#speeddata_index').val();
+	flightRecDataArray[index].act = $('#actiondata_index').val();
+	flightRecDataArray[index].actparam = $('#actionparam_index').val();
 }
 
 function removeSelectedFeature(selectedFeatureID) {
@@ -694,23 +673,23 @@ function removeSelectedFeature(selectedFeatureID) {
 }
 
 function removeFlightData(index) {
-	currentFlightData.splice(index, 1);
+	flightRecDataArray.splice(index, 1);
 
 	removeSelectedFeature(index);
 
-	if (currentFlightData.length <= 0) {
+	if (flightRecDataArray.length <= 0) {
 		$("#slider").hide();
 		$("#dataTable-points").hide();
 		return;
 	}
 
-	var newIndex = currentFlightData.length-1;
+	var newIndex = flightRecDataArray.length-1;
 
 	setDataToDesignTableWithFlightRecord(newIndex);
-	$("#slider").slider('value', newIndex + 1);
-	$("#slider").slider('option',{min: 1, max: (newIndex + 1)});
+	$("#slider").slider('value', newIndex);
+	$("#slider").slider('option',{min: 0, max: newIndex});
 
-	moveToPositionOnMap(currentFlightData[newIndex].lat, currentFlightData[newIndex].lng, currentFlightData[newIndex].yaw, currentFlightData[newIndex].roll, currentFlightData[newIndex].pitch);
+	moveToPositionOnMap(flightRecDataArray[newIndex].lat, flightRecDataArray[newIndex].lng, flightRecDataArray[newIndex].yaw, flightRecDataArray[newIndex].roll, flightRecDataArray[newIndex].pitch, false);
 }
 
 function appendMissionList(data) {
@@ -773,7 +752,7 @@ function btnClear() {
     lineSource.clear();
     pointSource.clear();
     posSource.clear();
-    currentFlightData = Array();
+    flightRecDataArray = Array();
     $("#dataTable-points").hide();
 }
 
@@ -815,7 +794,7 @@ function setFlightlistHistory(data) {
 
   data.forEach(function(item) {
     appendFlightListTableForHistory(item);
-    flightDataArray.push(item);
+    flightRecArray.push(item);
   });
 }
 
@@ -882,9 +861,9 @@ function showDataForHistoryWithName(name) {
 }
 
 function showDataForHistory(index) {
-  if (flightDataArray.length == 0) return;
+  if (flightRecArray.length == 0) return;
 
-  var item = flightDataArray[index];
+  var item = flightRecArray[index];
 
 	moviePlayerVisible = false;
 	
@@ -1096,7 +1075,7 @@ function setFlightlist(data) {
 
   data.forEach(function(item) {
     appendFlightListTable(item);
-    flightDataArray.push(item);
+    flightRecArray.push(item);
   });
 }
 
@@ -1168,7 +1147,7 @@ function appendFlightListTableForHistory(item) {
 
 function deleteFlightData(index) {
 
-  var item = flightDataArray[index];
+  var item = flightRecArray[index];
 
   if (confirm('정말로 ' + item.name + ' 비행기록을 삭제하시겠습니까?')) {
   } else {
@@ -1218,7 +1197,7 @@ function btnRemove(name, trname) {
 }
 
 function monitor(msg) {
-  var info = el('monitor');
+  var info = $('#monitor');
   info.innerHTML = "<font color=red><b>" + msg + "</b></font>";
 }
 
@@ -1238,15 +1217,15 @@ function btnRegister() {
     }
 
 
-    if (currentFlightData.length <= 0) {
+    if (flightRecDataArray.length <= 0) {
       alert("입력된 Waypoint가 1도 없습니다! 집중~ 집중~!");
       return;
     }
 
     var nPositions = [];
     var bError = 0;
-    for (var index=0;index<currentFlightData.length;index++) {
-    	var item = currentFlightData[index];
+    for (var index=0;index<flightRecDataArray.length;index++) {
+    	var item = flightRecDataArray[index];
 
       if (item.act == undefined || item.act === ""
         || item.lat == undefined || item.lat === ""
@@ -1333,7 +1312,7 @@ function mapInit() {
       zoom: 17
     });
 
-  geolocation = new ol.Geolocation({
+  var geolocation = new ol.Geolocation({
           // enableHighAccuracy must be set to true to have the heading value.
           trackingOptions: {
             enableHighAccuracy: true
@@ -1405,10 +1384,7 @@ function mapInit() {
     });
 
   scaleLineControl.setUnits("metric");
-  
-     
-    
-  
+             
   var bingLayer = new ol.layer.Tile({
     visible: true,
     preload: Infinity,
@@ -1445,30 +1421,35 @@ function mapInit() {
       view: current_view
     });
 
-    // update the HTML page when the position changes.
-    geolocation.on('change', function() {
-      el('accuracy').innerText = geolocation.getAccuracy() + ' [m]';
-      el('altitude').innerText = geolocation.getAltitude() + ' [m]';
-      el('altitudeAccuracy').innerText = geolocation.getAltitudeAccuracy() + ' [m]';
-      el('heading').innerText = geolocation.getHeading() + ' [rad]';
-      el('speed').innerText = geolocation.getSpeed() + ' [m/s]';
-      showLoader();
-      flyTo(geolocation.getPosition(), 0, function(){hideLoader();});
-    });
+  // update the HTML page when the position changes.
+  geolocation.on('change', function() {
+    $('#accuracy').text(geolocation.getAccuracy() + ' [m]');
+    $('#altitude').text(geolocation.getAltitude() + ' [m]');
+    $('#altitudeAccuracy').text(geolocation.getAltitudeAccuracy() + ' [m]');
+    $('#heading')..text(geolocation.getHeading() + ' [rad]');
+    $('#speed')..text(geolocation.getSpeed() + ' [m/s]');
+    showLoader();
+    flyTo(geolocation.getPosition(), 0, function(){hideLoader();});
+  });
 
-    // handle geolocation error.
-    geolocation.on('error', function(error) {
-      var info = el('monitor');
-      info.innerHTML = error.message;
-      info.style.display = '';
-    });
+  // handle geolocation error.
+  geolocation.on('error', function(error) {
+    var info = $('#monitor');
+    info.text(error.message);    
+  });
 
 
-    geolocation.on('change:position', function() {
-      var coordinates = geolocation.getPosition();
-      positionFeature.setGeometry(coordinates ?
-        new ol.geom.Point(coordinates) : null);
-    });
+  geolocation.on('change:position', function() {
+    var coordinates = geolocation.getPosition();
+    positionFeature.setGeometry(coordinates ?
+      new ol.geom.Point(coordinates) : null);
+  });
+  
+  if (isSet($('#track')) {
+  	$('#track').addEventListener('change', function() {
+    	geolocation.setTracking(this.checked);
+  	});
+  }  
 }
 
 // A bounce easing method (from https://github.com/DmitryBaranovskiy/raphael).
@@ -1507,7 +1488,7 @@ function hideLoader() {
   $("#loading").fadeOut(800);
 }
 
-function flyDirectTo(location, yaw, done) {
+function flyDirectTo(location, yaw) {
 		var duration = 1;
     var called = false;
 
@@ -1518,22 +1499,7 @@ function flyDirectTo(location, yaw, done) {
 				
     current_pos.setGeometry(new ol.geom.Point(location));
     current_pos_image.setRotation(yaw);
-
-    function dcallback(complete) {
-        if (called) {
-            return;
-        }
-
-        if (!complete) {
-            called = true;
-            done(complete);
-        }
-    }
-
-    current_view.animate({
-      center: location,
-      duration: duration
-    }, dcallback);
+    current_view.setCenter(location);
 }
 
 
@@ -1658,11 +1624,6 @@ function uploadFlightListCallback(mname, base64file) {
     });
 }
 
-
-function el(id) {
-        return document.getElementById(id);
-}
-
 function setCookie(cName, cValue, cDay){
     var expire = new Date();
     expire.setDate(expire.getDate() + cDay);
@@ -1684,4 +1645,58 @@ function getCookie(cName) {
         cValue = cookieData.substring(start, end);
     }
     return unescape(cValue);
+}
+
+
+
+function setMoveActionFromSlider(index, item) {							
+	openScatterTip(window.myScatter, 0, index);
+	if (openLineTip(window.myLine, 0, index) == true) return;
+
+	$('#sliderText').html( index );
+	
+  if ("dsec" in item) {
+    movieSeekTo(item.dsec);
+  }
+  
+	showCurrentInfo([item.lng * 1, item.lat * 1], item.alt);	
+	moveToPositionOnMap(item.lat * 1, item.lng * 1, item.yaw, item.roll, item.pitch, true);  	
+}
+
+function setMoveActionFromMap(index, item) {	  	
+	openScatterTip(window.myScatter, index);
+	if (openLineTip(window.myLine, 0, index) == true) return;
+	
+  setRollStatus(item.roll);
+  setYawStatus(item.yaw);
+  setPitchStatus(item.pitch);  
+  showCurrentInfo([item.lng * 1, item.lat * 1], item.alt);  
+
+  if ("dsec" in item) {
+    movieSeekTo(item.dsec);
+  }
+
+  setSliderPos(index);
+}
+
+function setMoveActionFromMovie(index, item) {		
+  openScatterTip(window.myScatter, 0, index);
+  if (openLineTip(window.myLine, 0, index) == true) return;
+    
+  showCurrentInfo([item.lng * 1, item.lat * 1], item.alt);  
+  setSliderPos(index);
+  
+  showCurrentInfo([item.lng * 1, item.lat * 1], item.alt);	
+	moveToPositionOnMap(item.lat * 1, item.lng * 1, item.yaw, item.roll, item.pitch, false);
+}
+
+
+function setMovedActionFromChart(index, item) {      	
+  if ("dsec" in item) {
+    movieSeekTo(item.dsec);
+  }
+
+  setSliderPos(index);
+  showCurrentInfo([item.lng * 1, item.lat * 1], item.alt);  
+  moveToPositionOnMap(item.lat * 1, item.lng * 1, item.yaw, item.roll, item.pitch, false);
 }
