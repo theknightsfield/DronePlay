@@ -869,9 +869,22 @@ function setFlightlistHistory(data) {
   });
 }
 
+function getRecordTitle() {
+	if (!isSet($("#record_name_field"))) return "";
+	
+	return $("#record_name_field").text();
+}
+
+function setRecordTitle(msg) {
+	if (!isSet($("#record_name_field"))) return;
+	
+	return;//녹화용
+	$("#record_name_field").text(msg);
+}
+
 function showDataForHistoryWithName(name) {
 
-  $("#record_name_field").text("- " + name);
+  setRecordTitle("- " + name);
   cur_flightrecord_name = name;
     
   var userid = getCookie("dev_user_id");
@@ -963,7 +976,7 @@ function showDataForHistory(index) {
 	if (!("data" in item) || !isSet(item.data)) {
     var userid = getCookie("dev_user_id");
     var jdata = {"action" : "position", "daction" : "download_spe", "name" : item.name, "clientid" : userid};
-    $("#record_name_field").text("- " + item.name);
+    setRecordTitle("- " + item.name);
     cur_flightrecord_name = item.name;
 	  showLoader();	  
 		ajaxRequest(jdata, function (r) {
@@ -1103,8 +1116,9 @@ function drawCadastral(x, y, vSource){
             }
           }
           
-          var curText = $("#record_name_field").text();
-          $("#record_name_field").text(curText + " / " + _addressText);
+          var curText = getRecordTitle();
+          setRecordTitle(curText + " / " + _addressText);
+          
           vSource.addFeatures(_features);
           	    	    	    
   }, function(request,status,error) {

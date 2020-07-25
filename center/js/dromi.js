@@ -289,7 +289,7 @@ function showData(index) {
 		var userid = getCookie("dev_user_id");
 		var jdata = {"action": "dromi", "daction": "get", "clientid" : userid, "name" : item.dname};
 
-    $("#record_name_field").text("- " + item.dname);
+    setRecordTitle("- " + item.dname);
         
     cur_flightrecord_name = item.dname;
 
