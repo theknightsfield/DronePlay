@@ -1648,9 +1648,17 @@ function getCookie(cName) {
 }
 
 
+function showCurrentInfo(dlatlng, alt) {
+	if (!isSet($("#position_info"))) return;
+	
+	var latlng = ol.proj.fromLonLat(dlatlng);
+	var hdms = ol.coordinate.toStringHDMS(latlng);
+	var itext = hdms + " [ Lat: " + dlatlng[1] + " / Lng: " + dlatlng[0] + " / Alt: " + alt + " ]";
+	$("#position_info").text(itext);
+}
 
 function openLineTip(oChart,datasetIndex,pointIndex){
-   if(!oChart || oChart == undefined) return false;
+   if(!isSet(oChart)) return false;
 
    if (oldLinedatasetIndex >= 0)
    	closeTip(oChart,oldLinedatasetIndex,oldLinepointIndex);
@@ -1676,7 +1684,7 @@ function openLineTip(oChart,datasetIndex,pointIndex){
 }
 
 function openScatterTip(oChart,datasetIndex,pointIndex){
-   if(!oChart || oChart == undefined) return false;
+   if(!isSet(oChart)) return false;
 
    if (oldScatterdatasetIndex >= 0)
    	closeTip(oChart,oldScatterdatasetIndex,oldScatterpointIndex);
@@ -1703,7 +1711,7 @@ function openScatterTip(oChart,datasetIndex,pointIndex){
 
 function closeTip(oChart,datasetIndex,pointIndex){
    var activeElements = oChart.tooltip._active;
-   if(activeElements == undefined || activeElements.length == 0)
+   if(!isSet(activeElements) || activeElements.length == 0)
      return;
 
    var requestedElem = oChart.getDatasetMeta(datasetIndex).data[pointIndex];
