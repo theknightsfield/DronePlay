@@ -1446,8 +1446,8 @@ function mapInit() {
   });
   
   if (isSet($('#track'))) {
-  	$('#track').addEventListener('change', function() {
-    	geolocation.setTracking(this.checked);
+  	$('#track').change(function() {
+    	geolocation.setTracking($("#track").is(":checked"));
   	});
   }  
 }
