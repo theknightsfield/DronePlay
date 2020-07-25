@@ -671,7 +671,7 @@ function drawLineGraph() {
 
                         var locdata = chartLocData[tooltipItem.index];
                         if(locdata && "lng" in locdata && "lat" in locdata) {
-                          	setMovedActionFromChart(tooltipItem.index, locdata);                          	
+                          	setMoveActionFromLineChart(tooltipItem.index, locdata);                          	
                         }
 
                         return JSON.stringify(locdata);
@@ -734,23 +734,11 @@ function drawScatterGraph() {
       tooltips: {
             callbacks: {
                 label: function(tooltipItem, data) {
-                    var d = data.datasets[tooltipItem.datasetIndex].data[0];
+                    //var d = data.datasets[tooltipItem.datasetIndex].data[0];
                     //var t = d.y;
                     var locdata = chartLocData[tooltipItem.index];
                     if("lng" in locdata && "lat" in locdata) {
-                      var latlng = ol.proj.fromLonLat([locdata.lng * 1, locdata.lat * 1]);
-
-                      if (isMoved == true) {
-                        isMoved = false;
-                        flyTo(latlng, locdata.yaw, function() {isMoved=true;});
-                      }
-
-                      if ("dsec" in locdata) {
-                        movieSeekTo(locdata.dsec);
-                      }
-
-                      setSliderPos(tooltipItem.index);
-											showCurrentInfo([locdata.lng * 1, locdata.lat * 1], locdata.alt);
+                      setMoveActionFromScatterChart(tooltipItem.index, locdata);
                     }
 
                     return JSON.stringify(locdata);
@@ -837,7 +825,7 @@ function openLineTip(oChart,datasetIndex,pointIndex){
 }
 
 function openScatterTip(oChart,datasetIndex,pointIndex){
-   if(!oChart || oChart == undefined) return;
+   if(!oChart || oChart == undefined) return false;
 
    if (oldScatterdatasetIndex >= 0)
    	closeTip(oChart,oldScatterdatasetIndex,oldScatterpointIndex);
@@ -852,12 +840,14 @@ function openScatterTip(oChart,datasetIndex,pointIndex){
 
    for(var i = 0; i < activeElements.length; i++) {
        if(requestedElem._index == activeElements[i]._index)
-          return;
+          return false;
    }
    activeElements.push(requestedElem);
    oChart.tooltip._active = activeElements;
    oChart.tooltip.update(true);
    oChart.draw();
+   
+   return true;
 }
 
 function closeTip(oChart,datasetIndex,pointIndex){

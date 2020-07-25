@@ -1650,7 +1650,7 @@ function getCookie(cName) {
 
 
 function setMoveActionFromSlider(index, item) {							
-	openScatterTip(window.myScatter, 0, index);
+	if (openScatterTip(window.myScatter, 0, index) == true) return;
 	if (openLineTip(window.myLine, 0, index) == true) return;
 
 	$('#sliderText').html( index );
@@ -1664,7 +1664,7 @@ function setMoveActionFromSlider(index, item) {
 }
 
 function setMoveActionFromMap(index, item) {	  	
-	openScatterTip(window.myScatter, index);
+	if (openScatterTip(window.myScatter, 0, index) == true) return;
 	if (openLineTip(window.myLine, 0, index) == true) return;
 	
   setRollStatus(item.roll);
@@ -1680,7 +1680,7 @@ function setMoveActionFromMap(index, item) {
 }
 
 function setMoveActionFromMovie(index, item) {		
-  openScatterTip(window.myScatter, 0, index);
+  if (openScatterTip(window.myScatter, 0, index) == true) return;
   if (openLineTip(window.myLine, 0, index) == true) return;
     
   showCurrentInfo([item.lng * 1, item.lat * 1], item.alt);  
@@ -1690,8 +1690,21 @@ function setMoveActionFromMovie(index, item) {
 	moveToPositionOnMap(item.lat * 1, item.lng * 1, item.yaw, item.roll, item.pitch, false);
 }
 
+function setMoveActionFromScatterChart(index, item) {
+	if (openLineTip(window.myLine, 0, index) == true) return;
+	
+	if ("dsec" in item) {
+    movieSeekTo(item.dsec);
+  }
 
-function setMovedActionFromChart(index, item) {      	
+  setSliderPos(index);
+  showCurrentInfo([item.lng * 1, item.lat * 1], item.alt);  
+  moveToPositionOnMap(item.lat * 1, item.lng * 1, item.yaw, item.roll, item.pitch, false);
+}
+
+function setMoveActionFromLineChart(index, item) {     
+	if (openScatterTip(window.myScatter, 0, index) == true) return;
+	 	
   if ("dsec" in item) {
     movieSeekTo(item.dsec);
   }
