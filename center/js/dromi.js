@@ -194,7 +194,8 @@ function onYouTubeIframeAPIReady() {
     });//youTubePlayer1셋팅
 }
 
-var fromMap = false;
+var movieProcess = false;
+var playVideo = false;
 
 function onPlayerReady(event) {
     event.target.playVideo();//자동재생
@@ -207,7 +208,7 @@ function onPlayerReady(event) {
             if(youTubePlayer.getPlayerState() == YT.PlayerState.PLAYING ) {
                 var t = youTubePlayer.getCurrentTime();
                 ///expecting 1 second interval , with 500 ms margin
-                if (Math.abs(t - lastTime) > 0.5) {
+                if (Math.abs(t - lastTime) > 1) {
                     // there was a seek occuring
                     processSeek(t);
                 }
@@ -224,8 +225,8 @@ function onPlayerStateChange(event) {
 }
 
 function processSeek(curTime) {
-    if (fromMap == true) {
-      fromMap = false;
+    if (movieProcess == true) {
+      movieProcess = false;
       return;
     }
 
@@ -233,7 +234,7 @@ function processSeek(curTime) {
     chartLocData.some(function(item) {
       if ("dsec" in item) {
         var ds = item.dsec;
-        if((ds + 10) >= curTime && (ds - 10) <= curTime) {
+        if((ds + 5) >= curTime && (ds - 5) <= curTime) {
             setMoveActionFromMovie(index, item);
             return true;
         }
@@ -245,7 +246,7 @@ function processSeek(curTime) {
 }
 
 function movieSeekTo(where) {
-  fromMap = true;
+  movieProcess = true;
 
   if (googlePhotoPlayer != null && googlePhotoPlayerAr.is(":visible") == true) {
   	googlePhotoPlayer.currentTime = where;
@@ -639,11 +640,24 @@ function drawLineGraph() {
               data: lineGraphData
          }
       	]};
+      	
+  document.getElementById("lineGraph").onclick = function(evt){
+    var activePoints = window.myLine.getElementsAtEvent(evt);
+        
+    if (activePoints.length > 0) {
+       var clickedDatasetIndex = activePoints[0]._datasetIndex;
+              
+       var locdata = chartLocData[clickedDatasetIndex];
+	     if("lng" in locdata && "lat" in locdata) {
+	        setMoveActionFromLineChart(clickedDatasetIndex, locdata);
+	     }
+     }
+	};
 
   window.myLine = new Chart(ctx2, {
       	type: 'scatter',
         data: linedataSet,
-        tooltipEvents: ["mousemove", "touchstart", "touchmove", "click"],
+        tooltipEvents: ["click"],
         options: {
         	legend: {
         		display: false
@@ -656,13 +670,7 @@ function drawLineGraph() {
           tooltips: {
                 callbacks: {
                     label: function(tooltipItem, data) {
-                        //var d = data.datasets[tooltipItem.datasetIndex].data[0];
-
-                        var locdata = chartLocData[tooltipItem.index];
-                        if(locdata && "lng" in locdata && "lat" in locdata) {
-                          	setMoveActionFromLineChart(tooltipItem.index, locdata);                          	
-                        }
-
+                        var locdata = chartLocData[tooltipItem.index];                        
                         return JSON.stringify(locdata);
                     }
                   },
@@ -688,6 +696,7 @@ function drawLineGraph() {
       });
 }
 
+
 function drawScatterGraph() {
 	if (chartTData.length == 0) {
     $("#chartView").hide();
@@ -695,6 +704,7 @@ function drawScatterGraph() {
   }
 
   $("#chartView").show();
+      
 
   var dataSet = {datasets: [
       {
@@ -710,11 +720,25 @@ function drawScatterGraph() {
          data: chartHData
      }
   ]};
+  
+  document.getElementById("chartArea").onclick = function(evt){
+    var activePoints = window.myScatter.getElementsAtEvent(evt);
+        
+    if (activePoints.length > 0) {
+       var clickedDatasetIndex = activePoints[0]._datasetIndex;
+              
+       var locdata = chartLocData[clickedDatasetIndex];
+	     if("lng" in locdata && "lat" in locdata) {
+	        setMoveActionFromScatterChart(clickedDatasetIndex, locdata);
+	     }
+     }
+	};
+  
 
   var ctx = document.getElementById('chartArea').getContext('2d');
   window.myScatter = new Chart(ctx, {
   	type: 'scatter',
-  	tooltipEvents: ["mousemove", "touchstart", "touchmove", "click"],
+  	tooltipEvents: ["click"],
     data: dataSet,
     options: {
       title: {
@@ -725,13 +749,7 @@ function drawScatterGraph() {
       tooltips: {
             callbacks: {
                 label: function(tooltipItem, data) {
-                    //var d = data.datasets[tooltipItem.datasetIndex].data[0];
-                    //var t = d.y;
-                    var locdata = chartLocData[tooltipItem.index];
-                    if("lng" in locdata && "lat" in locdata) {
-                      setMoveActionFromScatterChart(tooltipItem.index, locdata);
-                    }
-
+                		var locdata = chartLocData[tooltipItem.index];
                     return JSON.stringify(locdata);
 
                 }

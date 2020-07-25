@@ -1731,10 +1731,45 @@ function closeTip(oChart,datasetIndex,pointIndex){
 }
 
 
-function setMoveActionFromSlider(index, item) {							
-	if (openScatterTip(window.myScatter, 0, index) == true) return;
-	if (openLineTip(window.myLine, 0, index) == true) return;
+function setMoveActionFromMovie(index, item) {		
+  openScatterTip(window.myScatter, 0, index);
+  openLineTip(window.myLine, 0, index);
+    
+  showCurrentInfo([item.lng * 1, item.lat * 1], item.alt);  
+  setSliderPos(index);
+  
+  showCurrentInfo([item.lng * 1, item.lat * 1], item.alt);	
+	moveToPositionOnMap(item.lat * 1, item.lng * 1, item.yaw, item.roll, item.pitch, false);	
+}
 
+function setMoveActionFromScatterChart(index, item) {		
+	openLineTip(window.myLine, 0, index);
+	
+	if ("dsec" in item) {
+    movieSeekTo(item.dsec);
+  }
+
+  setSliderPos(index);
+  showCurrentInfo([item.lng * 1, item.lat * 1], item.alt);  
+  moveToPositionOnMap(item.lat * 1, item.lng * 1, item.yaw, item.roll, item.pitch, true);
+}
+
+function setMoveActionFromLineChart(index, item) {     
+	openScatterTip(window.myScatter, 0, index);
+	 	
+  if ("dsec" in item) {
+    movieSeekTo(item.dsec);
+  }
+
+  setSliderPos(index);
+  showCurrentInfo([item.lng * 1, item.lat * 1], item.alt);  
+  moveToPositionOnMap(item.lat * 1, item.lng * 1, item.yaw, item.roll, item.pitch, true);
+}
+
+
+function setMoveActionFromSlider(index, item) {							
+	openScatterTip(window.myScatter, 0, index);
+  openLineTip(window.myLine, 0, index);
 	$('#sliderText').html( index );
 	
   if ("dsec" in item) {
@@ -1746,8 +1781,8 @@ function setMoveActionFromSlider(index, item) {
 }
 
 function setMoveActionFromMap(index, item) {	  	
-	if (openScatterTip(window.myScatter, 0, index) == true) return;
-	if (openLineTip(window.myLine, 0, index) == true) return;
+	openScatterTip(window.myScatter, 0, index);
+	openLineTip(window.myLine, 0, index);
 	
   setRollStatus(item.roll);
   setYawStatus(item.yaw);
@@ -1759,60 +1794,4 @@ function setMoveActionFromMap(index, item) {
   }
 
   setSliderPos(index);
-}
-
-
-var bFromMovie = false;
-var bFromScatterChart = false;
-var bFromLineChart = false;
-
-function setMoveActionFromMovie(index, item) {
-	bFromMovie = true;
-	
-  if (openScatterTip(window.myScatter, 0, index) == true) return;
-  if (openLineTip(window.myLine, 0, index) == true) return;
-    
-  showCurrentInfo([item.lng * 1, item.lat * 1], item.alt);  
-  setSliderPos(index);
-  
-  showCurrentInfo([item.lng * 1, item.lat * 1], item.alt);	
-	moveToPositionOnMap(item.lat * 1, item.lng * 1, item.yaw, item.roll, item.pitch, false);
-	
-	bFromMovie = false;
-}
-
-function setMoveActionFromScatterChart(index, item) {
-	bFromScatterChart = true;
-	
-	if (bFromLineChart == false && openLineTip(window.myLine, 0, index) == true) return;
-	
-	if (bFromMovie == false && "dsec" in item) {
-    movieSeekTo(item.dsec);
-  }
-
-  setSliderPos(index);
-  showCurrentInfo([item.lng * 1, item.lat * 1], item.alt);  
-  moveToPositionOnMap(item.lat * 1, item.lng * 1, item.yaw, item.roll, item.pitch, true);
-
-
-  bFromLineChart = false;
-  bFromMovie = false;
-}
-
-function setMoveActionFromLineChart(index, item) {     
-	bFromLineChart = true;
-	
-	if (bFromScatterChart == false && openScatterTip(window.myScatter, 0, index) == true) return;
-	 	
-  if (bFromMovie == false && "dsec" in item) {
-    movieSeekTo(item.dsec);
-  }
-
-  setSliderPos(index);
-  showCurrentInfo([item.lng * 1, item.lat * 1], item.alt);  
-  moveToPositionOnMap(item.lat * 1, item.lng * 1, item.yaw, item.roll, item.pitch, true);
-  
-  
-  bFromScatterChart = false;  
-  bFromMovie = false;
 }
