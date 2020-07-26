@@ -1557,17 +1557,17 @@ function mapInit() {
   }  
   
   var select = document.getElementById('layer-select');      
-  select.addEventListener('change', onChange);
-  onChange();
+  select.addEventListener('change', function() {
+  	var select = document.getElementById('layer-select');
+	  var style = select.value;
+	  for (var i = 0, ii = maplayers.length; i < ii; ++i) {
+	    maplayers[i].setVisible(styles[i] === style);
+	  }
+  });
+  
+  maplayers[0].setVisible(true);
 }
 
-function onChange() {
-	var select = document.getElementById('layer-select');
-  var style = select.value;
-  for (var i = 0, ii = layers.length; i < ii; ++i) {
-    layers[i].setVisible(styles[i] === style);
-  }
-}
 
 // A bounce easing method (from https://github.com/DmitryBaranovskiy/raphael).
 function bounce(t) {
