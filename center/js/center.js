@@ -1394,6 +1394,30 @@ function logOut() {
 }
 
 function mapInit() {
+	 
+	var styles = [
+        'Road',
+        'Aerial',
+        'AerialWithLabels',
+        'collinsBart',
+        'ordnanceSurvey'
+      ];
+  var maplayers = [];
+  var i, ii;
+  for (i = 0, ii = styles.length; i < ii; ++i) {
+    maplayers.push(new ol.layer.Tile({
+      visible: false,
+      preload: Infinity,
+      source: new ol.source.BingMaps({
+        key: 'AgMfldbj_9tx3cd298eKeRqusvvGxw1EWq6eOgaVbDsoi7Uj9kvdkuuid-bbb6CK',
+        imagerySet: styles[i],
+        // use maxZoom 19 to see stretched tiles instead of the BingMaps
+        // "no photos at this zoom level" tiles
+        maxZoom: 19
+      })
+    }));
+  }
+      
   var dokdo = ol.proj.fromLonLat([131.8661992, 37.2435813]);
   var scaleLineControl = new ol.control.ScaleLine();
   
@@ -1486,37 +1510,16 @@ function mapInit() {
     });
 
   scaleLineControl.setUnits("metric");
-             
-  var bingLayer = new ol.layer.Tile({
-    visible: true,
-    preload: Infinity,
-    source: new ol.source.BingMaps({
-        // We need a key to get the layer from the provider. 
-        // Sign in with Bing Maps and you will get your key (for free)
-        key: 'AgMfldbj_9tx3cd298eKeRqusvvGxw1EWq6eOgaVbDsoi7Uj9kvdkuuid-bbb6CK',
-        imagerySet: 'AerialWithLabels', // or 'Road', 'AerialWithLabels', etc.
-        // use maxZoom 19 to see stretched tiles instead of the Bing Maps
-        // "no photos at this zoom level" tiles
-        maxZoom: 19
-    })
-	});
-  
+              	
+ 	maplayers.push(vectorLayer);
+ 	maplayers.push(pointLayer);
   
   map = new ol.Map({
       target: 'map',
       controls: ol.control.defaults().extend([
             scaleLineControl
           ]),
-      layers: [
-      		/*
-          new ol.layer.Tile({
-              preload: 4,
-              source: new ol.source.OSM()
-          })
-          */
-          bingLayer
-          , vectorLayer, pointLayer
-      ],
+      layers: maplayers,
       // Improve user experience by loading tiles while animating. Will make
       // animations stutter on mobile or slow devices.
       loadTilesWhileAnimating: true,
@@ -1552,6 +1555,18 @@ function mapInit() {
     	geolocation.setTracking($("#track").is(":checked"));
   	});
   }  
+  
+  var select = document.getElementById('layer-select');      
+  select.addEventListener('change', onChange);
+  onChange();
+}
+
+function onChange() {
+	var select = document.getElementById('layer-select');
+  var style = select.value;
+  for (var i = 0, ii = layers.length; i < ii; ++i) {
+    layers[i].setVisible(styles[i] === style);
+  }
 }
 
 // A bounce easing method (from https://github.com/DmitryBaranovskiy/raphael).

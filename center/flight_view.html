@@ -168,10 +168,19 @@ gtag('config', 'UA-130136264-4');
 
                       <div class="col-lg-6">
 		                        <div class="panel panel-default" id="map" style="height:400px;"></div>
-
-		                        <div class="panel panel-primary">
+		                        																						
+		                        <div class="panel panel-primary">		                        	
 		                        	<div class="panel-heading">
 		                        		<div id="slider"></div><span class="badge badge-light" id="sliderText">0</span>
+		                        	</div>
+		                        	<div class="panel-body">
+		                        		<select id="layer-select" class="form-control">
+																				       <option value="Aerial">Aerial</option>
+																				       <option value="AerialWithLabels" selected>Aerial with labels</option>
+																				       <option value="Road">Road</option>
+																				       <option value="collinsBart">Collins Bart</option>
+																				       <option value="ordnanceSurvey">Ordnance Survey</option>
+																</select>
 		                        	</div>
 		                        	<div class="panel-body">
 				                      		<span id="position_info"> ... </span>
