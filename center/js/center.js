@@ -198,6 +198,12 @@ function designInit() {
   	
   	hideLoader();
   }
+  
+
+	$('#saveItemBtn').off('click');
+	$('#saveItemBtn').click(function(){
+		saveFlightData(0);
+	});
 }
 
 
