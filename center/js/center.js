@@ -1554,16 +1554,18 @@ function mapInit() {
   	});
   }  
   
-  var select = document.getElementById('layer-select');      
-  select.addEventListener('change', function() {
-  	var select = document.getElementById('layer-select');
-	  var style = select.value;
-	  for (var i = 0, ii = maplayers.length; i < ii; ++i) {
-	    maplayers[i].setVisible(styles[i] === style);
-	  }
-  });
+  var select = document.getElementById('layer-select');
+  if (isSet(select)) {
+	  select.addEventListener('change', function() {
+	  	var select = document.getElementById('layer-select');
+		  var style = select.value;
+		  for (var i = 0, ii = maplayers.length; i < ii; ++i) {
+		    maplayers[i].setVisible(styles[i] === style);
+		  }
+	  });
+	}
   
-  maplayers[0].setVisible(true);
+  maplayers[1].setVisible(true);
 }
 
 
