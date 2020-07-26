@@ -1398,9 +1398,7 @@ function mapInit() {
 	var styles = [
         'Road',
         'Aerial',
-        'AerialWithLabels',
-        'collinsBart',
-        'ordnanceSurvey'
+        'AerialWithLabels'        
       ];
   var maplayers = [];
   var i, ii;
