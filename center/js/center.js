@@ -173,7 +173,8 @@ function designInit() {
           return;
       }
 
-			appendNewRecord(evt.coordinate);
+			var lonLat = ol.proj.toLonLat(coordinates);
+			appendNewRecord(lonLat);
   });  
 
 	var record_name = location.search.split('record_name=')[1];
@@ -500,8 +501,8 @@ function setDesignTableWithFlightRecord() {
 }
 
 
-function appendNewRecord(coordinates) {
-	var lonLat = ol.proj.toLonLat(coordinates);
+function appendNewRecord(lonLat) {
+	
 	var index = flightRecDataArray.length;
 
 	if (index <= 0) {
@@ -717,7 +718,9 @@ function setDataToDesignTableWithFlightRecord(index) {
 }
 
 function saveFlightData(index) {
-	if (flightRecDataArray.length <= 0) return;
+	if (flightRecDataArray.length <= 0) {
+		appendNewRecord([$('#lngdata_index').val() * 1, $('#lngdata_index').val() * 1]);
+	}
 
 	flightRecDataArray[index].lat = $('#latdata_index').val();
 	flightRecDataArray[index].lng = $('#lngdata_index').val();
