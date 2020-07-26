@@ -725,7 +725,9 @@ function setDataToDesignTableWithFlightRecord(index) {
 
 function saveFlightData(index) {
 	if (flightRecDataArray.length <= 0) {
-		appendNewRecord([$('#lngdata_index').val() * 1, $('#lngdata_index').val() * 1]);
+		var lng = $('#lngdata_index').val();
+		var lat = $('#latdata_index').val();
+		appendNewRecord([lng * 1, lat * 1]);
 		var npos = ol.proj.fromLonLat([lng * 1, lat * 1]);
 		flyDirectTo(npos, $('#yawdata_index').val());
 	}
