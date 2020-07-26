@@ -173,7 +173,7 @@ function designInit() {
           return;
       }
 
-			var lonLat = ol.proj.toLonLat(coordinates);
+			var lonLat = ol.proj.toLonLat(evt.coordinates);
 			appendNewRecord(lonLat);
   });  
 
