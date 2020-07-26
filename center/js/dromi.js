@@ -707,6 +707,9 @@ function drawScatterGraph() {
 }
 
 function setChartData(cdata) {
+	
+			if(isSet(cdata) == false || cdata == "" || cdata == "-") return;
+			
       posIcons = new Array();
       chartTData = new Array();
       chartHData = new Array();
