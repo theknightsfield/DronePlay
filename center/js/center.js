@@ -990,7 +990,7 @@ function showDataForHistory(index) {
 		showMovieDataSet();
 	}
 	
-	if (!("data" in item) || !isSet(item.data)) {
+	if (!("data" in item) || !isSet(item.data) || item.data === "-") {
     var userid = getCookie("dev_user_id");
     var jdata = {"action" : "position", "daction" : "download_spe", "name" : item.name, "clientid" : userid};
     setRecordTitle("- " + item.name);
