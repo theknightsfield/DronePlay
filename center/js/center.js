@@ -282,6 +282,8 @@ function setSliderPos(i) {
 function setYawStatus(degrees) {
 		if (!isSet(degrees)) return;
 		if (!isSet($('#yawStatus'))) return;
+		var yawStatus = document.getElementById('yawStatus');
+		if (!isSet(yawStatus)) return;
 		
 		degrees *= 1;
 		degrees = degrees < 0 ? (360 + degrees) : degrees;
@@ -301,8 +303,10 @@ function setYawStatus(degrees) {
 
 
 function setPitchStatus(pitch) {
-		if (!isSet(pitch)) return;
+		if (!isSet(pitch)) return;		
 		if (!isSet($('#pitchStatus'))) return;
+		var pitchStatus = document.getElementById('pitchStatus');
+		if (!isSet(pitchStatus)) return;
 		
 		var degrees = (pitch * -1);
 		degrees = degrees < 0 ? (360 + degrees) : degrees;
@@ -323,6 +327,8 @@ function setPitchStatus(pitch) {
 function setRollStatus(roll) {
 		if (!isSet(roll)) return;
 		if (!isSet($('#rollCanvas'))) return;
+		var canvas = document.getElementById('rollCanvas');
+		if (!isSet(canvas)) return;
 		
 		var degrees = roll * 1;
 		
@@ -333,18 +339,17 @@ function setRollStatus(roll) {
 		
 		var radians1 = (Math.PI/180)*degrees;
 		var radians2 = (Math.PI/180)*degrees2;
-						
-			var canvas = document.getElementById('rollCanvas');
-      var context = canvas.getContext('2d');      
-			context.clearRect(0, 0, canvas.width, canvas.height);
-      context.beginPath();
-      context.arc(30, 30, 20, radians1, radians2, true);
-      context.closePath();
-      context.lineWidth = 1;
-      context.fillStyle = 'blue';
-      context.fill();
-      context.strokeStyle = '#0000aa';
-      context.stroke();
+									
+    var context = canvas.getContext('2d');      
+		context.clearRect(0, 0, canvas.width, canvas.height);
+    context.beginPath();
+    context.arc(30, 30, 20, radians1, radians2, true);
+    context.closePath();
+    context.lineWidth = 1;
+    context.fillStyle = 'blue';
+    context.fill();
+    context.strokeStyle = '#0000aa';
+    context.stroke();
       
     $('#rollText').text(roll);
 }
