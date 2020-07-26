@@ -1559,13 +1559,15 @@ function mapInit() {
 	  select.addEventListener('change', function() {
 	  	var select = document.getElementById('layer-select');
 		  var style = select.value;
-		  for (var i = 0, ii = maplayers.length; i < ii; ++i) {
+		  for (var i = 0; i < ii; ++i) {
 		    maplayers[i].setVisible(styles[i] === style);
 		  }
 	  });
 	}
   
   maplayers[1].setVisible(true);
+  maplayers[3].setVisible(true);
+  maplayers[4].setVisible(true);
 }
 
 
