@@ -188,27 +188,44 @@
           <!-- Content Row -->
 
           <div class="row">
-						 <div class="col-xl-12 col-md-6 mb-4">
+						 <div class="col-xl-6 col-md-6 mb-4">
 	              <div class="card border-left-primary shadow py-2">
 	                <div class="card-body">
 	                                      
-	                    <div class="col-auto">
-	                      <button id="uploadFlightRecBtn" class="btn btn-primary" type="button" onClick="uploadFlightList()">
-                                          DJI 비행기록 업로드
-                        </button>                                                                            
+	                    <div class="col-auto">	                                                                                                  
                       	<form enctype="multipart/form-data" method="post" id="djifileform">
-                      		<div class="form-group">
-												    <label for="file">DJI 비행기록 파일</label>
-												    <input type="file" class="form-control-file" id="file">
-												    <input type="hidden" name="name" id="djifname">
-												  </div>
-												</form>
+                      		<div class="input-group">
+												    <input type="file" class="form-control-file form-control bg-light border-0 small" id="file">
+												    <input type="hidden" name="name" id="djifname">		
+												    <span class="input-group-append">										    
+													    <button id="uploadFlightRecBtn" class="btn btn-primary" type="button" onClick="uploadFlightList()">
+	                                          DJI 비행기록 파일 업로드
+	                        		</button>
+	                        	</span>
+												  </div>												  												  
+												</form>																								
 	                    </div>
 	                  
+	                </div>
+	                <div class="card-body">
+	                		<a data-toggle="collapse" data-target="#collapseRecordFileParams" aria-expanded="false" aria-controls="collapseRecordFileParams">
+																												    비행기록 파일 얻는 방법 (클릭)
+											</a>
+											
+											<div class="collapse" id="collapseRecordFileParams">
+		                		<p><b>안드로이드</b></p>
+												<p>- 내 파일 > 내장 메모리 > DJI > dji.go.v4 > FlightRecord > FlightRecord_연월일시.txt</p>
+												<br>
+												<p><b>iOS :  하기 링크의 내용을 참고하여 파일을 추출해 주세요.</b></p>
+												<p>- <a href="https://m.blog.naver.com/PostView.nhn?blogId=apache81&logNo=220423814490" target=new>https://m.blog.naver.com/PostView.nhn?blogId=apache81&logNo=220423814490</a></p>
+												<p>- <a href="http://blog.daum.net/dipod/857" target=new>http://blog.daum.net/dipod/857</a></p>
+												<p>- <a href="https://www.youtube.com/watch?v=59pE9N3pXdg" target=new>https://www.youtube.com/watch?v=59pE9N3pXdg</a></p>
+											</div>
 	                </div>
 	              </div>
              </div>
 					</div>			
+					
 					<div class="row">				
             <!-- List -->
             <div class="col-lg-12 mb-4">
@@ -294,7 +311,7 @@
   <script src="js/sb-admin-2.min.js"></script>
   <script src="./vendor/chart.js/Chart.min.js"></script>
   <script src="js/ol.js"></script>  
-  <script id="page_data" page_action="flightlist" src="./js/center.js"></script>
+  <!-- <script id="page_data" page_action="flightlist" src="./js/center.js"></script> -->
 </body>
 
 </html>
