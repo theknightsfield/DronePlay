@@ -628,14 +628,15 @@ function getMissionToMonitor(id) {
           }
         });
 
-        $("#loader").hide();
+       	hideLoader();
       }
       else {
       	alert("Error ! - 1");
+      	hideLoader();
       }
     }, function(request,status,error) {
       monitor("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-      $("#loader").hide();
+      hideLoader();
     });
 }
 
