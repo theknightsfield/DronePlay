@@ -198,7 +198,7 @@
 											<div class="card-body">
 													<div id="slider" class="bg-light border-0 small"></div><span class="badge badge-light" id="sliderText">0</span>
 													<p></p>
-			                  	<div class="input-group">			                  			
+			                  	<div class="form-group">			                  			
 			                  			<label for="layer-select">지도 종류</label>
 			                    		<select id="layer-select" name="layer-select" class="form-control bg-light border-0 small">
 																			       <option value="Aerial">Aerial</option>
@@ -209,12 +209,14 @@
 											</div>
 						
 			              	<div class="card-body">
-			                	<div class="input-group">
-			                		<span class="input-group-append">바로가기</span>
-												  <input type="text" value="0" id="goItemIndex" class="form-control bg-light border-0 small" aria-label="Index Number">
-												  <span class="input-group-append">
-												  		<button class="btn btn-primary" type="button" id="goItemBtn">Go!</button>
-												  </span>
+			                	<div class="form-group">	
+			                		<label for="goItemIndex">바로가기</label>
+			                		<div class="input-group">	
+													  <input type="text" value="0" id="goItemIndex" class="form-control bg-light border-0 small" aria-label="Index Number">
+													  <span class="input-group-append">
+													  		<button class="btn btn-primary" type="button" id="goItemBtn">Go!</button>
+													  </span>
+													</div>
 												</div>
 											</div>
 															
@@ -395,7 +397,7 @@
   <script src="js/sb-admin-2.min.js"></script>
   
   <script src="./js/ol.js"></script>  
-  <script id="page_data" page_action="design" src="./js/center.js"></script>
+  <!-- <script id="page_data" page_action="design" src="./js/center.js"></script> -->
 </body>
 
 </html>
