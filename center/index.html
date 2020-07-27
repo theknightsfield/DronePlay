@@ -77,55 +77,60 @@
         <div class="container-fluid">          
           <!-- Content Row -->
 
-          <div class="row">
+          <div class="row justify-content-center">
+          	
+          	<div class="col-xl-10 col-lg-12 col-md-9">
 
-            <!-- Area Chart -->
-            <div class="col-lg-6 mb-4">
-              <div class="card shadow mb-4">
-	                <!-- Card Header - Dropdown -->
-	                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-	                  <h6 class="m-0 font-weight-bold text-primary">이곳에 관하여...</h6>                  
-	                </div>
-	                <!-- Card Body -->
-	                <div class="card-body">
-	                    <p>드론의 비행계획을 쉽게 디자인하고 비행기록과 상황를 확인할 수 있는 곳입니다.</p>
-                      <p>디자인 한 비행계획은 DronePlay앱과 DJI제품의 드론에서 사용 할 수 있습니다. DronePlay앱은 현재 개발중이며 곧 안드로이드/iOS버전이 배포될 예정입니다. (계획 설계 메뉴)</p>
-                      <p>DronePlay앱의 안드로이드 버전은 소스코드가 공개되어 있습니다. <a href=http://code.droneplay.io/ target=_new>이곳</a>에서 확인할 수 있습니다.</p>
-                      <p>DJI 비행기록 파일과 드론 영상을 업로드한 유튜브 URL을 업로드하면 자세한 비행기록을 확인할 수 있습니다. (기록 업로드 메뉴)</p>
-                      <p>드론 SW개발자라면 이곳에서 <a href=https://dev.droneplay.io/dev/apis/index.html target=new>DronePlay Open API</a>의 사용을 위한 개발자토큰을 확인할 수 있습니다.</p>
-	                </div>
-	                
-	                <div class="card-body">
-	                	<div class="fb-like" data-width="280" data-href="https://www.facebook.com/386832955100142" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="false"></div>
-	                </div>
-              </div>
-            </div>
+					        <div class="card o-hidden border-0 shadow-lg my-5">
+					          <div class="card-body p-0">
+					            <!-- Nested Row within Card Body -->
+					            <div class="row">
+					              <div class="col-lg-6">
+					              	<div class="p-5">
+					              		
+						                <h6 class="m-0 font-weight-bold text-primary">이곳에 관하여...</h6>                  
+						                <br><br>
+						              	<p>드론의 비행계획을 쉽게 디자인하고 비행기록과 상황를 확인할 수 있는 곳입니다.</p>
+			                      <p>디자인 한 비행계획은 DronePlay앱과 DJI제품의 드론에서 사용 할 수 있습니다. DronePlay앱은 현재 개발중이며 곧 안드로이드/iOS버전이 배포될 예정입니다. (계획 설계 메뉴)</p>
+			                      <p>DronePlay앱의 안드로이드 버전은 소스코드가 공개되어 있습니다. <a href=http://code.droneplay.io/ target=_new>이곳</a>에서 확인할 수 있습니다.</p>
+			                      <p>DJI 비행기록 파일과 드론 영상을 업로드한 유튜브 URL을 업로드하면 자세한 비행기록을 확인할 수 있습니다. (기록 업로드 메뉴)</p>
+			                      <p>드론 SW개발자라면 이곳에서 <a href=https://dev.droneplay.io/dev/apis/index.html target=new>DronePlay Open API</a>의 사용을 위한 개발자토큰을 확인할 수 있습니다.</p>
+			                    </div>
+			                    
+			                    <div class="p-5">
+			                    	<div class="fb-like" data-width="280" data-href="https://www.facebook.com/386832955100142" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="false"></div>
+			                    </div>
+			                    
+					              </div>
+					              <div class="col-lg-6">
+					                <div class="p-5">
+					                  <div class="text-center">
+					                    <h1 class="h4 text-gray-900 mb-4">DRONEPLAY Center <B>BETA</B></h1>
+					                  </div>
+					                  <form class="user">
+					                    
+					                    <form class="user">
+							              		<a onclick="onGoogle()" class="btn btn-google btn-user btn-block text-white">
+							                      <i class="fab fa-google fa-fw"></i> Google 로그인
+							                    </a>
+							                  <a onclick="onFacebook()" class="btn btn-facebook btn-user btn-block text-white">
+							                      <i class="fab fa-facebook-f fa-fw"></i> Facebook 로그인
+							                  </a>
+							                  <a onclick="onNaver()" class="btn bg-success btn-user btn-block text-white">
+							                    <img src=imgs/naverlogo.png border=0> Naver 로그인
+							                  </a>              		
+							                </form>
+					                  </form>
+					                  <hr>
+					                  
+					                </div>
+					              </div>
+					            </div>
+					          </div>
+					        </div>
+					
+					      </div>
 
-            
-          
-
-            <!-- Area Chart -->
-            <div class="col-lg-6 mb-4">
-              <div class="card shadow mb-4">
-              	<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-	                  <h6 class="m-0 font-weight-bold text-primary">Please SignIn or SignUp By ...</h6>
-	                </div>
-              	<div class="card-body">
-              		<form class="user">
-	              		<a onclick="onGoogle()" class="btn btn-google btn-user btn-block text-white">
-	                      <i class="fab fa-google fa-fw"></i> Google 로그인
-	                    </a>
-	                  <a onclick="onFacebook()" class="btn btn-facebook btn-user btn-block text-white">
-	                      <i class="fab fa-facebook-f fa-fw"></i> Facebook 로그인
-	                  </a>
-	                  <a onclick="onNaver()" class="btn bg-success btn-user btn-block text-white">
-	                    <img src=imgs/naverlogo.png border=0> Naver 로그인
-	                  </a>              		
-	                </form>
-              	</div>
-              </div>
-            </div>
-            
           </div> 
 
         </div>
