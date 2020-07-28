@@ -176,7 +176,7 @@ response.raise_for_status()
 
 ### HTTP 요청
 
-`POST https://apis.droneplay.io/v1/`
+`POST https://api.droneplay.io/v1/`
 
 ### URL 파라메터
 
@@ -450,7 +450,7 @@ DronePlay Mission Center에 Mission 데이터를 기록합니다.
 
 ### HTTP 요청
 
-`POST https://apis.droneplay.io/v1/`
+`POST https://api.droneplay.io/v1/`
 
 ### URL 파라메터
 
@@ -615,7 +615,7 @@ DronePlay Mission Center의 Mission 목록을 불러옵니다.
 
 ### HTTP 요청
 
-`POST https://apis.droneplay.io/v1/`
+`POST https://api.droneplay.io/v1/`
 
 ### URL 파라메터
 
@@ -725,7 +725,7 @@ DronePlay Mission Center의 Mission 1개를 삭제합니다.
 
 ### HTTP 요청
 
-`POST https://apis.droneplay.io/v1/`
+`POST https://api.droneplay.io/v1/`
 
 ### URL 파라메터
 
@@ -843,7 +843,7 @@ DronePlay Mission Center에 Mission 데이터를 기록합니다.
 
 ### HTTP 요청
 
-`POST https://apis.droneplay.io/v1/`
+`POST https://api.droneplay.io/v1/`
 
 ### URL 파라메터
 
@@ -1009,7 +1009,7 @@ response.raise_for_status()
 
 ### HTTP 요청
 
-`POST https://apis.droneplay.io/v1/`
+`POST https://api.droneplay.io/v1/`
 
 ### URL 파라메터
 
@@ -1137,7 +1137,7 @@ response.raise_for_status()
 
 ### HTTP 요청
 
-`POST https://apis.droneplay.io/v1/`
+`POST https://api.droneplay.io/v1/`
 
 ### URL 파라메터
 
@@ -1247,7 +1247,7 @@ response.raise_for_status()
 
 ### HTTP 요청
 
-`POST https://apis.droneplay.io/v1/`
+`POST https://api.droneplay.io/v1/`
 
 ### URL 파라메터
 
@@ -1363,7 +1363,7 @@ DJI 비행기록 파일을 분석하여 비행기록으로 저장합니다.
 
 ### HTTP 요청
 
-`POST https://apis.droneplay.io/v1/`
+`POST https://api.droneplay.io/v1/`
 
 ### URL 파라메터
 
